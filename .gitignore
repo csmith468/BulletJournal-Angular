@@ -479,3 +479,4 @@ API/appsettings.json
 API/appsettings.Development.json
 API/datingApp.db-shm
 API/datingApp.db-wal
+client/.angular/cache/*
