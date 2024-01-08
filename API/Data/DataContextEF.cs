@@ -16,7 +16,7 @@ namespace API.Data {
             );
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
@@ -27,7 +27,7 @@ namespace API.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasDefaultSchema("bja");
-            modelBuilder.Entity<User>().ToTable("users", "bja").HasKey(u => u.UserId);
+            modelBuilder.Entity<AppUser>().ToTable("users", "bja").HasKey(u => u.UserId);
         }
     }
 }
