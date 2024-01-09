@@ -21,12 +21,10 @@ namespace API.Controllers
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto) {
-            if (await _uow.UserRepository.UsernameExists(registerDto.Username)) return BadRequest("Username is taken.");
             if (await _uow.UserRepository.EmailExists(registerDto.Email)) return BadRequest("Email is taken.");
             
             using var hmac = new HMACSHA512();
             var user = new AppUser {
-                Username = registerDto.Username.ToLower(),
                 Email = registerDto.Email.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
@@ -40,9 +38,9 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto) {
             var user = await _contextEF.AppUsers
-                .SingleOrDefaultAsync(x => x.Username.ToLower() == loginDto.Username.ToLower());
+                .SingleOrDefaultAsync(x => x.Email.ToLower() == loginDto.Email.ToLower());
 
-            if (user == null) return Unauthorized("Invalid username.");
+            if (user == null) return Unauthorized("Invalid email.");
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -51,7 +49,6 @@ namespace API.Controllers
             }
 
             return new AppUserDto {
-                Username = user.Username,
                 Email = user.Email
             };
         }

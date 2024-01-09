@@ -20,9 +20,9 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{username}")]
-        public async Task<ActionResult<AppUser>> GetUser(string username) {
-            return await _uow.UserRepository.GetAppUserAsync(username);
+        [HttpGet("{email}")]
+        public async Task<ActionResult<AppUser>> GetUser(string email) {
+            return await _uow.UserRepository.GetAppUserAsync(email);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace API.Data {
 
             modelBuilder.Entity<AppUser>()
                 .ToTable("appUser", "bja")
-                .HasKey(u => u.Username);
+                .HasKey(u => u.Email);
         }
 
     }

@@ -12,18 +12,14 @@ namespace API.Repositories {
             _contextEF = new DataContextEF(config);
         }
 
-        public async Task<AppUser> GetAppUserAsync(string username) {
+        public async Task<AppUser> GetAppUserAsync(string email) {
             return await _contextEF.AppUsers   
-                .Where(x => x.Username.ToLower() == username.ToLower())
+                .Where(x => x.Email.ToLower() == email.ToLower())
                 .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetAppUsersAsync() {
             return await _contextEF.AppUsers.ToListAsync();
-        }
-
-        public async Task<bool> UsernameExists(string username) {
-            return await _contextEF.AppUsers.AnyAsync(x => x.Username.ToLower() == username.ToLower());
         }
 
         public async Task<bool> EmailExists(string email) {
