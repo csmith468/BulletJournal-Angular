@@ -16,18 +16,24 @@ namespace API.Data {
             );
         }
 
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
-                optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"),
-                    optionsBuilder => optionsBuilder.EnableRetryOnFailure());
+                optionsBuilder
+                    .UseSqlServer(_config.GetConnectionString("DefaultConnection"),
+                        optionsBuilder => optionsBuilder.EnableRetryOnFailure());
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasDefaultSchema("bja");
-            modelBuilder.Entity<AppUser>().ToTable("users", "bja").HasKey(u => u.UserId);
+
+            modelBuilder.Entity<AppUser>()
+                .ToTable("appUser", "bja")
+                .HasKey(u => u.Username);
         }
+
     }
 }
+
