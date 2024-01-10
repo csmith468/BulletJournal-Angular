@@ -5,6 +5,7 @@ using API.DTOs;
 using API.Interfaces;
 using API.Models;
 using API.Repositories;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,14 +14,16 @@ namespace API.Controllers
     public class AccountController : BaseApiController {
         private readonly IUnitOfWork _uow;
         private readonly DataContextEF _contextEF;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(IConfiguration config, IUnitOfWork uow) {
+        public AccountController(IConfiguration config, IUnitOfWork uow, ITokenService tokenService) {
             _uow = new UnitOfWork(config);
             _contextEF = new DataContextEF(config);
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto) {
+        public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto) {
             if (await _uow.UserRepository.EmailExists(registerDto.Email)) return BadRequest("Email is taken.");
             
             using var hmac = new HMACSHA512();
@@ -32,7 +35,10 @@ namespace API.Controllers
 
             var result = _uow.UserRepository.RegisterUser(user);
 
-            return user;
+            return new AppUserDto{
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user)
+            };
         }
 
         [HttpPost("login")]
@@ -49,7 +55,8 @@ namespace API.Controllers
             }
 
             return new AppUserDto {
-                Email = user.Email
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user)
             };
         }
     }

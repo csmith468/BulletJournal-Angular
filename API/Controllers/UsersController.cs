@@ -2,18 +2,20 @@ using API.Data;
 using API.Interfaces;
 using API.Models;
 using API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers
-{
-    public class UserController : BaseApiController {
+namespace API.Controllers {
+    [Authorize]
+    public class UsersController : BaseApiController {
         private readonly IUnitOfWork _uow;
 
-        public UserController(IConfiguration config, IUnitOfWork uow) {
+        public UsersController(IConfiguration config, IUnitOfWork uow) {
             _uow = new UnitOfWork(config);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() {
             var users = await _uow.UserRepository.GetAppUsersAsync();
