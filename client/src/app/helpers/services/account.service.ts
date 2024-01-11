@@ -12,14 +12,15 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    // this.logout();
+  }
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
           this.setCurrentUser(user);
         }
       })
@@ -28,10 +29,11 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('user');
-    this.setCurrentUser(null);
+    this.currentUserSource.next(null);
   }
 
-  setCurrentUser(user: User | null) {
+  setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
 }

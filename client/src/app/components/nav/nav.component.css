@@ -1,0 +1,27 @@
+.dropdown-toggle, .dropdown-item, .menu-button {
+    cursor: pointer
+}
+
+img {
+    max-height: 50px;
+    border: 1px solid white;
+    display: inline;
+}
+.circle {
+    display: inline-block;
+    background-color: white;
+    border: 1px solid #23b9e9;
+    margin: 1px;
+    border-radius: 50%;
+}
+  
+.circle-inner {
+    color: #23b9e9;
+    display: table-cell;
+    vertical-align: middle; 
+    text-align: center;
+    text-decoration: none;
+    height: 35px;
+    width: 35px;  
+    font-size: 15px;
+}

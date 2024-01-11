@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.DTOs;
+using API.Helpers;
 using API.Interfaces;
 using API.Models;
 using API.Repositories;
@@ -29,6 +30,8 @@ namespace API.Controllers
             using var hmac = new HMACSHA512();
             var user = new AppUser {
                 Email = registerDto.Email.ToLower(),
+                FirstName = HelperFunctions.StringTitleCase(registerDto.FirstName),
+                LastName = HelperFunctions.StringTitleCase(registerDto.LastName),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
@@ -37,6 +40,8 @@ namespace API.Controllers
 
             return new AppUserDto{
                 Email = user.Email,
+                FirstName = HelperFunctions.StringTitleCase(registerDto.FirstName),
+                LastName = HelperFunctions.StringTitleCase(registerDto.LastName),
                 Token = _tokenService.CreateToken(user)
             };
         }
@@ -56,6 +61,8 @@ namespace API.Controllers
 
             return new AppUserDto {
                 Email = user.Email,
+                FirstName = HelperFunctions.StringTitleCase(user.FirstName),
+                LastName = HelperFunctions.StringTitleCase(user.LastName),
                 Token = _tokenService.CreateToken(user)
             };
         }
