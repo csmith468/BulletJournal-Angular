@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+  <div class="container">
+    <div class="dropdown" *ngIf="collapseNav" dropdown>
+      <div class="mr-4">
+        <a class="text-light menu-button text-decoration-none ms-2" dropdownToggle>
+          <i class="fa fa-bars"></i>
+      </a>
+      </div>
+      <div class="dropdown-menu" *dropdownMenu>
+        <a class="dropdown-item" routerLink="/about">About</a>
+        <ng-container *ngIf="(accountService.currentUser$ | async) as user">
+          <a class="dropdown-item" routerLink="/members">Members</a>
+          <a class="dropdown-item" routerLink="/lists">Lists</a>
+          <a class="dropdown-item" routerLink="/messages">Messages</a>
+          <a class="dropdown-item" routerLink="/errors">Errors</a>
+          <a class="dropdown-item" routerLink="/admin">Admin</a>
+        </ng-container>
+        <div *ngIf="!(accountService.currentUser$ | async) as user">
+          <a class="dropdown-item" routerLink="/register">Register</a>
+        </div>
+        <!-- <a *appHasRole="['Admin', 'Moderator']" class="dropdown-item" routerLink="/admin">Admin</a> -->
+      </div>
+    </div>
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">Bullet Journal</a>
+      <ul class="navbar-nav me-auto mb-2 mb-md-0" >
+        <ng-container *ngIf="!(collapseNav)">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
+          </li>
+        <ng-container *ngIf="(accountService.currentUser$ | async)">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/members" routerLinkActive="active">Members</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!(accountService.currentUser$ | async)"> 
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+        </ng-container>
+      </ng-container>
+      </ul>
+      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <!-- <img src="{{user.photoUrl || './assets/user.png'}}" alt="User Photo" class="img rounded-circle shadow-4-strong"> -->
+        <a *ngIf="!collapseWelcome" class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome {{user.email}}</a>
+        <a *ngIf="collapseWelcome" class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>{{user.email}}</a>
+        <div class="dropdown-menu" *dropdownMenu>
+          <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
+          <a class="dropdown-item" (click)="logout()" >Logout</a>
+        </div> 
+      </div>
+
+      <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
+      <!-- <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off"> -->
+          <input 
+          name="email"
+          [(ngModel)]="model.email"
+          class="form-control me-2" 
+          type="text" 
+          placeholder="Username">
+        <input 
+          name="password"
+          [(ngModel)]="model.password"
+          class="form-control me-2" 
+          type="password" 
+          placeholder="Password">
+        <button class="btn btn-secondary" type="submit">Login</button>
+      </form>
+    </div>
+</nav>
