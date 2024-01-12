@@ -28,5 +28,12 @@ namespace API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("addNight")]
+        public async Task<ActionResult<MorningChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
+            nightChecklist.UserID = User.GetUserId();
+            var result = await _uow.ChecklistRepository.AddNightChecklist(nightChecklist);
+            return Ok(result);
+        }
+
     }
 }

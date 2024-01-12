@@ -8,7 +8,7 @@ using API.Models.DTOs;
 
 namespace API.Controllers
 {
-    [Authorize] 
+    // [Authorize] 
     public class UsersController : BaseApiController {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;

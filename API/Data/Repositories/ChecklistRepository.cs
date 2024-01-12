@@ -17,5 +17,12 @@ namespace API.Data.Repositories {
             if (!result) return null;
             return morningChecklist;
         }
+
+        public async Task<NightChecklist> AddNightChecklist(NightChecklist nightChecklist) {
+            _contextEF.NightChecklists.Add(nightChecklist);
+            var result = await _contextEF.SaveChangesAsync() > 0;
+            if (!result) return null;
+            return nightChecklist;
+        }
     }
 }

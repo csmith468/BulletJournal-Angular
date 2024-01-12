@@ -20,6 +20,7 @@ namespace API.Data {
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<SleepRecord> SleepRecords { get; set; }
         public DbSet<MorningChecklist> MorningChecklists { get; set; }
+        public DbSet<NightChecklist> NightChecklists { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
@@ -36,6 +37,8 @@ namespace API.Data {
             modelBuilder.Entity<SleepRecord>().ToTable("sleep", "bja").HasKey(u => u.SleepID);
             modelBuilder.Entity<MorningChecklist>().ToTable("morningChecklist", "bja")
                 .HasKey(u => u.MorningChecklistID);
+            modelBuilder.Entity<NightChecklist>().ToTable("nightChecklist", "bja")
+                .HasKey(u => u.NightChecklistID);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {
