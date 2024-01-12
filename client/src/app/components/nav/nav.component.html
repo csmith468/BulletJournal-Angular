@@ -51,7 +51,19 @@
         </ng-container>
       </ng-container>
       </ul>
+
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>
+          <div class="circle">
+            <p class="circle-inner">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</p>
+          </div>        
+        </a>
+        <div class="dropdown-menu" *dropdownMenu>
+          <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
+          <a class="dropdown-item" (click)="logout()" >Logout</a>
+        </div>
+      </div>
+      <!-- <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>
           <div class="circle">
             <p class="circle-inner">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</p>
@@ -61,7 +73,7 @@
           <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
           <a class="dropdown-item" (click)="logout()" >Logout</a>
         </div> 
-      </div>
+      </div> -->
 
       <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
       <!-- <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off"> -->

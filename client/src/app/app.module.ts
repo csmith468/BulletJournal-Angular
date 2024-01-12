@@ -14,6 +14,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { TextInputComponent } from './components/forms/text-input/text-input.component';
 import { DatePickerComponent } from './components/forms/date-picker/date-picker.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

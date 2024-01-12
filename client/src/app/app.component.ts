@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccountService } from './helpers/services/account.service';
-import { environment } from 'src/environments/environment.development';
 import { User } from './helpers/models/user';
 
 
