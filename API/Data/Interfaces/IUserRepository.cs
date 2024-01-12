@@ -1,6 +1,6 @@
 using API.Models;
 
-namespace API.Interfaces {
+namespace API.Data.Interfaces {
     public interface IUserRepository {
         Task<AppUser> GetAppUserAsync(string email);
         Task<IEnumerable<AppUser>> GetAppUsersAsync();

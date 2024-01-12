@@ -1,7 +1,7 @@
 using API.Data;
-using API.Interfaces;
+using API.Data.Interfaces;
 
-namespace API.Repositories {
+namespace API.Data.Repositories {
     public class UnitOfWork : IUnitOfWork {
         private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;

@@ -1,4 +1,4 @@
-namespace API.Interfaces {
+namespace API.Data.Interfaces {
     public interface IUnitOfWork {
         IUserRepository UserRepository { get; }
         Task<bool> Complete();

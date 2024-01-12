@@ -1,9 +1,9 @@
 using API.Data;
-using API.Interfaces;
+using API.Data.Interfaces;
 using API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Repositories {
+namespace API.Data.Repositories {
     public class UserRepository : IUserRepository {
         private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;

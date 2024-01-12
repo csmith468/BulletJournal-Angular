@@ -1,7 +1,7 @@
 using API.Data;
-using API.Interfaces;
+using API.Data.Interfaces;
 using API.Models;
-using API.Repositories;
+using API.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
