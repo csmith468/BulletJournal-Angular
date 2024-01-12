@@ -17,6 +17,7 @@ namespace API.Extensions {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISleepRepository, SleepRepository>();
 
             return services;
         }

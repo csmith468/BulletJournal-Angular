@@ -12,6 +12,7 @@ namespace API.Data.Repositories {
         }
 
         public IUserRepository UserRepository => new UserRepository(_config);
+        public ISleepRepository SleepRepository => new SleepRepository(_config);
         
         public async Task<bool> Complete() {
             return await _contextEF.SaveChangesAsync() > 0;

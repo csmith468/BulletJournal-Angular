@@ -29,9 +29,8 @@ namespace API.Data {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.HasDefaultSchema("bja");
 
-            modelBuilder.Entity<AppUser>()
-                .ToTable("appUser", "bja")
-                .HasKey(u => u.Email);
+            modelBuilder.Entity<AppUser>().ToTable("user", "bja").HasKey(u => u.Id_User);
+            modelBuilder.Entity<SleepData>().ToTable("sleep", "bja").HasKey(u => u.Id_Sleep);
         }
 
     }

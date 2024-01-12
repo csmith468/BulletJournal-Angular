@@ -27,7 +27,9 @@ namespace API.Data.Repositories {
 
         public async Task<bool> RegisterUser(AppUser user) {
             _contextEF.AppUsers.Add(user);
-            return await _contextEF.SaveChangesAsync() > 0;
+            var result = await _contextEF.SaveChangesAsync() > 0;
+            int id = user.Id_User; // gets id correctly
+            return result;
         }
         
     }
