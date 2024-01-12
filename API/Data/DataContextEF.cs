@@ -1,5 +1,5 @@
 using System.Data;
-using API.Models;
+using API.Models.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 

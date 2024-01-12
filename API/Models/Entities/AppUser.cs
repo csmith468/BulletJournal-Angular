@@ -1,4 +1,4 @@
-namespace API.Models {
+namespace API.Models.Entities {
     public class AppUser {
         public string Email { get; set; }
         public string FirstName { get; set; }

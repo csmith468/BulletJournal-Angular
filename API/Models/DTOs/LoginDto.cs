@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API.DTOs {
+namespace API.Models.DTOs {
 
     public class LoginDto {
         public string Email { get; set; }

@@ -1,14 +1,14 @@
 using System.Security.Cryptography;
 using System.Text;
 using API.Data;
-using API.DTOs;
+using API.Models.DTOs;
 using API.Data.Helpers;
 using API.Data.Interfaces;
-using API.Models;
 using API.Data.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.Models.Entities;
 
 namespace API.Controllers
 {

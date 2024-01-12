@@ -1,12 +1,11 @@
-using API.Data;
 using API.Data.Interfaces;
-using API.Models;
 using API.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using API.Models.Entities;
 
-namespace API.Controllers {
+namespace API.Controllers
+{
     [Authorize]
     public class UsersController : BaseApiController {
         private readonly IUnitOfWork _uow;

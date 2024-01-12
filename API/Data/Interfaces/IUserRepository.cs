@@ -1,4 +1,4 @@
-using API.Models;
+using API.Models.Entities;
 
 namespace API.Data.Interfaces {
     public interface IUserRepository {
