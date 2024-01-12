@@ -13,26 +13,26 @@ export class NavComponent implements OnInit {
   collapseNav = false;
   collapseWelcome = false;
 
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService, private responsive: BreakpointObserver) { }
 
   ngOnInit(): void {
-    // this.responsive.observe(['(max-width: 433px)', '(min-width: 434px)', '(max-width: 991px)', 
-    //   '(min-width: 992px)']).subscribe(
-    //     result => {
-    //       if (result.breakpoints['(max-width: 433px)']) {
-    //         this.collapseWelcome = true;
-    //         this.collapseNav = true;
-    //       }
-    //       if (result.breakpoints['(min-width: 434px)'] && result.breakpoints['(max-width: 991px)']) {
-    //         this.collapseWelcome = false;
-    //         this.collapseNav = true;
-    //       }
-    //       if (result.breakpoints['(min-width: 992px)']) {
-    //         this.collapseWelcome = false;
-    //         this.collapseNav = false;
-    //       }
-    //     }
-    //   )
+    this.responsive.observe(['(max-width: 433px)', '(min-width: 434px)', '(max-width: 991px)', 
+      '(min-width: 992px)']).subscribe(
+        result => {
+          if (result.breakpoints['(max-width: 433px)']) {
+            this.collapseWelcome = true;
+            this.collapseNav = true;
+          }
+          if (result.breakpoints['(min-width: 434px)'] && result.breakpoints['(max-width: 991px)']) {
+            this.collapseWelcome = false;
+            this.collapseNav = true;
+          }
+          if (result.breakpoints['(min-width: 992px)']) {
+            this.collapseWelcome = false;
+            this.collapseNav = false;
+          }
+        }
+      )
   }
 
 
