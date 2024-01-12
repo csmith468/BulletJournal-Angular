@@ -11,9 +11,14 @@ namespace API.Data.Repositories {
             _contextEF = new DataContextEF(config);
         }
 
-        public async Task<AppUser> GetAppUserAsync(string email) {
+        public async Task<AppUser> GetAppUserByEmailAsync(string email) {
             return await _contextEF.AppUsers   
                 .Where(x => x.Email.ToLower() == email.ToLower())
+                .SingleOrDefaultAsync();
+        }
+        public async Task<AppUser> GetAppUserByIdAsync(int id) {
+            return await _contextEF.AppUsers   
+                .Where(x => x.UserID == id)
                 .SingleOrDefaultAsync();
         }
 
@@ -28,7 +33,7 @@ namespace API.Data.Repositories {
         public async Task<bool> RegisterUser(AppUser user) {
             _contextEF.AppUsers.Add(user);
             var result = await _contextEF.SaveChangesAsync() > 0;
-            int id = user.Id_User; // gets id correctly
+            int id = user.UserID; // gets id correctly
             return result;
         }
         
