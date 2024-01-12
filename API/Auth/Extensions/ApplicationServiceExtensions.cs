@@ -19,6 +19,8 @@ namespace API.Extensions {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISleepRepository, SleepRepository>();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             return services;
         }
     }
