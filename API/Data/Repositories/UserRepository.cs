@@ -26,11 +26,11 @@ namespace API.Data.Repositories {
             return await _contextEF.AppUsers.ToListAsync();
         }
 
-        public async Task<bool> EmailExists(string email) {
+        public async Task<bool> EmailExistsAsync(string email) {
             return await _contextEF.AppUsers.AnyAsync(x => x.Email.ToLower() == email.ToLower());
         }
 
-        public async Task<bool> RegisterUser(AppUser user) {
+        public async Task<bool> RegisterUserAsync(AppUser user) {
             _contextEF.AppUsers.Add(user);
             var result = await _contextEF.SaveChangesAsync() > 0;
             int id = user.UserID; // gets id correctly
