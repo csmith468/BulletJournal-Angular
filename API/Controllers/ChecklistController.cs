@@ -24,6 +24,8 @@ namespace API.Controllers
         [HttpPost("addMorning")]
         public async Task<ActionResult<MorningChecklist>> AddMorningChecklist(MorningChecklist morningChecklist) {
             morningChecklist.UserID = User.GetUserId();
+            if (await _uow.ChecklistRepository.MorningDateUsed(morningChecklist.Date, morningChecklist.UserID)) 
+                return BadRequest("User already submitted morning checklist for this date.");
             var result = await _uow.ChecklistRepository.AddMorningChecklist(morningChecklist);
             return Ok(result);
         }
@@ -31,9 +33,12 @@ namespace API.Controllers
         [HttpPost("addNight")]
         public async Task<ActionResult<MorningChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
             nightChecklist.UserID = User.GetUserId();
+            if (await _uow.ChecklistRepository.NightDateUsed(nightChecklist.Date, nightChecklist.UserID)) 
+                return BadRequest("User already submitted morning checklist for this date.");
             var result = await _uow.ChecklistRepository.AddNightChecklist(nightChecklist);
             return Ok(result);
         }
+
 
     }
 }

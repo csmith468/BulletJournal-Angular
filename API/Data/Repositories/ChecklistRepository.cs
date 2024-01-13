@@ -24,5 +24,12 @@ namespace API.Data.Repositories {
             if (!result) return null;
             return nightChecklist;
         }
+
+        public async Task<bool> MorningDateUsed(DateOnly date, int userId) {
+            return await _contextEF.MorningChecklists.AnyAsync(x => x.Date == date && x.UserID == userId);
+        }
+        public async Task<bool> NightDateUsed(DateOnly date, int userId) {
+            return await _contextEF.NightChecklists.AnyAsync(x => x.Date == date && x.UserID == userId);
+        }
     }
 }
