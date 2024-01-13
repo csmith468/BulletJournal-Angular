@@ -13,7 +13,6 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { 
-    // this.logout();
   }
 
   login(model: any) {

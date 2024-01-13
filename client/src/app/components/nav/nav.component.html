@@ -29,19 +29,13 @@
           </li>
         <ng-container *ngIf="(accountService.currentUser$ | async)">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/members" routerLinkActive="active">Members</a>
+            <a class="nav-link" routerLink="/checklists" routerLinkActive="active">Checklists</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+            <a class="nav-link" routerLink="/checklists/morning" routerLinkActive="active">Morning Checklist</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+            <a class="nav-link" routerLink="/checklists/night" routerLinkActive="active">Night Checklist</a>
           </li>
         </ng-container>
         <ng-container *ngIf="!(accountService.currentUser$ | async)"> 
@@ -63,26 +57,14 @@
           <a class="dropdown-item" (click)="logout()" >Logout</a>
         </div>
       </div>
-      <!-- <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-        <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>
-          <div class="circle">
-            <p class="circle-inner">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</p>
-          </div>
-        </a>
-        <div class="dropdown-menu" *dropdownMenu>
-          <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
-          <a class="dropdown-item" (click)="logout()" >Logout</a>
-        </div> 
-      </div> -->
 
       <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-      <!-- <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off"> -->
           <input 
           name="email"
           [(ngModel)]="model.email"
           class="form-control me-2" 
           type="text" 
-          placeholder="Username">
+          placeholder="Email">
         <input 
           name="password"
           [(ngModel)]="model.password"

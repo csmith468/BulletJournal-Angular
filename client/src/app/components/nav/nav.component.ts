@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/helpers/services/account.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { take } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +15,8 @@ export class NavComponent implements OnInit {
   collapseNav = false;
   collapseWelcome = false;
 
-  constructor(public accountService: AccountService, private responsive: BreakpointObserver) { }
+  constructor(public accountService: AccountService, private responsive: BreakpointObserver,
+    private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.responsive.observe(['(max-width: 433px)', '(min-width: 434px)', '(max-width: 991px)', 
@@ -39,15 +42,14 @@ export class NavComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: response => {
-        console.log(response);
-      },
-      error: error => console.log(error)
+      next: _ => this.router.navigateByUrl('/checklists'),
+      error: error => this.toastr.error(error.error)
     })
   }
 
   logout() {
     this.accountService.logout();
+    this.model = {};
   }
 
 }
