@@ -1,0 +1,55 @@
+<div class="col-7">
+    <div class="alert alert-warning pb-0" *ngIf="">
+        <p><strong>Information: </strong>You have made changes. Any unsaved changes will be lost.</p>
+    </div>
+    <form #nightForm="ngForm" id="nightForm" (ngSubmit)="submitNightChecklist()">
+        <div class="form-outline">
+            <input
+                type="text"
+                class="form-control ps-5"
+                placeholder="Date"
+                name="Date"
+                bsDatepicker
+                [bsConfig]="bsConfig"
+                [(ngModel)]="nightChecklist.Date"
+                id="floatingText"
+            />
+            <label for="Date"><i class="fa fa-calendar ms-3"></i></label>
+        </div>
+
+        <h5 class="mt-2">Night Checklist</h5>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="GlassOfWater" name="GlassOfWater" [(ngModel)]="nightChecklist.GlassOfWater">
+            <label for="GlassOfWater" class="custom-control-label">Did you have a glass of water?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Meds" name="Meds" [(ngModel)]="nightChecklist.Meds">
+            <label class="custom-control-label" for="Meds">Did you take your meds?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Vitamins" name="Vitamins" [(ngModel)]="nightChecklist.Vitamins">
+            <label class="custom-control-label" for="Vitamins">Did you take your vitamins?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="WashFace" name="WashFace" [(ngModel)]="nightChecklist.WashFace">
+            <label class="custom-control-label" for="WashFace">Did you wash your face?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Floss" name="Floss" [(ngModel)]="nightChecklist.Floss">
+            <label class="custom-control-label" for="Floss">Did you floss?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="CheckEmails" name="CheckEmails" [(ngModel)]="nightChecklist.CheckEmails">
+            <label class="custom-control-label" for="CheckEmails">Did you check your emails?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="CheckTexts" name="CheckTexts" [(ngModel)]="nightChecklist.CheckTexts">
+            <label class="custom-control-label" for="CheckTexts">Did you check your texts?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Mouthguard" name="Mouthguard" [(ngModel)]="nightChecklist.Mouthguard">
+            <label class="custom-control-label" for="Mouthguard">Did you wear your mouthguard?</label>
+        </div>
+        <button class="btn btn-success">Save Changes</button>
+    </form>
+</div>

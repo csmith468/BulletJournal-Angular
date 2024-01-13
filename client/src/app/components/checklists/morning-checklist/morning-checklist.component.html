@@ -1,0 +1,40 @@
+
+<div class="col-7">
+    <div class="alert alert-warning pb-0" *ngIf="morningForm.dirty">
+        <p><strong>Information: </strong>You have made changes. Any unsaved changes will be lost.</p>
+    </div>
+    <form #morningForm="ngForm" id="morningForm" (ngSubmit)="submitMorningChecklist()">
+        <div class="form-outline">
+            <input
+              type="text"
+              class="form-control ps-5"
+              placeholder="Date"
+              name="Date"
+              bsDatepicker
+              [bsConfig]="bsConfig"
+              [(ngModel)]="morningChecklist.Date"
+              id="floatingText" 
+            />
+            <label for="Date"><i class="fa fa-calendar ms-3"></i></label>
+        </div>
+          
+        <h5 class="mt-2">Morning Checklist</h5>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="GlassOfWater" name="GlassOfWater" [(ngModel)]="morningChecklist.GlassOfWater">
+            <label class="custom-control-label" for="GlassOfWater">Did you have a glass of water?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Meds" name="Meds" [(ngModel)]="morningChecklist.Meds">
+            <label class="custom-control-label" for="Meds">Did you take your meds?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Vitamins" name="Vitamins" [(ngModel)]="morningChecklist.Vitamins">
+            <label class="custom-control-label" for="Vitamins">Did you take your vitamins?</label>
+        </div>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="Breakfast" name="Breakfast" [(ngModel)]="morningChecklist.Breakfast">
+            <label class="custom-control-label" for="Breakfast">Did you eat breakfast?</label>
+        </div>
+        <button class="btn btn-success">Save Changes</button>
+    </form>
+</div>
