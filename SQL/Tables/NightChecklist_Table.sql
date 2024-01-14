@@ -14,8 +14,7 @@ CREATE TABLE [bja].[nightChecklist](
 	[CheckEmails] [bit] NULL,
 	[CheckTexts] [bit] NULL,
 	[Mouthguard] [bit] NULL,
-	[InsertDatetime] [datetime] NOT NULL,
-	[ModifiedDatetime] [datetime] NULL
+	[ModifiedDatetime] [datetime] NOT NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [bja].[nightChecklist] ADD PRIMARY KEY CLUSTERED 
@@ -23,5 +22,5 @@ ALTER TABLE [bja].[nightChecklist] ADD PRIMARY KEY CLUSTERED
 	[NightChecklistID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-ALTER TABLE [bja].[nightChecklist] ADD  DEFAULT (getdate()) FOR [InsertDatetime]
+ALTER TABLE [bja].[nightChecklist] ADD  DEFAULT (getUTCdate()) FOR [ModifiedDatetime]
 GO

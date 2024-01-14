@@ -24,24 +24,48 @@ namespace API.Controllers
         [HttpPost("addMorning")]
         public async Task<ActionResult<MorningChecklist>> AddMorningChecklist(MorningChecklist morningChecklist) {
             morningChecklist.UserID = User.GetUserId();
-            if (await _uow.ChecklistRepository.MorningDateUsed(morningChecklist.Date, morningChecklist.UserID)) 
+            if (await _uow.ChecklistRepository.MorningDateUsedAsync(morningChecklist.Date, morningChecklist.UserID)) 
                 return BadRequest("User already submitted morning checklist for this date.");
-            var result = await _uow.ChecklistRepository.AddMorningChecklist(morningChecklist);
+            var result = await _uow.ChecklistRepository.AddMorningChecklistAsync(morningChecklist);
             return Ok(result);
         }
 
         [HttpPost("addNight")]
-        public async Task<ActionResult<MorningChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
+        public async Task<ActionResult<NightChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
             nightChecklist.UserID = User.GetUserId();
-            if (await _uow.ChecklistRepository.NightDateUsed(nightChecklist.Date, nightChecklist.UserID)) 
+            if (await _uow.ChecklistRepository.NightDateUsedAsync(nightChecklist.Date, nightChecklist.UserID)) 
                 return BadRequest("User already submitted morning checklist for this date.");
-            var result = await _uow.ChecklistRepository.AddNightChecklist(nightChecklist);
+            var result = await _uow.ChecklistRepository.AddNightChecklistAsync(nightChecklist);
             return Ok(result);
         }
 
-        // [HttpGet("getMyMorning")]
+        [HttpGet("getMyMorningChecklists")]
+        public async Task<ActionResult<IEnumerable<MorningChecklist>>> GetMyMorningChecklists() {
+            var userId = User.GetUserId();
+            var checklists = await _uow.ChecklistRepository.GetMyMorningChecklistsAsync(userId);
+            return Ok(checklists);
+        }
 
+        [HttpGet("getMyNightChecklists")]
+        public async Task<ActionResult<IEnumerable<NightChecklist>>> GetMyNightChecklists() {
+            var userId = User.GetUserId();
+            var checklists = await _uow.ChecklistRepository.GetMyNightChecklistsAsync(userId);
+            return Ok(checklists);
+        }
 
+        [HttpGet("getMyMorningChecklistById/{id}")]
+        public async Task<ActionResult<MorningChecklist>> GetMyMorningChecklistById(int id) {
+            var userId = User.GetUserId();
+            var checklist = await _uow.ChecklistRepository.GetMyMorningChecklistByIdAsync(userId, id);
+            return Ok(checklist);
+        }
+
+        [HttpGet("getMyNightChecklistById/{id}")]
+        public async Task<ActionResult<NightChecklist>> GetMyNightChecklistById(int id) {
+            var userId = User.GetUserId();
+            var checklist = await _uow.ChecklistRepository.GetMyNightChecklistByIdAsync(userId, id);
+            return Ok(checklist);
+        }
 
 
     }

@@ -7,5 +7,6 @@ namespace API.Models.Entities {
         public bool Meds { get; set; }
         public bool Vitamins { get; set; }
         public bool Breakfast { get; set; }
+        public DateTime ModifiedDatetime { get; set; } = DateTime.UtcNow;
     }
 }

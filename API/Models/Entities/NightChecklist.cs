@@ -11,5 +11,6 @@ namespace API.Models.Entities {
         public bool CheckEmails { get; set; }
         public bool CheckTexts { get; set; }
         public bool Mouthguard { get; set; }
+        public DateTime ModifiedDatetime { get; set; } = DateTime.UtcNow;
     }
 }
