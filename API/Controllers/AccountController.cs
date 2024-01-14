@@ -9,6 +9,7 @@ using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Models.Entities;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -39,6 +40,7 @@ namespace API.Controllers
             var result = _uow.UserRepository.RegisterUserAsync(user);
 
             return new AppUserDto{
+                UserID = result.Result.UserID,
                 Email = user.Email,
                 FirstName = HelperFunctions.StringTitleCase(registerDto.FirstName),
                 LastName = HelperFunctions.StringTitleCase(registerDto.LastName),
@@ -60,6 +62,7 @@ namespace API.Controllers
             }
 
             return new AppUserDto {
+                UserID = user.UserID,
                 Email = user.Email,
                 FirstName = HelperFunctions.StringTitleCase(user.FirstName),
                 LastName = HelperFunctions.StringTitleCase(user.LastName),

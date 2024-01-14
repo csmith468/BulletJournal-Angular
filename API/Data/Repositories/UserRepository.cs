@@ -1,4 +1,6 @@
+using API.Data.Helpers;
 using API.Data.Interfaces;
+using API.Models.DTOs;
 using API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,7 @@ namespace API.Data.Repositories {
                 .Where(x => x.Email.ToLower() == email.ToLower())
                 .SingleOrDefaultAsync();
         }
+        
         public async Task<AppUser> GetAppUserByIdAsync(int id) {
             return await _contextEF.AppUsers   
                 .Where(x => x.UserID == id)
@@ -30,11 +33,17 @@ namespace API.Data.Repositories {
             return await _contextEF.AppUsers.AnyAsync(x => x.Email.ToLower() == email.ToLower());
         }
 
-        public async Task<bool> RegisterUserAsync(AppUser user) {
+        public async Task<AppUserDto> RegisterUserAsync(AppUser user) {
             _contextEF.AppUsers.Add(user);
             var result = await _contextEF.SaveChangesAsync() > 0;
-            int id = user.UserID; // gets id correctly
-            return result;
+            if (!result) return null;
+
+            return new AppUserDto{
+                UserID = user.UserID,
+                Email = user.Email,
+                FirstName = HelperFunctions.StringTitleCase(user.FirstName),
+                LastName = HelperFunctions.StringTitleCase(user.LastName)
+            };
         }
         
     }
