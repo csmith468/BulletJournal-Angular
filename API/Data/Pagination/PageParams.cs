@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 namespace API.Data.Pagination {
     public class PageParams {
         private const int MaxPageSize = 100;

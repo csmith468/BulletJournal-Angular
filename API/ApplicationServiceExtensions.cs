@@ -2,6 +2,7 @@ using API.Data.Interfaces;
 using API.Data.Repositories;
 using API.Services;
 using API.Extensions;
+using API.Data.Helpers;
 
 namespace API.Extensions {
     public static class ApplicationServiceExtensions {

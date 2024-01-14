@@ -43,7 +43,7 @@ namespace API.Data {
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {
             base.ConfigureConventions(builder);
-            builder.Properties<DateOnly>().HaveConversion<DateOnlyConverter>();
+            builder.Properties<DateOnly>().HaveConversion<DateTimeToOnlyConverter>();
         }
 
     }
