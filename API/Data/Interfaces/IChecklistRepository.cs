@@ -1,3 +1,4 @@
+using API.Data.Pagination;
 using API.Models.Entities;
 
 namespace API.Data.Interfaces {
@@ -6,8 +7,8 @@ namespace API.Data.Interfaces {
         Task<NightChecklist> AddNightChecklistAsync(NightChecklist nightChecklist);
         Task<bool> MorningDateUsedAsync(DateOnly date, int userId);
         Task<bool> NightDateUsedAsync(DateOnly date, int userId);
-        Task<IEnumerable<MorningChecklist>> GetMyMorningChecklistsAsync(int userId);
-        Task<IEnumerable<NightChecklist>> GetMyNightChecklistsAsync(int userId);
+        Task<PagedList<MorningChecklist>> GetMyMorningChecklistsAsync(int userId, PageParams pageParams);
+        Task<PagedList<NightChecklist>> GetMyNightChecklistsAsync(int userId, PageParams pageParams);
         Task<MorningChecklist> GetMyMorningChecklistByIdAsync(int userId, int morningChecklistId);
         Task<NightChecklist> GetMyNightChecklistByIdAsync(int userId, int nightChecklistId);
     }

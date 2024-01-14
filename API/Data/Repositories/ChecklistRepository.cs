@@ -1,4 +1,5 @@
 using API.Data.Interfaces;
+using API.Data.Pagination;
 using API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,16 +33,20 @@ namespace API.Data.Repositories {
             return await _contextEF.NightChecklists.AnyAsync(x => x.Date == date && x.UserID == userId);
         }
 
-        public async Task<IEnumerable<MorningChecklist>> GetMyMorningChecklistsAsync(int userId) {
-            return await _contextEF.MorningChecklists   
+        public async Task<PagedList<MorningChecklist>> GetMyMorningChecklistsAsync(int userId, PageParams pageParams) {
+            var query = _contextEF.MorningChecklists   
                 .Where(x => x.UserID == userId)
-                .ToListAsync();
+                .AsNoTracking();
+
+            return await PagedList<MorningChecklist>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
-        public async Task<IEnumerable<NightChecklist>> GetMyNightChecklistsAsync(int userId) {
-            return await _contextEF.NightChecklists   
+        public async Task<PagedList<NightChecklist>> GetMyNightChecklistsAsync(int userId, PageParams pageParams) {
+            var query = _contextEF.NightChecklists   
                 .Where(x => x.UserID == userId)
-                .ToListAsync();
+                .AsNoTracking();
+
+            return await PagedList<NightChecklist>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
         public async Task<MorningChecklist> GetMyMorningChecklistByIdAsync(int userId, int morningChecklistId) {

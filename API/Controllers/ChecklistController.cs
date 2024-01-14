@@ -6,6 +6,7 @@ using API.Models.Entities;
 using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using API.Data.Pagination;
 
 namespace API.Controllers
 {
@@ -39,17 +40,25 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getMyMorningChecklists")]
-        public async Task<ActionResult<IEnumerable<MorningChecklist>>> GetMyMorningChecklists() {
+        [HttpGet("getMyMorningChecklists")] //?pageNumber=2&pageSize=3
+        public async Task<ActionResult<PagedList<MorningChecklist>>> GetMyMorningChecklists([FromQuery]PageParams pageParams) {
             var userId = User.GetUserId();
-            var checklists = await _uow.ChecklistRepository.GetMyMorningChecklistsAsync(userId);
+            var checklists = await _uow.ChecklistRepository.GetMyMorningChecklistsAsync(userId, pageParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
+                checklists.TotalPages));
+
             return Ok(checklists);
         }
 
-        [HttpGet("getMyNightChecklists")]
-        public async Task<ActionResult<IEnumerable<NightChecklist>>> GetMyNightChecklists() {
+        [HttpGet("getMyNightChecklists")] //?pageNumber=2&pageSize=3
+        public async Task<ActionResult<PagedList<NightChecklist>>> GetMyNightChecklists([FromQuery]PageParams pageParams) {
             var userId = User.GetUserId();
-            var checklists = await _uow.ChecklistRepository.GetMyNightChecklistsAsync(userId);
+            var checklists = await _uow.ChecklistRepository.GetMyNightChecklistsAsync(userId, pageParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
+                checklists.TotalPages));
+
             return Ok(checklists);
         }
 
