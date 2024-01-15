@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sub-level-menu',
   template: `
-  <ul *ngIf="collapsed && data.items && data.items.length > 0" 
+  <ul *ngIf="navOpen && data.items && data.items.length > 0" 
     [@submenu]="expanded 
       ? {value: 'visible', params: {transitionParams: '400ms cubic-bezier(0.86, 0, 0.07, 1)', height: '*'}} 
       : {value: 'hidden', params: {transitionParams: '400ms cubic-bezier(0.86, 0, 0.07, 1)', height: '0'}} "
@@ -24,9 +24,9 @@ import { Router } from '@angular/router';
       >
         <i class="sublevel-link-icon {{item.icon}}"></i>
         <span class="sublevel-link-text" @fadeInOut
-            *ngIf="collapsed">{{item.label}}
+            *ngIf="navOpen">{{item.label}}
         </span>
-        <i *ngIf="item.items && collapsed" 
+        <i *ngIf="item.items && navOpen" 
           class="menu-collapse-icon {{!item.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'}}" >
         </i>
       </a>
@@ -38,13 +38,13 @@ import { Router } from '@angular/router';
       >
         <i class="sublevel-link-icon {{item.icon}}"></i>
         <span class="sublevel-link-text" @fadeInOut
-            *ngIf="collapsed">{{item.label}}
+            *ngIf="navOpen">{{item.label}}
         </span>
       </a>
       <div *ngIf="item.items && item.items.length > 0">
         <app-sub-level-menu
           [data]="item"
-          [collapsed]="collapsed"
+          [navOpen]="navOpen"
           [multiple]="multiple"
           [expanded]="item.expanded"
         ></app-sub-level-menu>
@@ -78,7 +78,7 @@ export class SubLevelMenuComponent implements OnInit{
     label: '',
     items: []
   }
-  @Input() collapsed = false;
+  @Input() navOpen = true;
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;

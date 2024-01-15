@@ -32,7 +32,7 @@ export class SublevelMenuComponent implements OnInit{
     label: '',
     items: []
   }
-  @Input() collapsed = false;
+  @Input() navOpen = false;
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;

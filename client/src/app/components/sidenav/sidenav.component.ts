@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 })
 export class SidenavComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
-  collapsed = true;
+  navOpen = false;
   screenWidth = 0;
   navData = sidenav_links_loggedIn;
   // navData_loggedOut = sidenav_links_loggedOut;
@@ -36,9 +36,9 @@ export class SidenavComponent implements OnInit {
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 768) {
-      this.collapsed = false;
+      this.navOpen = false;
       this.onToggleSideNav.emit({
-        collapsed: this.collapsed,
+        navOpen: this.navOpen,
         screenWidth: this.screenWidth
       });
     }
@@ -48,6 +48,7 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+    console.log(this.navOpen)
     // this.setNavItems();
   }
 
@@ -66,17 +67,17 @@ export class SidenavComponent implements OnInit {
 
   toggleCollapse() {
     console.log('toggle');
-    this.collapsed = !this.collapsed;
+    this.navOpen = !this.navOpen;
     this.onToggleSideNav.emit({
-      collapsed: this.collapsed,
+      navOpen: this.navOpen,
       screenWidth: this.screenWidth
     });
   }
 
   closeSideNav() {
-    this.collapsed = false;
+    this.navOpen = false;
     this.onToggleSideNav.emit({
-      collapsed: this.collapsed,
+      navOpen: this.navOpen,
       screenWidth: this.screenWidth
     });
   }

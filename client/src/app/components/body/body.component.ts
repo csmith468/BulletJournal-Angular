@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./body.component.css']
 })
 export class BodyComponent implements OnInit{
-  @Input() collapsed = false;
+  @Input() navOpen = false;
   @Input() screenWidth = 0;
 
   ngOnInit(): void {
@@ -15,9 +15,9 @@ export class BodyComponent implements OnInit{
 
   getBodyClass() : string {
     let styleClass = '';
-    if (this.collapsed && this.screenWidth > 768) {
+    if (this.navOpen && this.screenWidth > 768) {
       styleClass = 'body-trimmed';
-    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+    } else if (this.navOpen && this.screenWidth <= 768 && this.screenWidth > 0) {
       styleClass = 'body-md-screen';
     }
     return styleClass;

@@ -13,7 +13,7 @@ import { SideNavToggle } from './components/sidenav/sidenav-styling/sidenav-togg
 export class AppComponent implements OnInit {
   title = 'Bullet Journal';
   users: any;
-  isSideNavCollapsed = false;
+  isSideNavOpen = false;
   screenWidth = 0;
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
@@ -31,6 +31,6 @@ export class AppComponent implements OnInit {
 
   onToggleSideNav(data: SideNavToggle) {
     this.screenWidth = data.screenWidth;
-    this.isSideNavCollapsed = data.collapsed;
+    this.isSideNavOpen = data.navOpen;
   }
 }

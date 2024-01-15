@@ -1,10 +1,12 @@
-<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+<div class="sidenav" [ngClass]="navOpen ? 'sidenav-navOpen': ''">
     <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">B</button>
-        <div class="logo-text-div" @fadeInOut *ngIf="collapsed" >
+        <button class="logo" (click)="toggleCollapse()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="logo-text-div" @fadeInOut *ngIf="navOpen" >
             <a class="logo-text" routerLink="/">Bullet Journal</a>
         </div>
-        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSideNav()">
+        <button class="btn-close" @rotate *ngIf="navOpen" (click)="closeSideNav()">
             <i class="fa fa-times"></i>
         </button>
     </div>
@@ -18,8 +20,8 @@
                     [ngClass]="getActiveClass(data)"
                 >
                     <i class="sidenav-link-icon" [class]="data.icon"></i>
-                    <span class="sidenav-link-text" *ngIf="collapsed" @fadeInOut>{{data.label}}</span>
-                    <i *ngIf="data.items && collapsed" class="menu-collapse-icon"
+                    <span class="sidenav-link-text" *ngIf="navOpen" @fadeInOut>{{data.label}}</span>
+                    <i *ngIf="data.items && navOpen" class="menu-collapse-icon"
                         [ngClass]="!data.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'"
                     ></i>
                 </a>
@@ -32,10 +34,10 @@
                     (click)="shrinkItems(data)"
                 >
                     <i class="sidenav-link-icon" [class]="data.icon"></i>
-                    <span class="sidenav-link-text" *ngIf="collapsed" @fadeInOut>{{data.label}}</span>
+                    <span class="sidenav-link-text" *ngIf="navOpen" @fadeInOut>{{data.label}}</span>
                 </a>
-                <div *ngIf="collapsed && data.items && data.items.length > 0">
-                    <app-sub-level-menu [data]="data" [collapsed]="collapsed" [multiple]="multiple" [expanded]="data.expanded">
+                <div *ngIf="navOpen && data.items && data.items.length > 0">
+                    <app-sub-level-menu [data]="data" [navOpen]="navOpen" [multiple]="multiple" [expanded]="data.expanded">
                     </app-sub-level-menu>
                 </div>
             </li>

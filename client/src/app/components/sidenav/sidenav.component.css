@@ -18,7 +18,7 @@
 
          /* B with box details */
         .logo {
-            background: #c0f0ff;
+            background: #24B9D8;
             text-align: center;
             width: 3rem;
             min-width: 3rem;
@@ -28,11 +28,13 @@
             font-weight: 900;
             cursor: pointer;
             border: none;
+            color: #fff;
         }
 
         /* B with box when hovered */
         .logo:hover {
-            background: #fff;
+            background: #51c8ee;
+            color: #000;
             cursor: pointer;
         }
 
@@ -74,8 +76,8 @@
     }
 }
 
- /* size of panel when collapsed */
-.sidenav-collapsed {
+ /* size of panel when navOpen */
+.sidenav-navOpen {
     width: 16.5625rem;
 }
 
