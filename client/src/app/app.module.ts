@@ -26,6 +26,8 @@ import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
 import { MorningTableComponent } from './components/tables/morning-table/morning-table.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { BodyComponent } from './components/body/body.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
     NightChecklistComponent,
     ChecklistHomeComponent,
     SwitchInputComponent,
-    MorningTableComponent
+    MorningTableComponent,
+    SidenavComponent,
+    BodyComponent
   ],
   imports: [
     BrowserModule,

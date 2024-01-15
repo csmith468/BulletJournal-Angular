@@ -9,11 +9,14 @@
       <div class="dropdown-menu" *dropdownMenu>
         <a class="dropdown-item" routerLink="/about">About</a>
         <ng-container *ngIf="(accountService.currentUser$ | async) as user">
-          <a class="dropdown-item" routerLink="/members">Members</a>
-          <a class="dropdown-item" routerLink="/lists">Lists</a>
-          <a class="dropdown-item" routerLink="/messages">Messages</a>
-          <a class="dropdown-item" routerLink="/errors">Errors</a>
-          <a class="dropdown-item" routerLink="/admin">Admin</a>
+          <div class="dropright">
+            <a class="dropdown-item dropdown-toggle" dropdownToggle>Members</a>
+            <div class="dropdown-menu" *dropdownMenu>
+              <a class="dropdown-item" routerLink="/checklists/morning">Add Morning Checklist</a>
+              <a class="dropdown-item" routerLink="/checklists/night">Add Night Checklist</a>
+              <a class="dropdown-item" routerLink="/checklists/sleep">Add Sleep Checklist</a>
+            </div>
+          </div>
         </ng-container>
         <div *ngIf="!(accountService.currentUser$ | async) as user">
           <a class="dropdown-item" routerLink="/register">Register</a>
@@ -28,17 +31,35 @@
             <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
           </li>
         <ng-container *ngIf="(accountService.currentUser$ | async)">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/checklists" routerLinkActive="active">Checklists</a>
+          <li class="nav-item dropdown">
+            <div class="dropdown" dropdown>
+              <a class="nav-link dropdown-toggle" dropdownToggle>Trends</a>
+              <div class="dropdown-menu" *dropdownMenu>
+                <a class="dropdown-item" >View Morning Trends</a>
+                <a class="dropdown-item" >View Night Trends</a>
+                <a class="dropdown-item" >View Sleep Trends</a>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/checklists/morning" routerLinkActive="active">Morning Checklist</a>
+          <li class="nav-item dropdown">
+            <div class="dropdown" dropdown>
+              <a class="nav-link dropdown-toggle" dropdownToggle>Checklists</a>
+              <div class="dropdown-menu" *dropdownMenu>
+                <a class="dropdown-item" routerLink="/checklists/morning">Add Morning Checklist</a>
+                <a class="dropdown-item" routerLink="/checklists/night">Add Night Checklist</a>
+                <a class="dropdown-item" routerLink="/checklists/sleep">Add Sleep Checklist</a>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/checklists/night" routerLinkActive="active">Night Checklist</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tables/morning" routerLinkActive="active">Morning Table</a>
+          <li class="nav-item dropdown">
+            <div class="dropdown" dropdown>
+              <a class="nav-link dropdown-toggle" dropdownToggle>Tables</a>
+              <div class="dropdown-menu" *dropdownMenu>
+                <a class="dropdown-item" routerLink="/tables/morning">View Morning Data</a>
+                <a class="dropdown-item" routerLink="/tables/night">View Night Data</a>
+                <a class="dropdown-item" routerLink="/tables/sleep">View Sleep Data</a>
+              </div>
+            </div>
           </li>
         </ng-container>
         <ng-container *ngIf="!(accountService.currentUser$ | async)"> 
