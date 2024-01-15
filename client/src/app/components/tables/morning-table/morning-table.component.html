@@ -1,0 +1,21 @@
+
+<div class="row">
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th *ngFor="let column of columns">
+            {{ column }}
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let checklist of morningTable">
+          <td *ngFor="let column of columns">
+            {{ checklist[column] }}
+          </td>
+          <button class="btn btn-secondary">Edit</button>
+        </tr>
+      </tbody>
+    </table>
+  </div>

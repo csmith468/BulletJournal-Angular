@@ -37,6 +37,9 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/checklists/night" routerLinkActive="active">Night Checklist</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/tables/morning" routerLinkActive="active">Morning Table</a>
+          </li>
         </ng-container>
         <ng-container *ngIf="!(accountService.currentUser$ | async)"> 
           <li class="nav-item">
