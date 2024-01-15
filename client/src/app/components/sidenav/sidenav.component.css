@@ -1,5 +1,6 @@
+/* main styling */
 .sidenav {
-    background: #51C8EE;
+    background: #24B9D8; /*51C8EE*/
     transition: all .5s ease;
     position: fixed;
     z-index: 1;
@@ -8,15 +9,16 @@
     height: 100vh;
     box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 
-
+    /* B with box */
     .logo-container {
         display: flex;
         align-items: center;
         padding: 0.938rem 0.938rem 0 0.938rem;
         width: 100%;
 
+         /* B with box details */
         .logo {
-            background: #fff;
+            background: #c0f0ff;
             text-align: center;
             width: 3rem;
             min-width: 3rem;
@@ -28,14 +30,33 @@
             border: none;
         }
 
-        .logo-text {
-            margin-left: 1.5rem;
-            text-transform: capitalize;
-            font-size: 25px;
-            font-weight: 700;
-            color: #fff;
+        /* B with box when hovered */
+        .logo:hover {
+            background: #fff;
+            cursor: pointer;
         }
 
+         /* Bullet Journal text container */
+        .logo-text-div {
+            margin-left: 1.5rem;
+            text-align: left;
+        }
+
+        /* Bullet Journal text */
+        .logo-text {
+           text-transform: capitalize;
+           font-size: 25px;
+           font-weight: 700;
+           color: #fff;
+        }
+
+        /* Bullet Journal text when hovered */
+        .logo-text:hover {
+            text-decoration: none;
+            color: #c0f0ff;
+        }
+
+         /* what it looks like when you click the X */
         .btn-close {
             margin-left: auto;
             cursor: pointer;
@@ -53,10 +74,12 @@
     }
 }
 
+ /* size of panel when collapsed */
 .sidenav-collapsed {
     width: 16.5625rem;
 }
 
+/* main items */
 .sidenav-nav {
     list-style: none;
     padding: 0.938rem;
@@ -64,13 +87,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100% - 3.65rem);
     cursor: pointer;
 
+     /* each link in list */
     .sidenav-nav-item {
         width: 100%;
         margin-bottom: 0.625rem;
 
+         /* text and icon */
         .sidenav-nav-link {
             display: flex;
             align-items: center;
@@ -80,6 +104,7 @@
             border-radius: 0.625rem;
             transition: all .3s ease;
 
+             /* icon for each link in list */
             .sidenav-link-icon {
                 font-size: 22px;
                 width: 2rem;
@@ -88,24 +113,183 @@
                 text-align: center;
             }
 
+             /* text for each link in list */
             .sidenav-link-text {
                 margin-left: 1.5rem;
-                font-weight: 400;
+                font-weight: 450;
                 font-size: 20px;
             }
         }
     }
 
-    .sidenav-nav-item:hover {
-        .sidenav-nav-link {
-            background-color: #A6E9FD;
+     /* what link looks like when you hover over it */
+    .sidenav-nav-link:hover {
+        background-color: #A6E9FD;
+        color: #000;
+
+         /* what menu collapse icon looks like when you hover over it */
+        .menu-collapse-icon {
+            color: #000;
+        }
+    }
+
+    /* style of header when sub-link is active (sub-active comes from getActiveClass() */
+    .sub-active {
+        background-color: #c0f0ff;
+
+        .menu-collapse-icon,
+        .sidenav-link-icon,
+        .sidenav-link-text {
             color: #000;
         }
     }
 }
 
+ /* what link looks like when active */
+.active {
+    background-color: #fff;
+
+    .menu-collapse-icon,
+    .sidenav-link-icon,
+    .sidenav-link-text {
+        color: #000;
+    }
+}
+
+ /* menu collapse icon */
+.menu-collapse-icon {
+    font-size: 25px;
+    width: 2rem;
+    min-width: 2rem;
+    margin: auto 0.5rem auto auto;
+    text-align: center;
+    color: #f3f3f3;
+}
+
+/* sub-items for each */
+.sublevel-nav {
+    list-style: none;
+    margin-left: 0px;
+
+     /* each sub-link in list */
+    .sublevel-nav-item {
+        /* text and icon */
+        .sublevel-nav-link {
+            display: flex;
+            align-items: center;
+            height: 3rem;
+            color: #c3f0fe;
+            text-decoration: none;
+            border-radius: 0.625rem;
+            transition: all .3s ease;
+            
+             /* icon for each sub-link in list */
+            .sublevel-link-icon {
+                /* font-size: 4px; */
+                width: 2rem;
+                min-width: 2rem;
+                margin: 0 0.5rem;
+                text-align: center;
+            }
+
+             /* text for each sub-link in list */
+            .sublevel-link-text {
+                /* margin-left: 0rem; */
+                font-weight: 450;
+            }
+        }
+
+        /* what sub-link looks like when you hover over it */
+        .sublevel-nav-link:hover {
+            background-color: #6ed5f5;
+            color: #1a1a1a;
+
+            /* what menu collapse icon looks like when you hover over it */
+            .menu-collapse-icon {
+                color: #000;
+            }
+        }
+    }
+}
+
+/* active sublevel item */
+.active-sublevel {
+    color: #1a1a1a;
+    background-color: #89ddf7;
+    opacity: 1;
+
+    .menu-collapse-icon,
+    .sublevel-link-icon,
+    .sublevel-link-text {
+        color: #000;
+    }
+}
+
+.subactive-sublevel {
+    color: #1a1a1a;
+    background-color: #70d5f4;
+    opacity: 1;
+
+    .menu-collapse-icon,
+    .sublevel-link-icon,
+    .sublevel-link-text {
+        color: #000;
+    }
+}
+
+
+/* scrollbar and visibility on hover and focus */
+.scrollwrap {
+    overflow-y: auto;
+    visibility: hidden;
+    height: calc(100% - 3.65rem);
+}
+
+/* make scrollbar visible when you hover or focus */
+.sidenav-nav,
+.scrollwrap:hover,
+.scrollwrap:focus {
+    visibility: visible;
+}
+
+/* delay visibility of scrollbar */
+.scrollwrap-delayed {
+    transition: visibility 0.5s 0.2s;
+}
+/* delay visibility of scrollbar on hover */
+.scrollwrap-delayed:hover {
+    transition: visibility 0.2s 0.2s;
+}
+
+/* scrollbar for Chrome, Edge, & Safari */
+    /* width of scrollbar */
+    .scrollwrap::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* background of scrollbar is color of sidenav */
+    .scrollwrap::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* scrollbar itself */
+    .scrollwrap::-webkit-scrollbar-thumb {
+        background-color: #84d7f2;
+        border-radius: 20px;
+    }
+
+/* scrollbar for Firefox */
+    /* all of the above but for Firefox */
+    .scrollwrap {
+        scrollbar-width: thin;
+        scrollbar-color: #84d7f2 transparent;
+    }
+
+
+
+/* horizontal line between links and top part */
 .horizontal-line {
-    border: solid 1.5px #A6E9FD;
+    border: solid 1.5px #84d7f2;
     margin-bottom: 0;
     margin-top: 15px;
 }

@@ -18,7 +18,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MorningChecklistComponent } from './components/checklists/morning-checklist/morning-checklist.component';
 import { NightChecklistComponent } from './components/checklists/night-checklist/night-checklist.component';
-import { ChecklistHomeComponent } from './components/checklists/checklist-home/checklist-home.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SwitchInputComponent } from './components/forms/switch-input/switch-input.component';
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
@@ -28,6 +27,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BodyComponent } from './components/body/body.component';
+import { SubLevelMenuComponent } from './components/sidenav/sub-level-menu.component';
+import { SublevelMenuComponent } from './components/sidenav/sublevel-menu/sublevel-menu.component';
 
 @NgModule({
   declarations: [
@@ -40,11 +41,12 @@ import { BodyComponent } from './components/body/body.component';
     NotFoundComponent,
     MorningChecklistComponent,
     NightChecklistComponent,
-    ChecklistHomeComponent,
     SwitchInputComponent,
     MorningTableComponent,
     SidenavComponent,
-    BodyComponent
+    BodyComponent,
+    SubLevelMenuComponent,
+    SublevelMenuComponent
   ],
   imports: [
     BrowserModule,

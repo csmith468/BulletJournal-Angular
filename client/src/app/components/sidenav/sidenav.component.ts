@@ -1,26 +1,18 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
-import { SideNavToggle, navbarData } from './navHelpers';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { ISideNavData } from './sidenav-data/sidenav-ISideNavData';
+import { AccountService } from 'src/app/helpers/services/account.service';
+import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
+import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
+import { sidenav_links_loggedIn } from './sidenav-data/sidenav-links-loggedIn';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css'],
   animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('350ms',
-        style({opacity: 1})
-        )
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('350ms',
-        style({opacity: 0})
-        )
-      ])
-    ]),
+    sidenav_fadeInOut,
     trigger('rotate', [
       transition(':enter', [
         animate('750ms', 
@@ -34,9 +26,11 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 })
 export class SidenavComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
-  collapsed = false;
+  collapsed = true;
   screenWidth = 0;
-  navData = navbarData;
+  navData = sidenav_links_loggedIn;
+  // navData_loggedOut = sidenav_links_loggedOut;
+  multiple: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -50,9 +44,25 @@ export class SidenavComponent implements OnInit {
     }
   }
 
+  constructor(public accountService: AccountService, public router: Router) { }
+
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+    // this.setNavItems();
   }
+
+  // setNavItems() {
+  //   this.accountService.currentUser$.subscribe({
+  //     next: () => {
+  //       if (this.accountService.currentUser$) {
+  //         console.log(this.accountService.currentUser$)
+  //         this.navData = sideNavLinks_loggedIn;
+  //       } else {
+  //         this.navData = sideNavLinks_loggedOut;
+  //       }
+  //     }
+  //   });
+  // }
 
   toggleCollapse() {
     console.log('toggle');
@@ -69,5 +79,24 @@ export class SidenavComponent implements OnInit {
       collapsed: this.collapsed,
       screenWidth: this.screenWidth
     });
+  }
+
+  handleClick(item: ISideNavData) {
+    this.shrinkItems(item);
+    item.expanded = !item.expanded;
+  }
+
+  shrinkItems(item: ISideNavData) {
+    if (!this.multiple) {
+      for(let modelItem of this.navData) {
+        if (item !== modelItem && modelItem.expanded) {
+          modelItem.expanded = false;
+        }
+      }
+    }
+  }
+
+  getActiveClass(data: ISideNavData) {
+    return this.router.url.includes(data.routeLink) ? 'sub-active' : '';
   }
 }
