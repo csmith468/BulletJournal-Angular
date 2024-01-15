@@ -36,6 +36,7 @@ namespace API.Data.Repositories {
         public async Task<PagedList<MorningChecklist>> GetMyMorningChecklistsAsync(int userId, PageParams pageParams) {
             var query = _contextEF.MorningChecklists   
                 .Where(x => x.UserID == userId)
+                .OrderByDescending(x => x.Date)
                 .AsNoTracking();
 
             return await PagedList<MorningChecklist>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
@@ -44,6 +45,7 @@ namespace API.Data.Repositories {
         public async Task<PagedList<NightChecklist>> GetMyNightChecklistsAsync(int userId, PageParams pageParams) {
             var query = _contextEF.NightChecklists   
                 .Where(x => x.UserID == userId)
+                .OrderByDescending(x => x.Date)
                 .AsNoTracking();
 
             return await PagedList<NightChecklist>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
