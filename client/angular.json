@@ -31,6 +31,7 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/bootswatch/dist/customBlue/bootstrap.css",
+              "./node_modules/ngx-spinner/animations/square-jelly-box.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -57,7 +58,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

@@ -23,6 +23,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SwitchInputComponent } from './components/forms/switch-input/switch-input.component';
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
+import { MorningTableComponent } from './components/tables/morning-table/morning-table.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
     MorningChecklistComponent,
     NightChecklistComponent,
     ChecklistHomeComponent,
-    SwitchInputComponent
+    SwitchInputComponent,
+    MorningTableComponent
   ],
   imports: [
     BrowserModule,
@@ -48,12 +52,18 @@ import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     BsDropdownModule.forRoot(),
-    ToastrModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right'
+    }),
+    BsDatepickerModule.forRoot(),
+    NgxSpinnerModule.forRoot({
+      type: 'square-jelly-box'
+    })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
