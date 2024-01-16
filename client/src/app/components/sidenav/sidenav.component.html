@@ -10,10 +10,10 @@
             <i class="fa fa-times"></i>
         </button>
     </div>
-    <hr class="horizontal-line">
+    <hr class="horizontal-line-sidenav">
     <div class="scrollwrap scrollwrap-delayed">
         <ul class="sidenav-nav">
-            <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <li class="sidenav-nav-item" *ngFor="let data of (accountService.currentUser$ | async) ? navData_loggedIn : navData_loggedOut">
                 <a class="sidenav-nav-link" 
                     *ngIf="data.items && data.items.length > 0"
                     (click)="handleClick(data)"

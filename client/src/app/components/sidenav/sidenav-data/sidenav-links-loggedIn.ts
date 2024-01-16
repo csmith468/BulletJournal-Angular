@@ -22,12 +22,12 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'Add Sleep',
                 items: [
                     {
-                        routeLink: 'checklists/night',
+                        routeLink: 'checklists/sleep/test',
                         icon: 'fa fa-moon-o',
                         label: 'Level1',
                         items: [
                             {
-                                routeLink: 'checklists/night',
+                                routeLink: 'checklists/sleep/test/test2',
                                 icon: 'fa fa-moon-o',
                                 label: 'Level2'
                             }

@@ -6,6 +6,7 @@ import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
 import { sidenav_links_loggedIn } from './sidenav-data/sidenav-links-loggedIn';
 import { Router } from '@angular/router';
+import { sidenav_links_loggedOut } from './sidenav-data/sidenav-links-loggedOut';
 
 @Component({
   selector: 'app-sidenav',
@@ -28,7 +29,8 @@ export class SidenavComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   navOpen = false;
   screenWidth = 0;
-  navData = sidenav_links_loggedIn;
+  navData_loggedIn = sidenav_links_loggedIn;
+  navData_loggedOut = sidenav_links_loggedOut;
   // navData_loggedOut = sidenav_links_loggedOut;
   multiple: boolean = false;
 
@@ -91,7 +93,7 @@ export class SidenavComponent implements OnInit {
 
   shrinkItems(item: ISideNavData) {
     if (!this.multiple) {
-      for(let modelItem of this.navData) {
+      for(let modelItem of (this.accountService.currentUser$) ? this.navData_loggedIn : this.navData_loggedOut) {
         if (item !== modelItem && modelItem.expanded) {
           modelItem.expanded = false;
         }

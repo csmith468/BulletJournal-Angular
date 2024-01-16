@@ -292,7 +292,7 @@
 
 
 /* horizontal line between links and top part */
-.horizontal-line {
+.horizontal-line-sidenav {
     border: solid 1.5px #84d7f2;
     margin-bottom: 0;
     margin-top: 15px;
