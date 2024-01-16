@@ -31,7 +31,11 @@
 }
 
 .navbar-brand {
-    font-size: 25px;
+    font-size: 26px;
+}
+
+.navbar-brand:hover {
+    color: #6c6c6c;
 }
 
 

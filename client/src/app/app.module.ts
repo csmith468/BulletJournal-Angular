@@ -30,6 +30,8 @@ import { BodyComponent } from './components/body/body.component';
 import { SubLevelMenuComponent } from './components/sidenav/sub-level-menu.component';
 import { SublevelMenuComponent } from './components/sidenav/sublevel-menu/sublevel-menu.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoginComponent } from './components/login/login.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { HeaderComponent } from './components/header/header.component';
     BodyComponent,
     SubLevelMenuComponent,
     SublevelMenuComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

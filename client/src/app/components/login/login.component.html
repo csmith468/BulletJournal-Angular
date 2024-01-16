@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="login-section">
+        <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off"
+        >
+          <h2 class="text-center text-primary">Login</h2>
+          <hr class="horizontal-line" />
+          <div class="form-floating mb-3">
+            <input 
+                type="text" 
+                class="form-control"
+                placeholder="Email"
+                name="email"
+                [(ngModel)]="model.email"
+                id="Email"
+            >
+            <label for="floatingText">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+            <input 
+                name="password"
+                [(ngModel)]="model.password"
+                class="form-control" 
+                type="password" 
+                placeholder="Password"
+                id="floatingText" 
+                label="Password"
+                id="Password"
+            >
+            <label for="Password">Password</label>
+
+            </div>  
+          <div class="text-center">
+            <button class="btn btn-secondary me-2" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

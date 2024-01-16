@@ -1,6 +1,6 @@
 <div class="head" [ngClass]="getHeadClass()"> 
     <div class="head-content">
-        <a class="navbar-brand" routerLink="/" routerLinkActive="active">Bullet Journal</a>
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">Bullet Journal App</a>
 
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <a class="dropdown-toggle text-dark text-decoration-none ms-1" dropdownToggle>
@@ -18,20 +18,9 @@
         </div>
       </div>
 
-      <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-          <input 
-          name="email"
-          [(ngModel)]="model.email"
-          class="form-control me-2" 
-          type="text" 
-          placeholder="Email">
-        <input 
-          name="password"
-          [(ngModel)]="model.password"
-          class="form-control me-2" 
-          type="password" 
-          placeholder="Password">
-        <button class="btn btn-secondary" type="submit">Login</button>
-      </form>
+      <div class="d-flex" *ngIf="!(accountService.currentUser$ | async)">
+        <button class="btn btn-secondary mr-2" routerLink="/login" type="submit">Login</button>
+        <button class="btn btn-success" routerLink="/register" type="submit">Register</button>
+      </div>
     </div>
 </div>

@@ -6,4 +6,6 @@ html { background-color: #f4f7fa; }
   font-family: 'Arial Narrow', Arial, 'Franklin Gothic Medium', sans-serif;
 }
 
-
+.horizontal-line {
+  border: solid 0.5px #b2b8ba;
+}

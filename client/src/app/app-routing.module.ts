@@ -4,9 +4,8 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authGuard } from './helpers/guards/auth.guard';
-import { MorningChecklistComponent } from './components/checklists/morning-checklist/morning-checklist.component';
-import { NightChecklistComponent } from './components/checklists/night-checklist/night-checklist.component';
-import { MorningTableComponent } from './components/tables/morning-table/morning-table.component';
+import { LoginComponent } from './components/login/login.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -30,7 +29,8 @@ const routes: Routes = [
       // {path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard]},
     ]
   },
-  // {path: 'about', component: AboutComponent},
+  {path: 'about', component: AboutComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'},
