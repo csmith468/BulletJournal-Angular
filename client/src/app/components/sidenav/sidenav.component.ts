@@ -66,24 +66,26 @@ export class SidenavComponent implements OnInit {
   // }
 
   toggleCollapse() {
-    console.log('toggle');
     this.navOpen = !this.navOpen;
-    this.onToggleSideNav.emit({
-      navOpen: this.navOpen,
-      screenWidth: this.screenWidth
-    });
+    this.emitToggleSideNav();
+  }
+
+  openSideNav() {
+    this.navOpen = true;
+    this.emitToggleSideNav();
   }
 
   closeSideNav() {
     this.navOpen = false;
-    this.onToggleSideNav.emit({
-      navOpen: this.navOpen,
-      screenWidth: this.screenWidth
-    });
+    this.emitToggleSideNav();
   }
 
   handleClick(item: ISideNavData) {
     this.shrinkItems(item);
+    if (!this.navOpen) {
+      this.navOpen = true;
+      this.emitToggleSideNav();
+    }
     item.expanded = !item.expanded;
   }
 
@@ -99,5 +101,12 @@ export class SidenavComponent implements OnInit {
 
   getActiveClass(data: ISideNavData) {
     return this.router.url.includes(data.routeLink) ? 'sub-active' : '';
+  }
+
+  emitToggleSideNav() {
+    this.onToggleSideNav.emit({
+      navOpen: this.navOpen,
+      screenWidth: this.screenWidth
+    });
   }
 }

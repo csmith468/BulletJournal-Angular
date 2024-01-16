@@ -3,11 +3,9 @@
 </ngx-spinner>
 
 <!-- <app-nav></app-nav> -->
+<app-header [navOpen]="isSideNavOpen"[screenWidth]="screenWidth"></app-header>
 <app-sidenav (onToggleSideNav)="onToggleSideNav($event)"></app-sidenav>
-<app-body 
-  [navOpen]="isSideNavOpen"
-  [screenWidth]="screenWidth"
-></app-body>
+<app-body [navOpen]="isSideNavOpen" [screenWidth]="screenWidth"></app-body>
 
 <!-- <div class="container" style="margin-top: 120px">
   

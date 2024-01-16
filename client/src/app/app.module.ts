@@ -29,6 +29,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BodyComponent } from './components/body/body.component';
 import { SubLevelMenuComponent } from './components/sidenav/sub-level-menu.component';
 import { SublevelMenuComponent } from './components/sidenav/sublevel-menu/sublevel-menu.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SublevelMenuComponent } from './components/sidenav/sublevel-menu/sublev
     SidenavComponent,
     BodyComponent,
     SubLevelMenuComponent,
-    SublevelMenuComponent
+    SublevelMenuComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

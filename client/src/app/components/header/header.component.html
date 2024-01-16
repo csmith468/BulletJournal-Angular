@@ -1,0 +1,37 @@
+<div class="head" [ngClass]="getHeadClass()"> 
+    <div class="head-content">
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">Bullet Journal</a>
+
+      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-dark text-decoration-none ms-1" dropdownToggle>
+          <div class="circle">
+            <p class="circle-inner">{{user.firstName | slice:0:1}}{{user.lastName | slice:0:1}}</p>
+          </div>        
+        </a>
+        <div class="dropdown-menu" *dropdownMenu>
+            <a class="dropdown-item" routerLink="/member/edit">
+                <i class="fa fa-user dropdown-icon"></i> Edit Profile
+            </a>
+            <a class="dropdown-item" (click)="logout()" > 
+                <i class="fa fa-sign-out dropdown-icon"></i>Logout
+            </a>
+        </div>
+      </div>
+
+      <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
+          <input 
+          name="email"
+          [(ngModel)]="model.email"
+          class="form-control me-2" 
+          type="text" 
+          placeholder="Email">
+        <input 
+          name="password"
+          [(ngModel)]="model.password"
+          class="form-control me-2" 
+          type="password" 
+          placeholder="Password">
+        <button class="btn btn-secondary" type="submit">Login</button>
+      </form>
+    </div>
+</div>

@@ -57,16 +57,14 @@ import { Router } from '@angular/router';
     sidenav_fadeInOut,
     trigger('submenu', [
       state('hidden', style({
-        height: 0,
+        height: '0',
         overflow: 'hidden'
       })),
       state('visible', style({
         height: '*'
       })),
-      transition('visible <=> hidden', [
-        style({overflow: 'hidden'}),
-        animate('{{transitionParams}}')
-      ]),
+      transition('visible <=> hidden', [style({overflow: 'hidden'}),
+        animate('{{transitionParams}}')]),
       transition('void => *', animate(0))
     ])
   ]

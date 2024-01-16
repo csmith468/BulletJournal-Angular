@@ -1,79 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 body { margin: 0; padding: 0; }
+html { background-color: #f4f7fa; }
 
-.tab-panel {
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 4px;
+* {
+  font-family: 'Arial Narrow', Arial, 'Franklin Gothic Medium', sans-serif;
 }
 
-.nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
-  border-bottom: 4px solid #fbcdcf;
-}
-
-.member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
-  /* border: 0 !important;
-  background: none !important; */
-  color: #290608;
-}
-
-.member-tabset > .nav-tabs > li.open > a > i, .member-tabset > .nav-tabs > li:hover > a > i {
-  color: #f3969a;
-}
-
-.member-tabset > .nav-tabs > li.open .dropdown-menu, .member-tabset > .nav-tabs > li:hover .dropdown-menu {
-  margin-top: 0px;
-}
-
-.member-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid #f3969a;
-  position: relative;
-}
-
-.member-tabset > .nav-tabs > li.active > a > i {
-  color: #404040;
-}
-
-.member-tabset > .tab-content {
-  margin-top: -3px;
-  background-color: #fff;
-  border: 0;
-  border-top: 1px solid #eee;
-  padding: 15px 0;
-}
-
-.nav-tabs > li > a {
-  color: #d96369;
-}
-
-.nav-tabs {
-    --bs-nav-tabs-border-width: 0px;
-}
-
-.gallery {
-  height: 600px;
-  background-color: white;
-}
-
-.horizontal-line {
-  border: solid 1px #f3969a;
-}
-
-.custom-label-register {
-  margin-bottom: 0;
-  /* margin-left: 3px; */
-  font-size: medium;
-  color: teal;
-  font-weight: 350;
-}
-
-.badge-warning {
-  color: #fff;
-  background-color: #f5b625; }
-a.badge-warning:hover, a.badge-warning:focus {
-  color: #fff;
-  background-color: #dd9d0a; }
-a.badge-warning:focus, a.badge-warning.focus {
-  outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(245, 182, 37, 0.5); }
 
