@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/register/register.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HomeComponent } from './components/layout/home/home.component';
+import { RegisterComponent } from './components/account/register/register.component';
+import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { authGuard } from './helpers/guards/auth.guard';
-import { LoginComponent } from './components/login/login.component';
-import { AboutComponent } from './components/about/about.component';
+import { LoginComponent } from './components/account/login/login.component';
+import { AboutComponent } from './components/static/about/about.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,12 +15,12 @@ const routes: Routes = [
     children: [
       {
         path: 'checklists',
-        loadChildren: () => import('./components/checklists/checklists.module')
+        loadChildren: () => import('./components/data/checklists/checklists.module')
           .then(m => m.ChecklistsModule)
       },
       {
         path: 'tables',
-        loadChildren: () => import('./components/tables/tables.module')
+        loadChildren: () => import('./components/data/tables/tables.module')
           .then(m => m.TablesModule)
       }
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},

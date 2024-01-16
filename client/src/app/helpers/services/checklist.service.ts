@@ -5,7 +5,7 @@ import { MorningChecklist } from '../models/morningChecklist';
 import { NightChecklist } from '../models/nightChecklist';
 import { map, of } from 'rxjs';
 import { MorningTable } from '../models/morningTable';
-import { MorningTableComponent } from 'src/app/components/tables/morning-table/morning-table.component';
+import { MorningTableComponent } from 'src/app/components/data/tables/morning-table/morning-table.component';
 import { PaginatedResult } from '../models/pagination';
 
 @Injectable({

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from './helpers/services/account.service';
 import { User } from './helpers/models/user';
-import { SideNavToggle } from './components/sidenav/sidenav-styling/sidenav-toggle';
+import { SideNavToggle } from './components/layout/sidenav/sidenav-styling/sidenav-toggle';
 
 
 @Component({

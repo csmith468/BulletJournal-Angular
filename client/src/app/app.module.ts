@@ -9,35 +9,33 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { NavComponent } from './components/nav/nav.component';
-import { RegisterComponent } from './components/register/register.component';
-import { TextInputComponent } from './components/forms/text-input/text-input.component';
-import { DatePickerComponent } from './components/forms/date-picker/date-picker.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HomeComponent } from './components/layout/home/home.component';
+import { RegisterComponent } from './components/account/register/register.component';
+import { TextInputComponent } from './components/layout/forms/text-input/text-input.component';
+import { DatePickerComponent } from './components/layout/forms/date-picker/date-picker.component';
+import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { MorningChecklistComponent } from './components/checklists/morning-checklist/morning-checklist.component';
-import { NightChecklistComponent } from './components/checklists/night-checklist/night-checklist.component';
+import { MorningChecklistComponent } from './components/data/checklists/morning-checklist/morning-checklist.component';
+import { NightChecklistComponent } from './components/data/checklists/night-checklist/night-checklist.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { SwitchInputComponent } from './components/forms/switch-input/switch-input.component';
+import { SwitchInputComponent } from './components/layout/forms/switch-input/switch-input.component';
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
-import { MorningTableComponent } from './components/tables/morning-table/morning-table.component';
+import { MorningTableComponent } from './components/data/tables/morning-table/morning-table.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { BodyComponent } from './components/body/body.component';
-import { SubLevelMenuComponent } from './components/sidenav/sub-level-menu.component';
-import { SublevelMenuComponent } from './components/sidenav/sublevel-menu/sublevel-menu.component';
-import { HeaderComponent } from './components/header/header.component';
-import { LoginComponent } from './components/login/login.component';
-import { AboutComponent } from './components/about/about.component';
+import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
+import { BodyComponent } from './components/layout/body/body.component';
+import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
+import { SublevelMenuComponent } from './components/layout/sidenav/sublevel-menu/sublevel-menu.component';
+import { HeaderComponent } from './components/layout/header/header.component';
+import { LoginComponent } from './components/account/login/login.component';
+import { AboutComponent } from './components/static/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavComponent,
     RegisterComponent,
     TextInputComponent,
     DatePickerComponent,
