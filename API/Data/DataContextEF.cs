@@ -31,13 +31,11 @@ namespace API.Data {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.HasDefaultSchema("bja");
-
-            modelBuilder.Entity<AppUser>().ToTable("user", "bja").HasKey(u => u.UserID);
-            modelBuilder.Entity<SleepRecord>().ToTable("sleep", "bja").HasKey(u => u.SleepID);
-            modelBuilder.Entity<MorningChecklist>().ToTable("morningChecklist", "bja")
+            modelBuilder.Entity<AppUser>().ToTable("user", "app").HasKey(u => u.UserID);
+            modelBuilder.Entity<SleepRecord>().ToTable("sleep", "app").HasKey(u => u.SleepID);
+            modelBuilder.Entity<MorningChecklist>().ToTable("morningChecklist", "app")
                 .HasKey(u => u.MorningChecklistID);
-            modelBuilder.Entity<NightChecklist>().ToTable("nightChecklist", "bja")
+            modelBuilder.Entity<NightChecklist>().ToTable("nightChecklist", "app")
                 .HasKey(u => u.NightChecklistID);
         }
 
