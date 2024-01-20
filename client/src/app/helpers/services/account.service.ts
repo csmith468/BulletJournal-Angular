@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
 import { User } from '../models/user';
+import { TimezoneLocation } from '../models/timezoneLocation';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,9 @@ export class AccountService {
   setCurrentUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+  }
+
+  getTimezones() {
+    return this.http.get<TimezoneLocation[]>(this.baseUrl + 'account/timezones');
   }
 }

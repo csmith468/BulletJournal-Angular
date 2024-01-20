@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center">
       <div class="register-section">
         <form
           [formGroup]="registerForm"
@@ -51,5 +51,14 @@
           </div>
         </form>
       </div>
+    </div> -->
+  </div>
+
+
+  <div class="row">
+    <div class="col-2">
+      <p *ngFor="let tz of timezones">
+      {{tz.timezoneLocationName}}
+    </p>
     </div>
   </div>

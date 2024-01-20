@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { TimezoneLocation } from 'src/app/helpers/models/timezoneLocation';
 import { AccountService } from 'src/app/helpers/services/account.service';
 
 @Component({
@@ -12,12 +14,20 @@ import { AccountService } from 'src/app/helpers/services/account.service';
 export class RegisterComponent {
   registerForm: FormGroup = new FormGroup({});
   validationErrors: string[] | undefined;
+  timezones: TimezoneLocation[] = [];
 
   constructor(private accountService: AccountService, private fb: FormBuilder, 
     private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.loadTimezones();
     this.initializeForm();
+  }
+
+  loadTimezones() {
+    this.accountService.getTimezones().subscribe({
+      next: timezones => this.timezones = timezones
+    })
   }
 
   initializeForm() { 
@@ -58,6 +68,7 @@ export class RegisterComponent {
       return /[a-z]/.test(control.value) ? null : {missingLower: true}
     };
   }
+
   register() { 
     const values = {...this.registerForm.value};
     this.accountService.register(values).subscribe({
