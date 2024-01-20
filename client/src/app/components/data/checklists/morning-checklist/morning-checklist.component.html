@@ -12,7 +12,7 @@
               name="Date"
               bsDatepicker
               [bsConfig]="bsConfig"
-              [(ngModel)]="morningChecklist.Date"
+              [(ngModel)]="morningChecklist.date"
               id="floatingText" 
             />
             <label for="Date"><i class="fa fa-calendar ms-3"></i></label>
@@ -20,19 +20,19 @@
           
         <h5 class="mt-2">Morning Checklist</h5>
         <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="GlassOfWater" name="GlassOfWater" [(ngModel)]="morningChecklist.GlassOfWater">
+            <input type="checkbox" class="custom-control-input" id="GlassOfWater" name="GlassOfWater" [(ngModel)]="morningChecklist.glassOfWater">
             <label class="custom-control-label" for="GlassOfWater">Did you have a glass of water?</label>
         </div>
         <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="Meds" name="Meds" [(ngModel)]="morningChecklist.Meds">
+            <input type="checkbox" class="custom-control-input" id="Meds" name="Meds" [(ngModel)]="morningChecklist.meds">
             <label class="custom-control-label" for="Meds">Did you take your meds?</label>
         </div>
         <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="Vitamins" name="Vitamins" [(ngModel)]="morningChecklist.Vitamins">
+            <input type="checkbox" class="custom-control-input" id="Vitamins" name="Vitamins" [(ngModel)]="morningChecklist.vitamins">
             <label class="custom-control-label" for="Vitamins">Did you take your vitamins?</label>
         </div>
         <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="Breakfast" name="Breakfast" [(ngModel)]="morningChecklist.Breakfast">
+            <input type="checkbox" class="custom-control-input" id="Breakfast" name="Breakfast" [(ngModel)]="morningChecklist.breakfast">
             <label class="custom-control-label" for="Breakfast">Did you eat breakfast?</label>
         </div>
         <button class="btn btn-success">Save Changes</button>

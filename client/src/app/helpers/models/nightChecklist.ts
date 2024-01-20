@@ -1,27 +1,27 @@
 export interface NightChecklistInterface {
-    Date: Date;
-    GlassOfWater: boolean;
-    Meds: boolean;
-    Vitamins: boolean;
-    WashFace: boolean;
-    Floss: boolean;
-    CheckEmails: boolean;
-    CheckTexts: boolean;
-    Mouthguard: boolean;
-    ModifiedDatetime: Date;
+    date: Date;
+    glassOfWater: boolean;
+    meds: boolean;
+    vitamins: boolean;
+    washFace: boolean;
+    floss: boolean;
+    checkEmails: boolean;
+    checkTexts: boolean;
+    mouthguard: boolean;
+    modifiedDatetime: Date;
 }
 
 export class NightChecklist {
-    Date = new Date();
-    GlassOfWater = false;
-    Meds = false;
-    Vitamins = false;
-    WashFace = false;
-    Floss = false;
-    CheckEmails = false;
-    CheckTexts = false;
-    Mouthguard = false;
-    ModifiedDatetime = new Date();
+    date = new Date();
+    glassOfWater = false;
+    meds = false;
+    vitamins = false;
+    washFace = false;
+    floss = false;
+    checkEmails = false;
+    checkTexts = false;
+    mouthguard = false;
+    modifiedDatetime = new Date();
 
     constructor() {
     }
