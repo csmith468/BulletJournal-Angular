@@ -6,6 +6,7 @@ import { NotFoundComponent } from './components/static/not-found/not-found.compo
 import { authGuard } from './helpers/guards/auth.guard';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
+import { ProfileComponent } from './components/account/profile/profile.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: '**', component: NotFoundComponent, pathMatch: 'full'},
 ];

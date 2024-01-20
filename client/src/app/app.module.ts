@@ -31,6 +31,7 @@ import { SublevelMenuComponent } from './components/layout/sidenav/sublevel-menu
 import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
+import { ProfileComponent } from './components/account/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AboutComponent } from './components/static/about/about.component';
     SublevelMenuComponent,
     HeaderComponent,
     LoginComponent,
-    AboutComponent
+    AboutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
