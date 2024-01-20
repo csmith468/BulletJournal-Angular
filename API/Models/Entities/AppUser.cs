@@ -7,5 +7,6 @@ namespace API.Models.Entities {
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; } 
         public DateTime ModifiedDatetime { get; set; } = DateTime.UtcNow;
+        public int TimezoneLocationID { get; set; }
     }
 }

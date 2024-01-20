@@ -21,6 +21,7 @@ namespace API.Data {
         public DbSet<SleepRecord> SleepRecords { get; set; }
         public DbSet<MorningChecklist> MorningChecklists { get; set; }
         public DbSet<NightChecklist> NightChecklists { get; set; }
+        public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             if (!optionsBuilder.IsConfigured) {
@@ -37,6 +38,8 @@ namespace API.Data {
                 .HasKey(u => u.MorningChecklistID);
             modelBuilder.Entity<NightChecklist>().ToTable("nightChecklist", "app")
                 .HasKey(u => u.NightChecklistID);
+            modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
+                .HasKey(u => u.TimezoneLocationID);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {

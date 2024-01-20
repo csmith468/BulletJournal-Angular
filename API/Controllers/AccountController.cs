@@ -69,5 +69,10 @@ namespace API.Controllers
                 Token = _tokenService.CreateToken(user)
             };
         }
+
+        [HttpGet("timezones")]
+        public async Task<ActionResult<IEnumerable<TimezoneLocation>>> GetTimezoneLocation() {
+            return Ok(await _uow.UserRepository.GetTimezoneLocationsAsync());
+        }
     }
 }

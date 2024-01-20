@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using API.Data.Helpers;
 using API.Data.Interfaces;
 using API.Models.DTOs;
@@ -44,6 +45,12 @@ namespace API.Data.Repositories {
                 FirstName = HelperFunctions.StringTitleCase(user.FirstName),
                 LastName = HelperFunctions.StringTitleCase(user.LastName)
             };
+        }
+
+        public async Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync() {
+            return await _contextEF.TimezoneLocations
+                .OrderBy(t => t.TimezoneLocationName)
+                .ToListAsync();
         }
         
     }

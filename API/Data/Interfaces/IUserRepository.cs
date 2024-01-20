@@ -8,5 +8,6 @@ namespace API.Data.Interfaces {
         Task<IEnumerable<AppUser>> GetAppUsersAsync();
         Task<bool> EmailExistsAsync(string email);
         Task<AppUserDto> RegisterUserAsync(AppUser user);
+        Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync();
     }
 }
