@@ -1,1 +1,26 @@
-<p>night-table works!</p>
+
+
+<h4 class="mt-2">Night Table</h4>
+<div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">
+            {{ column }}
+          </th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let checklist of nightTable">
+          <td *ngFor="let column of columns">
+            {{ checklist[column] }}
+          </td>
+          <div class="edit-button">
+            <button class="btn btn-secondary"><i class="fa fa-pencil"></i></button>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

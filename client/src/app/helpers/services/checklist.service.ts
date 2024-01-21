@@ -7,6 +7,7 @@ import { map, of } from 'rxjs';
 import { MorningTable } from '../models/morningTable';
 import { MorningTableComponent } from 'src/app/components/data/tables/morning-table/morning-table.component';
 import { PaginatedResult } from '../models/pagination';
+import { NightTable } from '../models/nightTable';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ChecklistService {
   morningTable: MorningTable[] = [];
   nightChecklists: NightChecklist[] = [];
   paginatedResultMorning: PaginatedResult<MorningTable[]> = new PaginatedResult<MorningTable[]>;
+  paginatedResultNight: PaginatedResult<NightTable[]> = new PaginatedResult<NightTable[]>;
 
   constructor(private http: HttpClient) { 
   }
@@ -45,6 +47,25 @@ export class ChecklistService {
           const pagination = response.headers.get('Pagination');
           if (pagination) this.paginatedResultMorning.pagination = JSON.parse(pagination);
           return this.paginatedResultMorning;
+        }
+      ))
+  }
+
+  getNightChecklist(page?: number, itemsPerPage?: number) {
+    let params = new HttpParams();
+
+    if (page && itemsPerPage) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    return this.http.get<NightTable[]>(this.baseUrl + 'checklist/getMyNightChecklists',
+      {observe: 'response', params}).pipe(map(
+        response => {
+          if (response.body) this.paginatedResultNight.result = response.body;
+          const pagination = response.headers.get('Pagination');
+          if (pagination) this.paginatedResultNight.pagination = JSON.parse(pagination);
+          return this.paginatedResultNight;
         }
       ))
   }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MorningChecklist } from 'src/app/helpers/models/morningChecklist';
 import { MorningTable } from 'src/app/helpers/models/morningTable';
 import { Pagination } from 'src/app/helpers/models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
@@ -34,7 +33,6 @@ export class MorningTableComponent implements OnInit {
         }
       }
     })
-
   }
 
 }
