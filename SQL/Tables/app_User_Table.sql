@@ -9,7 +9,6 @@ CREATE TABLE [app].[user](
 	[LastName] [nvarchar](50) NOT NULL,
 	[PasswordHash] [varbinary](max) NULL,
 	[PasswordSalt] [varbinary](max) NULL,
-	[ModifiedDatetime] [datetime] NOT NULL,
 	[TimezoneLocationID] [int] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
@@ -17,6 +16,4 @@ ALTER TABLE [app].[user] ADD PRIMARY KEY CLUSTERED
 (
 	[UserID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-ALTER TABLE [app].[user] ADD  DEFAULT (getutcdate()) FOR [ModifiedDatetime]
 GO

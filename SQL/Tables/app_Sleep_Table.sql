@@ -13,14 +13,11 @@ CREATE TABLE [app].[sleep](
 	[WakeOnTime] [bit] NULL,
 	[EnergyLevel] [int] NULL,
 	[Type] [nvarchar](50) NULL,
-	[Notes] [nvarchar](max) NULL,
-	[ModifiedDatetime] [datetime] NOT NULL
+	[Notes] [nvarchar](max) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [app].[sleep] ADD PRIMARY KEY CLUSTERED 
 (
 	[SleepID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-GO
-ALTER TABLE [app].[sleep] ADD  DEFAULT (getutcdate()) FOR [ModifiedDatetime]
 GO
