@@ -11,6 +11,5 @@ namespace API.Models.Entities {
         public int EnergyLevel { get; set; }
         public string Type { get; set; }
         public string Notes { get; set; }
-        public DateTime ModifiedDatetime { get; set; } = DateTime.UtcNow;
     }
 }
