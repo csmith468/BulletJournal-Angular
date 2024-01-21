@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { DropdownItem } from 'src/app/helpers/models/dropdownItem';
 import { TimezoneLocation } from 'src/app/helpers/models/timezoneLocation';
 import { AccountService } from 'src/app/helpers/services/account.service';
 
@@ -15,6 +16,7 @@ export class RegisterComponent {
   registerForm: FormGroup = new FormGroup({});
   validationErrors: string[] | undefined;
   timezones: TimezoneLocation[] = [];
+  timezoneDropdown: DropdownItem[] = [];
 
   constructor(private accountService: AccountService, private fb: FormBuilder, 
     private router: Router, private toastr: ToastrService) { }
@@ -26,7 +28,15 @@ export class RegisterComponent {
 
   loadTimezones() {
     this.accountService.getTimezones().subscribe({
-      next: timezones => this.timezones = timezones
+      next: timezones => {
+        this.timezones = timezones,
+        this.timezoneDropdown = timezones.map<DropdownItem>(
+          t => ({
+            id: t.timezoneLocationID,
+            display: t.timezoneLocationName
+          })
+        )
+      }
     })
   }
 
@@ -35,6 +45,7 @@ export class RegisterComponent {
       email: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      timezoneLocationId: ['', [Validators.required]],
       password: ['', [
         Validators.required, Validators.minLength(4), this.hasNumber(),
           this.hasUpper(), this.hasLower()]],

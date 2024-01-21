@@ -1,0 +1,17 @@
+<div class="form-floating mb-3">
+    <ng-select name="dropdown" 
+        id="dropdown_{{label}}" 
+        class="form-control"
+        [formControl]="control"
+        [class.is-valid]="control.valid"
+        [class.is-invalid]="control.touched && control.invalid"
+    >
+    <ng-option class="custom-select" value=""></ng-option>
+    <ng-option class="custom-select" *ngFor="let item of dropdownItems" value="{{item.id}}">{{item.display}}</ng-option>
+    </ng-select>
+    <div class="invalid-feedback" *ngIf="control.errors?.['required']">
+        Please enter a {{label}}.
+    </div>
+    <div class="valid-feedback" *ngIf="control.valid"></div>
+    <label for="dropdown_{{label}}">{{label}}</label>
+</div>

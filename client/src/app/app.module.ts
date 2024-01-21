@@ -32,6 +32,8 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
+import { DropdownInputComponent } from './components/layout/forms/dropdown-input/dropdown-input.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { ProfileComponent } from './components/account/profile/profile.component
     HeaderComponent,
     LoginComponent,
     AboutComponent,
-    ProfileComponent
+    ProfileComponent,
+    DropdownInputComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { ProfileComponent } from './components/account/profile/profile.component
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule.forRoot({
       type: 'square-jelly-box'
-    })
+    }),
+    NgSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

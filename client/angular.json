@@ -32,7 +32,8 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/bootswatch/dist/customBlue/bootstrap.css",
-              "./node_modules/ngx-spinner/animations/square-jelly-box.css"
+              "./node_modules/ngx-spinner/animations/square-jelly-box.css",
+              "./node_modules/@ng-select/ng-select/themes/custom.theme.css"
             ],
             "scripts": []
           },

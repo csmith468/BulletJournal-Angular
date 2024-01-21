@@ -1,5 +1,5 @@
 <div class="container">
-    <!-- <div class="row justify-content-center">
+    <div class="row justify-content-center">
       <div class="register-section">
         <form
           [formGroup]="registerForm"
@@ -20,6 +20,11 @@
             [formControl]="$any(registerForm.controls['lastName'])"
             [label]="'Last Name'"
           ></app-text-input>
+          <app-dropdown-input
+            [formControl]="$any(registerForm.controls['timezoneLocationId'])"
+            [label]="'Timezone'"
+            [dropdownItems]="timezoneDropdown"
+          ></app-dropdown-input>
   
           <app-text-input
             [formControl]="$any(registerForm.controls['password'])"
@@ -32,8 +37,23 @@
             [label]="'Confirm Password'"
             [type]="'password'"
           ></app-text-input>
-  
-  
+<!-- 
+          <div class="form-floating mb-3">
+            <select name="timezone" 
+              id="timezone" 
+              class="form-control form-select" 
+              [formControl]="$any(registerForm.controls['timezone'])"
+              
+            >
+              <option *ngFor="let tz of timezoneDropdown" [value]="tz.id">{{tz.display}}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="control.errors?.['required']">
+              Please enter a timezone.
+            </div>
+            <div class="valid-feedback" *ngIf="control.valid"></div>
+            <label for="timezone">Timezone</label>
+          </div>
+   -->
           <div class="row" *ngIf="validationErrors">
             <ul class="text-danger">
               <li *ngFor="let error of validationErrors">
@@ -51,14 +71,9 @@
           </div>
         </form>
       </div>
-    </div> -->
-  </div>
-
-
-  <div class="row">
-    <div class="col-2">
-      <p *ngFor="let tz of timezones">
-      {{tz.timezoneLocationName}}
-    </p>
     </div>
+
+
+<p>Form Value: {{ registerForm.value | json }}</p>
   </div>
+
