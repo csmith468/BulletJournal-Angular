@@ -1,15 +1,17 @@
 using API.Data.Interfaces;
 using API.Data.Pagination;
 using API.Models.Entities;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories {
     public class ChecklistRepository : IChecklistRepository {
-        private readonly DataContextDapper _contextDapper;
+        // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
-        public ChecklistRepository(IConfiguration config) {
-            _contextDapper = new DataContextDapper(config);
-            _contextEF = new DataContextEF(config);
+        private readonly IMapper _mapper;
+        public ChecklistRepository(DataContextEF contextEF, IMapper mapper) {
+            _contextEF = contextEF;
+            _mapper = mapper;
         }
 
         public async Task<MorningChecklist> AddMorningChecklistAsync(MorningChecklist morningChecklist) {

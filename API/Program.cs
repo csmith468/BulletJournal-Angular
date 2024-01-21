@@ -1,5 +1,7 @@
+using API.Data;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Components.Forms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,5 +31,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try {
+    var context = services.GetRequiredService<DataContextEF>();
+} catch (Exception ex) {
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred Entity Framework setup.");
+}
 
 app.Run();

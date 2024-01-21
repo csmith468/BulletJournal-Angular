@@ -3,10 +3,16 @@ using API.Data.Repositories;
 using API.Services;
 using API.Extensions;
 using API.Data.Helpers;
+using API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions {
     public static class ApplicationServiceExtensions {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config) {
+            services.AddDbContext<DataContextEF>(opt => {
+                opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddCors((options) => {
                 options.AddPolicy("client", (corsBuilder) => {
                     corsBuilder.WithOrigins("https://localhost:4200")

@@ -15,12 +15,10 @@ namespace API.Controllers
 {
     public class AccountController : BaseApiController {
         private readonly IUnitOfWork _uow;
-        private readonly DataContextEF _contextEF;
         private readonly ITokenService _tokenService;
 
-        public AccountController(IConfiguration config, IUnitOfWork uow, ITokenService tokenService) {
-            _uow = new UnitOfWork(config);
-            _contextEF = new DataContextEF(config);
+        public AccountController(IUnitOfWork uow, ITokenService tokenService) {
+            _uow = uow;
             _tokenService = tokenService;
         }
 
@@ -55,8 +53,7 @@ namespace API.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto) {
-            var user = await _contextEF.AppUsers
-                .SingleOrDefaultAsync(x => x.Email.ToLower() == loginDto.Email.ToLower());
+            var user = await _uow.UserRepository.GetAppUserByEmailAsync(loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email.");
 

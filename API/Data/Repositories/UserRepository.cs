@@ -3,15 +3,17 @@ using API.Data.Helpers;
 using API.Data.Interfaces;
 using API.Models.DTOs;
 using API.Models.Entities;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories {
     public class UserRepository : IUserRepository {
-        private readonly DataContextDapper _contextDapper;
+        // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
-        public UserRepository(IConfiguration config) {
-            _contextDapper = new DataContextDapper(config);
-            _contextEF = new DataContextEF(config);
+        private readonly IMapper _mapper;
+        public UserRepository(DataContextEF contextEF, IMapper mapper) {
+            _contextEF = contextEF;
+            _mapper = mapper;
         }
 
         public async Task<AppUser> GetAppUserByEmailAsync(string email) {
@@ -46,6 +48,10 @@ namespace API.Data.Repositories {
                 LastName = HelperFunctions.StringTitleCase(user.LastName),
                 TimezoneLocationID = user.TimezoneLocationID
             };
+        }
+
+        public void Update(AppUser user) {
+            _contextEF.Entry(user).State = EntityState.Modified;
         }
 
         public async Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync() {

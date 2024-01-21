@@ -8,6 +8,7 @@ namespace API.Data.Helpers {
             CreateMap<AppUser, AppUserDto>();
             CreateMap<DateTime, DateTime>().ConvertUsing(
                 d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
+            CreateMap<AppUserUpdateDto, AppUser>();
         }
     }
 }

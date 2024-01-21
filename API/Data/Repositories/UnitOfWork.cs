@@ -1,22 +1,24 @@
 using API.Data.Interfaces;
+using AutoMapper;
 
 namespace API.Data.Repositories {
     public class UnitOfWork : IUnitOfWork {
-        private readonly DataContextDapper _contextDapper;
+        // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
-        private readonly IConfiguration _config;
-        public UnitOfWork(IConfiguration config) {
-            _contextDapper = new DataContextDapper(config);
-            _contextEF = new DataContextEF(config);
-            _config = config;
+        private readonly IMapper _mapper;
+        public UnitOfWork(DataContextEF contextEF, IMapper mapper) {
+            _contextEF = contextEF;
+            _mapper = mapper;
         }
 
-        public IUserRepository UserRepository => new UserRepository(_config);
-        public ISleepRepository SleepRepository => new SleepRepository(_config);
-        public IChecklistRepository ChecklistRepository => new ChecklistRepository(_config);
+        public IUserRepository UserRepository => new UserRepository(_contextEF, _mapper);
+        public ISleepRepository SleepRepository => new SleepRepository(_contextEF, _mapper);
+        public IChecklistRepository ChecklistRepository => new ChecklistRepository(_contextEF, _mapper);
         
         public async Task<bool> Complete() {
-            return await _contextEF.SaveChangesAsync() > 0;
+            var r = HasChanges();
+            var result = await _contextEF.SaveChangesAsync();
+            return result > 0;
         }
 
         public bool HasChanges() {

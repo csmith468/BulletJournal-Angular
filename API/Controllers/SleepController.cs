@@ -18,12 +18,10 @@ namespace API.Controllers
     [Authorize]
     public class SleepController : BaseApiController {
         private readonly IUnitOfWork _uow;
-        private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
 
-        public SleepController(IConfiguration config, IUnitOfWork uow, IMapper mapper) {
-            _uow = new UnitOfWork(config);
-            _contextEF = new DataContextEF(config);
+        public SleepController(IUnitOfWork uow, IMapper mapper) {
+            _uow = uow;
             _mapper = mapper;
         }
 

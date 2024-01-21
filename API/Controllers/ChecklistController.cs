@@ -13,12 +13,10 @@ namespace API.Controllers
     [Authorize]
     public class ChecklistController : BaseApiController {
         private readonly IUnitOfWork _uow;
-        private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
 
-        public ChecklistController(IConfiguration config, IUnitOfWork uow, IMapper mapper) {
-            _uow = new UnitOfWork(config);
-            _contextEF = new DataContextEF(config);
+        public ChecklistController(IUnitOfWork uow, IMapper mapper) {
+            _uow = uow;
             _mapper = mapper;
         }
 

@@ -5,16 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using API.Models.Entities;
 using AutoMapper;
 using API.Models.DTOs;
+using API.Extensions;
 
 namespace API.Controllers
 {
-    // [Authorize] 
+    [Authorize] 
     public class UsersController : BaseApiController {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public UsersController(IConfiguration config, IUnitOfWork uow, IMapper mapper) {
-            _uow = new UnitOfWork(config);
+        public UsersController(IUnitOfWork uow, IMapper mapper) {
+            _uow = uow;
             _mapper = mapper;
         }
 
@@ -36,6 +37,18 @@ namespace API.Controllers
         public async Task<ActionResult<AppUserDto>> GetUserById(int id) {
             var user = await _uow.UserRepository.GetAppUserByIdAsync(id);
             return _mapper.Map<AppUserDto>(user);
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateUser(AppUserUpdateDto appUserUpdateDto) {
+            var user = await _uow.UserRepository.GetAppUserByIdAsync(User.GetUserId());
+            if (user == null) return NotFound();
+
+            _mapper.Map(appUserUpdateDto, user);
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to update user.");
+            
         }
     }
 }
