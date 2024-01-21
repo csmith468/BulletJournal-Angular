@@ -2,13 +2,20 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION [app].[GetUTCInTimezone](
+CREATE FUNCTION [app].[GetUTCInUserTimezone](
     @UTCDatetime datetime,
-    @TimezoneID int
+    @UserId int
 )
 RETURNS DATETIME
 AS 
 BEGIN
+
+    DECLARE @TimezoneID int = (
+        SELECT timezoneLocation.TimezoneID 
+        FROM app.[user] 
+        JOIN dbo.timezoneLocation ON [user].[TimezoneLocationID] = timezoneLocation.TimezoneLocationID
+        WHERE UserID = @UserId
+    );
 
     -- standard and transition biases
     DECLARE @Year int = (SELECT DATEPART(yy, @UTCDatetime));
