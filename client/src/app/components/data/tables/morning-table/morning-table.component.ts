@@ -12,7 +12,7 @@ import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 export class MorningTableComponent implements OnInit {
   morningTable: MorningTable[] = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof MorningTable> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast', 'modifiedDatetime']
+  columns: Array<keyof MorningTable> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
   pageNumber = 1;
   pageSize = 15;
 

@@ -5,7 +5,6 @@ export interface MorningChecklistInterface {
     meds: boolean;
     vitamins: boolean;
     breakfast: boolean;
-    modifiedDatetime: Date;
 }
 
 export class MorningChecklist {
@@ -14,7 +13,6 @@ export class MorningChecklist {
     meds = false;
     vitamins = false;
     breakfast = false;
-    modifiedDatetime = new Date();
 
     constructor() {
     }

@@ -8,7 +8,6 @@ export interface NightChecklistInterface {
     checkEmails: boolean;
     checkTexts: boolean;
     mouthguard: boolean;
-    modifiedDatetime: Date;
 }
 
 export class NightChecklist {
@@ -21,7 +20,6 @@ export class NightChecklist {
     checkEmails = false;
     checkTexts = false;
     mouthguard = false;
-    modifiedDatetime = new Date();
 
     constructor() {
     }

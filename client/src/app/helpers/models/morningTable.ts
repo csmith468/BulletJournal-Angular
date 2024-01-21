@@ -6,5 +6,4 @@ export interface MorningTable {
     meds: boolean;
     vitamins: boolean;
     breakfast: boolean;
-    modifiedDatetime: string;
 }
