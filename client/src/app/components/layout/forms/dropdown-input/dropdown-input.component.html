@@ -1,4 +1,16 @@
 <div class="form-floating mb-3">
+    <!-- <input 
+        list="dataListOptions" 
+        id="dropdown_{{label}}" 
+        class="form-control custom-select"
+        [formControl]="control"
+        [class.is-valid]="control.valid"
+        [class.is-invalid]="control.touched && control.invalid"
+    >
+    <datalist id="dataListOptions">
+        <option value=""></option>
+        <option *ngFor="let item of dropdownItems" value="{{item.id}}">{{item.display}}</option>
+    </datalist> -->
     <ng-select name="dropdown" 
         id="dropdown_{{label}}" 
         class="form-control"
@@ -11,7 +23,7 @@
     </ng-select>
     <div class="invalid-feedback" *ngIf="control.errors?.['required']">
         Please enter a {{label}}.
-    </div>
+    </div> 
     <div class="valid-feedback" *ngIf="control.valid"></div>
     <label for="dropdown_{{label}}">{{label}}</label>
 </div>
