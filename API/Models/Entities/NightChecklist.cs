@@ -11,5 +11,9 @@ namespace API.Models.Entities {
         public bool CheckEmails { get; set; }
         public bool CheckTexts { get; set; }
         public bool Mouthguard { get; set; }
+        public bool Fruits { get; set; }
+        public bool Vegetables { get; set; }
+        public bool Read { get; set; }
+        public bool WentOutside { get; set; }
     }
 }

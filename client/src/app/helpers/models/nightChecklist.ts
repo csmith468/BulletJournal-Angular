@@ -8,6 +8,10 @@ export interface NightChecklistInterface {
     checkEmails: boolean;
     checkTexts: boolean;
     mouthguard: boolean;
+    fruits: boolean;
+    vegetables: boolean;
+    read: boolean;
+    wentOutside: boolean;
 }
 
 export class NightChecklist {
@@ -20,6 +24,10 @@ export class NightChecklist {
     checkEmails = false;
     checkTexts = false;
     mouthguard = false;
+    fruits = false;
+    vegetables = false;
+    read = false;
+    wentOutside = false;
 
     constructor() {
     }

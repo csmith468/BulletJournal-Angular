@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MorningTable } from 'src/app/helpers/models/morningTable';
 import { Pagination } from 'src/app/helpers/models/pagination';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
 
 @Component({
   selector: 'app-morning-table',
@@ -15,7 +15,7 @@ export class MorningTableComponent implements OnInit {
   pageNumber = 1;
   pageSize = 15;
 
-  constructor(private checklistService: ChecklistService) {
+  constructor(private morningService: MorningService) {
 
   }
 
@@ -24,7 +24,7 @@ export class MorningTableComponent implements OnInit {
   }
 
   loadData() {
-    this.checklistService.getMorningChecklist(this.pageNumber, this.pageSize).subscribe({
+    this.morningService.getMorningChecklist(this.pageNumber, this.pageSize).subscribe({
       next: response => {
         console.log(<MorningTable>(response.result!.at(0)))
         if (response.result && response.pagination) {

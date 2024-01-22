@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NightTable } from 'src/app/helpers/models/nightTable';
 import { Pagination } from 'src/app/helpers/models/pagination';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 
 @Component({
   selector: 'app-night-table',
@@ -16,7 +16,7 @@ export class NightTableComponent implements OnInit {
   pageNumber = 1;
   pageSize = 15;
 
-  constructor(private checklistService: ChecklistService) {
+  constructor(private nightService: NightService) {
 
   }
 
@@ -25,7 +25,7 @@ export class NightTableComponent implements OnInit {
   }
 
   loadData() {
-    this.checklistService.getNightChecklist(this.pageNumber, this.pageSize).subscribe({
+    this.nightService.getNightChecklist(this.pageNumber, this.pageSize).subscribe({
       next: response => {
         console.log(<NightTable>(response.result!.at(0)))
         if (response.result && response.pagination) {

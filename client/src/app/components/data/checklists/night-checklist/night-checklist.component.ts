@@ -1,20 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
+import { ChecklistQuestions } from 'src/app/helpers/models/checklistQuestions';
 import { NightChecklist } from 'src/app/helpers/models/nightChecklist';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 
 @Component({
   selector: 'app-night-checklist',
   templateUrl: './night-checklist.component.html',
-  styleUrls: ['./night-checklist.component.css']
+  styleUrls: ['./night-checklist.component.css'],
+  providers : [{provide : ControlContainer, useExisting : NgForm}]
 })
 export class NightChecklistComponent implements OnInit {
+  @ViewChildren('childForm') childForm!:QueryList<any>;
   nightChecklist = new NightChecklist();
   bsConfig: Partial<BsDatepickerConfig> | undefined;
 
-  constructor(private checklistService: ChecklistService, private router: Router) {
+  questions: ChecklistQuestions[] = [
+    { column: 'glassOfWater', question: 'testglass'},
+    { column: 'meds', question: 'testmeds'}
+  ];
+
+  constructor(private nightService: NightService, private router: Router) {
     this.bsConfig = {
       containerClass: 'theme-default',
       dateInputFormat: 'MMMM DD, YYYY'
@@ -22,13 +31,14 @@ export class NightChecklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.questions)
   }
 
   submitNightChecklist() {
     const values = { ...this.nightChecklist, 
       date: getDateOnly(this.nightChecklist.date.toString())
     };
-    this.checklistService.addNightChecklist(values).subscribe({
+    this.nightService.addNightChecklist(values).subscribe({
       next: () => {
         this.router.navigateByUrl('/checklists');
       }

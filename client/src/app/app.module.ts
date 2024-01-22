@@ -34,6 +34,9 @@ import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
 import { DropdownInputComponent } from './components/layout/forms/dropdown-input/dropdown-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NightFormComponent } from './components/data/checklists/night-form/night-form.component';
+import { TextboxComponent } from './components/form-group/form-question/textbox/textbox.component';
+import { SwitchComponent } from './components/form-group/form-question/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LoginComponent,
     AboutComponent,
     ProfileComponent,
-    DropdownInputComponent
+    DropdownInputComponent,
+    NightFormComponent,
+    TextboxComponent,
+    SwitchComponent
   ],
   imports: [
     BrowserModule,

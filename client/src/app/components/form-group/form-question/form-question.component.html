@@ -1,0 +1,36 @@
+<div [formGroup]="form">
+    <div [ngSwitch]="question.controlType">
+
+        <div *ngSwitchCase="'textbox'" class="form-floating">
+            <input 
+            class="form-control" 
+            [id]="question.key"
+            [formControlName]="question.key"
+            [type]="question.type"
+        >
+        <label [attr.for]="question.key">{{question.label}}</label>
+        </div>
+
+        <div *ngSwitchCase="'dropdown'" class="form-floating mb-3">
+            <select class="form-control custom-select"
+                [id]="question.key"
+                [formControlName]="question.key"
+            >
+                <option *ngFor="let opt of question.options"
+                    value="opt.key">{{opt.value}}</option>
+            </select>
+            <label [attr.for]="question.key">{{question.label}}</label>
+        </div>  
+
+        <div *ngSwitchCase="'checkbox'" class="custom-control custom-switch">
+            <input class="custom-control-input"
+                [type]="question.type"
+                [id]="question.key"
+                [formControlName]="question.key"
+            >
+            <label class="custom-control-label" [for]="question.key">{{question.label}}</label>
+        </div>
+    </div>
+
+    <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required.</div>
+</div>

@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { MorningChecklist } from 'src/app/helpers/models/morningChecklist';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
 import { Router } from '@angular/router';
+import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
 
 @Component({
   selector: 'app-morning-checklist',
@@ -16,7 +16,7 @@ export class MorningChecklistComponent implements OnInit {
   morningChecklist = new MorningChecklist();
   bsConfig: Partial<BsDatepickerConfig> | undefined;
 
-  constructor(private checklistService: ChecklistService, private router: Router) {
+  constructor(private morningService: MorningService, private router: Router) {
     this.bsConfig = {
       containerClass: 'theme-default',
       dateInputFormat: 'MMMM DD, YYYY'
@@ -30,7 +30,7 @@ export class MorningChecklistComponent implements OnInit {
     const values = {...this.morningChecklist, 
       date: getDateOnly(this.morningChecklist.date.toString())
     };
-    this.checklistService.addMorningChecklist(values).subscribe({
+    this.morningService.addMorningChecklist(values).subscribe({
       next: () => {
         this.router.navigateByUrl('/checklists');
       }

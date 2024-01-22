@@ -18,6 +18,12 @@
         </div>
 
         <h4 class="mt-2">Night Checklist</h4>
+
+        <!-- <div *ngFor="let q of questions" class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="{{q.column}}" name="{{q.column}}" [(ngModel)]="nightChecklist.q.column">
+            <label for="GlassOfWater" class="custom-control-label">Did you have a glass of water?</label>
+        </div> -->
+
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="GlassOfWater" name="GlassOfWater" [(ngModel)]="nightChecklist.glassOfWater">
             <label for="GlassOfWater" class="custom-control-label">Did you have a glass of water?</label>
