@@ -28,7 +28,7 @@ export class MorningChecklistComponent implements OnInit {
 
   submitMorningChecklist() {
     const values = {...this.morningChecklist, 
-      Date: getDateOnly(this.morningChecklist.date.toString())
+      date: getDateOnly(this.morningChecklist.date.toString())
     };
     this.checklistService.addMorningChecklist(values).subscribe({
       next: () => {

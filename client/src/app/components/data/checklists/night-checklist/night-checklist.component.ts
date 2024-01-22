@@ -26,7 +26,7 @@ export class NightChecklistComponent implements OnInit {
 
   submitNightChecklist() {
     const values = { ...this.nightChecklist, 
-      Date: getDateOnly(this.nightChecklist.date.toString())
+      date: getDateOnly(this.nightChecklist.date.toString())
     };
     this.checklistService.addNightChecklist(values).subscribe({
       next: () => {

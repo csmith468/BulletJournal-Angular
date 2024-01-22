@@ -50,7 +50,6 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    console.log(this.navOpen)
     // this.setNavItems();
   }
 
