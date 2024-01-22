@@ -1,0 +1,10 @@
+<div [formGroup]="form">
+    <div class="custom-control custom-switch mb-2">
+        <input class="custom-control-input"
+            type="checkbox"
+            [id]="question.key"
+            [formControlName]="question.key"
+        >
+        <label class="custom-control-label" [for]="question.key">{{question.label}}</label>
+    </div>
+</div>

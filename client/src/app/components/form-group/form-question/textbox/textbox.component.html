@@ -1,0 +1,11 @@
+<div [formGroup]="form">
+    <div class="form-floating mb-2">
+        <input 
+            class="form-control" 
+            type="text"
+            [id]="question.key"
+            [formControlName]="question.key"
+        >
+        <label [attr.for]="question.key">{{question.label}}</label>
+    </div>
+</div>

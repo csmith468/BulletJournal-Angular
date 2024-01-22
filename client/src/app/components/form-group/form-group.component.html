@@ -1,7 +1,25 @@
 <div>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
         <div *ngFor="let question of questions" class="form-row">
-            <app-form-question [question]="question" [form]="form"></app-form-question>
+            
+            <div [ngSwitch]="question.type">
+
+                <div *ngSwitchCase="'text'">
+                    <app-textbox [question]="question" [form]="form"></app-textbox>
+                </div>
+
+                <div *ngSwitchCase="'dropdown'">
+                    <app-dropdown [question]="question" [form]="form"></app-dropdown>
+                </div>  
+
+                <div *ngSwitchCase="'switch'">
+                    <app-switch [question]="question" [form]="form"></app-switch>
+                </div>
+
+                <div *ngSwitchCase="'date'" >
+                    <app-date-picker [question]="question" [form]="form"></app-date-picker>
+                </div>
+            </div>
         </div>
 
         <div class="form-row mt-3">

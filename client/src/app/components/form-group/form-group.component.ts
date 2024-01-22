@@ -4,6 +4,10 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
 import { QuestionControlService } from 'src/app/helpers/services/question-control.service';
 import { FormQuestionComponent } from './form-question/form-question.component';
+import { DropdownComponent } from './form-question/dropdown/dropdown.component';
+import { SwitchComponent } from './form-question/switch/switch.component';
+import { TextboxComponent } from './form-question/textbox/textbox.component';
+import { DatePickerComponent } from './form-question/date-picker/date-picker.component';
 
 @Component({
   standalone: true,
@@ -11,17 +15,18 @@ import { FormQuestionComponent } from './form-question/form-question.component';
   templateUrl: './form-group.component.html',
   styleUrls: ['./form-group.component.css'],
   providers: [QuestionControlService],
-  imports: [CommonModule, FormQuestionComponent, ReactiveFormsModule],
+  imports: [CommonModule, FormQuestionComponent, ReactiveFormsModule, 
+    TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent],
 })
 export class FormGroupComponent implements OnInit {
-  @Input() questions: QuestionBase<string>[] | null = [];
+  @Input() questions: QuestionBase<string | boolean>[] | null = [];
   form!: FormGroup;
   payload = '';
 
   constructor(private qcs: QuestionControlService) { }
 
   ngOnInit(): void {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | boolean>[]);
   }
 
   onSubmit() {

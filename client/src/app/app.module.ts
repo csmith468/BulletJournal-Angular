@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/layout/home/home.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { TextInputComponent } from './components/layout/forms/text-input/text-input.component';
-import { DatePickerComponent } from './components/layout/forms/date-picker/date-picker.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { MorningChecklistComponent } from './components/data/checklists/morning-checklist/morning-checklist.component';
@@ -35,8 +34,6 @@ import { ProfileComponent } from './components/account/profile/profile.component
 import { DropdownInputComponent } from './components/layout/forms/dropdown-input/dropdown-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NightFormComponent } from './components/data/checklists/night-form/night-form.component';
-import { TextboxComponent } from './components/form-group/form-question/textbox/textbox.component';
-import { SwitchComponent } from './components/form-group/form-question/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +41,6 @@ import { SwitchComponent } from './components/form-group/form-question/switch/sw
     HomeComponent,
     RegisterComponent,
     TextInputComponent,
-    DatePickerComponent,
     NotFoundComponent,
     MorningChecklistComponent,
     NightChecklistComponent,
@@ -59,9 +55,7 @@ import { SwitchComponent } from './components/form-group/form-question/switch/sw
     AboutComponent,
     ProfileComponent,
     DropdownInputComponent,
-    NightFormComponent,
-    TextboxComponent,
-    SwitchComponent
+    NightFormComponent
   ],
   imports: [
     BrowserModule,

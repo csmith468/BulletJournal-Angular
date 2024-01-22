@@ -7,6 +7,9 @@ import { MorningChecklist } from '../../models/morningChecklist';
 import { map, of } from 'rxjs';
 import { QuestionBase } from '../../models/form-models/questionBase';
 import { SwitchQuestion } from '../../models/form-models/switchQuestion';
+import { TextboxQuestion } from '../../models/form-models/textboxQuestion';
+import { DropdownQuestion } from '../../models/form-models/dropdownQuestion';
+import { DateQuestion } from '../../models/form-models/dateQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -45,10 +48,18 @@ export class MorningService {
 
   getQuestions() {
     const questions: QuestionBase<string | boolean>[] = [
+      new DateQuestion({
+        key: 'date',
+        label: 'Date',
+        required: true,
+        order: 0
+      }),
+
       new SwitchQuestion({
         key: 'glassOfWater',
         label: 'Did you have a glass of water?',
-        order: 2
+        value: false,
+        order: 3
       }),
 
       new SwitchQuestion({
@@ -72,25 +83,25 @@ export class MorningService {
         order: 5
       }),
       
-      // new DropdownQuestion({
-      //   key: 'brave',
-      //   label: 'Bravery Rating',
-      //   options: [
-      //     {key: 'solid',  value: 'Solid'},
-      //     {key: 'great',  value: 'Great'},
-      //     {key: 'good',   value: 'Good'},
-      //     {key: 'unproven', value: 'Unproven'}
-      //   ],
-      //   order: 3
-      // }),
+      new DropdownQuestion({
+        key: 'brave',
+        label: 'Bravery Rating',
+        options: [
+          {key: 'solid',  value: 'Solid'},
+          {key: 'great',  value: 'Great'},
+          {key: 'good',   value: 'Good'},
+          {key: 'unproven', value: 'Unproven'}
+        ],
+        order: 2
+      }),
 
-      // new TextboxQuestion({
-      //   key: 'firstName',
-      //   label: 'First name',
-      //   value: 'Bombasto',
-      //   required: true,
-      //   order: 1
-      // }),
+      new TextboxQuestion({
+        key: 'firstName',
+        label: 'First name',
+        value: 'Bombasto',
+        required: true,
+        order: 1
+      }),
     ];
     console.log(questions)
 
