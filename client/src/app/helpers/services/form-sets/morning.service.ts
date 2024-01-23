@@ -10,6 +10,7 @@ import { SwitchQuestion } from '../../models/form-models/switchQuestion';
 import { TextboxQuestion } from '../../models/form-models/textboxQuestion';
 import { DropdownQuestion } from '../../models/form-models/dropdownQuestion';
 import { DateQuestion } from '../../models/form-models/dateQuestion';
+import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
 
 @Injectable({
   providedIn: 'root'
@@ -47,10 +48,11 @@ export class MorningService {
 
 
   getQuestions() {
-    const questions: QuestionBase<string | boolean>[] = [
+    const questions: QuestionBase<string | boolean | Date>[] = [
       new DateQuestion({
         key: 'date',
         label: 'Date',
+        value: new Date('2024-01-15T00:00:00'),
         required: true,
         order: 0
       }),
@@ -83,27 +85,26 @@ export class MorningService {
         order: 5
       }),
       
-      new DropdownQuestion({
-        key: 'brave',
-        label: 'Bravery Rating',
-        options: [
-          {key: 'solid',  value: 'Solid'},
-          {key: 'great',  value: 'Great'},
-          {key: 'good',   value: 'Good'},
-          {key: 'unproven', value: 'Unproven'}
-        ],
-        order: 2
-      }),
+      // new DropdownQuestion({
+      //   key: 'brave',
+      //   label: 'Bravery Rating',
+      //   options: [
+      //     {key: 'solid',  value: 'Solid'},
+      //     {key: 'great',  value: 'Great'},
+      //     {key: 'good',   value: 'Good'},
+      //     {key: 'unproven', value: 'Unproven'}
+      //   ],
+      //   order: 2
+      // }),
 
-      new TextboxQuestion({
-        key: 'firstName',
-        label: 'First name',
-        value: 'Bombasto',
-        required: true,
-        order: 1
-      }),
+      // new TextboxQuestion({
+      //   key: 'firstName',
+      //   label: 'First name',
+      //   value: 'Bombasto',
+      //   required: true,
+      //   order: 1
+      // }),
     ];
-    console.log(questions)
 
     return of(questions.sort((a, b) => a.order - b.order));
   }

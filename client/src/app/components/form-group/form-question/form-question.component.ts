@@ -14,7 +14,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
   imports: [CommonModule, ReactiveFormsModule, TextboxComponent, SwitchComponent, DropdownComponent],
 })
 export class FormQuestionComponent {
-  @Input() question!: QuestionBase<string | boolean>;
+  @Input() question!: QuestionBase<string | boolean | Date>;
   @Input() form!: FormGroup;
 
   get isValid() {

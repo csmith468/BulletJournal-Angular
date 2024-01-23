@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { FormGroupComponent } from 'src/app/components/form-group/form-group.component';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
@@ -15,8 +16,23 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
 })
 export class MorningFormComponent {
   questions$: Observable<QuestionBase<any>[]>;
+  payload:string = "";
 
-  constructor(morningService: MorningService) {
+  constructor(private morningService: MorningService, private router: Router) {
     this.questions$ = morningService.getQuestions();
   }
+
+  getData(data:string) {
+    this.payload = data;
+    this.submitMorningChecklist();
+  }
+
+
+  submitMorningChecklist() {
+    this.morningService.addMorningChecklist(this.payload).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/checklists');
+      }
+    });
+  };
 }

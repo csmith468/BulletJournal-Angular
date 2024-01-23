@@ -11,7 +11,7 @@ import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class TextboxComponent {
-  @Input() question!: QuestionBase<string | boolean>;
+  @Input() question!: QuestionBase<string | boolean | Date>;
   @Input() form!: FormGroup;
 
   get isValid() {
