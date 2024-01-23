@@ -1,14 +1,15 @@
 import { Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { DropdownItem } from 'src/app/helpers/models/dropdownItem';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css']
+  selector: 'app-dropdown-register',
+  templateUrl: './dropdown-register.component.html',
+  styleUrls: ['./dropdown-register.component.css']
 })
-export class TextInputComponent implements ControlValueAccessor {
+export class DropdownInputComponent implements ControlValueAccessor {
   @Input() label = '';
-  @Input() type = 'text';
+  @Input() dropdownItems: DropdownItem[] = [];
 
   constructor(@Self() public ngControl: NgControl) { 
     this.ngControl.valueAccessor = this;
@@ -26,5 +27,4 @@ export class TextInputComponent implements ControlValueAccessor {
   get control(): FormControl {
     return this.ngControl.control as FormControl;
   }
-  
 }

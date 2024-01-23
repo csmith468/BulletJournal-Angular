@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/layout/home/home.component';
 import { RegisterComponent } from './components/account/register/register.component';
-import { TextInputComponent } from './components/layout/forms/text-input/text-input.component';
+import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -28,7 +28,7 @@ import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
-import { DropdownInputComponent } from './components/layout/forms/dropdown-input/dropdown-input.component';
+import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
