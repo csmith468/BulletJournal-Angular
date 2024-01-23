@@ -23,8 +23,7 @@ export class MorningService {
   constructor(private http: HttpClient) { }
 
   addMorningChecklist(model: any) {
-    return this.http.post<MorningChecklist>(
-      this.baseUrl + 'checklist/addMorning', model);
+    return this.http.post(this.baseUrl + 'checklist/addMorning', model);
   }
 
   getMorningChecklist(page?: number, itemsPerPage?: number) {
@@ -52,7 +51,8 @@ export class MorningService {
       new DateQuestion({
         key: 'date',
         label: 'Date',
-        value: new Date('2024-01-15T00:00:00'),
+        // value: new Date('2024-01-15T00:00:00'),
+        value: new Date(),
         required: true,
         order: 0
       }),
@@ -61,28 +61,28 @@ export class MorningService {
         key: 'glassOfWater',
         label: 'Did you have a glass of water?',
         value: false,
-        order: 3
+        order: 1
       }),
 
       new SwitchQuestion({
         key: 'meds',
         label: 'Did you take your meds?',
         value: false,
-        order: 3
+        order: 2
       }),
 
       new SwitchQuestion({
         key: 'vitamins',
         label: 'Did you take your vitamins?',
         value: false,
-        order: 4
+        order: 3
       }),
 
       new SwitchQuestion({
         key: 'breakfast',
         label: 'Did you eat breakfast?',
         value: false,
-        order: 5
+        order: 4
       }),
       
       // new DropdownQuestion({

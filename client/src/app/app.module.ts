@@ -14,10 +14,7 @@ import { RegisterComponent } from './components/account/register/register.compon
 import { TextInputComponent } from './components/layout/forms/text-input/text-input.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { MorningChecklistComponent } from './components/data/checklists/morning-checklist/morning-checklist.component';
-import { NightChecklistComponent } from './components/data/checklists/night-checklist/night-checklist.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { SwitchInputComponent } from './components/layout/forms/switch-input/switch-input.component';
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
 import { JwtInterceptor } from './helpers/interceptors/jwt.interceptor';
 import { MorningTableComponent } from './components/data/tables/morning-table/morning-table.component';
@@ -33,7 +30,6 @@ import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
 import { DropdownInputComponent } from './components/layout/forms/dropdown-input/dropdown-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NightFormComponent } from './components/data/checklists/night-form/night-form.component';
 
 @NgModule({
   declarations: [
@@ -42,9 +38,6 @@ import { NightFormComponent } from './components/data/checklists/night-form/nigh
     RegisterComponent,
     TextInputComponent,
     NotFoundComponent,
-    MorningChecklistComponent,
-    NightChecklistComponent,
-    SwitchInputComponent,
     MorningTableComponent,
     SidenavComponent,
     BodyComponent,
@@ -54,8 +47,7 @@ import { NightFormComponent } from './components/data/checklists/night-form/nigh
     LoginComponent,
     AboutComponent,
     ProfileComponent,
-    DropdownInputComponent,
-    NightFormComponent
+    DropdownInputComponent
   ],
   imports: [
     BrowserModule,

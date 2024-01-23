@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
 import { QuestionControlService } from 'src/app/helpers/services/question-control.service';
-import { FormQuestionComponent } from './form-question/form-question.component';
 import { DropdownComponent } from './form-question/dropdown/dropdown.component';
 import { SwitchComponent } from './form-question/switch/switch.component';
 import { TextboxComponent } from './form-question/textbox/textbox.component';
@@ -16,7 +15,7 @@ import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
   templateUrl: './form-group.component.html',
   styleUrls: ['./form-group.component.css'],
   providers: [QuestionControlService],
-  imports: [CommonModule, FormQuestionComponent, ReactiveFormsModule, 
+  imports: [CommonModule, ReactiveFormsModule, 
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent],
 })
 export class FormGroupComponent implements OnInit {
@@ -32,8 +31,6 @@ export class FormGroupComponent implements OnInit {
   }
 
   onSubmit() {
-    this.payload = JSON.stringify(this.form.getRawValue());
-
     // convert date to correct format
     var payloadJSON = JSON.parse(JSON.stringify(this.form.getRawValue()));
     if (payloadJSON['date']) {

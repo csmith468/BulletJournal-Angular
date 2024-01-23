@@ -9,4 +9,8 @@ export interface NightTable {
     checkEmails: boolean;
     checkTexts: boolean;
     mouthguard: boolean;
+    fruits: boolean;
+    vegetables: boolean;
+    read: boolean;
+    wentOutside: boolean;
 }
