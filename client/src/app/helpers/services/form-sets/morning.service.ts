@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { MorningTable } from '../../models/morningTable';
-import { PaginatedResult } from '../../models/pagination';
+import { MorningTable } from '../../models/data-models/morningTable';
+import { PaginatedResult } from '../../models/data-models/pagination';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { MorningChecklist } from '../../models/morningChecklist';
+import { MorningChecklist } from '../../models/data-models/morningChecklist';
 import { map, of } from 'rxjs';
 import { QuestionBase } from '../../models/form-models/questionBase';
-import { SwitchQuestion } from '../../models/form-models/switchQuestion';
+import { SwitchQuestion, createSwitchQuestion } from '../../models/form-models/switchQuestion';
 import { TextboxQuestion } from '../../models/form-models/textboxQuestion';
-import { DropdownQuestion } from '../../models/form-models/dropdownQuestion';
-import { DateQuestion } from '../../models/form-models/dateQuestion';
+import { DropdownQuestion, createDropdownQuestion } from '../../models/form-models/dropdownQuestion';
+import { DateQuestion, createDateQuestion } from '../../models/form-models/dateQuestion';
 import { getDate } from 'ngx-bootstrap/chronos/utils/date-getters';
+import { NightChecklist } from '../../models/data-models/nightChecklist';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class MorningService {
     return this.http.post(this.baseUrl + 'checklist/addMorning', model);
   }
 
-  getMorningChecklist(page?: number, itemsPerPage?: number) {
+  getMorningTable(page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 
     if (page && itemsPerPage) {
@@ -45,67 +46,23 @@ export class MorningService {
       ))
   }
 
+  getMorningFormById(id: number) {
+    var morningItems = this.http.get<MorningChecklist[]>(this.baseUrl + 'checklist/getMyMorningChecklistById/' + id.toString());
+    // console.log(morningItems)
+    // return morningItems;
+  }
 
-  getQuestions() {
-    const questions: QuestionBase<string | boolean | Date>[] = [
-      new DateQuestion({
-        key: 'date',
-        label: 'Date',
-        // value: new Date('2024-01-15T00:00:00'),
-        value: new Date(),
-        required: true,
-        order: 0
-      }),
+  
 
-      new SwitchQuestion({
-        key: 'glassOfWater',
-        label: 'Did you have a glass of water?',
-        value: false,
-        order: 1
-      }),
-
-      new SwitchQuestion({
-        key: 'meds',
-        label: 'Did you take your meds?',
-        value: false,
-        order: 2
-      }),
-
-      new SwitchQuestion({
-        key: 'vitamins',
-        label: 'Did you take your vitamins?',
-        value: false,
-        order: 3
-      }),
-
-      new SwitchQuestion({
-        key: 'breakfast',
-        label: 'Did you eat breakfast?',
-        value: false,
-        order: 4
-      }),
-      
-      // new DropdownQuestion({
-      //   key: 'brave',
-      //   label: 'Bravery Rating',
-      //   options: [
-      //     {key: 'solid',  value: 'Solid'},
-      //     {key: 'great',  value: 'Great'},
-      //     {key: 'good',   value: 'Good'},
-      //     {key: 'unproven', value: 'Unproven'}
-      //   ],
-      //   order: 2
-      // }),
-
-      // new TextboxQuestion({
-      //   key: 'firstName',
-      //   label: 'First name',
-      //   value: 'Bombasto',
-      //   required: true,
-      //   order: 1
-      // }),
+  getQuestions(morning?: MorningChecklist) {
+    const questions: QuestionBase<any>[] = [
+      createDateQuestion('date', 'Date', true, morning),
+      createSwitchQuestion('glassOfWater', 'Did you have a glass of water?', morning),
+      createSwitchQuestion('meds', 'Did you take your meds?', morning),
+      createSwitchQuestion('vitamins', 'Did you take your vitamins?', morning),
+      createSwitchQuestion('breakfast', 'Did you eat breakfast?', morning)
     ];
 
-    return of(questions.sort((a, b) => a.order - b.order));
+    return of(questions); // .sort((a, b) => a.order - b.order));
   }
 }

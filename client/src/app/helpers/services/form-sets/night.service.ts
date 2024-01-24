@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { NightChecklist } from '../../models/nightChecklist';
-import { PaginatedResult } from '../../models/pagination';
-import { NightTable } from '../../models/nightTable';
+import { NightChecklist } from '../../models/data-models/nightChecklist';
+import { PaginatedResult } from '../../models/data-models/pagination';
+import { NightTable } from '../../models/data-models/nightTable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, of } from 'rxjs';
-import { SwitchQuestion } from '../../models/form-models/switchQuestion';
+import { SwitchQuestion, createSwitchQuestion } from '../../models/form-models/switchQuestion';
 import { QuestionBase } from '../../models/form-models/questionBase';
-import { DateQuestion } from '../../models/form-models/dateQuestion';
+import { DateQuestion, createDateQuestion } from '../../models/form-models/dateQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class NightService {
   }
 
 
-  getNightChecklist(page?: number, itemsPerPage?: number) {
+  getNightTable(page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 
     if (page && itemsPerPage) {
@@ -45,101 +45,23 @@ export class NightService {
 
 
 
-  getQuestions() {
-    const questions: QuestionBase<string | boolean | Date>[] = [
-      new DateQuestion({
-        key: 'date',
-        label: 'Date',
-        value: new Date(),
-        required: true,
-        order: 0
-      }),
-
-      new SwitchQuestion({
-        key: 'glassOfWater',
-        label: 'Did you have a glass of water?',
-        value: false,
-        order: 3
-      }),
-
-      new SwitchQuestion({
-        key: 'meds',
-        label: 'Did you take your meds?',
-        value: false,
-        order: 3
-      }),
-
-      new SwitchQuestion({
-        key: 'vitamins',
-        label: 'Did you take your vitamins?',
-        value: false,
-        order: 4
-      }),
-
-      new SwitchQuestion({
-        key: 'washFace',
-        label: 'Did you wash your face?',
-        value: false,
-        order: 5
-      }),
-
-      new SwitchQuestion({
-        key: 'floss',
-        label: 'Did you floss?',
-        value: false,
-        order: 6
-      }),
-
-      new SwitchQuestion({
-        key: 'checkEmails',
-        label: 'Did you check your emails?',
-        value: false,
-        order: 7
-      }),
-
-      new SwitchQuestion({
-        key: 'checkTexts',
-        label: 'Did you check your texts?',
-        value: false,
-        order: 8
-      }),
-
-      new SwitchQuestion({
-        key: 'mouthguard',
-        label: 'Did you wear your retainer/mouthguard?',
-        value: false,
-        order: 9
-      }),
-
-      new SwitchQuestion({
-        key: 'fruits',
-        label: 'Did you eat fruit?',
-        value: false,
-        order: 10
-      }),
-
-      new SwitchQuestion({
-        key: 'vegetables',
-        label: 'Did you eat vegetables?',
-        value: false,
-        order: 11
-      }),
-
-      new SwitchQuestion({
-        key: 'read',
-        label: 'Did you read?',
-        value: false,
-        order: 12
-      }),
-
-      new SwitchQuestion({
-        key: 'wentOutside',
-        label: 'Did you go outside?',
-        value: false,
-        order: 13
-      }),
+  getQuestions(night?: NightChecklist) {
+    const questions: QuestionBase<any>[] = [
+      createDateQuestion('date', 'Date', true),
+      createSwitchQuestion('glassOfWater', 'Did you have a glass of water?'),
+      createSwitchQuestion('meds', 'Did you take your meds?'),
+      createSwitchQuestion('vitamins', 'Did you take your vitamins?'),
+      createSwitchQuestion('washFace', 'Did you wash your face?'),
+      createSwitchQuestion('floss', 'Did you floss?'),
+      createSwitchQuestion('checkEmails', 'Did you check your emails?'),
+      createSwitchQuestion('checkTexts', 'Did you check your texts?'),
+      createSwitchQuestion('mouthguard', 'Did you wear your retainer/mouthguard?'),
+      createSwitchQuestion('fruits', 'Did you eat fruit?'),
+      createSwitchQuestion('vegetables', 'Did you eat vegetables?'),
+      createSwitchQuestion('read', 'Did you read?'),
+      createSwitchQuestion('wentOutside', 'Did you go outside?')
     ];
 
-    return of(questions.sort((a, b) => a.order - b.order));
+    return of(questions); //.sort((a, b) => a.order - b.order));
   }
 }

@@ -20,6 +20,7 @@
 
 
   <div [formGroup]="form">
+    <div class="input-group">
     <div class="form-floating mb-2">
     <input type="text"
         [id]="question.key"
@@ -34,18 +35,20 @@
         [class.is-invalid]="!isValid"
         [class.is-valid]="isValid"
     >
-    <span class="input-group-btn">
-    <button class="btn btn-default btn-date-picker"
+    <span >
+    <!-- <button class="btn btn-default btn-date-picker"
         type="button"
         (click)="dp.toggle()"
         [attr.aria-expanded]="dp.isOpen">
         <i class="fa fa-calendar" aria-hidden="true"></i>
-    </button>
+    </button> -->
     </span>
     <div class="invalid-feedback" *ngIf="!isValid">
       Please enter a {{ question.label }}.
     </div>
     <div class="valid-feedback" *ngIf="isValid"></div>
     <label [for]="question.key">{{question.label}}</label>
+
+  </div>
 </div>
 </div>  

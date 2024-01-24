@@ -11,7 +11,11 @@ import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class DropdownComponent {
-  @Input() question!: QuestionBase<string | boolean | Date>;
+  @Input() question!: QuestionBase<any>;
   @Input() form!: FormGroup;
+
+  get isValid() {
+    return this.form.controls[this.question.key].valid;
+  }
 
 }

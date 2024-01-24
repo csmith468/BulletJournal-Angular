@@ -19,7 +19,7 @@ import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent],
 })
 export class FormGroupComponent implements OnInit {
-  @Input() questions: QuestionBase<string | boolean | Date>[] | null = [];
+  @Input() questions: QuestionBase<any>[] | null = [];
   form!: FormGroup;
   payload = '';
   @Output() payloadOutput = new EventEmitter<string>();
@@ -27,7 +27,8 @@ export class FormGroupComponent implements OnInit {
   constructor(private qcs: QuestionControlService) { }
 
   ngOnInit(): void {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string | boolean | Date>[]);
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<any>[]);
+    this.payload = JSON.stringify(this.form.getRawValue());
   }
 
   onSubmit() {
@@ -47,6 +48,6 @@ export class FormGroupComponent implements OnInit {
     }
 
     this.payload = JSON.stringify(payloadJSON);
-    this.payloadOutput.emit(payloadJSON);
+    // this.payloadOutput.emit(payloadJSON);
   }
 }

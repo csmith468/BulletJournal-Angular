@@ -14,22 +14,22 @@ import { NgbAlertModule, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstra
   imports: [CommonModule, ReactiveFormsModule, BsDatepickerModule]
 })
 export class DatePickerComponent implements OnInit {
-  @Input() question!: QuestionBase<string | boolean | Date>;
+  @Input() question!: QuestionBase<any>;
   @Input() form!: FormGroup;
 
   bsConfig = {
-    dateInputFormat: 'MM-DD-YYYY',
-    containerClass: 'theme-dark-blue',
+    dateInputFormat: 'MMM DD, YYYY',
+    containerClass: 'theme-blue',
     showClearButton: true,
     clearPosition: 'right',
     showWeekNumbers: false
+    // isAnimated: true
   };
 
   bsValue:Date = new Date();
 
   ngOnInit(): void {
     this.bsValue = <Date>this.question.value;
-    console.log(this.bsValue);
   }
 
   constructor() {
