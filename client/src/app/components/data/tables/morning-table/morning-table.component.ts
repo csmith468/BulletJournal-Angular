@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
 import { MorningEntry } from 'src/app/helpers/models/data-models/morningEntry';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
@@ -16,7 +15,6 @@ export class MorningTableComponent implements OnInit {
   columns: Array<keyof MorningEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
   pageNumber = 1;
   pageSize = 15;
-  @Output() morningEntry = new EventEmitter<MorningEntry>();
 
   constructor(private morningService: MorningService, private router: Router) {
 
@@ -38,10 +36,7 @@ export class MorningTableComponent implements OnInit {
   }
 
   editChecklist(row: MorningEntry) {
-    this.morningService.setMorningEntry(row);
-    this.morningService.currentMorningEntry$.pipe(take(1)).subscribe({
-      next: entry => this.router.navigateByUrl('/checklists/morning/edit')
-    });
+    this.router.navigateByUrl('/checklists/morning/edit/' + row.morningChecklistID.toString());
   }
 
 }

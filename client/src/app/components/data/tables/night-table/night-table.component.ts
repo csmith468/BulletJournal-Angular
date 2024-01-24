@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NightEntry } from 'src/app/helpers/models/data-models/nightEntry';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { NightService } from 'src/app/helpers/services/form-sets/night.service';
@@ -12,11 +13,11 @@ export class NightTableComponent implements OnInit {
   nightTable: NightEntry[] = [];
   pagination: Pagination | undefined;
   columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 
-    'checkEmails', 'checkTexts', 'mouthguard']
+    'checkEmails', 'checkTexts', 'mouthguard', 'fruits', 'vegetables', 'read', 'wentOutside']
   pageNumber = 1;
   pageSize = 15;
 
-  constructor(private nightService: NightService) {
+  constructor(private nightService: NightService, private router: Router) {
 
   }
 
@@ -35,4 +36,7 @@ export class NightTableComponent implements OnInit {
     })
   }
 
+  editChecklist(row: NightEntry) {
+    this.router.navigateByUrl('/checklists/night/edit/' + row.nightChecklistID.toString());
+  }
 }

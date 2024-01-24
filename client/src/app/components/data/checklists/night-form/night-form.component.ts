@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroupComponent } from 'src/app/components/form-group/form-group.component';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
@@ -18,17 +18,22 @@ export class NightFormComponent {
   questions$: Observable<QuestionBase<any>[]>;
   payload: string = "";
 
-  constructor(private nightService: NightService, private router: Router) {
-    this.questions$ = nightService.getQuestions();
+  constructor(private nightService: NightService, private router: Router, private route: ActivatedRoute) {
+    console.log(this.route.snapshot.data['night'])
+    if (this.route.snapshot.data['night']) {
+      this.questions$ = this.nightService.getQuestions(this.route.snapshot.data['night']);
+    } else {
+      this.questions$ = this.nightService.getQuestions();
+    }
   }
 
   getSubmittedFormData(data: string) {
     this.payload = data;
-    this.submitNightChecklist();
+    this.submitNightEntry();
   }
 
-  submitNightChecklist() {
-    this.nightService.addNightChecklist(this.payload).subscribe({
+  submitNightEntry() {
+    this.nightService.addNightEntry(this.payload).subscribe({
       next: () => {
         this.router.navigateByUrl('/checklists');
       }

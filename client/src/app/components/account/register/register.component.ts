@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { DropdownItem } from 'src/app/helpers/models/dropdownItem';
 import { TimezoneLocation } from 'src/app/helpers/models/data-models/timezoneLocation';
 import { AccountService } from 'src/app/helpers/services/account.service';
