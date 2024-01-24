@@ -10,9 +10,10 @@ export class QuestionControlService {
     const group: any = {};
 
     questions.forEach(question => {
+      var value = (question.controlType === 'checkbox') ? false : '';
       group[question.key] = question.required 
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
+        ? new FormControl(question.value || value, Validators.required)
+        : new FormControl(question.value || value);
     });
 
     return new FormGroup(group);

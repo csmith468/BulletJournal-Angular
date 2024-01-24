@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { MorningTable } from '../../models/data-models/morningTable';
+import { MorningEntry } from '../../models/data-models/morningEntry';
 import { PaginatedResult } from '../../models/data-models/pagination';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MorningChecklist } from '../../models/data-models/morningChecklist';
-import { map, of } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
 import { QuestionBase } from '../../models/form-models/questionBase';
 import { SwitchQuestion, createSwitchQuestion } from '../../models/form-models/switchQuestion';
 import { TextboxQuestion } from '../../models/form-models/textboxQuestion';
@@ -18,8 +18,11 @@ import { NightChecklist } from '../../models/data-models/nightChecklist';
 })
 export class MorningService {
   baseUrl = environment.apiUrl;
-  morningTable: MorningTable[] = [];
-  paginatedResultMorning: PaginatedResult<MorningTable[]> = new PaginatedResult<MorningTable[]>;
+  morningTable: MorningEntry[] = [];
+  paginatedResultMorning: PaginatedResult<MorningEntry[]> = new PaginatedResult<MorningEntry[]>;
+  // currentMorningEntry: MorningEntry | undefined;
+  private currentMorningEntry = new BehaviorSubject<MorningEntry | null>(null);
+  currentMorningEntry$ = this.currentMorningEntry.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -35,7 +38,7 @@ export class MorningService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<MorningTable[]>(this.baseUrl + 'checklist/getMyMorningChecklists',
+    return this.http.get<MorningEntry[]>(this.baseUrl + 'checklist/getMyMorningChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultMorning.result = response.body;
@@ -46,21 +49,21 @@ export class MorningService {
       ))
   }
 
-  getMorningFormById(id: number) {
-    var morningItems = this.http.get<MorningChecklist[]>(this.baseUrl + 'checklist/getMyMorningChecklistById/' + id.toString());
-    // console.log(morningItems)
-    // return morningItems;
+  getMorningEntryById(id: string) {
+    return this.http.get<MorningEntry>(this.baseUrl + 'checklist/getMyMorningChecklistById/' + id);
   }
 
-  
+  setMorningEntry(morningEntry?: MorningEntry) {
+    this.currentMorningEntry.next((morningEntry) ? morningEntry : null);
+  }
 
-  getQuestions(morning?: MorningChecklist) {
+  getQuestions(morning?: MorningEntry) {
     const questions: QuestionBase<any>[] = [
-      createDateQuestion('date', 'Date', true, morning),
-      createSwitchQuestion('glassOfWater', 'Did you have a glass of water?', morning),
-      createSwitchQuestion('meds', 'Did you take your meds?', morning),
-      createSwitchQuestion('vitamins', 'Did you take your vitamins?', morning),
-      createSwitchQuestion('breakfast', 'Did you eat breakfast?', morning)
+      createDateQuestion('date', 'Date', true, this.currentMorningEntry),
+      createSwitchQuestion('glassOfWater', 'Did you have a glass of water?', this.currentMorningEntry),
+      createSwitchQuestion('meds', 'Did you take your meds?', this.currentMorningEntry),
+      createSwitchQuestion('vitamins', 'Did you take your vitamins?', this.currentMorningEntry),
+      createSwitchQuestion('breakfast', 'Did you eat breakfast?', this.currentMorningEntry)
     ];
 
     return of(questions); // .sort((a, b) => a.order - b.order));

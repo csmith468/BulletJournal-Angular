@@ -1,4 +1,4 @@
-export interface MorningTable {
+export interface MorningEntry {
     morningChecklistID: number;
     userID: number;
     date: string;
@@ -7,3 +7,5 @@ export interface MorningTable {
     vitamins: boolean;
     breakfast: boolean;
 }
+
+

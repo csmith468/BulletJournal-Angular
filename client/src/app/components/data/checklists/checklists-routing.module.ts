@@ -4,8 +4,10 @@ import { MorningFormComponent } from './morning-form/morning-form.component';
 import { NightFormComponent } from './night-form/night-form.component';
 
 const routes: Routes = [
-  {path: 'morning', component: MorningFormComponent},
-  {path: 'night', component: NightFormComponent},
+  {path: 'morning/edit', component: MorningFormComponent},
+  {path: 'morning/add', component: MorningFormComponent},
+  {path: 'night/edit', component: NightFormComponent},
+  {path: 'night/add', component: NightFormComponent},
 ];
 
 @NgModule({
