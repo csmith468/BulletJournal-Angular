@@ -22,7 +22,7 @@ export class NightFormComponent {
     this.questions$ = nightService.getQuestions();
   }
 
-  getData(data: string) {
+  getSubmittedFormData(data: string) {
     this.payload = data;
     this.submitNightChecklist();
   }

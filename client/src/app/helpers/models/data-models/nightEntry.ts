@@ -1,4 +1,4 @@
-export interface NightTable {
+export interface NightEntry {
     nightChecklistID: number;
     date: Date;
     glassOfWater: boolean;

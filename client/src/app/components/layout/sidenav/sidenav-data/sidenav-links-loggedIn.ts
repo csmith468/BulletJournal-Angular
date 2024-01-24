@@ -7,12 +7,12 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
         label: 'Checklists',
         items: [
             {
-                routeLink: 'checklists/morning',
+                routeLink: 'checklists/morning/add',
                 icon: 'fa fa-sun-o',
                 label: 'Add Morning',
             },
             {
-                routeLink: 'checklists/night',
+                routeLink: 'checklists/night/add',
                 icon: 'fa fa-moon-o',
                 label: 'Add Night',
             },

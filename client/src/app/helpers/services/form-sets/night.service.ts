@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { NightChecklist } from '../../models/data-models/nightChecklist';
 import { PaginatedResult } from '../../models/data-models/pagination';
-import { NightTable } from '../../models/data-models/nightTable';
+import { NightEntry } from '../../models/data-models/nightEntry';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, of } from 'rxjs';
-import { SwitchQuestion, createSwitchQuestion } from '../../models/form-models/switchQuestion';
+import { createSwitchQuestion } from '../../models/form-models/switchQuestion';
 import { QuestionBase } from '../../models/form-models/questionBase';
-import { DateQuestion, createDateQuestion } from '../../models/form-models/dateQuestion';
+import { createDateQuestion } from '../../models/form-models/dateQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ import { DateQuestion, createDateQuestion } from '../../models/form-models/dateQ
 export class NightService {
   baseUrl = environment.apiUrl;
   nightChecklists: NightChecklist[] = [];
-  paginatedResultNight: PaginatedResult<NightTable[]> = new PaginatedResult<NightTable[]>;
+  paginatedResultNight: PaginatedResult<NightEntry[]> = new PaginatedResult<NightEntry[]>;
 
   constructor(private http: HttpClient) { 
   }
@@ -32,7 +32,7 @@ export class NightService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<NightTable[]>(this.baseUrl + 'checklist/getMyNightChecklists',
+    return this.http.get<NightEntry[]>(this.baseUrl + 'checklist/getMyNightChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultNight.result = response.body;

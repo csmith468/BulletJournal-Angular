@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NightTable } from 'src/app/helpers/models/data-models/nightTable';
+import { NightEntry } from 'src/app/helpers/models/data-models/nightEntry';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 
@@ -9,9 +9,9 @@ import { NightService } from 'src/app/helpers/services/form-sets/night.service';
   styleUrls: ['./night-table.component.css']
 })
 export class NightTableComponent implements OnInit {
-  nightTable: NightTable[] = [];
+  nightTable: NightEntry[] = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof NightTable> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 
+  columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 
     'checkEmails', 'checkTexts', 'mouthguard']
   pageNumber = 1;
   pageSize = 15;
@@ -27,9 +27,8 @@ export class NightTableComponent implements OnInit {
   loadData() {
     this.nightService.getNightTable(this.pageNumber, this.pageSize).subscribe({
       next: response => {
-        console.log(<NightTable>(response.result!.at(0)))
         if (response.result && response.pagination) {
-          this.nightTable = <NightTable[]>response.result;
+          this.nightTable = <NightEntry[]>response.result;
           this.pagination = response.pagination;
         }
       }

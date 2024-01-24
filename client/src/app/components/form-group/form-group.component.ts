@@ -48,6 +48,6 @@ export class FormGroupComponent implements OnInit {
     }
 
     this.payload = JSON.stringify(payloadJSON);
-    // this.payloadOutput.emit(payloadJSON);
+    this.payloadOutput.emit(payloadJSON);
   }
 }
