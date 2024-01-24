@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NightTable } from 'src/app/helpers/models/nightTable';
-import { Pagination } from 'src/app/helpers/models/pagination';
+import { NightTable } from 'src/app/helpers/models/data-models/nightTable';
+import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class NightTableComponent implements OnInit {
   }
 
   loadData() {
-    this.nightService.getNightChecklist(this.pageNumber, this.pageSize).subscribe({
+    this.nightService.getNightTable(this.pageNumber, this.pageSize).subscribe({
       next: response => {
         console.log(<NightTable>(response.result!.at(0)))
         if (response.result && response.pagination) {

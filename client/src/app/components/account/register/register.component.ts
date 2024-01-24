@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DropdownItem } from 'src/app/helpers/models/dropdownItem';
-import { TimezoneLocation } from 'src/app/helpers/models/timezoneLocation';
+import { TimezoneLocation } from 'src/app/helpers/models/data-models/timezoneLocation';
 import { AccountService } from 'src/app/helpers/services/account.service';
 
 @Component({

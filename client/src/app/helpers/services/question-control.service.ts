@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   providedIn: 'root'
 })
 export class QuestionControlService {
-  toFormGroup(questions: QuestionBase<string | boolean | Date>[]) {
+  toFormGroup(questions: QuestionBase<any>[]) {
     const group: any = {};
 
     questions.forEach(question => {

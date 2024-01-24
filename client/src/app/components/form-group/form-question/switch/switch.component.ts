@@ -11,7 +11,7 @@ import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class SwitchComponent {
-  @Input() question!: QuestionBase<string | boolean | Date>;
+  @Input() question!: QuestionBase<any>;
   @Input() form!: FormGroup;
 
 
