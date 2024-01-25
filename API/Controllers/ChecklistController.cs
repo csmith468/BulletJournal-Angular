@@ -81,7 +81,30 @@ namespace API.Controllers
             var checklist = await _uow.ChecklistRepository.GetMyMorningChecklistByIdAsync(morningChecklist.UserID, morningChecklist.MorningChecklistID);
             if (checklist == null) return NotFound();
 
-            checklist = morningChecklist;
+            if (checklist.Date != morningChecklist.Date) {
+                if (await _uow.ChecklistRepository.MorningDateUsedAsync(morningChecklist.Date, morningChecklist.UserID)) 
+                    return BadRequest("User already submitted morning checklist for this date.");
+            }
+
+            _mapper.Map(morningChecklist, checklist);
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to update user.");
+        }
+
+        [HttpPut("night/update")]
+        public async Task<ActionResult> UpdateNightChecklist(NightChecklist nightChecklist) {
+            if (nightChecklist.UserID != User.GetUserId()) return Unauthorized();
+
+            var checklist = await _uow.ChecklistRepository.GetMyNightChecklistByIdAsync(nightChecklist.UserID, nightChecklist.NightChecklistID);
+            if (checklist == null) return NotFound();
+
+            if (checklist.Date != nightChecklist.Date) {
+                if (await _uow.ChecklistRepository.NightDateUsedAsync(nightChecklist.Date, nightChecklist.UserID)) 
+                    return BadRequest("User already submitted night checklist for this date.");
+            }
+
+            _mapper.Map(nightChecklist, checklist);
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to update user.");
