@@ -18,7 +18,7 @@ export class NightService {
   constructor(private http: HttpClient) { 
   }
   addNightEntry(model: any) {
-    return this.http.post(this.baseUrl + 'checklist/addNight', model);
+    return this.http.post(this.baseUrl + 'checklist/night/add', model);
   }
 
 
@@ -30,7 +30,7 @@ export class NightService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<NightEntry[]>(this.baseUrl + 'checklist/getMyNightChecklists',
+    return this.http.get<NightEntry[]>(this.baseUrl + 'checklist/night/getMyChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultNight.result = response.body;
@@ -42,7 +42,7 @@ export class NightService {
   }
 
   getNightEntryById(id: string) {
-    return this.http.get<NightEntry>(this.baseUrl + 'checklist/getMyNightChecklistById/' + id);
+    return this.http.get<NightEntry>(this.baseUrl + 'checklist/night/getMyChecklistById/' + id);
   }
 
   getQuestions(night?: NightEntry) {

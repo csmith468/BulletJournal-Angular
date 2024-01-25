@@ -19,7 +19,7 @@ export class MorningService {
   constructor(private http: HttpClient) { }
 
   addMorningEntry(model: any) {
-    return this.http.post(this.baseUrl + 'checklist/addMorning', model);
+    return this.http.post(this.baseUrl + 'checklist/morning/add', model);
   }
 
   getMorningTable(page?: number, itemsPerPage?: number) {
@@ -30,7 +30,7 @@ export class MorningService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<MorningEntry[]>(this.baseUrl + 'checklist/getMyMorningChecklists',
+    return this.http.get<MorningEntry[]>(this.baseUrl + 'checklist/morning/getMyChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultMorning.result = response.body;
@@ -42,7 +42,7 @@ export class MorningService {
   }
 
   getMorningEntryById(id: string) {
-    return this.http.get<MorningEntry>(this.baseUrl + 'checklist/getMyMorningChecklistById/' + id);
+    return this.http.get<MorningEntry>(this.baseUrl + 'checklist/morning/getMyChecklistById/' + id);
   }
 
   getQuestions(morning?: MorningEntry) {

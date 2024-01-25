@@ -20,7 +20,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("addMorning")]
+        [HttpPost("morning/add")]
         public async Task<ActionResult<MorningChecklist>> AddMorningChecklist(MorningChecklist morningChecklist) {
             morningChecklist.UserID = User.GetUserId();
             if (await _uow.ChecklistRepository.MorningDateUsedAsync(morningChecklist.Date, morningChecklist.UserID)) 
@@ -29,7 +29,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("addNight")]
+        [HttpPost("night/add")]
         public async Task<ActionResult<NightChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
             nightChecklist.UserID = User.GetUserId();
             if (await _uow.ChecklistRepository.NightDateUsedAsync(nightChecklist.Date, nightChecklist.UserID)) 
@@ -38,7 +38,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getMyMorningChecklists")] //?pageNumber=2&pageSize=3
+        [HttpGet("morning/getMyChecklists")] //?pageNumber=2&pageSize=3
         public async Task<ActionResult<PagedList<MorningChecklist>>> GetMyMorningChecklists([FromQuery]PageParams pageParams) {
             var userId = User.GetUserId();
             var checklists = await _uow.ChecklistRepository.GetMyMorningChecklistsAsync(userId, pageParams);
@@ -49,7 +49,7 @@ namespace API.Controllers
             return Ok(checklists);
         }
 
-        [HttpGet("getMyNightChecklists")] //?pageNumber=2&pageSize=3
+        [HttpGet("night/getMyChecklists")] //?pageNumber=2&pageSize=3
         public async Task<ActionResult<PagedList<NightChecklist>>> GetMyNightChecklists([FromQuery]PageParams pageParams) {
             var userId = User.GetUserId();
             var checklists = await _uow.ChecklistRepository.GetMyNightChecklistsAsync(userId, pageParams);
@@ -60,20 +60,31 @@ namespace API.Controllers
             return Ok(checklists);
         }
 
-        [HttpGet("getMyMorningChecklistById/{id}")]
+        [HttpGet("morning/getMyChecklistById/{id}")]
         public async Task<ActionResult<MorningChecklist>> GetMyMorningChecklistById(int id) {
             var userId = User.GetUserId();
             var checklist = await _uow.ChecklistRepository.GetMyMorningChecklistByIdAsync(userId, id);
             return Ok(checklist);
         }
 
-        [HttpGet("getMyNightChecklistById/{id}")]
+        [HttpGet("night/getMyChecklistById/{id}")]
         public async Task<ActionResult<NightChecklist>> GetMyNightChecklistById(int id) {
             var userId = User.GetUserId();
             var checklist = await _uow.ChecklistRepository.GetMyNightChecklistByIdAsync(userId, id);
             return Ok(checklist);
         }
 
+        [HttpPut("morning/update")]
+        public async Task<ActionResult> UpdateMorningChecklist(MorningChecklist morningChecklist) {
+            if (morningChecklist.UserID != User.GetUserId()) return Unauthorized();
 
+            var checklist = await _uow.ChecklistRepository.GetMyMorningChecklistByIdAsync(morningChecklist.UserID, morningChecklist.MorningChecklistID);
+            if (checklist == null) return NotFound();
+
+            checklist = morningChecklist;
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to update user.");
+        }
     }
 }
