@@ -1,5 +1,7 @@
 <div>
     <app-form-group [questions]="questions$ | async" 
+        [requiresUpdate]="mode == 'edit'"
+        formTitle="Night Entry"
         (payloadOutput)="getSubmittedFormData($event)">
     </app-form-group>
 </div>

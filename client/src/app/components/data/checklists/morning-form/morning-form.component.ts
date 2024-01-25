@@ -17,12 +17,12 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
 })
 export class MorningFormComponent implements OnInit {
   questions$: Observable<QuestionBase<any>[]> | undefined;
-  morningEntry: MorningEntry | undefined;
   payload: string = "";
   mode: string = "add";
 
   constructor(private morningService: MorningService, private router: Router, private route: ActivatedRoute) {
     if (this.route.snapshot.data['morning']) {
+      this.mode = 'edit';
       this.questions$ = this.morningService.getQuestions(this.route.snapshot.data['morning']);
     } else {
       this.questions$ = this.morningService.getQuestions();
