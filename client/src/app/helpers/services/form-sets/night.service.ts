@@ -21,6 +21,9 @@ export class NightService {
     return this.http.post(this.baseUrl + 'checklist/night/add', model);
   }
 
+  updateNightEntry(model: any) {
+    return this.http.put(this.baseUrl + 'checklist/night/update', model);
+  }
 
   getNightTable(page?: number, itemsPerPage?: number) {
     let params = new HttpParams();

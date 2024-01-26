@@ -17,12 +17,15 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
 })
 export class MorningFormComponent implements OnInit {
   questions$: Observable<QuestionBase<any>[]> | undefined;
-  payload: string = "";
+  payload: string = '';
   mode: string = "add";
+  id?: number;
+
 
   constructor(private morningService: MorningService, private router: Router, private route: ActivatedRoute) {
     if (this.route.snapshot.data['morning']) {
       this.mode = 'edit';
+      this.id = this.route.snapshot.data['morning'].morningChecklistID!;
       this.questions$ = this.morningService.getQuestions(this.route.snapshot.data['morning']);
     } else {
       this.questions$ = this.morningService.getQuestions();
@@ -34,15 +37,28 @@ export class MorningFormComponent implements OnInit {
 
   getSubmittedFormData(data:string) {
     this.payload = data;
-    this.submitMorningEntry();
+    if (this.mode == 'add') this.addMorningEntry();
+    else this.updateMorningEntry();
   }
 
 
-  submitMorningEntry() {
+  addMorningEntry() {
     this.morningService.addMorningEntry(this.payload).subscribe({
       next: () => {
         this.router.navigateByUrl('/tables/morning');
       }
     });
-  };
+  }
+
+  updateMorningEntry() {
+    // var payloadJSON = JSON.parse(this.payload);
+    console.log(this.payload)
+    // this.morningService.updateMorningEntry(this.payload).subscribe({
+    //   next: () => {
+    //     this.router.navigateByUrl('/tables/morning');
+    //   }
+    // })
+  }
+
+  
 }

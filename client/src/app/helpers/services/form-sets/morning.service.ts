@@ -22,6 +22,10 @@ export class MorningService {
     return this.http.post(this.baseUrl + 'checklist/morning/add', model);
   }
 
+  updateMorningEntry(model: any) {
+    return this.http.put(this.baseUrl + 'checklist/morning/update', model);
+  }
+
   getMorningTable(page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 

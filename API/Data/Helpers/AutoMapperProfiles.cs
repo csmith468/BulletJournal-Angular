@@ -10,7 +10,9 @@ namespace API.Data.Helpers {
                 d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
             CreateMap<AppUserUpdateDto, AppUser>();
             CreateMap<MorningChecklist, MorningChecklist>();
+            CreateMap<MorningChecklistDto, MorningChecklist>();
             CreateMap<NightChecklist, NightChecklist>();
+            CreateMap<NightChecklistDto, NightChecklist>();
         }
     }
 }
