@@ -19,13 +19,11 @@ export class MorningFormComponent implements OnInit {
   questions$: Observable<QuestionBase<any>[]> | undefined;
   payload: string = '';
   mode: string = "add";
-  id?: number;
 
 
   constructor(private morningService: MorningService, private router: Router, private route: ActivatedRoute) {
     if (this.route.snapshot.data['morning']) {
       this.mode = 'edit';
-      this.id = this.route.snapshot.data['morning'].morningChecklistID!;
       this.questions$ = this.morningService.getQuestions(this.route.snapshot.data['morning']);
     } else {
       this.questions$ = this.morningService.getQuestions();
@@ -51,13 +49,12 @@ export class MorningFormComponent implements OnInit {
   }
 
   updateMorningEntry() {
-    // var payloadJSON = JSON.parse(this.payload);
-    console.log(this.payload)
-    // this.morningService.updateMorningEntry(this.payload).subscribe({
-    //   next: () => {
-    //     this.router.navigateByUrl('/tables/morning');
-    //   }
-    // })
+    var id = this.route.snapshot.data['morning'].morningChecklistID;
+    this.morningService.updateMorningEntry(this.payload, id).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/tables/morning');
+      }
+    })
   }
 
   

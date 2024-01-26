@@ -31,13 +31,24 @@ export class NightFormComponent {
 
   getSubmittedFormData(data: string) {
     this.payload = data;
-    this.submitNightEntry();
+    if (this.mode == 'add') this.addNightEntry();
+    else this.updateNightEntry();
   }
 
-  submitNightEntry() {
+
+  addNightEntry() {
     this.nightService.addNightEntry(this.payload).subscribe({
       next: () => {
-        this.router.navigateByUrl('/checklists');
+        this.router.navigateByUrl('/tables/night');
+      }
+    });
+  }
+
+  updateNightEntry() {
+    var id = this.route.snapshot.data['night'].nightChecklistID;
+    this.nightService.updateNightEntry(this.payload, id).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/tables/night');
       }
     })
   }
