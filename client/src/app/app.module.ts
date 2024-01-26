@@ -23,7 +23,6 @@ import { LoadingInterceptor } from './helpers/interceptors/loading.interceptor';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { BodyComponent } from './components/layout/body/body.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
-import { SublevelMenuComponent } from './components/layout/sidenav/sublevel-menu/sublevel-menu.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
@@ -42,7 +41,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     SidenavComponent,
     BodyComponent,
     SubLevelMenuComponent,
-    SublevelMenuComponent,
     HeaderComponent,
     LoginComponent,
     AboutComponent,

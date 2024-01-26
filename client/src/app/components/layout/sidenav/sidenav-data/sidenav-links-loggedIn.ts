@@ -2,7 +2,7 @@ import { ISideNavData } from "./sidenav-ISideNavData";
 
 export const sidenav_links_loggedIn: ISideNavData[] = [
     {
-        routeLink: 'checklists/morning',
+        routeLink: 'checklists',
         icon: 'fa fa-check-square-o',
         label: 'Checklists',
         items: [
@@ -38,7 +38,7 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
         ]
     },
     {
-        routeLink: 'tables/morning',
+        routeLink: 'tables',
         icon: 'fa fa-table',
         label: 'Tables',
         items: [

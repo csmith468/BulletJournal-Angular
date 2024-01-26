@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit{
 
   getHeadClass() {
     let styleClass = '';
-    if (this.navOpen && this.screenWidth > 768) {
+    if (this.navOpen && this.screenWidth > 600) {
       styleClass = 'head-trimmed';
     } else {
       styleClass = 'head-md-screen';

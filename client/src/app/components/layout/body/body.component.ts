@@ -15,9 +15,9 @@ export class BodyComponent implements OnInit{
 
   getBodyClass() : string {
     let styleClass = '';
-    if (this.navOpen && this.screenWidth > 768) {
+    if (this.navOpen && this.screenWidth > 600) {
       styleClass = 'body-trimmed';
-    } else if (this.navOpen && this.screenWidth <= 768 && this.screenWidth > 0) {
+    } else if (this.navOpen && this.screenWidth <= 600 && this.screenWidth > 0) {
       styleClass = 'body-md-screen';
     }
     return styleClass;

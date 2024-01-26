@@ -20,7 +20,6 @@ export class NightFormComponent {
   mode: string = "add";
 
   constructor(private nightService: NightService, private router: Router, private route: ActivatedRoute) {
-    console.log(this.route.snapshot.data['night'])
     if (this.route.snapshot.data['night']) {
       this.mode = 'edit';
       this.questions$ = this.nightService.getQuestions(this.route.snapshot.data['night']);

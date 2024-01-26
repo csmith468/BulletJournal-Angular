@@ -56,13 +56,7 @@ export class NightService {
       createSwitchQuestion('vitamins', 'Did you take your vitamins?', night),
       createSwitchQuestion('washFace', 'Did you wash your face?', night),
       createSwitchQuestion('floss', 'Did you floss?', night),
-      createSwitchQuestion('checkEmails', 'Did you check your emails?', night),
-      createSwitchQuestion('checkTexts', 'Did you check your texts?', night),
-      createSwitchQuestion('mouthguard', 'Did you wear your retainer/mouthguard?', night),
-      createSwitchQuestion('fruits', 'Did you eat fruit?', night),
-      createSwitchQuestion('vegetables', 'Did you eat vegetables?', night),
-      createSwitchQuestion('read', 'Did you read?', night),
-      createSwitchQuestion('wentOutside', 'Did you go outside?', night)
+      createSwitchQuestion('retainer', 'Did you wear your retainer?', night)
     ];
 
     return of(questions); //.sort((a, b) => a.order - b.order));

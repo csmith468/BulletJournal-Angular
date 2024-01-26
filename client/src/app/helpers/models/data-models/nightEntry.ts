@@ -6,11 +6,5 @@ export interface NightEntry {
     vitamins: boolean;
     washFace: boolean;
     floss: boolean;
-    checkEmails: boolean;
-    checkTexts: boolean;
-    mouthguard: boolean;
-    fruits: boolean;
-    vegetables: boolean;
-    read: boolean;
-    wentOutside: boolean;
+    retainer: boolean;
 }

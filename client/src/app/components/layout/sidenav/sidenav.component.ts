@@ -37,7 +37,7 @@ export class SidenavComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 768) {
+    if (this.screenWidth <= 600) {
       this.navOpen = false;
       this.onToggleSideNav.emit({
         navOpen: this.navOpen,

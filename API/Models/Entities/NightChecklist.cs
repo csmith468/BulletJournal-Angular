@@ -8,12 +8,6 @@ namespace API.Models.Entities {
         public bool? Vitamins { get; set; }
         public bool? WashFace { get; set; }
         public bool? Floss { get; set; }
-        public bool? CheckEmails { get; set; }
-        public bool? CheckTexts { get; set; }
-        public bool? Mouthguard { get; set; }
-        public bool? Fruits { get; set; }
-        public bool? Vegetables { get; set; }
-        public bool? Read { get; set; }
-        public bool? WentOutside { get; set; }
+        public bool? Retainer { get; set; }
     }
 }

@@ -12,8 +12,7 @@ import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 export class NightTableComponent implements OnInit {
   nightTable: NightEntry[] = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 
-    'checkEmails', 'checkTexts', 'mouthguard', 'fruits', 'vegetables', 'read', 'wentOutside']
+  columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 'retainer']
   pageNumber = 1;
   pageSize = 15;
 
