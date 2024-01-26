@@ -24,6 +24,7 @@ export class FormGroupComponent implements OnInit, OnDestroy {
   @Input() requiresUpdate: boolean = false;
   @Input() formTitle: string = '';
   @Output() payloadOutput = new EventEmitter<string>();
+  @Output() cancel = new EventEmitter<boolean>();
   
   form!: FormGroup;
   payload = '';
@@ -61,10 +62,12 @@ export class FormGroupComponent implements OnInit, OnDestroy {
     this.subscription.add(subscription);
   }
 
-
-
   onSubmit() {
     this.payloadOutput.emit(this.updatePayload());
+  }
+
+  onCancel() {
+    this.cancel.emit(true);
   }
 
   updatePayload() {

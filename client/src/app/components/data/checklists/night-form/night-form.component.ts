@@ -29,12 +29,15 @@ export class NightFormComponent {
     }
   }
 
+  cancelForm() {
+    this.router.navigateByUrl('/tables/night');
+  }
+
   getSubmittedFormData(data: string) {
     this.payload = data;
     if (this.mode == 'add') this.addNightEntry();
     else this.updateNightEntry();
   }
-
 
   addNightEntry() {
     this.nightService.addNightEntry(this.payload).subscribe({

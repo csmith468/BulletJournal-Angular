@@ -1,9 +1,9 @@
 <div>
-    <div *ngIf="(questions$ | async)">
-        <app-form-group [questions]="questions$ | async" 
-            [requiresUpdate]="mode == 'edit'"
-            formTitle="Morning Entry"
-            (payloadOutput)="getSubmittedFormData($event)">
-        </app-form-group>
-    </div>
+    <app-form-group [questions]="questions$ | async" 
+        [requiresUpdate]="mode == 'edit'"
+        formTitle="Morning Entry"
+        (payloadOutput)="getSubmittedFormData($event)"
+        (cancel)="cancelForm()"
+    >
+    </app-form-group>
 </div>

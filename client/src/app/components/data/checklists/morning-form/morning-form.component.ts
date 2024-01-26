@@ -33,6 +33,10 @@ export class MorningFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  cancelForm() {
+    this.router.navigateByUrl('/tables/morning');
+  }
+
   getSubmittedFormData(data:string) {
     this.payload = data;
     if (this.mode == 'add') this.addMorningEntry();
