@@ -21,6 +21,6 @@ namespace API.Models.Entities {
         public float? ScreenTime { get; set; }
         public int? HoursWorked { get; set; }
 
-        // public override int GetID() { return DailyChecklistID; }
+        public override int GetID() { return DailyChecklistID; }
     }
 }

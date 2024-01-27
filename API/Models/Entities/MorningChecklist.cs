@@ -7,6 +7,6 @@ namespace API.Models.Entities {
         public bool? Meds { get; set; }
         public bool? Vitamins { get; set; }
         public bool? Breakfast { get; set; }
-        // public override int GetID() { return MorningChecklistID; }
+        public override int GetID() { return MorningChecklistID; }
     }
 }

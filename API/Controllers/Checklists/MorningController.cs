@@ -10,33 +10,23 @@ using API.Models.DTOs;
 namespace API.Controllers
 {
     [Authorize]
-    public class MorningController : BaseApiController {
+    public class MorningController : ChecklistControllerBase {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public MorningController(IUnitOfWork uow, IMapper mapper) {
+        public MorningController(IUnitOfWork uow, IMapper mapper) : base(uow, mapper) {
             _uow = uow;
             _mapper = mapper;
         }
 
         [HttpPost("add")]
         public async Task<ActionResult<MorningChecklist>> AddMorningChecklist(MorningChecklist morningChecklist) {
-            morningChecklist.UserID = User.GetUserId();
-            if (await _uow.ChecklistRepository.DateUsedAsync<MorningChecklist>(morningChecklist.Date, morningChecklist.UserID)) 
-                return BadRequest("User already submitted morning checklist for this date.");
-            var result = await _uow.ChecklistRepository.AddAsync(morningChecklist);
-            return Ok(result);
+            return await AddChecklist(morningChecklist);
         }
 
         [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3
         public async Task<ActionResult<PagedList<MorningChecklist>>> GetMyMorningChecklists([FromQuery]PageParams pageParams) {
-            var userId = User.GetUserId();
-            var checklists = await _uow.ChecklistRepository.GetListAsync<MorningChecklist>(userId, pageParams);
-
-            Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
-                checklists.TotalPages));
-
-            return Ok(checklists);
+            return await GetMyChecklists<MorningChecklist>(pageParams);
         }
 
         [HttpGet("getMyChecklistById/{id}")]
@@ -48,36 +38,17 @@ namespace API.Controllers
 
         [HttpPut("update")]
         public async Task<ActionResult> UpdateMorningChecklist(MorningChecklist morningChecklist) {
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<MorningChecklist>(User.GetUserId(), morningChecklist.MorningChecklistID);
-            if (checklist == null) return NotFound();
-            morningChecklist.UserID = User.GetUserId();
-
-            if (checklist.Date != morningChecklist.Date) {
-                if (await _uow.ChecklistRepository.DateUsedAsync<MorningChecklist>(morningChecklist.Date, User.GetUserId())) 
-                    return BadRequest("You already submitted a morning entry for this date.");
-            }
-
-            _mapper.Map(morningChecklist, checklist);
-            if (await _uow.Complete()) return NoContent();
-
-            return BadRequest("Failed to update user.");
+           return await UpdateChecklist(morningChecklist);
         }
 
 
         [HttpPut("updateById/{id}")]
         public async Task<ActionResult> UpdateMorningChecklistById(int id, [FromBody]MorningChecklistDto morningChecklistDto) {
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<MorningChecklist>(User.GetUserId(), id);
-            if (checklist == null) return NotFound();
+            var morningChecklist = _mapper.Map<MorningChecklist>(morningChecklistDto);
+            morningChecklist.MorningChecklistID = id;
+            morningChecklist.UserID = User.GetUserId();
 
-            if (checklist.Date != morningChecklistDto.Date) {
-                if (await _uow.ChecklistRepository.DateUsedAsync<MorningChecklist>(morningChecklistDto.Date, User.GetUserId())) 
-                    return BadRequest("You already submitted a morning entry for this date.");
-            }
-
-            _mapper.Map(morningChecklistDto, checklist);
-            if (await _uow.Complete()) return NoContent();
-
-            return BadRequest("Failed to update user.");
+            return await UpdateChecklist(morningChecklist);
         }
     }
 }
