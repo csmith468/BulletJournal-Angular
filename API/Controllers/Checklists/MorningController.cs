@@ -31,9 +31,7 @@ namespace API.Controllers
 
         [HttpGet("getMyChecklistById/{id}")]
         public async Task<ActionResult<MorningChecklist>> GetMyMorningChecklistById(int id) {
-            var userId = User.GetUserId();
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<MorningChecklist>(userId, id);
-            return Ok(checklist);
+            return await GetMyChecklistById<MorningChecklist>(id);
         }
 
         [HttpPut("update")]
