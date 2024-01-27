@@ -51,6 +51,7 @@ namespace API.Data {
             builder.Properties<DateOnly>().HaveConversion<DateTimeToOnlyConverter>();
         }
 
+
     }
 }
 

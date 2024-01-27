@@ -1,8 +1,8 @@
 namespace API.Models.Entities {
-    public class DailyChecklist {
+    public class DailyChecklist : Checklist {
         public int DailyChecklistID { get; set; }
-        public int UserID { get; set; }
-        public DateOnly Date { get; set; }
+        public override int UserID { get; set; }
+        public override DateOnly Date { get; set; }
         public bool? Breakfast { get; set; }
         public bool? Lunch { get; set; }
         public bool? Dinner { get; set; }
@@ -20,5 +20,7 @@ namespace API.Models.Entities {
         public float? Spending { get; set; }
         public float? ScreenTime { get; set; }
         public int? HoursWorked { get; set; }
+
+        // public override int GetID() { return DailyChecklistID; }
     }
 }

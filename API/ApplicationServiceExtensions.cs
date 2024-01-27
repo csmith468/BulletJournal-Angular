@@ -25,8 +25,9 @@ namespace API.Extensions {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IChecklistRepository, ChecklistRepository>();
             // services.AddScoped<ISleepRepository, SleepRepository>();
-            services.AddScoped<IChecklistRepository<MorningChecklist>, MorningRepository>();
+            // services.AddScoped<IChecklistRepository<MorningChecklist>, MorningRepository>();
             services.AddScoped<IChecklistRepository<NightChecklist>, NightRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
