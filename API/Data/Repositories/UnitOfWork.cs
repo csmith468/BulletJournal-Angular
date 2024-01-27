@@ -13,9 +13,9 @@ namespace API.Data.Repositories {
         }
 
         public IUserRepository UserRepository => new UserRepository(_contextEF, _mapper);
-        public ISleepRepository SleepRepository => new SleepRepository(_contextEF, _mapper);
+        // public ISleepRepository SleepRepository => new SleepRepository(_contextEF, _mapper);
         public IChecklistRepository<MorningChecklist> MorningRepository => new MorningRepository(_contextEF, _mapper);
-        public INightRepository NightRepository => new NightRepository(_contextEF, _mapper);
+        public IChecklistRepository<NightChecklist> NightRepository => new NightRepository(_contextEF, _mapper);
         
         public async Task<bool> Complete() {
             var r = HasChanges();

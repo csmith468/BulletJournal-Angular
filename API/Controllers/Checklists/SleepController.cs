@@ -25,12 +25,12 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("add")]
-        public async Task<ActionResult<SleepRecord>> AddSleepRecord(SleepRecord sleepRecord) {
-            sleepRecord.UserID = User.GetUserId();
-            var result = await _uow.SleepRepository.AddSleep(sleepRecord);
-            return Ok(result);
-        }
+        // [HttpPost("add")]
+        // public async Task<ActionResult<SleepRecord>> AddSleepRecord(SleepRecord sleepRecord) {
+        //     sleepRecord.UserID = User.GetUserId();
+        //     var result = await _uow.SleepRepository.AddSleep(sleepRecord);
+        //     return Ok(result);
+        // }
 
         // [HttpPost("edit")]
         // public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto) {

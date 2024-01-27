@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories {
-    public class SleepRepository : ISleepRepository {
+    public class SleepRepository { // derive from IChecklistRepository
         // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;

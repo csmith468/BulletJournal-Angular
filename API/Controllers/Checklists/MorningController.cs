@@ -24,14 +24,14 @@ namespace API.Controllers
             morningChecklist.UserID = User.GetUserId();
             if (await _uow.MorningRepository.DateUsedAsync(morningChecklist.Date, morningChecklist.UserID)) 
                 return BadRequest("User already submitted morning checklist for this date.");
-            var result = await _uow.MorningRepository.AddItemAsync(morningChecklist);
+            var result = await _uow.MorningRepository.AddAsync(morningChecklist);
             return Ok(result);
         }
 
         [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3
         public async Task<ActionResult<PagedList<MorningChecklist>>> GetMyMorningChecklists([FromQuery]PageParams pageParams) {
             var userId = User.GetUserId();
-            var checklists = await _uow.MorningRepository.GetMyItemsAsync(userId, pageParams);
+            var checklists = await _uow.MorningRepository.GetListAsync(userId, pageParams);
 
             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
                 checklists.TotalPages));
@@ -42,19 +42,19 @@ namespace API.Controllers
         [HttpGet("getMyChecklistById/{id}")]
         public async Task<ActionResult<MorningChecklist>> GetMyMorningChecklistById(int id) {
             var userId = User.GetUserId();
-            var checklist = await _uow.MorningRepository.GetMyItemsByIdAsync(userId, id);
+            var checklist = await _uow.MorningRepository.GetByIdAsync(userId, id);
             return Ok(checklist);
         }
 
         [HttpPut("update")]
         public async Task<ActionResult> UpdateMorningChecklist(MorningChecklist morningChecklist) {
-            var checklist = await _uow.MorningRepository.GetMyItemsByIdAsync(User.GetUserId(), morningChecklist.MorningChecklistID);
+            var checklist = await _uow.MorningRepository.GetByIdAsync(User.GetUserId(), morningChecklist.MorningChecklistID);
             if (checklist == null) return NotFound();
             morningChecklist.UserID = User.GetUserId();
 
             if (checklist.Date != morningChecklist.Date) {
                 if (await _uow.MorningRepository.DateUsedAsync(morningChecklist.Date, User.GetUserId())) 
-                    return BadRequest("User already submitted morning checklist for this date.");
+                    return BadRequest("You already submitted a morning entry for this date.");
             }
 
             _mapper.Map(morningChecklist, checklist);
@@ -66,12 +66,12 @@ namespace API.Controllers
 
         [HttpPut("updateById/{id}")]
         public async Task<ActionResult> UpdateMorningChecklistById(int id, [FromBody]MorningChecklistDto morningChecklistDto) {
-            var checklist = await _uow.MorningRepository.GetMyItemsByIdAsync(User.GetUserId(), id);
+            var checklist = await _uow.MorningRepository.GetByIdAsync(User.GetUserId(), id);
             if (checklist == null) return NotFound();
 
             if (checklist.Date != morningChecklistDto.Date) {
                 if (await _uow.MorningRepository.DateUsedAsync(morningChecklistDto.Date, User.GetUserId())) 
-                    return BadRequest("User already submitted morning checklist for this date.");
+                    return BadRequest("You already submitted a morning entry for this date.");
             }
 
             _mapper.Map(morningChecklistDto, checklist);
