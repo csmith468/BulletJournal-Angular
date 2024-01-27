@@ -12,9 +12,9 @@ CREATE TABLE [app].[sleep](
 	[BedOnTime] [bit] NULL,
 	[WakeOnTime] [bit] NULL,
 	[EnergyLevel] [int] NULL,
-	[Type] [nvarchar](50) NULL,
-	[Notes] [nvarchar](max) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	[Snoozed] [bit] NULL,
+	[Type] [nvarchar](50) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [app].[sleep] ADD PRIMARY KEY CLUSTERED 
 (

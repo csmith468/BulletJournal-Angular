@@ -11,9 +11,7 @@ CREATE TABLE [app].[nightChecklist](
 	[Vitamins] [bit] NULL,
 	[WashFace] [bit] NULL,
 	[Floss] [bit] NULL,
-	[CheckEmails] [bit] NULL,
-	[CheckTexts] [bit] NULL,
-	[Mouthguard] [bit] NULL
+	[Retainer] [bit] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [app].[nightChecklist] ADD PRIMARY KEY CLUSTERED 
