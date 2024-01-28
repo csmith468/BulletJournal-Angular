@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       {
         path: 'checklists',
-        loadChildren: () => import('./components/data/checklists/checklists.module')
+        loadChildren: () => import('./components/data/checklists/checklist.module')
           .then(m => m.ChecklistsModule)
       },
       {
