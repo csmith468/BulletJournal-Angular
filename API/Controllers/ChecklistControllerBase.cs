@@ -30,7 +30,7 @@ namespace API.Controllers
             var checklists = await _uow.ChecklistRepository.GetListAsync<T>(User.GetUserId(), pageParams);
 
             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
-                checklists.TotalPages));
+                checklists.TotalPages, checklists.MinDate, checklists.MaxDate));
 
             return Ok(checklists);
         }

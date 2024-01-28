@@ -61,5 +61,10 @@ namespace API.Data.Repositories {
             var dbSet = _contextEF.Set<T>();
             dbSet.Remove(checklist);
         }
+
+        public DateOnly GetMinDate<T>() where T : Checklist {
+            var dbSet = _contextEF.Set<T>();
+            return dbSet.OrderBy(x => x.Date).FirstOrDefault().Date;
+        }
     }
 }
