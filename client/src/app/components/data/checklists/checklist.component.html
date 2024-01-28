@@ -1,1 +1,9 @@
-<p>checklists works!</p>
+<div *ngIf="questions && questions.length > 1">
+    <app-form-group [questions]="questions" 
+        [requiresUpdate]="mode == 'edit'"
+        formTitle="{{type.charAt(0).toUpperCase() + type.slice(1)}} Entry"
+        (payloadOutput)="getSubmittedFormData($event)"
+        (cancel)="cancelForm()"
+    >
+    </app-form-group>
+</div>

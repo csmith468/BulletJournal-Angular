@@ -16,22 +16,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ChecklistComponent {
   questions: QuestionBase<any>[] | undefined;
   payload: string = '';
-  mode: string = "add";
-  type: string = "";
+  mode: string = 'add';
+  type: string = '';
+
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
     const routeData = this.route.snapshot.data;
-    this.type = routeData['type'];
+    this.type = routeData['metadata']['type'];
 
     if (routeData['checklist']) this.mode = 'edit';
-
     this.checklistService.getQuestions(this.type, routeData['checklist']).subscribe({
       next: q => this.questions = q
     })
+  }
+
+  ngOnInit(): void {
   }
 
   cancelForm() {
     this.router.navigateByUrl('/tables/' + this.type);
   }
 
+  getSubmittedFormData(data:string) {
+    this.payload = data;
+    var id = this.route.snapshot.data['metadata']['id'];
+    this.checklistService.addOrUpdateEntry(this.type, this.payload, id).subscribe({
+      next: () => this.router.navigateByUrl('/tables/' + this.type)
+    })
+  }
 }

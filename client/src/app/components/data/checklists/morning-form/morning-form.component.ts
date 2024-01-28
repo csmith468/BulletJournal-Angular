@@ -18,13 +18,12 @@ export class MorningFormComponent implements OnInit {
   // questions$: Observable<QuestionBase<any>[]> | undefined;
   questions: QuestionBase<any>[] | undefined;
   payload: string = '';
-  mode: string = "add";
+  mode: string = 'add';
   type: string = '';
 
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
     const routeData = this.route.snapshot.data;
-    console.log(routeData['metadata'])
     this.type = routeData['metadata']['type'];
 
     if (routeData['checklist']) this.mode = 'edit';
