@@ -8,9 +8,7 @@ import { ChecklistComponent } from './checklist.component';
 
 const routes: Routes = [
   {path: ':type/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
-  {path: ':type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
-  {path: 'night/edit/:id', component: NightFormComponent, resolve: {night: nightFormResolver}},
-  {path: 'night/add', component: NightFormComponent}
+  {path: ':type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}}
 ];
 
 @NgModule({

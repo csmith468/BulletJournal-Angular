@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { FormGroupComponent } from '../../form-group/form-group.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providers: [ChecklistService],
   imports: [FormGroupComponent, AsyncPipe, CommonModule]
 })
-export class ChecklistComponent {
+export class ChecklistComponent implements OnInit, OnDestroy {
   questions: QuestionBase<any>[] | undefined;
   payload: string = '';
   mode: string = 'add';
@@ -31,6 +31,11 @@ export class ChecklistComponent {
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngOnDestroy(): void {
+    
   }
 
   cancelForm() {
