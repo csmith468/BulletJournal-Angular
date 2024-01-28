@@ -46,5 +46,10 @@ namespace API.Controllers
 
             return await UpdateChecklist(morningChecklist);
         }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteMessage(int id) {
+            return await DeleteChecklist<MorningChecklist>(id);
+        }
     }
 }

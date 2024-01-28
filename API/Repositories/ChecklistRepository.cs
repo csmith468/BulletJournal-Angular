@@ -56,5 +56,10 @@ namespace API.Data.Repositories {
 
             return await dbSet.Where(x => x.UserID == userId).Where(whereLambda).SingleOrDefaultAsync();
         }
+
+        public void DeleteChecklist<T>(T checklist) where T : Checklist {
+            var dbSet = _contextEF.Set<T>();
+            dbSet.Remove(checklist);
+        }
     }
 }

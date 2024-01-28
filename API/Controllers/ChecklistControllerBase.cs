@@ -5,7 +5,6 @@ using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Data.Pagination;
-using API.Models.DTOs;
 
 namespace API.Controllers
 {
@@ -22,14 +21,13 @@ namespace API.Controllers
         public async Task<ActionResult<T>> AddChecklist<T>(T checklist) where T : Checklist {
             checklist.UserID = User.GetUserId();
             if (await _uow.ChecklistRepository.DateUsedAsync<T>(checklist.Date, checklist.UserID)) 
-                return BadRequest("User already submitted morning checklist for this date.");
+                return BadRequest("You already submitted an entry for this date.");
             var result = await _uow.ChecklistRepository.AddAsync(checklist);
             return Ok(result);
         }
 
         public async Task<ActionResult<PagedList<T>>> GetMyChecklists<T>(PageParams pageParams) where T : Checklist {
-            var userId = User.GetUserId();
-            var checklists = await _uow.ChecklistRepository.GetListAsync<T>(userId, pageParams);
+            var checklists = await _uow.ChecklistRepository.GetListAsync<T>(User.GetUserId(), pageParams);
 
             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
                 checklists.TotalPages));
@@ -38,8 +36,8 @@ namespace API.Controllers
         }
 
         public async Task<ActionResult<T>> GetMyChecklistById<T>(int id) where T : Checklist {
-            var userId = User.GetUserId();
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(userId, id);
+            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(User.GetUserId(), id);
+            if (checklist == null) return NotFound();
             return Ok(checklist);
         }
 
@@ -50,13 +48,23 @@ namespace API.Controllers
 
             if (checklist.Date != inputChecklist.Date) {
                 if (await _uow.ChecklistRepository.DateUsedAsync<T>(inputChecklist.Date, User.GetUserId())) 
-                    return BadRequest("You already submitted a morning entry for this date.");
+                    return BadRequest("You already submitted an entry for this date.");
             }
 
             _mapper.Map(inputChecklist, checklist);
             if (await _uow.Complete()) return NoContent();
 
-            return BadRequest("Failed to update user.");
+            return BadRequest("Failed to update entry.");
+        }
+
+        public async Task<ActionResult> DeleteChecklist<T>(int id) where T : Checklist {
+            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(User.GetUserId(), id);
+            if (checklist == null) return NotFound();
+
+            _uow.ChecklistRepository.DeleteChecklist(checklist);
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to remove entry.");
         }
     }
 }
