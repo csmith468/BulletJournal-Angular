@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { MorningEntry } from '../../models/data-models/morningEntry';
+import { MorningChecklist } from '../../models/data-models/morningChecklist';
 import { PaginatedResult } from '../../models/data-models/pagination';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, of } from 'rxjs';
@@ -13,15 +13,15 @@ import { createDateQuestion } from '../../models/form-models/dateQuestion';
 })
 export class MorningService {
   baseUrl = environment.apiUrl;
-  paginatedResultMorning: PaginatedResult<MorningEntry[]> = new PaginatedResult<MorningEntry[]>;
+  paginatedResultMorning: PaginatedResult<MorningChecklist[]> = new PaginatedResult<MorningChecklist[]>;
 
   constructor(private http: HttpClient) { }
 
-  addMorningEntry(model: any) {
+  addMorningChecklist(model: any) {
     return this.http.post(this.baseUrl + 'morning/add', model);
   }
 
-  updateMorningEntry(model: any, id:number) {
+  updateMorningChecklist(model: any, id:number) {
     return this.http.put(this.baseUrl + 'morning/updateById/' + id.toString(), model);
   }
 
@@ -33,7 +33,7 @@ export class MorningService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<MorningEntry[]>(this.baseUrl + 'morning/getMyChecklists',
+    return this.http.get<MorningChecklist[]>(this.baseUrl + 'morning/getMyChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultMorning.result = response.body;
@@ -44,15 +44,15 @@ export class MorningService {
       ))
   }
 
-  getMorningEntryById(id: string) {
-    return this.http.get<MorningEntry>(this.baseUrl + 'morning/getMyChecklistById/' + id);
+  getMorningChecklistById(id: string) {
+    return this.http.get<MorningChecklist>(this.baseUrl + 'morning/getMyChecklistById/' + id);
   }
 
-  deleteMorningEntry(id: number) {
+  deleteMorningChecklist(id: number) {
     return this.http.delete(this.baseUrl + 'morning/delete/' + id.toString());
   }
 
-  getQuestions(morning?: MorningEntry) {
+  getQuestions(morning?: MorningChecklist) {
     const questions: QuestionBase<any>[] = [
       createDateQuestion('date', 'Date', true, morning),
       createSwitchQuestion('glassOfWater', 'Did you have a glass of water?', morning),

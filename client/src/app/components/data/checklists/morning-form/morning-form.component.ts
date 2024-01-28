@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroupComponent } from 'src/app/components/form-group/form-group.component';
-import { MorningEntry } from 'src/app/helpers/models/data-models/morningEntry';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
 import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
 
@@ -39,22 +38,22 @@ export class MorningFormComponent implements OnInit {
 
   getSubmittedFormData(data:string) {
     this.payload = data;
-    if (this.mode == 'add') this.addMorningEntry();
-    else this.updateMorningEntry();
+    if (this.mode == 'add') this.addMorningChecklist();
+    else this.updateMorningChecklist();
   }
 
 
-  addMorningEntry() {
-    this.morningService.addMorningEntry(this.payload).subscribe({
+  addMorningChecklist() {
+    this.morningService.addMorningChecklist(this.payload).subscribe({
       next: () => {
         this.router.navigateByUrl('/tables/morning');
       }
     });
   }
 
-  updateMorningEntry() {
+  updateMorningChecklist() {
     var id = this.route.snapshot.data['morning'].morningChecklistID;
-    this.morningService.updateMorningEntry(this.payload, id).subscribe({
+    this.morningService.updateMorningChecklist(this.payload, id).subscribe({
       next: () => {
         this.router.navigateByUrl('/tables/morning');
       }
