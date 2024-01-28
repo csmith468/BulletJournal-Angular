@@ -41,15 +41,7 @@ export class NightTableComponent implements OnInit {
 
   deleteChecklist(row: NightEntry) {
     this.nightService.deleteNightEntry(row.nightChecklistID).subscribe({
-      next: () => {
-        if (row.date === this.pagination?.maxDate || row.date == this.pagination?.minDate) {
-          this.loadData();
-        } else {
-        this.nightTable.splice(
-          this.nightTable.findIndex(
-            mt => mt.nightChecklistID === row.nightChecklistID), 1)
-        }
-      }
+      next: () => this.loadData()
     });
   }
 

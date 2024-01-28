@@ -41,15 +41,7 @@ export class MorningTableComponent implements OnInit {
 
   deleteChecklist(row: MorningEntry) {
     this.morningService.deleteMorningEntry(row.morningChecklistID).subscribe({
-      next: () => {
-        if (row.date === this.pagination?.maxDate || row.date == this.pagination?.minDate) {
-          this.loadData();
-        } else {
-        this.morningTable.splice(
-          this.morningTable.findIndex(
-            mt => mt.morningChecklistID === row.morningChecklistID), 1)
-        }
-      }
+      next: () => this.loadData()
     });
   }
 

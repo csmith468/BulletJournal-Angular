@@ -8,13 +8,28 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
         items: [
             {
                 routeLink: 'checklists/morning/add',
-                icon: 'fa fa-sun-o',
+                icon: 'fa fa-coffee',
                 label: 'Add Morning',
             },
             {
                 routeLink: 'checklists/night/add',
                 icon: 'fa fa-moon-o',
                 label: 'Add Night',
+            },
+            {
+                routeLink: 'checklists/daily/add',
+                icon: 'fa fa-sun-o',
+                label: 'Add Daily',
+            },
+            {
+                routeLink: 'checklists/wellbeing/add',
+                icon: 'fa fa-smile-o',
+                label: 'Add Wellbeing',
+            },
+            {
+                routeLink: 'checklists/physicalSymptoms/add',
+                icon: 'fa fa-heartbeat',
+                label: 'Add Physical Symptoms',
             },
             {
                 routeLink: 'checklists/sleep',
@@ -44,13 +59,28 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
         items: [
             {
                 routeLink: 'tables/morning',
-                icon: 'fa fa-sun-o',
-                label: 'View Morning Data',
+                icon: 'fa fa-coffee',
+                label: 'View Morning Entries',
             },
             {
                 routeLink: 'tables/night',
                 icon: 'fa fa-moon-o',
-                label: 'View Night Data',
+                label: 'View Night Entries',
+            },
+            {
+                routeLink: 'checklists/daily/add',
+                icon: 'fa fa-sun-o',
+                label: 'View Daily Entries',
+            },
+            {
+                routeLink: 'checklists/wellbeing/add',
+                icon: 'fa fa-smile-o',
+                label: 'View Wellbeing Tracker',
+            },
+            {
+                routeLink: 'checklists/physicalSymptoms/add',
+                icon: 'fa fa-heartbeat',
+                label: 'View Physical Symptoms',
             },
             {
                 routeLink: 'tables/sleep',
