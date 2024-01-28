@@ -12,19 +12,10 @@ namespace API.Data.Helpers {
             CreateMap<AppUserUpdateDto, AppUser>();
 
             CreateMap<MorningChecklist, MorningChecklist>();
-            CreateMap<MorningChecklistDto, MorningChecklist>();
-
-            CreateMap<DailyChecklist, DailyChecklist>();
-            CreateMap<DailyChecklistDto, DailyChecklist>();
-            
             CreateMap<NightChecklist, NightChecklist>();
-            CreateMap<NightChecklistDto, NightChecklist>();
-
+            CreateMap<DailyChecklist, DailyChecklist>();
             CreateMap<WellbeingTracker, WellbeingTracker>();
-            CreateMap<WellbeingTrackerDto, WellbeingTracker>();
-            
             CreateMap<PhysicalSymptoms, PhysicalSymptoms>();
-            CreateMap<PhysicalSymptomsDto, PhysicalSymptoms>();
         }
     }
 }

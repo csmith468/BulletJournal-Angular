@@ -5,7 +5,6 @@ using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Data.Pagination;
-using API.Models.DTOs;
 
 namespace API.Controllers
 {
@@ -41,8 +40,7 @@ namespace API.Controllers
 
 
         [HttpPut("updateById/{id}")]
-        public async Task<ActionResult> UpdateMorningChecklistById(int id, [FromBody]MorningChecklistDto morningChecklistDto) {
-            var morningChecklist = _mapper.Map<MorningChecklist>(morningChecklistDto);
+        public async Task<ActionResult> UpdateMorningChecklistById(int id, [FromBody]MorningChecklist morningChecklist) {
             morningChecklist.MorningChecklistID = id;
             morningChecklist.UserID = User.GetUserId();
 
