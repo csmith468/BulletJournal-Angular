@@ -66,5 +66,21 @@ namespace API.Controllers
 
             return BadRequest("Failed to remove entry.");
         }
+
+        public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet<T>() where T : Checklist {
+            var questionSet = await _uow.ChecklistRepository.GetQuestionSet<T>();
+            if (questionSet == null) return NotFound();
+            return Ok(questionSet);
+        }
+
+       
+        // public async Task<ActionResult<PagedList<T>>> GetMyChecklists<T>(PageParams pageParams) where T : Checklist {
+        //     var checklists = await _uow.ChecklistRepository.GetListAsync<T>(User.GetUserId(), pageParams);
+
+        //     Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
+        //         checklists.TotalPages, checklists.MinDate, checklists.MaxDate));
+
+        //     return Ok(checklists);
+        // }
     }
 }

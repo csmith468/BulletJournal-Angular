@@ -62,9 +62,8 @@ namespace API.Data.Repositories {
             dbSet.Remove(checklist);
         }
 
-        public DateOnly GetMinDate<T>() where T : Checklist {
-            var dbSet = _contextEF.Set<T>();
-            return dbSet.OrderBy(x => x.Date).FirstOrDefault().Date;
+        public async Task<IEnumerable<QuestionSet>> GetQuestionSet<T>() where T : Checklist {
+            return await _contextEF.QuestionSets.Where(x => x.Source == typeof(T).Name).ToListAsync();
         }
     }
 }

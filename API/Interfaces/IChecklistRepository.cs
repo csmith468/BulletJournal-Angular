@@ -8,5 +8,6 @@ namespace API.Data.Interfaces {
         Task<PagedList<T>> GetListAsync<T>(int userId, PageParams pageParams) where T : Checklist;
         Task<T> GetByIdAsync<T>(int userId, int itemID) where T : Checklist;
         void DeleteChecklist<T>(T checklist) where T : Checklist;
+        Task<IEnumerable<QuestionSet>> GetQuestionSet<T>() where T : Checklist;
     }
 }

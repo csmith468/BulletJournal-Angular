@@ -13,7 +13,6 @@ import { createDateQuestion } from '../../models/form-models/dateQuestion';
 })
 export class MorningService {
   baseUrl = environment.apiUrl;
-  morningTable: MorningEntry[] = [];
   paginatedResultMorning: PaginatedResult<MorningEntry[]> = new PaginatedResult<MorningEntry[]>;
 
   constructor(private http: HttpClient) { }

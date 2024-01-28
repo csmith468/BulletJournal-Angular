@@ -51,5 +51,10 @@ namespace API.Controllers
         public async Task<ActionResult> DeleteMessage(int id) {
             return await DeleteChecklist<MorningChecklist>(id);
         }
+
+        [HttpGet("getQuestionSet")]
+        public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet() {
+            return await GetQuestionSet<MorningChecklist>();
+        }
     }
 }

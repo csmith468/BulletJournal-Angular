@@ -15,6 +15,7 @@ namespace API.Data {
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
+        public DbSet<QuestionSet> QuestionSets { get; set; }
         public DbSet<MorningChecklist> MorningChecklists { get; set; }
         public DbSet<NightChecklist> NightChecklists { get; set; }
         public DbSet<DailyChecklist> DailyChecklists { get; set; }
@@ -44,6 +45,8 @@ namespace API.Data {
                 .HasKey(u => u.PhysicalSymptomsID);
             modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
                 .HasKey(u => u.TimezoneLocationID);
+            modelBuilder.Entity<QuestionSet>().ToTable("questions", "app")
+                .HasKey(u => u.QuestionID);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {
