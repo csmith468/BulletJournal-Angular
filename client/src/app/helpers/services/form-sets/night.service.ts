@@ -48,6 +48,10 @@ export class NightService {
     return this.http.get<NightEntry>(this.baseUrl + 'night/getMyChecklistById/' + id);
   }
 
+  deleteNightEntry(id: number) {
+    return this.http.delete(this.baseUrl + 'night/delete/' + id.toString());
+  }
+
   getQuestions(night?: NightEntry) {
     const questions: QuestionBase<any>[] = [
       createDateQuestion('date', 'Date', true, night),

@@ -10,7 +10,7 @@ import { NightService } from 'src/app/helpers/services/form-sets/night.service';
   styleUrls: ['./night-table.component.css']
 })
 export class NightTableComponent implements OnInit {
-  nightTable: NightEntry[] = [];
+  nightTable: Array<NightEntry> = [];
   pagination: Pagination | undefined;
   columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 'retainer']
   pageNumber = 1;
@@ -37,5 +37,13 @@ export class NightTableComponent implements OnInit {
 
   editChecklist(row: NightEntry) {
     this.router.navigateByUrl('/checklists/night/edit/' + row.nightChecklistID.toString());
+  }
+
+  deleteChecklist(row: NightEntry) {
+    this.nightService.deleteNightEntry(row.nightChecklistID).subscribe({
+      next: () => this.nightTable.splice(
+        this.nightTable.findIndex(
+          mt => mt.nightChecklistID === row.nightChecklistID), 1)
+    });
   }
 }
