@@ -3,22 +3,9 @@
     [columns]="columns"
     [tableData]="morningTable"
     tableTitle="Morning Table"
+    [pagination]="pagination"
     (update)="editChecklist($event)"
     (delete)="deleteChecklist($event)"
+    (newPage)="pageChanged($event)"
   ></app-table>
-  <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination
-      [boundaryLinks]="true"
-      [totalItems]="pagination.totalItems"
-      [itemsPerPage]="pagination.itemsPerPage"
-      [maxSize]="10"
-      [(ngModel)]="pagination.currentPage"
-      (pageChanged)="pageChanged($event)"
-      previousText="&lsaquo;"
-      nextText="&rsaquo;"
-      firstText="&laquo;"
-      lastText="&raquo;"
-    >
-    </pagination>
-  </div>
 </div>

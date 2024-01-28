@@ -14,7 +14,7 @@ export class NightTableComponent implements OnInit {
   pagination: Pagination | undefined;
   columns: Array<keyof NightEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 'retainer']
   pageNumber = 1;
-  pageSize = 15;
+  pageSize = 10;
 
   constructor(private nightService: NightService, private router: Router) {
 
@@ -41,9 +41,20 @@ export class NightTableComponent implements OnInit {
 
   deleteChecklist(row: NightEntry) {
     this.nightService.deleteNightEntry(row.nightChecklistID).subscribe({
-      next: () => this.nightTable.splice(
-        this.nightTable.findIndex(
-          mt => mt.nightChecklistID === row.nightChecklistID), 1)
+      next: () => {
+        if (row.date === this.pagination?.maxDate || row.date == this.pagination?.minDate) {
+          this.loadData();
+        } else {
+        this.nightTable.splice(
+          this.nightTable.findIndex(
+            mt => mt.nightChecklistID === row.nightChecklistID), 1)
+        }
+      }
     });
+  }
+
+  pageChanged(page: any) {
+    this.pageNumber = page;
+    this.loadData();
   }
 }

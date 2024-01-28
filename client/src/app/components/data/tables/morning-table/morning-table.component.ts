@@ -14,7 +14,7 @@ export class MorningTableComponent implements OnInit {
   pagination: Pagination | undefined;
   columns: Array<keyof MorningEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
   pageNumber = 1;
-  pageSize = 15;
+  pageSize = 10;
 
   constructor(private morningService: MorningService, private router: Router) {
 
@@ -41,17 +41,20 @@ export class MorningTableComponent implements OnInit {
 
   deleteChecklist(row: MorningEntry) {
     this.morningService.deleteMorningEntry(row.morningChecklistID).subscribe({
-      next: () => this.morningTable.splice(
-        this.morningTable.findIndex(
-          mt => mt.morningChecklistID === row.morningChecklistID), 1)
+      next: () => {
+        if (row.date === this.pagination?.maxDate || row.date == this.pagination?.minDate) {
+          this.loadData();
+        } else {
+        this.morningTable.splice(
+          this.morningTable.findIndex(
+            mt => mt.morningChecklistID === row.morningChecklistID), 1)
+        }
+      }
     });
   }
 
-  pageChanged(event: any) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
-      this.loadData();
-    }
+  pageChanged(page: any) {
+    this.pageNumber = page;
+    this.loadData();
   }
-
 }

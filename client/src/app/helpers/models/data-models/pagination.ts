@@ -3,7 +3,8 @@ export interface Pagination {
     itemsPerPage: number;
     totalItems: number;
     totalPages: number;
-    
+    minDate: string;
+    maxDate: string;
 }
 
 export class PaginatedResult<T> {

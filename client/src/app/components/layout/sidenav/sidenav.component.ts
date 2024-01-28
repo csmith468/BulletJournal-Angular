@@ -31,7 +31,6 @@ export class SidenavComponent implements OnInit {
   screenWidth = 0;
   navData_loggedIn = sidenav_links_loggedIn;
   navData_loggedOut = sidenav_links_loggedOut;
-  // navData_loggedOut = sidenav_links_loggedOut;
   multiple: boolean = false;
 
   @HostListener('window:resize', ['$event'])
@@ -50,21 +49,7 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    // this.setNavItems();
   }
-
-  // setNavItems() {
-  //   this.accountService.currentUser$.subscribe({
-  //     next: () => {
-  //       if (this.accountService.currentUser$) {
-  //         console.log(this.accountService.currentUser$)
-  //         this.navData = sideNavLinks_loggedIn;
-  //       } else {
-  //         this.navData = sideNavLinks_loggedOut;
-  //       }
-  //     }
-  //   });
-  // }
 
   toggleCollapse() {
     this.navOpen = !this.navOpen;

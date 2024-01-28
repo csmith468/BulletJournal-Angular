@@ -3,7 +3,9 @@
     [columns]="columns"
     [tableData]="nightTable"
     tableTitle="Night Table"
+    [pagination]="pagination"
     (update)="editChecklist($event)"
     (delete)="deleteChecklist($event)"
+    (newPage)="pageChanged($event)"
   ></app-table>
 </div>

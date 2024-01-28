@@ -1,6 +1,6 @@
 export interface NightEntry {
     nightChecklistID: number;
-    date: Date;
+    date: string;
     glassOfWater: boolean;
     meds: boolean;
     vitamins: boolean;
