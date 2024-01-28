@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MorningFormComponent } from './morning-form/morning-form.component';
 import { NightFormComponent } from './night-form/night-form.component';
-import { morningFormResolver } from 'src/app/helpers/resolvers/morning-form.resolver';
 import { nightFormResolver } from 'src/app/helpers/resolvers/night-form.resolver';
+import { checklistResolver } from 'src/app/helpers/resolvers/checklist.resolver';
+import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
 
 const routes: Routes = [
-  {path: 'morning/edit/:id', component: MorningFormComponent, resolve: {morning: morningFormResolver}},
-  {path: 'morning/add', component: MorningFormComponent},
+  {path: ':type/edit/:id', component: MorningFormComponent, resolve: {type: typeResolver, checklist: checklistResolver}},
+  {path: ':type/add', component: MorningFormComponent, resolve: {type: typeResolver}},
   {path: 'night/edit/:id', component: NightFormComponent, resolve: {night: nightFormResolver}},
-  {path: 'night/add', component: NightFormComponent},
+  {path: 'night/add', component: NightFormComponent}
 ];
 
 @NgModule({

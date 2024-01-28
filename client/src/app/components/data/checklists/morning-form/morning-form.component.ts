@@ -19,17 +19,19 @@ export class MorningFormComponent implements OnInit {
   questions: QuestionBase<any>[] | undefined;
   payload: string = '';
   mode: string = "add";
-  type: string = 'morning';
+  type: string = '';
 
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
-    if (this.route.snapshot.data[this.type]) {
+    this.type = this.route.snapshot.data['type'];
+    console.log(this.route.snapshot.data['checklist'])
+    if (this.route.snapshot.data['checklist']) {
       this.mode = 'edit';
-      this.checklistService.getQuestions(this.type, this.route.snapshot.data[this.type]).subscribe({
+      this.checklistService.getQuestions(this.type, this.route.snapshot.data['checklist']).subscribe({
         next: q => this.questions = q
       })
     } else {
-      this.checklistService.getQuestions(this.type, this.route.snapshot.data[this.type]).subscribe({
+      this.checklistService.getQuestions(this.type, this.route.snapshot.data['checklist']).subscribe({
         next: q => this.questions = q
       })
     }

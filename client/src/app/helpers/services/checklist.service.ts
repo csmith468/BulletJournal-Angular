@@ -64,6 +64,10 @@ export class ChecklistService {
     return columns;
   }
 
+  getChecklistById(type: string, id: string) {
+    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
+  }
+
   getQuestions(type: string, initialChecklist?: any) {
     var questions: QuestionBase<any>[] = [
       createDateQuestion('date', 'Date', true, initialChecklist)
