@@ -4,28 +4,34 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroupComponent } from 'src/app/components/form-group/form-group.component';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
-import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
+import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
   standalone: true,
   selector: 'app-morning-form',
   templateUrl: './morning-form.component.html',
   styleUrls: ['./morning-form.component.css'],
-  providers: [MorningService],
+  providers: [ChecklistService],
   imports: [FormGroupComponent, AsyncPipe, CommonModule]
 })
 export class MorningFormComponent implements OnInit {
-  questions$: Observable<QuestionBase<any>[]> | undefined;
+  // questions$: Observable<QuestionBase<any>[]> | undefined;
+  questions: QuestionBase<any>[] | undefined;
   payload: string = '';
   mode: string = "add";
+  type: string = 'morning';
 
 
-  constructor(private morningService: MorningService, private router: Router, private route: ActivatedRoute) {
-    if (this.route.snapshot.data['morning']) {
+  constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
+    if (this.route.snapshot.data[this.type]) {
       this.mode = 'edit';
-      this.questions$ = this.morningService.getQuestions(this.route.snapshot.data['morning']);
+      this.checklistService.getQuestions(this.type, this.route.snapshot.data[this.type]).subscribe({
+        next: q => this.questions = q
+      })
     } else {
-      this.questions$ = this.morningService.getQuestions();
+      this.checklistService.getQuestions(this.type, this.route.snapshot.data[this.type]).subscribe({
+        next: q => this.questions = q
+      })
     }
   }
 
@@ -33,7 +39,7 @@ export class MorningFormComponent implements OnInit {
   }
 
   cancelForm() {
-    this.router.navigateByUrl('/tables/morning');
+    this.router.navigateByUrl('/tables/' + this.type);
   }
 
   getSubmittedFormData(data:string) {
@@ -44,18 +50,18 @@ export class MorningFormComponent implements OnInit {
 
 
   addMorningChecklist() {
-    this.morningService.addMorningChecklist(this.payload).subscribe({
+    this.checklistService.addEntry(this.type, this.payload).subscribe({
       next: () => {
-        this.router.navigateByUrl('/tables/morning');
+        this.router.navigateByUrl('/tables/' + this.type);
       }
     });
   }
 
   updateMorningChecklist() {
-    var id = this.route.snapshot.data['morning'].morningChecklistID;
-    this.morningService.updateMorningChecklist(this.payload, id).subscribe({
+    var id = this.route.snapshot.data[this.type].morningChecklistID;
+    this.checklistService.updateEntry(this.type, this.payload, id).subscribe({
       next: () => {
-        this.router.navigateByUrl('/tables/morning');
+        this.router.navigateByUrl('/tables/' + this.type);
       }
     })
   }

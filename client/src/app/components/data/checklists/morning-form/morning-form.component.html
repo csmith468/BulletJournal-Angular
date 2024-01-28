@@ -1,5 +1,5 @@
-<div>
-    <app-form-group [questions]="questions$ | async" 
+<div *ngIf="questions && questions.length > 1">
+    <app-form-group [questions]="questions" 
         [requiresUpdate]="mode == 'edit'"
         formTitle="Morning Entry"
         (payloadOutput)="getSubmittedFormData($event)"

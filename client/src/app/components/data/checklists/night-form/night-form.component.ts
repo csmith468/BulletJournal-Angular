@@ -16,13 +16,14 @@ import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 })
 export class NightFormComponent {
   questions$: Observable<QuestionBase<any>[]>;
+  type: string = 'night';
   payload: string = "";
   mode: string = "add";
 
   constructor(private nightService: NightService, private router: Router, private route: ActivatedRoute) {
-    if (this.route.snapshot.data['night']) {
+    if (this.route.snapshot.data[this.type]) {
       this.mode = 'edit';
-      this.questions$ = this.nightService.getQuestions(this.route.snapshot.data['night']);
+      this.questions$ = this.nightService.getQuestions(this.route.snapshot.data[this.type]);
     } else {
       this.questions$ = this.nightService.getQuestions();
     }
