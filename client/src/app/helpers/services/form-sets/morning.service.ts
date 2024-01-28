@@ -49,6 +49,10 @@ export class MorningService {
     return this.http.get<MorningEntry>(this.baseUrl + 'morning/getMyChecklistById/' + id);
   }
 
+  deleteMorningEntry(id: number) {
+    return this.http.delete(this.baseUrl + 'morning/delete/' + id.toString());
+  }
+
   getQuestions(morning?: MorningEntry) {
     const questions: QuestionBase<any>[] = [
       createDateQuestion('date', 'Date', true, morning),

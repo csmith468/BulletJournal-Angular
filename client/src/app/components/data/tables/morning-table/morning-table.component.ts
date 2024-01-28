@@ -10,7 +10,7 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
   styleUrls: ['./morning-table.component.css']
 })
 export class MorningTableComponent implements OnInit {
-  morningTable: MorningEntry[] = [];
+  morningTable: Array<MorningEntry> = [];
   pagination: Pagination | undefined;
   columns: Array<keyof MorningEntry> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
   pageNumber = 1;
@@ -37,6 +37,14 @@ export class MorningTableComponent implements OnInit {
 
   editChecklist(row: MorningEntry) {
     this.router.navigateByUrl('/checklists/morning/edit/' + row.morningChecklistID.toString());
+  }
+
+  deleteChecklist(row: MorningEntry) {
+    this.morningService.deleteMorningEntry(row.morningChecklistID).subscribe({
+      next: () => this.morningTable.splice(
+        this.morningTable.findIndex(
+          mt => mt.morningChecklistID === row.morningChecklistID), 1)
+    });
   }
 
 }

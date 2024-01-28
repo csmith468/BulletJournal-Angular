@@ -29,6 +29,7 @@ import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
 import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TableComponent } from './components/data/tables/table.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LoginComponent,
     AboutComponent,
     ProfileComponent,
-    DropdownInputComponent
+    DropdownInputComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

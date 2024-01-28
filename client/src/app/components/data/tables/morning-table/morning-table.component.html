@@ -1,24 +1,9 @@
-
-<h4 class="mt-2">Morning Table</h4>
-<div class="row">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th *ngFor="let column of columns">
-          {{ column }}
-        </th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let checklist of morningTable">
-        <td *ngFor="let column of columns">
-          {{ checklist[column] }}
-        </td>
-        <div class="edit-button">
-          <button (click)="editChecklist(checklist)" class="btn btn-secondary"><i class="fa fa-pencil"></i></button>
-        </div>
-      </tr>
-    </tbody>
-  </table>
+<div *ngIf="morningTable">
+  <app-table 
+    [columns]="columns"
+    [tableData]="morningTable"
+    tableTitle="Morning Table"
+    (update)="editChecklist($event)"
+    (delete)="deleteChecklist($event)"
+  ></app-table>
 </div>

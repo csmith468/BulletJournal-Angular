@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'tables',
-        loadChildren: () => import('./components/data/tables/tables.module')
+        loadChildren: () => import('./components/data/tables/table.module')
           .then(m => m.TablesModule)
       }
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
