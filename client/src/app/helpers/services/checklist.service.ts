@@ -21,12 +21,9 @@ export class ChecklistService {
 
   constructor(private http: HttpClient) { }
 
-  addEntry(type: string, model: any) {
-    return this.http.post(this.baseUrl + type + '/add', model);
-  }
-
-  updateEntry(type: string, model: any, id:number) {
-    return this.http.put(this.baseUrl + type + '/updateById/' + id.toString(), model);
+  addOrUpdateEntry(type: string, model: any, id: number) {
+    if (id) return this.http.put(this.baseUrl + type + '/updateById/' + id.toString(), model);
+    else return this.http.post(this.baseUrl + type + '/add', model);
   }
 
   getTable(type: string, page?: number, itemsPerPage?: number) {

@@ -24,18 +24,13 @@ export class MorningFormComponent implements OnInit {
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
     const routeData = this.route.snapshot.data;
-    this.type = routeData['type'];
-    
-    if (routeData['checklist']) {
-      this.mode = 'edit';
-      this.checklistService.getQuestions(this.type, routeData['checklist']).subscribe({
-        next: q => this.questions = q
-      })
-    } else {
-      this.checklistService.getQuestions(this.type).subscribe({
-        next: q => this.questions = q
-      })
-    }
+    console.log(routeData['metadata'])
+    this.type = routeData['metadata']['type'];
+
+    if (routeData['checklist']) this.mode = 'edit';
+    this.checklistService.getQuestions(this.type, routeData['checklist']).subscribe({
+      next: q => this.questions = q
+    })
   }
 
   ngOnInit(): void {
@@ -47,27 +42,9 @@ export class MorningFormComponent implements OnInit {
 
   getSubmittedFormData(data:string) {
     this.payload = data;
-    if (this.mode == 'add') this.addMorningChecklist();
-    else this.updateMorningChecklist();
-  }
-
-
-  addMorningChecklist() {
-    this.checklistService.addEntry(this.type, this.payload).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/tables/' + this.type);
-      }
-    });
-  }
-
-  updateMorningChecklist() {
-    var id = this.route.snapshot.data[this.type].morningChecklistID;
-    this.checklistService.updateEntry(this.type, this.payload, id).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/tables/' + this.type);
-      }
+    var id = this.route.snapshot.data['metadata']['id'];
+    this.checklistService.addOrUpdateEntry(this.type, this.payload, id).subscribe({
+      next: () => this.router.navigateByUrl('/tables/' + this.type)
     })
   }
-
-  
 }

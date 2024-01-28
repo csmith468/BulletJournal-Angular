@@ -7,8 +7,8 @@ import { checklistResolver } from 'src/app/helpers/resolvers/checklist.resolver'
 import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
 
 const routes: Routes = [
-  {path: ':type/edit/:id', component: MorningFormComponent, resolve: {type: typeResolver, checklist: checklistResolver}},
-  {path: ':type/add', component: MorningFormComponent, resolve: {type: typeResolver}},
+  {path: ':type/edit/:id', component: MorningFormComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
+  {path: ':type/add', component: MorningFormComponent, resolve: {metadata: typeResolver}},
   {path: 'night/edit/:id', component: NightFormComponent, resolve: {night: nightFormResolver}},
   {path: 'night/add', component: NightFormComponent}
 ];
