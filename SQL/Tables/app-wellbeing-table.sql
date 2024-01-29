@@ -2,8 +2,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [app].[wellbeingTracker](
-	[WellbeingTrackerID] [int] IDENTITY(1,1) NOT NULL,
+CREATE TABLE [app].[wellbeing](
+	[WellbeingID] [int] IDENTITY(1,1) NOT NULL,
 	[UserID] [int] NOT NULL,
 	[Date] [date] NOT NULL,
 	[DayRating] [int] NULL,
@@ -17,8 +17,8 @@ CREATE TABLE [app].[wellbeingTracker](
 	[Energy] [float] NULL
 ) ON [PRIMARY]
 GO
-ALTER TABLE [app].[wellbeingTracker] ADD PRIMARY KEY CLUSTERED 
+ALTER TABLE [app].[wellbeing] ADD PRIMARY KEY CLUSTERED 
 (
-	[WellbeingTrackerID] ASC
+	[WellbeingID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
