@@ -2,13 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, of } from 'rxjs';
-import { ChecklistEntry } from '../models/data-models/checklistEntry';
 import { PaginatedResult } from '../models/data-models/pagination';
-import { QuestionBase } from '../models/form-models/questionBase';
-import { createDateQuestion } from '../models/form-models/dateQuestion';
-import { createSwitchQuestion } from '../models/form-models/switchQuestion';
 import { QuestionSet } from '../models/form-models/questionSet';
-import { createTextboxQuestion } from '../models/form-models/textboxQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +30,6 @@ export class ChecklistService {
   }
 
   getColumns(type: string) {
-    // var columns: string[] = [];
-    // this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
-    //   qs => qs.forEach(q => columns.push(q.key))
-    // );
-    // return columns;
     return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
   }
 
@@ -67,19 +57,6 @@ export class ChecklistService {
   }
 
   getQuestions(type: string, initialChecklist?: any) {
-    // var questions: QuestionBase<any>[] = [
-    //   createDateQuestion('date', 'Date', true, initialChecklist)
-    // ]
-
-    // this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
-    //   qs => {
-    //     qs.forEach(q => {
-    //       if (q.type == 'switch') questions.push(createSwitchQuestion(q.key, q.question, initialChecklist))
-    //       if (q.type == 'textbox') questions.push(createTextboxQuestion(q.key, q.question, initialChecklist))
-    //     })
-    //   }
-    // )
-    // return of(questions); // .sort((a, b) => a.order - b.order));
     return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
   }
 }
