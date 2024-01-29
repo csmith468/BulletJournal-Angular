@@ -1,8 +1,8 @@
 namespace API.Models.Entities {
-    public class PhysicalSymptoms {
-        public int PhysicalSymptomsID { get; set; }
-        public int UserID { get; set; }
-        public DateOnly Date { get; set; }
+    public class Physical : Checklist {
+        public int PhysicalID { get; set; }
+        public override int UserID { get; set; }
+        public override DateOnly Date { get; set; }
         public int? PainLevel { get; set; }
         public bool? Headache { get; set; }
         public bool? Nausea { get; set; }
@@ -18,6 +18,7 @@ namespace API.Models.Entities {
         public bool? PeriodCramps { get; set; }
         public bool? Hangover { get; set; }
         public bool? MuscleSoreness { get; set; }
+        public override int GetID() { return PhysicalID; }
 
     }
 }

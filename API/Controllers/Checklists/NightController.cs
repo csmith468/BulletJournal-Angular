@@ -19,42 +19,42 @@ namespace API.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<NightChecklist>> AddNightChecklist(NightChecklist nightChecklist) {
-            return await AddChecklist(nightChecklist);
+        public async Task<ActionResult<Night>> AddNightChecklist(Night night) {
+            return await AddChecklist(night);
         }
 
         [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3
-        public async Task<ActionResult<PagedList<NightChecklist>>> GetMyNightChecklists([FromQuery]PageParams pageParams) {
-            return await GetMyChecklists<NightChecklist>(pageParams);
+        public async Task<ActionResult<PagedList<Night>>> GetMyNightChecklists([FromQuery]PageParams pageParams) {
+            return await GetMyChecklists<Night>(pageParams);
         }
 
         [HttpGet("getMyChecklistById/{id}")]
-        public async Task<ActionResult<NightChecklist>> GetMyNightChecklistById(int id) {
-            return await GetMyChecklistById<NightChecklist>(id);
+        public async Task<ActionResult<Night>> GetMyNightChecklistById(int id) {
+            return await GetMyChecklistById<Night>(id);
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult> UpdateNightChecklist(NightChecklist nightChecklist) {
-            return await UpdateChecklist(nightChecklist);
+        public async Task<ActionResult> UpdateNightChecklist(Night night) {
+            return await UpdateChecklist(night);
         }
 
 
         [HttpPut("updateById/{id}")]
-        public async Task<ActionResult> UpdateNightChecklistById(int id, [FromBody]NightChecklist nightChecklist) {
-            nightChecklist.NightChecklistID = id;
-            nightChecklist.UserID = User.GetUserId();
+        public async Task<ActionResult> UpdateNightChecklistById(int id, [FromBody]Night night) {
+            night.NightID = id;
+            night.UserID = User.GetUserId();
 
-            return await UpdateChecklist(nightChecklist);
+            return await UpdateChecklist(night);
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteMessage(int id) {
-            return await DeleteChecklist<NightChecklist>(id);
+            return await DeleteChecklist<Night>(id);
         }
 
         [HttpGet("getQuestionSet")]
         public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet() {
-            return await GetQuestionSet<NightChecklist>();
+            return await GetQuestionSet<Night>();
         }
     }
 }

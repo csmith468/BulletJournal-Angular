@@ -1,5 +1,5 @@
 namespace API.Models.Entities {
-    public class SleepRecord {
+    public class Sleep {
         public int SleepID { get; set; }
         public int UserID { get; set; }
         public DateTime BedStartInstant { get; set; }

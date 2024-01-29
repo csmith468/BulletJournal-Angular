@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MorningTableComponent } from './morning-table/morning-table.component';
 import { NightTableComponent } from './night-table/night-table.component';
+import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
 
 const routes: Routes = [
-  {path: 'morning', component: MorningTableComponent},
+  {path: 'morning', component: MorningTableComponent, resolve: {metadata: typeResolver}},
   {path: 'night', component: NightTableComponent}
 ];
 
@@ -12,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TablesRoutingModule { }
+export class TableRoutingModule { }

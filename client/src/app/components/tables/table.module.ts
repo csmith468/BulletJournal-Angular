@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TablesRoutingModule } from './table-routing.module';
-import { TableComponent } from './table.component';
+import { TableRoutingModule } from './table-routing.module';
+import { ViewDataComponent } from './view-data/view-data.component';
 
 
 @NgModule({
@@ -10,7 +10,7 @@ import { TableComponent } from './table.component';
   ],
   imports: [
     CommonModule,
-    TablesRoutingModule
+    TableRoutingModule
   ]
 })
 export class TablesModule { }

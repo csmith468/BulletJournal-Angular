@@ -1,5 +1,5 @@
-export interface NightChecklist {
-    nightChecklistID: number;
+export interface Night {
+    nightID: number;
     date: string;
     glassOfWater: boolean;
     meds: boolean;

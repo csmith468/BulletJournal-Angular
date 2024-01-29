@@ -46,7 +46,7 @@ export class ChecklistService {
   }
 
   getEntryById(type: string, id: string) {
-    return this.http.get<any>(this.baseUrl + type + 'g/getMyChecklistById/' + id);
+    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
   deleteEntry(type: string, id: string) {

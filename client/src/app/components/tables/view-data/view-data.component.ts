@@ -1,28 +1,27 @@
-<div *ngIf="morningTable">
-  <app-table 
-    [columns]="columns"
-    [tableData]="morningTable"
-    tableTitle="Morning Table"
-    [pagination]="pagination"
-    (update)="editChecklist($event)"
-    (delete)="deleteChecklist($event)"
-    (newPage)="pageChanged($event)"
-  ></app-table>
-</div>
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Pagination } from 'src/app/helpers/models/data-models/pagination';
+import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
-
-<!-- type="morning" -->
-
-<!-- export class TablesModule implements OnInit{ 
+@Component({
+  selector: 'app-view-data',
+  templateUrl: './view-data.component.html',
+  styleUrls: ['./view-data.component.css']
+})
+export class ViewDataComponent implements OnInit { 
   table: Array<any> = [];
   type: string = '';
   pagination: Pagination | undefined;
+  columns: Array<keyof any> = [];
   pageNumber = 1;
   pageSize = 10;
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
     const routeData = this.route.snapshot.data;
     this.type = routeData['metadata']['type'];
+
+    this.columns = this.checklistService.getColumns(this.type);
+    console.log(this.columns)
   }
 
   ngOnInit(): void {
@@ -38,4 +37,6 @@
         }
       }
     })
-  } -->
+  } 
+
+}

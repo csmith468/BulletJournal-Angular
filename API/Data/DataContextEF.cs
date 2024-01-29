@@ -16,12 +16,12 @@ namespace API.Data {
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
         public DbSet<QuestionSet> QuestionSets { get; set; }
-        public DbSet<MorningChecklist> MorningChecklists { get; set; }
-        public DbSet<NightChecklist> NightChecklists { get; set; }
-        public DbSet<DailyChecklist> DailyChecklists { get; set; }
-        public DbSet<WellbeingTracker> WellbeingTrackers { get; set; }
-        public DbSet<PhysicalSymptoms> PhysicalSymptoms { get; set; }
-        public DbSet<SleepRecord> SleepRecords { get; set; }
+        public DbSet<Morning> Mornings { get; set; }
+        public DbSet<Night> Nights { get; set; }
+        public DbSet<Daily> Dailies { get; set; }
+        public DbSet<Wellbeing> Wellbeing { get; set; }
+        public DbSet<Physical> Physicals { get; set; }
+        public DbSet<Sleep> Sleep { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) {
             if (!options.IsConfigured) {
@@ -32,17 +32,17 @@ namespace API.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<AppUser>().ToTable("user", "app").HasKey(u => u.UserID);
-            modelBuilder.Entity<SleepRecord>().ToTable("sleep", "app").HasKey(u => u.SleepID);
-            modelBuilder.Entity<MorningChecklist>().ToTable("morningChecklist", "app")
-                .HasKey(u => u.MorningChecklistID);
-            modelBuilder.Entity<NightChecklist>().ToTable("nightChecklist", "app")
-                .HasKey(u => u.NightChecklistID);
-            modelBuilder.Entity<DailyChecklist>().ToTable("dailyChecklist", "app")
-                .HasKey(u => u.DailyChecklistID);
-            modelBuilder.Entity<WellbeingTracker>().ToTable("wellbeingTracker", "app")
-                .HasKey(u => u.WellbeingTrackerID);
-            modelBuilder.Entity<PhysicalSymptoms>().ToTable("physicalSymptoms", "app")
-                .HasKey(u => u.PhysicalSymptomsID);
+            modelBuilder.Entity<Morning>().ToTable("morning", "app")
+                .HasKey(u => u.MorningID);
+            modelBuilder.Entity<Night>().ToTable("night", "app")
+                .HasKey(u => u.NightID);
+            modelBuilder.Entity<Daily>().ToTable("daily", "app")
+                .HasKey(u => u.DailyID);
+            modelBuilder.Entity<Wellbeing>().ToTable("wellbeing", "app")
+                .HasKey(u => u.WellbeingID);
+            modelBuilder.Entity<Physical>().ToTable("physical", "app")
+                .HasKey(u => u.PhysicalID);
+        modelBuilder.Entity<Sleep>().ToTable("sleep", "app").HasKey(u => u.SleepID);
             modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
                 .HasKey(u => u.TimezoneLocationID);
             modelBuilder.Entity<QuestionSet>().ToTable("questions", "app")

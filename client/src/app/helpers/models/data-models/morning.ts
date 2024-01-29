@@ -1,5 +1,5 @@
-export interface MorningChecklist {
-    morningChecklistID: number;
+export interface Morning {
+    morningID: number;
     date: string;
     glassOfWater: boolean;
     meds: boolean;

@@ -3,14 +3,14 @@ import { environment } from 'src/environments/environment';
 import { PaginatedResult } from '../../models/data-models/pagination';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs';
-import { MorningChecklist } from '../../models/data-models/morningChecklist';
+import { Morning } from '../../models/data-models/morning';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MorningService {
   baseUrl = environment.apiUrl;
-  paginatedResultMorning: PaginatedResult<MorningChecklist[]> = new PaginatedResult<MorningChecklist[]>;
+  paginatedResultMorning: PaginatedResult<Morning[]> = new PaginatedResult<Morning[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class MorningService {
       params = params.append('pageSize', itemsPerPage);
     }
 
-    return this.http.get<MorningChecklist[]>(this.baseUrl + 'morning/getMyChecklists',
+    return this.http.get<Morning[]>(this.baseUrl + 'morning/getMyChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
           if (response.body) this.paginatedResultMorning.result = response.body;
@@ -31,10 +31,6 @@ export class MorningService {
           return this.paginatedResultMorning;
         }
       ))
-  }
-
-  getMorningChecklistById(id: string) {
-    return this.http.get<MorningChecklist>(this.baseUrl + 'morning/getMyChecklistById/' + id);
   }
 
   deleteMorningChecklist(id: number) {

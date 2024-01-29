@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NightChecklist } from 'src/app/helpers/models/data-models/nightChecklist';
+import { Night } from 'src/app/helpers/models/data-models/night';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { NightService } from 'src/app/helpers/services/form-sets/night.service';
 
@@ -10,9 +10,9 @@ import { NightService } from 'src/app/helpers/services/form-sets/night.service';
   styleUrls: ['./night-table.component.css']
 })
 export class NightTableComponent implements OnInit {
-  nightTable: Array<NightChecklist> = [];
+  nightTable: Array<Night> = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof NightChecklist> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 'retainer']
+  columns: Array<keyof Night> = ['date',  'glassOfWater',  'meds', 'vitamins', 'washFace', 'floss', 'retainer']
   pageNumber = 1;
   pageSize = 10;
 
@@ -28,19 +28,19 @@ export class NightTableComponent implements OnInit {
     this.nightService.getNightTable(this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {
-          this.nightTable = <NightChecklist[]>response.result;
+          this.nightTable = <Night[]>response.result;
           this.pagination = response.pagination;
         }
       }
     })
   }
 
-  editChecklist(row: NightChecklist) {
-    this.router.navigateByUrl('/checklists/night/edit/' + row.nightChecklistID.toString());
+  editChecklist(row: Night) {
+    this.router.navigateByUrl('/checklists/night/edit/' + row.nightID.toString());
   }
 
-  deleteChecklist(row: NightChecklist) {
-    this.nightService.deleteNightChecklist(row.nightChecklistID).subscribe({
+  deleteChecklist(row: Night) {
+    this.nightService.deleteNightChecklist(row.nightID).subscribe({
       next: () => this.loadData()
     });
   }

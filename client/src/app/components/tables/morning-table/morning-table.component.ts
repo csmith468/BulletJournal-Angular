@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MorningChecklist } from 'src/app/helpers/models/data-models/morningChecklist';
+import { Morning } from 'src/app/helpers/models/data-models/morning';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
 
@@ -10,9 +10,9 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
   styleUrls: ['./morning-table.component.css']
 })
 export class MorningTableComponent implements OnInit {
-  morningTable: Array<MorningChecklist> = [];
+  morningTable: Array<Morning> = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof MorningChecklist> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
+  columns: Array<keyof Morning> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
   pageNumber = 1;
   pageSize = 10;
 
@@ -28,19 +28,19 @@ export class MorningTableComponent implements OnInit {
     this.morningService.getMorningTable(this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {
-          this.morningTable = <MorningChecklist[]>response.result;
+          this.morningTable = <Morning[]>response.result;
           this.pagination = response.pagination;
         }
       }
     })
   }
 
-  editChecklist(row: MorningChecklist) {
-    this.router.navigateByUrl('/checklists/morning/edit/' + row.morningChecklistID.toString());
+  editChecklist(row: Morning) {
+    this.router.navigateByUrl('/checklists/morning/edit/' + row.morningID.toString());
   }
 
-  deleteChecklist(row: MorningChecklist) {
-    this.morningService.deleteMorningChecklist(row.morningChecklistID).subscribe({
+  deleteChecklist(row: Morning) {
+    this.morningService.deleteMorningChecklist(row.morningID).subscribe({
       next: () => this.loadData()
     });
   }

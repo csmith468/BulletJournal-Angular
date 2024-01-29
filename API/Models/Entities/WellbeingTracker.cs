@@ -1,8 +1,8 @@
 namespace API.Models.Entities {
-    public class WellbeingTracker {
-        public int WellbeingTrackerID { get; set; }
-        public int UserID { get; set; }
-        public DateOnly Date { get; set; }
+    public class Wellbeing : Checklist {
+        public int WellbeingID { get; set; }
+        public override int UserID { get; set; }
+        public override DateOnly Date { get; set; }
         public int? DayRating { get; set; }
         public float? Happiness { get; set; }
         public float? Sadness { get; set; }
@@ -12,5 +12,6 @@ namespace API.Models.Entities {
         public float? Overwhelmed { get; set; }
         public float? Irritable { get; set; }
         public float? Energy { get; set; }
+        public override int GetID() { return WellbeingID; }
     }
 }

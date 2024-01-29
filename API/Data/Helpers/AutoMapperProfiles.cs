@@ -11,11 +11,11 @@ namespace API.Data.Helpers {
             CreateMap<AppUser, AppUserDto>();
             CreateMap<AppUserUpdateDto, AppUser>();
 
-            CreateMap<MorningChecklist, MorningChecklist>();
-            CreateMap<NightChecklist, NightChecklist>();
-            CreateMap<DailyChecklist, DailyChecklist>();
-            CreateMap<WellbeingTracker, WellbeingTracker>();
-            CreateMap<PhysicalSymptoms, PhysicalSymptoms>();
+            CreateMap<Morning, Morning>();
+            CreateMap<Night, Night>();
+            CreateMap<Daily, Daily>();
+            CreateMap<Wellbeing, Wellbeing>();
+            CreateMap<Physical, Physical>();
         }
     }
 }

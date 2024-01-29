@@ -1,6 +1,6 @@
 namespace API.Models.Entities {
-    public class NightChecklist : Checklist {
-        public int NightChecklistID { get; set; }
+    public class Night : Checklist {
+        public int NightID { get; set; }
         public override int UserID { get; set; }
         public override DateOnly Date { get; set; }
         public bool? GlassOfWater { get; set; }
@@ -9,6 +9,6 @@ namespace API.Models.Entities {
         public bool? WashFace { get; set; }
         public bool? Floss { get; set; }
         public bool? Retainer { get; set; }
-        public override int GetID() { return NightChecklistID; }
+        public override int GetID() { return NightID; }
     }
 }

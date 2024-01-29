@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
+import { RouteReuseStrategy } from '@angular/router';
 
 // font awesome
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -21,6 +22,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
+import { CustomRouteReuseStrategy } from './helpers/services/routeReuseStategy';
 
 // Interceptors
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
@@ -44,8 +46,7 @@ import { TextInputComponent } from './components/account/register/form-register-
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
 import { TableComponent } from './components/tables/table.component';
-import { RouteReuseStrategy } from '@angular/router';
-import { CustomRouteReuseStrategy } from './helpers/services/routeReuseStategy';
+import { ViewDataComponent } from './components/tables/view-data/view-data.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { CustomRouteReuseStrategy } from './helpers/services/routeReuseStategy';
     SidenavComponent,
     SubLevelMenuComponent,
     TableComponent,
-    TextInputComponent
+    TextInputComponent,
+    ViewDataComponent
   ],
   imports: [
     AppRoutingModule,
