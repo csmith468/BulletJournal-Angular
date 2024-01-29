@@ -1,0 +1,55 @@
+<div *ngIf="table">
+  <h4 class="mt-2">change to match other'</h4>
+  <p *ngIf="pagination?.maxDate">Max Date: {{pagination?.maxDate}}</p>
+  <p *ngIf="pagination?.minDate">Min Date: {{pagination?.minDate}}</p>
+  <p>Total Rows: {{pagination?.totalItems}}</p>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">
+            {{ column }}
+          </th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table">
+          <td *ngFor="let column of columns">
+            {{ data[column] }}
+          </td>
+          <td>
+            <div class="edit-button">
+              <button (click)="editEntry(data)" class="btn btn-warning">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
+          </td>
+          <td>
+            <div class="delete-button">
+              <button (click)="deleteEntry(data)" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination
+      [boundaryLinks]="true"
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;"
+    >
+    </pagination>
+  </div>
+</div>

@@ -4,11 +4,11 @@ import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
-  selector: 'app-morning-table',
-  templateUrl: './morning-table.component.html',
-  styleUrls: ['./morning-table.component.css']
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css']
 })
-export class MorningTableComponent implements OnInit {
+export class TableComponent implements OnInit {
   table: Array<any> = [];
   pagination: Pagination | undefined;
   columns: Array<keyof any> = ['date']
@@ -39,7 +39,7 @@ export class MorningTableComponent implements OnInit {
   }
 
   editEntry(row: any) {
-    this.router.navigateByUrl('/checklists/morning/edit/' + row[this.type + 'ID'].toString());
+    this.router.navigateByUrl('/checklists/'+ this.type + '/edit/' + row[this.type + 'ID'].toString());
   }
 
   deleteEntry(row: any) {
@@ -48,8 +48,10 @@ export class MorningTableComponent implements OnInit {
     });
   }
 
-  pageChanged(page: any) {
-    this.pageNumber = page;
-    this.loadData();
+  pageChanged(event: any) {
+    if (this.pageNumber !== event.page) {
+      this.pageNumber = event.page;
+      this.loadData();
+    }
   }
 }
