@@ -16,11 +16,13 @@ namespace API.Models.Entities {
         public bool? CheckEmails { get; set; }
         public bool? CheckTexts { get; set; }
         public bool? CommitmentsMet { get; set; }
-        public int? Steps { get; set; }
-        public float? Spending { get; set; }
-        public float? ScreenTime { get; set; }
-        public int? HoursWorked { get; set; }
+        public double? Steps { get; set; }
+        public double? Spending { get; set; }
+        public double? ScreenTime { get; set; }
+        public double? HoursWorked { get; set; }
 
         public override int GetID() { return DailyID; }
     }
 }
+
+// current issue - float type
