@@ -1,11 +1,11 @@
-<div *ngIf="morningTable">
+<div *ngIf="table">
   <app-table 
     [columns]="columns"
-    [tableData]="morningTable"
+    [tableData]="table"
     tableTitle="Morning Table"
     [pagination]="pagination"
-    (update)="editChecklist($event)"
-    (delete)="deleteChecklist($event)"
+    (update)="editEntry($event)"
+    (delete)="deleteEntry($event)"
     (newPage)="pageChanged($event)"
   ></app-table>
 </div>

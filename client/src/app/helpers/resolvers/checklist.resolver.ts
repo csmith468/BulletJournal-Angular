@@ -7,3 +7,4 @@ export const checklistResolver: ResolveFn<any> = (route, state) => {
   return checklistService.getChecklistById(route.paramMap.get('type')!, route.paramMap.get('id')!);
 };
 
+ 

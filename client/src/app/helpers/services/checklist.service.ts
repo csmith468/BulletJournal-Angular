@@ -26,6 +26,27 @@ export class ChecklistService {
     else return this.http.post(this.baseUrl + type + '/add', model);
   }
 
+  getEntryById(type: string, id: string) {
+    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
+  }
+
+  deleteEntry(type: string, id: string) {
+    return this.http.delete(this.baseUrl + type + '/delete/' + id.toString());
+  }
+
+  getColumns(type: string) {
+    // var columns: string[] = [];
+    // this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
+    //   qs => qs.forEach(q => columns.push(q.key))
+    // );
+    // return columns;
+    return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
+  }
+
+  getChecklistById(type: string, id: string) {
+    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
+  }
+
   getTable(type: string, page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 
@@ -42,27 +63,7 @@ export class ChecklistService {
           if (pagination) this.paginatedResult.pagination = JSON.parse(pagination);
           return this.paginatedResult;
         }
-      ))
-  }
-
-  getEntryById(type: string, id: string) {
-    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
-  }
-
-  deleteEntry(type: string, id: string) {
-    return this.http.delete(this.baseUrl + type + '/delete/' + id.toString());
-  }
-
-  getColumns(type: string) {
-    var columns = ['Date'];
-    this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
-      qs => qs.forEach(q => columns.push(q.key))
-    );
-    return columns;
-  }
-
-  getChecklistById(type: string, id: string) {
-    return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
+    ))
   }
 
   getQuestions(type: string, initialChecklist?: any) {

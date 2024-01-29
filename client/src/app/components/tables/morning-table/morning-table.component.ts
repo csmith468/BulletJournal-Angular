@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Morning } from 'src/app/helpers/models/data-models/morning';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
-import { MorningService } from 'src/app/helpers/services/form-sets/morning.service';
+import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
   selector: 'app-morning-table',
@@ -10,14 +9,18 @@ import { MorningService } from 'src/app/helpers/services/form-sets/morning.servi
   styleUrls: ['./morning-table.component.css']
 })
 export class MorningTableComponent implements OnInit {
-  morningTable: Array<Morning> = [];
+  table: Array<any> = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof Morning> = ['date',  'glassOfWater',  'meds', 'vitamins', 'breakfast']
+  columns: Array<keyof any> = ['date']
   pageNumber = 1;
   pageSize = 10;
+  type: string = ''
 
-  constructor(private morningService: MorningService, private router: Router) {
-
+  constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
+    this.type = this.route.snapshot.data['metadata']['type'];
+    var cols = checklistService.getColumns(this.type).subscribe(
+        qs => qs.forEach(q => this.columns.push(q.key))
+    );
   }
 
   ngOnInit(): void {
@@ -25,22 +28,22 @@ export class MorningTableComponent implements OnInit {
   }
 
   loadData() {
-    this.morningService.getMorningTable(this.pageNumber, this.pageSize).subscribe({
+    this.checklistService.getTable(this.type, this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {
-          this.morningTable = <Morning[]>response.result;
+          this.table = <any[]>response.result;
           this.pagination = response.pagination;
         }
       }
     })
   }
 
-  editChecklist(row: Morning) {
-    this.router.navigateByUrl('/checklists/morning/edit/' + row.morningID.toString());
+  editEntry(row: any) {
+    this.router.navigateByUrl('/checklists/morning/edit/' + row[this.type + 'ID'].toString());
   }
 
-  deleteChecklist(row: Morning) {
-    this.morningService.deleteMorningChecklist(row.morningID).subscribe({
+  deleteEntry(row: any) {
+    this.checklistService.deleteEntry(this.type, row[this.type + 'ID']).subscribe({
       next: () => this.loadData()
     });
   }

@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { MorningTableComponent } from './morning-table/morning-table.component';
 import { NightTableComponent } from './night-table/night-table.component';
 import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
+import { columnsResolver } from 'src/app/helpers/resolvers/columns.resolver';
 
 const routes: Routes = [
-  {path: 'morning', component: MorningTableComponent, resolve: {metadata: typeResolver}},
+  {path: ':type', component: MorningTableComponent, resolve: {metadata: typeResolver, columns: columnsResolver}},
+  // {path: 'morning', component: MorningTableComponent, resolve: {metadata: typeResolver, columns: columnsResolver}},
   {path: 'night', component: NightTableComponent}
 ];
 

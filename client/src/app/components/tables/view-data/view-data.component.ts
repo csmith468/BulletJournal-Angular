@@ -20,8 +20,8 @@ export class ViewDataComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     this.type = routeData['metadata']['type'];
 
-    this.columns = this.checklistService.getColumns(this.type);
-    console.log(this.columns)
+    // this.columns = this.checklistService.getColumns(this.type);
+    // console.log(this.columns)
   }
 
   ngOnInit(): void {
