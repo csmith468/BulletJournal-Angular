@@ -18,8 +18,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {path: ':type/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
-      {path: ':type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
+      {path: 'checklists/:type/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
+      {path: 'checklists/:type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
       {path: 'tables/:type', component: TableComponent, resolve: {metadata: typeResolver}},
       {path: 'profile', component: ProfileComponent}
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},

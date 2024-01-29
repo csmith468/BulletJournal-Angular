@@ -67,18 +67,19 @@ export class ChecklistService {
   }
 
   getQuestions(type: string, initialChecklist?: any) {
-    var questions: QuestionBase<any>[] = [
-      createDateQuestion('date', 'Date', true, initialChecklist)
-    ]
+    // var questions: QuestionBase<any>[] = [
+    //   createDateQuestion('date', 'Date', true, initialChecklist)
+    // ]
 
-    this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
-      qs => {
-        qs.forEach(q => {
-          if (q.type == 'switch') questions.push(createSwitchQuestion(q.key, q.question, initialChecklist))
-          if (q.type == 'textbox') questions.push(createTextboxQuestion(q.key, q.question, initialChecklist))
-        })
-      }
-    )
-    return of(questions); // .sort((a, b) => a.order - b.order));
+    // this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet').subscribe(
+    //   qs => {
+    //     qs.forEach(q => {
+    //       if (q.type == 'switch') questions.push(createSwitchQuestion(q.key, q.question, initialChecklist))
+    //       if (q.type == 'textbox') questions.push(createTextboxQuestion(q.key, q.question, initialChecklist))
+    //     })
+    //   }
+    // )
+    // return of(questions); // .sort((a, b) => a.order - b.order));
+    return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
   }
 }
