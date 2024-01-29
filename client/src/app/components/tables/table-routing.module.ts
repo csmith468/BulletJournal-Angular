@@ -6,8 +6,8 @@ import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
 import { columnsResolver } from 'src/app/helpers/resolvers/columns.resolver';
 
 const routes: Routes = [
-  {path: ':type', component: MorningTableComponent, resolve: {metadata: typeResolver, columns: columnsResolver}},
-  // {path: 'morning', component: MorningTableComponent, resolve: {metadata: typeResolver, columns: columnsResolver}},
+  {path: ':type', component: MorningTableComponent, resolve: {metadata: typeResolver}},
+  // {path: 'morning', component: MorningTableComponent, resolve: {metadata: typeResolver}},
   {path: 'night', component: NightTableComponent}
 ];
 
