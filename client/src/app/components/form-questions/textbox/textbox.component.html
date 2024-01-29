@@ -1,11 +1,20 @@
 <div [formGroup]="form">
-    <div class="form-floating mb-2">
+    <div class="form-floating mb-2 custom-textbox" >
         <input 
             class="form-control" 
-            type="text"
+            [type]="question.inputType"
             [id]="question.key"
             [formControlName]="question.key"
+            [class.is-invalid]="emptyButRequired || isNegativeNumber"
+            [class.is-valid]="isValid"
         >
+        <div class="invalid-feedback" *ngIf="emptyButRequired">
+          Question is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="isNegativeNumber">
+          Number cannot be negative.
+        </div>
+        <div class="valid-feedback" *ngIf="isValid"></div>
         <label [attr.for]="question.key">{{question.label}}</label>
     </div>
 </div>

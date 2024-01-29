@@ -11,9 +11,9 @@ import { TextboxComponent } from '../form-questions/textbox/textbox.component';
 import { SwitchComponent } from '../form-questions/switch/switch.component';
 import { DropdownComponent } from '../form-questions/dropdown/dropdown.component';
 import { DatePickerComponent } from '../form-questions/date-picker/date-picker.component';
-import { createDateQuestion } from 'src/app/helpers/models/form-models/dateQuestion';
-import { createSwitchQuestion } from 'src/app/helpers/models/form-models/switchQuestion';
-import { createTextboxQuestion } from 'src/app/helpers/models/form-models/textboxQuestion';
+import { createSwitchQuestion } from '../form-questions/switch/switchQuestion';
+import { createTextboxQuestion } from '../form-questions/textbox/textboxQuestion';
+import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
 
 @Component({
   standalone: true,
@@ -44,7 +44,9 @@ export class ChecklistComponent implements OnInit {
       qs => {
         qs.forEach(q => {
           if (q.type == 'switch') this.questions.push(createSwitchQuestion(q.key, q.question, routeData['checklist']))
-          if (q.type == 'textbox') this.questions.push(createTextboxQuestion(q.key, q.question, routeData['checklist']))
+          if (q.type == 'text' || q.type == 'number' || q.type == 'number positive') {
+            this.questions.push(createTextboxQuestion(q.key, q.question, q.type, routeData['checklist']))
+          }
         })
         this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
         this.createForm();
@@ -57,7 +59,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   createForm() {
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<any>[]);
+    this.form = this.qcs.toFormGroup(this.questions);
     this.payload = JSON.stringify(this.updatePayload());
     if (this.editMode) {
       this.originalPayload = JSON.stringify(this.updatePayload());
@@ -103,9 +105,8 @@ export class ChecklistComponent implements OnInit {
     // all un-touched questions of type checkbox as false instead of empty string
     if (this.questions) {
       for (let q of this.questions) {
-        if (q.controlType == 'checkbox' && payloadJSON[q.key] === "") {
-          payloadJSON[q.key] = false;
-        }
+        if (q.controlType == 'checkbox' && payloadJSON[q.key] === "") payloadJSON[q.key] = false;
+        if (q.controlType == 'textbox' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
       }
     }
     return payloadJSON;

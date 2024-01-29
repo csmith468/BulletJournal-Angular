@@ -8,6 +8,12 @@
                 <div *ngSwitchCase="'text'">
                     <app-textbox [question]="question" [form]="form"></app-textbox>
                 </div>
+                <div *ngSwitchCase="'number'">
+                    <app-textbox [question]="question" [form]="form"></app-textbox>
+                </div>
+                <div *ngSwitchCase="'number positive'">
+                    <app-textbox [question]="question" [form]="form"></app-textbox>
+                </div>
                 <div *ngSwitchCase="'dropdown'">
                     <app-dropdown [question]="question" [form]="form"></app-dropdown>
                 </div>  

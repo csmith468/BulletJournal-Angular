@@ -15,7 +15,16 @@ export class TextboxComponent {
   @Input() form!: FormGroup;
 
   get isValid() {
-    return this.form.controls[this.question.key].valid;
+    return this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched  && this.question.required
+      && !this.emptyButRequired && !this.isNegativeNumber;
   }
 
+  get emptyButRequired() {
+    return !this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched && this.question.required;
+  }
+
+  get isNegativeNumber() {
+    return this.form.controls[this.question.key].touched 
+      && this.question.type == 'number positive' && this.form.controls[this.question.key].value < 0;
+  }
 }

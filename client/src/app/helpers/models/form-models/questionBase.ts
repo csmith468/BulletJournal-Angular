@@ -6,7 +6,8 @@ export class QuestionBase<T> {
     order: number;
     controlType: string;
     type: string;
-    options: { key: string, value: string }[];
+    inputType: string; // textboxes only
+    options: { key: string, value: string }[]; //dropdowns only
 
     constructor(options: {
         value?: T;
@@ -16,6 +17,7 @@ export class QuestionBase<T> {
         order?: number;
         controlType?: string;
         type?: string;
+        inputType?: string; // textboxes only
         options?: {key: string, value: string}[];
       } = {}) {
         this.value = options.value;
@@ -25,6 +27,7 @@ export class QuestionBase<T> {
         this.order = options.order === undefined ? 1 : options.order;
         this.controlType = options.controlType || '';
         this.type = options.type || '';
+        this.inputType = options.inputType || ''; // textboxes only
         this.options = options.options || [];
       }
 }
