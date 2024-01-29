@@ -68,17 +68,17 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'View Night Entries',
             },
             {
-                routeLink: 'checklists/daily/add',
+                routeLink: 'tables/daily',
                 icon: 'fa fa-sun-o',
                 label: 'View Daily Entries',
             },
             {
-                routeLink: 'checklists/wellbeing/add',
+                routeLink: 'tables/wellbeing',
                 icon: 'fa fa-smile-o',
                 label: 'View Wellbeing Tracker',
             },
             {
-                routeLink: 'checklists/physicalSymptoms/add',
+                routeLink: 'tables/physicalSymptoms',
                 icon: 'fa fa-heartbeat',
                 label: 'View Physical Symptoms',
             },

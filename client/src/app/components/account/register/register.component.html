@@ -10,32 +10,33 @@
           <hr class="horizontal-line" />
           <app-text-register
             [formControl]="$any(registerForm.controls['email'])"
-            [label]="'Email'"
+            label="Email"
+            type="email"
           ></app-text-register>
           <app-text-register
             [formControl]="$any(registerForm.controls['firstName'])"
-            [label]="'First Name'"
+            label="First Name"
           ></app-text-register>
           <app-text-register
             [formControl]="$any(registerForm.controls['lastName'])"
-            [label]="'Last Name'"
+            label="Last Name"
           ></app-text-register>
           <app-dropdown-register
             [formControl]="$any(registerForm.controls['timezoneLocationId'])"
-            [label]="'Timezone'"
+            label="Timezone"
             [dropdownItems]="timezoneDropdown"
           ></app-dropdown-register>
   
           <app-text-register
             [formControl]="$any(registerForm.controls['password'])"
-            [label]="'Password'"
-            [type]="'password'"
+            label="Password"
+            type="password"
           ></app-text-register>
   
           <app-text-register
             [formControl]="$any(registerForm.controls['confirmPassword'])"
-            [label]="'Confirm Password'"
-            [type]="'password'"
+            label="Confirm Password"
+            type="password"
           ></app-text-register>
 <!-- 
           <div class="form-floating mb-3">

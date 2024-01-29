@@ -1,4 +1,4 @@
-import { QuestionBase } from "./questionBase";
+import { QuestionBase } from "../../../helpers/models/form-models/questionBase";
 
 export class SwitchQuestion extends QuestionBase<boolean> {
     override type = 'switch';
