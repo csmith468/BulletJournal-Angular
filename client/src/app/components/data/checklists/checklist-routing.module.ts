@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NightFormComponent } from './night-form/night-form.component';
-import { nightFormResolver } from 'src/app/helpers/resolvers/night-form.resolver';
 import { checklistResolver } from 'src/app/helpers/resolvers/checklist.resolver';
 import { typeResolver } from 'src/app/helpers/resolvers/type.resolver';
 import { ChecklistComponent } from './checklist.component';
