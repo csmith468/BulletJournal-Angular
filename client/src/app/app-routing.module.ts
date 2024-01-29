@@ -9,6 +9,8 @@ import { AboutComponent } from './components/static/about/about.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
 import { TableComponent } from './components/table/table.component';
 import { typeResolver } from './helpers/resolvers/type.resolver';
+import { ChecklistComponent } from './components/checklist/checklist.component';
+import { checklistResolver } from './helpers/resolvers/checklist.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -16,13 +18,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {
-        path: 'checklists',
-        loadChildren: () => import('./components/checklist/checklist.module')
-          .then(m => m.ChecklistsModule)
-      },
+      {path: ':type/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
+      {path: ':type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
       {path: 'tables/:type', component: TableComponent, resolve: {metadata: typeResolver}},
-      {path: 'profile', component: ProfileComponent},
+      {path: 'profile', component: ProfileComponent}
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
       // {path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
       // {path: 'admin', component: AdminPanelComponent}, // set to view-only if not admin, no longer using adminGuard
