@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
-import { FormGroupComponent } from '../../form-group/form-group.component';
+import { FormGroupComponent } from '../form-group/form-group.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
 import { ActivatedRoute, Router } from '@angular/router';

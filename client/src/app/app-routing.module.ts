@@ -16,12 +16,12 @@ const routes: Routes = [
     children: [
       {
         path: 'checklists',
-        loadChildren: () => import('./components/data/checklists/checklist.module')
+        loadChildren: () => import('./components/checklist/checklist.module')
           .then(m => m.ChecklistsModule)
       },
       {
         path: 'tables',
-        loadChildren: () => import('./components/data/tables/table.module')
+        loadChildren: () => import('./components/tables/table.module')
           .then(m => m.TablesModule)
       }
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},

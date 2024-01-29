@@ -35,15 +35,15 @@ import { DropdownInputComponent } from './components/account/register/form-regis
 import { HeaderComponent } from './components/layout/header/header.component';
 import { HomeComponent } from './components/layout/home/home.component';
 import { LoginComponent } from './components/account/login/login.component';
-import { MorningTableComponent } from './components/data/tables/morning-table/morning-table.component';
-import { NightTableComponent } from './components/data/tables/night-table/night-table.component';
+import { MorningTableComponent } from './components/tables/morning-table/morning-table.component';
+import { NightTableComponent } from './components/tables/night-table/night-table.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
-import { TableComponent } from './components/data/tables/table.component';
+import { TableComponent } from './components/tables/table.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './helpers/services/routeReuseStategy';
 
