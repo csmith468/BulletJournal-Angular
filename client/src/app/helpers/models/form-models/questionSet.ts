@@ -4,4 +4,7 @@ export interface QuestionSet {
     key: string;
     type: string;
     question: string;
+    options: [];
+    minValue: number;
+    maxValue: number;
 }

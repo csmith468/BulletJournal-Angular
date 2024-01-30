@@ -44,8 +44,8 @@ export class ChecklistComponent implements OnInit {
       qs => {
         qs.forEach(q => {
           if (q.type == 'switch') this.questions.push(createSwitchQuestion(q.key, q.question, routeData['checklist']))
-          if (q.type == 'text' || q.type == 'number' || q.type == 'number positive') {
-            this.questions.push(createTextboxQuestion(q.key, q.question, q.type, routeData['checklist']))
+          if (q.type == 'text' || q.type == 'number') {
+            this.questions.push(createTextboxQuestion(q.key, q.question, q.type, q.minValue, q.maxValue, routeData['checklist']))
           }
         })
         this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
@@ -60,7 +60,7 @@ export class ChecklistComponent implements OnInit {
 
   createForm() {
     this.form = this.qcs.toFormGroup(this.questions);
-    this.payload = JSON.stringify(this.updatePayload());
+    this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
     if (this.editMode) {
       this.originalPayload = JSON.stringify(this.updatePayload());
       this.changeMade = false;
@@ -107,6 +107,9 @@ export class ChecklistComponent implements OnInit {
       for (let q of this.questions) {
         if (q.controlType == 'checkbox' && payloadJSON[q.key] === "") payloadJSON[q.key] = false;
         if (q.controlType == 'textbox' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
+        if ((q.type == 'number' && payloadJSON[q.key] != "" && payloadJSON[q.key] != null && typeof(payloadJSON[q.key]) === 'number')
+            || payloadJSON[q.key] === 0)
+          payloadJSON[q.key] = payloadJSON[q.key].toString();
       }
     }
     return payloadJSON;

@@ -5,14 +5,17 @@
             [type]="question.inputType"
             [id]="question.key"
             [formControlName]="question.key"
-            [class.is-invalid]="emptyButRequired || isNegativeNumber"
+            [class.is-invalid]="emptyButRequired || isTooSmall || isTooLarge"
             [class.is-valid]="isValid"
         >
-        <div class="invalid-feedback" *ngIf="emptyButRequired">
+        <div class="invalid-feedback" *ngIf="">
           Question is required.
         </div>
-        <div class="invalid-feedback" *ngIf="isNegativeNumber">
-          Number cannot be negative.
+        <div class="invalid-feedback" *ngIf="isTooSmall">
+          Number must be at least {{question.minValue}}.
+        </div>
+        <div class="invalid-feedback" *ngIf="isTooLarge">
+          Number must be no greater than {{question.maxValue}}.
         </div>
         <div class="valid-feedback" *ngIf="isValid"></div>
         <label [attr.for]="question.key">{{question.label}}</label>

@@ -16,15 +16,20 @@ export class TextboxComponent {
 
   get isValid() {
     return this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched  && this.question.required
-      && !this.emptyButRequired && !this.isNegativeNumber;
+      && !this.emptyButRequired && !this.isTooSmall && !this.isTooLarge;
   }
 
   get emptyButRequired() {
     return !this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched && this.question.required;
   }
 
-  get isNegativeNumber() {
-    return this.form.controls[this.question.key].touched 
-      && this.question.type == 'number positive' && this.form.controls[this.question.key].value < 0;
+  get isTooSmall() {
+    return this.form.controls[this.question.key].touched && this.question.type == 'number'
+    && this.question.minValue != null && this.form.controls[this.question.key].value < this.question.minValue;
+  }
+
+  get isTooLarge() {
+    return this.form.controls[this.question.key].touched && this.question.type == 'number'
+    && this.question.maxValue != null && this.form.controls[this.question.key].value > this.question.maxValue;
   }
 }
