@@ -1,0 +1,512 @@
+[
+  {
+    "QuestionID": 1,
+    "Source": "Morning",
+    "Key": "glassOfWater",
+    "Type": "switch",
+    "Question": "Did you have a glass of water?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 2,
+    "Source": "Morning",
+    "Key": "meds",
+    "Type": "switch",
+    "Question": "Did you take your meds?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 3,
+    "Source": "Morning",
+    "Key": "vitamins",
+    "Type": "switch",
+    "Question": "Did you take your vitamins?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 4,
+    "Source": "Morning",
+    "Key": "breakfast",
+    "Type": "switch",
+    "Question": "Did you eat breakfast?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 6,
+    "Source": "Night",
+    "Key": "glassOfWater",
+    "Type": "switch",
+    "Question": "Did you have a glass of water?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 7,
+    "Source": "Night",
+    "Key": "meds",
+    "Type": "switch",
+    "Question": "Did you take your meds?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 8,
+    "Source": "Night",
+    "Key": "vitamins",
+    "Type": "switch",
+    "Question": "Did you take your vitamins?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 9,
+    "Source": "Night",
+    "Key": "washFace",
+    "Type": "switch",
+    "Question": "Did you wash your face?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 10,
+    "Source": "Night",
+    "Key": "floss",
+    "Type": "switch",
+    "Question": "Did you floss?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 11,
+    "Source": "Night",
+    "Key": "retainer",
+    "Type": "switch",
+    "Question": "Did you wear your retainer?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 12,
+    "Source": "Daily",
+    "Key": "breakfast",
+    "Type": "switch",
+    "Question": "Did you eat breakfast?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 13,
+    "Source": "Daily",
+    "Key": "lunch",
+    "Type": "switch",
+    "Question": "Did you eat lunch?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 14,
+    "Source": "Daily",
+    "Key": "dinner",
+    "Type": "switch",
+    "Question": "Did you eat dinner?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 15,
+    "Source": "Daily",
+    "Key": "fruits",
+    "Type": "switch",
+    "Question": "Did you eat fruit?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 16,
+    "Source": "Daily",
+    "Key": "vegetables",
+    "Type": "switch",
+    "Question": "Did you eat vegetables?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 17,
+    "Source": "Daily",
+    "Key": "read",
+    "Type": "switch",
+    "Question": "Did you read?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 18,
+    "Source": "Daily",
+    "Key": "wentOutside",
+    "Type": "switch",
+    "Question": "Did you go outside?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 19,
+    "Source": "Daily",
+    "Key": "showered",
+    "Type": "switch",
+    "Question": "Did you shower?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 20,
+    "Source": "Daily",
+    "Key": "journaled",
+    "Type": "switch",
+    "Question": "Did you journal?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 21,
+    "Source": "Daily",
+    "Key": "meditated",
+    "Type": "switch",
+    "Question": "Did you meditate?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 22,
+    "Source": "Daily",
+    "Key": "checkEmails",
+    "Type": "switch",
+    "Question": "Did you check your emails?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 23,
+    "Source": "Daily",
+    "Key": "checkTexts",
+    "Type": "switch",
+    "Question": "Did you check your texts?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 24,
+    "Source": "Daily",
+    "Key": "commitmentsMet",
+    "Type": "switch",
+    "Question": "Did you meet all of your commitments?",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 25,
+    "Source": "Daily",
+    "Key": "steps",
+    "Type": "number",
+    "Question": "How many steps did you take?",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 26,
+    "Source": "Daily",
+    "Key": "spending",
+    "Type": "number",
+    "Question": "How much did you spend?",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 27,
+    "Source": "Daily",
+    "Key": "screenTime",
+    "Type": "number",
+    "Question": "What was your screen time?",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 24
+  },
+  {
+    "QuestionID": 28,
+    "Source": "Daily",
+    "Key": "hoursWorked",
+    "Type": "number",
+    "Question": "How many hours did you work?",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 24
+  },
+  {
+    "QuestionID": 29,
+    "Source": "Physical",
+    "Key": "painLevel",
+    "Type": "number",
+    "Question": "Pain Level",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 30,
+    "Source": "Physical",
+    "Key": "headache",
+    "Type": "switch",
+    "Question": "Headache",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 31,
+    "Source": "Physical",
+    "Key": "nausea",
+    "Type": "switch",
+    "Question": "Nausea",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 32,
+    "Source": "Physical",
+    "Key": "stomachAche",
+    "Type": "switch",
+    "Question": "Stomach Ache",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 33,
+    "Source": "Physical",
+    "Key": "soreThroat",
+    "Type": "switch",
+    "Question": "Sore Throat",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 34,
+    "Source": "Physical",
+    "Key": "cough",
+    "Type": "switch",
+    "Question": "Cough",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 35,
+    "Source": "Physical",
+    "Key": "congestion",
+    "Type": "switch",
+    "Question": "Congestion",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 36,
+    "Source": "Physical",
+    "Key": "nightSweats",
+    "Type": "switch",
+    "Question": "Night Sweats",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 37,
+    "Source": "Physical",
+    "Key": "backPain",
+    "Type": "switch",
+    "Question": "Back Pain",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 38,
+    "Source": "Physical",
+    "Key": "jawPain",
+    "Type": "switch",
+    "Question": "Jaw Pain",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 39,
+    "Source": "Physical",
+    "Key": "kneePain",
+    "Type": "switch",
+    "Question": "Knee Pain",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 40,
+    "Source": "Physical",
+    "Key": "noseBleed",
+    "Type": "switch",
+    "Question": "Nose Bleed",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 41,
+    "Source": "Physical",
+    "Key": "periodCramps",
+    "Type": "switch",
+    "Question": "Period Cramps",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 42,
+    "Source": "Physical",
+    "Key": "hangover",
+    "Type": "switch",
+    "Question": "Hangover",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 43,
+    "Source": "Physical",
+    "Key": "muscleSoreness",
+    "Type": "switch",
+    "Question": "Muscle Soreness",
+    "Options": null,
+    "MinValue": null,
+    "MaxValue": null
+  },
+  {
+    "QuestionID": 44,
+    "Source": "Wellbeing",
+    "Key": "dayRating",
+    "Type": "slider",
+    "Question": "How would you rate your day?",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 45,
+    "Source": "Wellbeing",
+    "Key": "happiness",
+    "Type": "slider",
+    "Question": "Happiness",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 46,
+    "Source": "Wellbeing",
+    "Key": "sadness",
+    "Type": "slider",
+    "Question": "Sadness",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 47,
+    "Source": "Wellbeing",
+    "Key": "shame",
+    "Type": "slider",
+    "Question": "Shame",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 48,
+    "Source": "Wellbeing",
+    "Key": "anger",
+    "Type": "slider",
+    "Question": "Anger",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 49,
+    "Source": "Wellbeing",
+    "Key": "anxiety",
+    "Type": "slider",
+    "Question": "Anxiety",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 50,
+    "Source": "Wellbeing",
+    "Key": "overwhelmed",
+    "Type": "slider",
+    "Question": "Overwhelmed",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 51,
+    "Source": "Wellbeing",
+    "Key": "irritable",
+    "Type": "slider",
+    "Question": "Irritable",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  },
+  {
+    "QuestionID": 52,
+    "Source": "Wellbeing",
+    "Key": "energy",
+    "Type": "slider",
+    "Question": "Energy",
+    "Options": null,
+    "MinValue": 0,
+    "MaxValue": 10
+  }
+]
