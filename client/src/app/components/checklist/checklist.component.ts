@@ -14,6 +14,8 @@ import { DatePickerComponent } from '../form-questions/date-picker/date-picker.c
 import { createSwitchQuestion } from '../form-questions/switch/switchQuestion';
 import { createTextboxQuestion } from '../form-questions/textbox/textboxQuestion';
 import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
+import { createSliderQuestion } from '../form-questions/slider/sliderQuestion';
+import { SliderComponent } from '../form-questions/slider/slider.component';
 
 @Component({
   standalone: true,
@@ -22,7 +24,7 @@ import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
   styleUrls: ['./checklist.component.css'],
   providers: [ChecklistService],
   imports: [AsyncPipe, CommonModule, ReactiveFormsModule, 
-    TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent]
+    TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
 export class ChecklistComponent implements OnInit {
   questions: QuestionBase<any>[] = [];
@@ -47,6 +49,7 @@ export class ChecklistComponent implements OnInit {
           if (q.type == 'text' || q.type == 'number') {
             this.questions.push(createTextboxQuestion(q.key, q.question, q.type, q.minValue, q.maxValue, routeData['checklist']))
           }
+          if (q.type == 'slider') this.questions.push(createSliderQuestion(q.key, q.question, q.minValue, q.maxValue, routeData['checklist']))
         })
         this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
         this.createForm();
@@ -108,8 +111,9 @@ export class ChecklistComponent implements OnInit {
         if (q.controlType == 'checkbox' && payloadJSON[q.key] === "") payloadJSON[q.key] = false;
         if (q.controlType == 'textbox' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
         if ((q.type == 'number' && payloadJSON[q.key] != "" && payloadJSON[q.key] != null && typeof(payloadJSON[q.key]) === 'number')
-            || payloadJSON[q.key] === 0)
+            || payloadJSON[q.key] === 0) {
           payloadJSON[q.key] = payloadJSON[q.key].toString();
+        }
       }
     }
     return payloadJSON;

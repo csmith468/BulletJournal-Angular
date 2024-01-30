@@ -1,0 +1,12 @@
+.label-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 10px 0;
+    max-width: 284px;
+}
+.slider-container{
+    min-width: 284px;
+}
+mat-slider {
+    width: 284px;
+}

@@ -20,6 +20,9 @@
                 <div *ngSwitchCase="'date'" >
                     <app-date-picker [question]="question" [form]="form"></app-date-picker>
                 </div>
+                <div *ngSwitchCase="'slider'" >
+                    <app-slider [question]="question" [form]="form"></app-slider>
+                </div>
             </div>
         </div>
         <div class="form-row mt-3">
@@ -34,7 +37,7 @@
             >Cancel</button>
         </div>
     </form>
-    <!-- <div *ngIf="payload" class="form-row">
+    <div *ngIf="payload" class="form-row">
         {{ payload }}
-    </div> -->
+    </div>
 </div>
