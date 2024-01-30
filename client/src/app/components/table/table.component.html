@@ -1,8 +1,6 @@
 <div *ngIf="table">
-  <h4 class="mt-2">change to match other'</h4>
-  <p *ngIf="pagination?.maxDate">Max Date: {{pagination?.maxDate}}</p>
-  <p *ngIf="pagination?.minDate">Min Date: {{pagination?.minDate}}</p>
-  <p>Total Rows: {{pagination?.totalItems}}</p>
+  <h4 class="mt-2">{{this.header}}</h4>
+  <p *ngIf="pagination?.maxDate && pagination?.minDate">Max Date: {{pagination?.maxDate}}, Min Date: {{pagination?.minDate}}, Total Rows: {{pagination?.totalItems}}</p>
   <div class="row">
     <table class="table table-striped">
       <thead>

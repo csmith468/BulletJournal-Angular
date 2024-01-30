@@ -5,6 +5,7 @@ GO
 CREATE TABLE [app].[physical](
 	[PhysicalID] [int] IDENTITY(1,1) NOT NULL,
 	[UserID] [int] NOT NULL,
+	[Date] [date] NOT NULL,
 	[PainLevel] [float] NULL,
 	[Headache] [bit] NULL,
 	[Nausea] [bit] NULL,

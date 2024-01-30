@@ -14,13 +14,16 @@ export class TableComponent implements OnInit {
   columns: Array<keyof any> = ['date']
   pageNumber = 1;
   pageSize = 10;
-  type: string = ''
+  type: string = '';
+  header: string = 'Data';
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute) {
     this.type = this.route.snapshot.data['metadata']['type'];
     var cols = checklistService.getColumns(this.type).subscribe(
         qs => qs.forEach(q => this.columns.push(q.key))
     );
+    this.header = this.type.charAt(0).toUpperCase() + this.type.slice(1) + ' Data';
+    if (this.type === 'physical') this.header = 'Physical Symptoms Data'
   }
 
   ngOnInit(): void {
