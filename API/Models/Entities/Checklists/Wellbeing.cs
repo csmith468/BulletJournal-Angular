@@ -3,15 +3,15 @@ namespace API.Models.Entities {
         public int WellbeingID { get; set; }
         public override int UserID { get; set; }
         public override DateOnly Date { get; set; }
-        public float? DayRating { get; set; }
-        public float? Happiness { get; set; }
-        public float? Sadness { get; set; }
-        public float? Shame { get; set; }
-        public float? Anger { get; set; }
-        public float? Anxiety { get; set; }
-        public float? Overwhelmed { get; set; }
-        public float? Irritable { get; set; }
-        public float? Energy { get; set; }
+        public double? DayRating { get; set; }
+        public double? Happiness { get; set; }
+        public double? Sadness { get; set; }
+        public double? Shame { get; set; }
+        public double? Anger { get; set; }
+        public double? Anxiety { get; set; }
+        public double? Overwhelmed { get; set; }
+        public double? Irritable { get; set; }
+        public double? Energy { get; set; }
         public override int GetID() { return WellbeingID; }
     }
 }
