@@ -6,7 +6,7 @@ CREATE TABLE [app].[wellbeing](
 	[WellbeingID] [int] IDENTITY(1,1) NOT NULL,
 	[UserID] [int] NOT NULL,
 	[Date] [date] NOT NULL,
-	[DayRating] [int] NULL,
+	[DayRating] [float] NULL,
 	[Happiness] [float] NULL,
 	[Sadness] [float] NULL,
 	[Shame] [float] NULL,
