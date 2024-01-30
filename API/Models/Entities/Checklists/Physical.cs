@@ -3,7 +3,7 @@ namespace API.Models.Entities {
         public int PhysicalID { get; set; }
         public override int UserID { get; set; }
         public override DateOnly Date { get; set; }
-        public int? PainLevel { get; set; }
+        public double? PainLevel { get; set; }
         public bool? Headache { get; set; }
         public bool? Nausea { get; set; }
         public bool? StomachAche { get; set; }

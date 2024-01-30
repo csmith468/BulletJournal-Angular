@@ -3,7 +3,7 @@ namespace API.Models.Entities {
         public int WellbeingID { get; set; }
         public override int UserID { get; set; }
         public override DateOnly Date { get; set; }
-        public int? DayRating { get; set; }
+        public float? DayRating { get; set; }
         public float? Happiness { get; set; }
         public float? Sadness { get; set; }
         public float? Shame { get; set; }
