@@ -27,7 +27,7 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'Add Wellbeing',
             },
             {
-                routeLink: 'checklists/physicalSymptoms/add',
+                routeLink: 'checklists/physical/add',
                 icon: 'fa fa-heartbeat',
                 label: 'Add Physical Symptoms',
             },
@@ -78,7 +78,7 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'View Wellbeing Tracker',
             },
             {
-                routeLink: 'tables/physicalSymptoms',
+                routeLink: 'tables/physical',
                 icon: 'fa fa-heartbeat',
                 label: 'View Physical Symptoms',
             },
