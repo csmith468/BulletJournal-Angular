@@ -36,7 +36,12 @@
               "./node_modules/@ng-select/ng-select/themes/custom.theme.css",
               "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
-            "scripts": []
+            "allowedCommonJsDependencies": [
+              "apexcharts"
+            ],
+            "scripts": [
+              "./node_modules/apexcharts/dist/apexcharts.min.js"
+            ]
           },
           "configurations": {
             "production": {

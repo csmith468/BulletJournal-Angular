@@ -1,0 +1,8 @@
+<div *ngIf="commonOptions && data && data.length > 0 && lineChartFields && lineChartFields.length > 0">
+<app-line-chart
+    [data]="data"
+    [fields]="lineChartFields"
+    selectedField="dayRating"
+></app-line-chart>
+</div>
+<app-area-chart></app-area-chart>

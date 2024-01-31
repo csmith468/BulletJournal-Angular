@@ -31,7 +31,7 @@ export class TableComponent implements OnInit {
   }
 
   loadData() {
-    this.checklistService.getTable(this.type, this.pageNumber, this.pageSize).subscribe({
+    this.checklistService.getData(this.type, this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {
           this.table = <any[]>response.result;

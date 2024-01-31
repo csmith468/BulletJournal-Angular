@@ -37,7 +37,7 @@ export class ChecklistService {
     return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
-  getTable(type: string, page?: number, itemsPerPage?: number) {
+  getData(type: string, page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 
     if (page && itemsPerPage) {

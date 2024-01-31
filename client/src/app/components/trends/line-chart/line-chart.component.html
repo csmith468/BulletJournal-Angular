@@ -1,0 +1,23 @@
+<!-- <div style="text-align: center;">
+    <apx-chart
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart!"
+        [xaxis]="chartOptions.xaxis!"
+        [title]="chartOptions.title!"
+    ></apx-chart>
+</div> -->
+
+<div *ngIf="chartData && chartData.length > 0 && chartOptions && chartOptions">
+    <apx-chart
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart"
+        [colors]="chartOptions.colors"
+        [yaxis]="chartOptions.yAxis!"
+        [dataLabels]="chartOptions.dataLabels!"
+        [markers]="chartOptions.markers!"
+        [stroke]="chartOptions.stroke!"
+        [grid]="chartOptions.grid"
+        [xaxis]="chartOptions.xAxis!"
+        [tooltip]="chartOptions.tooltip!"
+    ></apx-chart>
+</div>

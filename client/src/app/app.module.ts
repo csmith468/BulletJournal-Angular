@@ -7,18 +7,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouteReuseStrategy } from '@angular/router';
 
-// font awesome
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-// ngx-bootstrap modules
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+// other external modules
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-
-// other ng modules
-import { ToastrModule } from 'ngx-toastr';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ToastrModule } from 'ngx-toastr';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +33,7 @@ import { BodyComponent } from './components/layout/body/body.component';
 import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { HomeComponent } from './components/layout/home/home.component';
+import { LineChartComponent } from './components/trends/line-chart/line-chart.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
@@ -44,6 +42,8 @@ import { SidenavComponent } from './components/layout/sidenav/sidenav.component'
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
 import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
+import { AreaChartComponent } from './components/trends/area-chart/area-chart.component';
+import { TrendsComponent } from './components/trends/trends.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,7 @@ import { TextInputComponent } from './components/account/register/form-register-
     DropdownInputComponent,
     HeaderComponent,
     HomeComponent,
+    LineChartComponent,
     LoginComponent,
     NotFoundComponent,
     ProfileComponent,
@@ -60,7 +61,9 @@ import { TextInputComponent } from './components/account/register/form-register-
     SidenavComponent,
     SubLevelMenuComponent,
     TableComponent,
-    TextInputComponent
+    TextInputComponent,
+    AreaChartComponent,
+    TrendsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -72,6 +75,7 @@ import { TextInputComponent } from './components/account/register/form-register-
     FormsModule,
     HttpClientModule,
     LayoutModule,
+    NgApexchartsModule,
     NgSelectModule,
     NgxSpinnerModule.forRoot({
       type: 'square-jelly-box'

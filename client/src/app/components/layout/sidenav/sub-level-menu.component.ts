@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ISideNavData } from './sidenav-data/sidenav-ISideNavData';
+import { ISideNavData } from '../../../helpers/models/sidenav-data/sidenav-ISideNavData';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { AccountService } from 'src/app/helpers/services/account.service';

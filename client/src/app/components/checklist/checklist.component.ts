@@ -90,6 +90,12 @@ export class ChecklistComponent implements OnInit {
     this.router.navigateByUrl('/tables/' + this.type);
   }
 
+  deleteEntry() {
+    this.checklistService.deleteEntry(this.type, this.route.snapshot.data['metadata']['id']).subscribe({
+      next: () => this.router.navigateByUrl('/tables/' + this.type)
+    });
+  }
+
   submitForm() {
     this.payload = this.updatePayload();
     if (this.editMode) this.subscription.unsubscribe();

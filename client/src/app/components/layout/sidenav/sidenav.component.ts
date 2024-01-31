@@ -1,12 +1,12 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { ISideNavData } from './sidenav-data/sidenav-ISideNavData';
+import { ISideNavData } from '../../../helpers/models/sidenav-data/sidenav-ISideNavData';
 import { AccountService } from 'src/app/helpers/services/account.service';
 import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
-import { sidenav_links_loggedIn } from './sidenav-data/sidenav-links-loggedIn';
+import { sidenav_links_loggedIn } from '../../../helpers/models/sidenav-data/sidenav-links-loggedIn';
 import { Router } from '@angular/router';
-import { sidenav_links_loggedOut } from './sidenav-data/sidenav-links-loggedOut';
+import { sidenav_links_loggedOut } from '../../../helpers/models/sidenav-data/sidenav-links-loggedOut';
 
 @Component({
   selector: 'app-sidenav',
