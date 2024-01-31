@@ -7,8 +7,8 @@ export type ChartOptions = {
     markers: ApexMarkers;
     title: ApexTitleSubtitle;
     fill: ApexFill;
-    xAxis: ApexXAxis;
-    yAxis: ApexYAxis;
+    xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
     tooltip: ApexTooltip;
     stroke: ApexStroke;
     annotations: ApexAnnotations;

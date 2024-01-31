@@ -41,37 +41,50 @@ export class LineChartComponent implements OnInit {
         }
       ],
       chart: {
-        id: this.selectedField,
-        group: this.selectedField,
-        type: 'line',
-        height: 300
-      },
-      colors: ["#F396C0"],
-      yAxis: {
-        tickAmount: 1,
-        labels: { minWidth: 40 }
-      },
-      toolbar: { tools: { selection: false }},
-      stroke: { curve: "straight" },
-      markers: {
-        // size: 2,
-        hover: { size: 10 }
-      },
-      tooltip: {
-        followCursor: false,
-        theme: 'light',
-        x: { show: false },
-        marker: { show: false },
-        y: {
-          title: {
-            formatter: function() { return ""; }
-          }
+        type: "area",
+        stacked: false,
+        height: 350,
+        zoom: {
+          type: "x",
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        toolbar: {
+          autoSelected: "zoom"
         }
       },
-      grid: { clipMarkers: false },
-      xAxis: { type: "datetime" },
-      dataLabels: { enabled: false }
-    };
+      dataLabels: { enabled: false },
+      markers: { size: 0 },
+      title: {
+        text: this.selectedField,
+        align: "center"
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 0,
+          stops: [0, 90, 100]
+        }
+      },
+      yaxis: {
+        min: 0,
+        title: {
+          text: this.selectedField
+        }
+      },
+      xaxis: { type: "datetime" },
+      tooltip: {
+        shared: false,
+        y: {
+          formatter: function(val) {
+            return (val / 1000000).toFixed(0);
+          }
+        }
+      }
+    }
   }
 
 }

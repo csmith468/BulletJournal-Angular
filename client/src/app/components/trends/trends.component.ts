@@ -37,7 +37,7 @@ export class TrendsComponent {
       }
     },
     grid: { clipMarkers: false },
-    xAxis: { type: "datetime" }
+    xaxis: { type: "datetime" }
   };
 
   constructor(private checklistService: ChecklistService, private route: ActivatedRoute) {
@@ -72,7 +72,7 @@ export class TrendsComponent {
         this.dates.push(new Date(currentDate));
 
         if (!this.data.find(x => x.date == getDateOnly(currentDate.toString()))) {
-          this.data.push({'Date' : getDateOnly(currentDate.toString())})
+          this.data.push({'date' : getDateOnly(currentDate.toString())})
         }
         
         currentDate.setDate(currentDate.getDate() + 1);

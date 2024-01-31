@@ -63,7 +63,7 @@ export class AreaChartComponent {
       chart: { type: "area", height: 350 },
       dataLabels: { enabled: false },
       markers: { size: 0 },
-      xAxis: {
+      xaxis: {
         type: "datetime",
         tickAmount: 6
       },
