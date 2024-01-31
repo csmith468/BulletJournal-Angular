@@ -23,7 +23,7 @@ namespace API.Controllers
             return await AddChecklist(physical);
         }
 
-        [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3
+        [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3 (pageSize = -1 will return all entries)
         public async Task<ActionResult<PagedList<Physical>>> GetMyPhysicalChecklists([FromQuery]PageParams pageParams) {
             return await GetMyChecklists<Physical>(pageParams);
         }

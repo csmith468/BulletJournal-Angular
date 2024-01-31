@@ -26,7 +26,8 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        public async Task<ActionResult<PagedList<T>>> GetMyChecklists<T>(PageParams pageParams) where T : Checklist {
+        //  (pageSize = -1 will return all entries)
+        public async Task<ActionResult<PagedList<T>>> GetMyChecklists<T>(PageParams pageParams) where T : Checklist { 
             var checklists = await _uow.ChecklistRepository.GetListAsync<T>(User.GetUserId(), pageParams);
 
             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,

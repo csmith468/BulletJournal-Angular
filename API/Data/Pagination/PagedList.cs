@@ -23,6 +23,9 @@ namespace API.Data.Pagination {
 
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize) {
             var count = await source.CountAsync();
+
+            if (pageSize == -1) pageSize = count;
+
             // get items from the page we want (skip the items on previous pages)
             var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 

@@ -33,7 +33,7 @@ namespace API.Data.Repositories {
             var query = dbSet.Where(x => x.UserID == userId)
                 .OrderByDescending(x => x.Date)
                 .AsNoTracking();
-            return await PagedList<T>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
+            return await PagedList<T>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize); // pageSize = -1 will return all entries on one page
         }
 
         public async Task<T> GetByIdAsync<T>(int userId, int itemID) where T : Checklist {
