@@ -105,6 +105,11 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'View Night Trends',
             },
             {
+                routeLink: 'trends/wellbeing',
+                icon: 'fa fa-smile-o',
+                label: 'View Wellbeing Tracker',
+            },
+            {
                 routeLink: 'trends/sleep',
                 icon: 'fa fa-bed',
                 label: 'View Sleep Trends',
