@@ -33,7 +33,7 @@ import { BodyComponent } from './components/layout/body/body.component';
 import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { HomeComponent } from './components/layout/home/home.component';
-import { LineChartComponent } from './components/trends/line-chart/line-chart.component';
+import { LineChartComponent } from './components/trends/chart/line-chart/line-chart.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
 import { ProfileComponent } from './components/account/profile/profile.component';
@@ -42,8 +42,8 @@ import { SidenavComponent } from './components/layout/sidenav/sidenav.component'
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
 import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
-import { AreaChartComponent } from './components/trends/area-chart/area-chart.component';
 import { TrendsComponent } from './components/trends/trends.component';
+import { ChartComponent } from './components/trends/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +62,8 @@ import { TrendsComponent } from './components/trends/trends.component';
     SubLevelMenuComponent,
     TableComponent,
     TextInputComponent,
-    AreaChartComponent,
-    TrendsComponent
+    TrendsComponent,
+    ChartComponent
   ],
   imports: [
     AppRoutingModule,

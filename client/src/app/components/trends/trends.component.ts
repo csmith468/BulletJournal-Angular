@@ -4,6 +4,7 @@ import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { ChartOptions } from './chartOptions';
+import { FieldType } from './fieldType';
 
 @Component({
   selector: 'app-trends',
@@ -14,8 +15,15 @@ export class TrendsComponent {
   data: Array<any> = [];
   dates: Date[] = [];
   pagination: Pagination | undefined;
-  type: string = '';
-  lineChartFields: string[] = [];
+  type: string = '';  // morning, night, etc
+  fields: FieldType[] = [];
+  typesInQuestionSet: string[] = [];
+  chart1Visible: boolean = true;
+  chart2Visible: boolean = true;
+  chart3Visible: boolean = true;
+  chart4Visible: boolean = true;
+  chart5Visible: boolean = true;
+
 
   commonOptions: Partial<ChartOptions> = {
     dataLabels: { enabled: false },
@@ -47,7 +55,8 @@ export class TrendsComponent {
     this.checklistService.getQuestions(this.type, routeData['checklist']).subscribe(
       qs => {
         qs.forEach(q => {
-          if (q.type == 'slider') this.lineChartFields.push(q.key);
+          this.fields.push({field: q.key, type: q.type});
+          if (!this.typesInQuestionSet.includes(q.type)) this.typesInQuestionSet.push(q.type);
         })
       }
     )
