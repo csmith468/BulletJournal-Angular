@@ -1,10 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
-import { Pagination } from 'src/app/helpers/models/data-models/pagination';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from '../../chartOptions';
-import { ActivatedRoute } from '@angular/router';
-import { FieldType } from '../../fieldType';
 
 export type FieldValues = {
   name: string;
@@ -12,11 +7,11 @@ export type FieldValues = {
 }
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.css']
+  selector: 'app-area-chart',
+  templateUrl: './area-chart.component.html',
+  styleUrls: ['./area-chart.component.css']
 })
-export class LineChartComponent implements OnInit {
+export class AreaChartComponent implements OnInit {
   @Input() data: Array<any> = [];
   @Input() selectedFields: string[] = [];
   @Input() fieldType: string = 'switch';
