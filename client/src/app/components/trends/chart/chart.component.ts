@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FieldType } from '../fieldType';
+import { ChartService } from 'src/app/helpers/services/chart.service';
 
 @Component({
   selector: 'app-chart',
@@ -12,14 +13,29 @@ export class ChartComponent implements OnInit{
   @Input() typesInQuestionSet: string[] = [];
 
   selectedFields: string[] = [];
-  selectedType: string = '';
+  fieldOptions: string[] = [];
+  selectedType: string = 'switch';
   selectedRangeType: string = 'monthly';
 
-  constructor() {
+  constructor(private chartService: ChartService) {
   }
 
   ngOnInit(): void {
-    this.selectedFields = this.fields.map(field => field['field']);
+    this.selectedFields = this.fields.map(field => field['field']).slice(0, 5);
+    this.fieldOptions = this.fields.filter(field => field.type == this.selectedType).map(field => field.field);
+  }
+
+  onUpdateFields(type: any) {
+    const field = type.target.id;
+    if (this.selectedFields.includes(field)) {
+      this.selectedFields.splice(this.selectedFields.indexOf(field, 0), 1);
+      this.chartService.emitRemovedField(field);
+    }
+    else {
+      this.selectedFields.push(field);
+      this.chartService.emitAddedField(field);
+    }
+    // this.selectedFields.push(field);
   }
 
 

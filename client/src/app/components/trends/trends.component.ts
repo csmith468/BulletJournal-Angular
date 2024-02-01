@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
-import { ChartOptions } from './chartOptions';
+import { ChartOptions } from './chart/chartOptions';
 import { FieldType } from './fieldType';
 
 @Component({

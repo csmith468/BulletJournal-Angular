@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartOptions } from '../../chartOptions';
+import { ChartOptions } from '../chartOptions';
+import { ChartService } from 'src/app/helpers/services/chart.service';
 
 export type FieldValues = {
   name: string;
@@ -23,12 +24,27 @@ export class AreaChartComponent implements OnInit {
 
   chartOptions: Partial<ChartOptions> | undefined;
 
-  constructor() { }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
+    this.chartService.addedField$.subscribe((field) => this.addField(field));
+    this.chartService.removedField$.subscribe((field) => this.removeField(field));
+
     for (const field of this.selectedFields) {
       this.initializeChartData(field);
     }
+    this.createChart();
+  }
+
+  removeField(field: string) {
+    this.selectedFields = this.selectedFields.filter(sf => sf !== field);
+    this.chartData = this.chartData.filter(data => data.name !== field);
+    this.createChart();
+  }
+
+  addField(field: string) {
+    this.selectedFields.push(field);
+    this.initializeChartData(field);
     this.createChart();
   }
 
@@ -41,7 +57,6 @@ export class AreaChartComponent implements OnInit {
       })
     }
 
-    console.log(this.fieldType )
     if (this.fieldType === 'switch') {
       this.data.forEach(q => {
         var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;

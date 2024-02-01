@@ -1,11 +1,29 @@
-<app-area-chart
-    [data]="data"
-    [selectedFields]="selectedFields"
-    fieldType="switch"
-    aggregation="monthly"
-></app-area-chart>
-
-<!-- @Input() data: Array<any> = [];
-@Input() selectedFields: string[] = [];
-@Input() fieldType: string = '';
-@Input() aggregation: string = 'monthly'; -->
+<div class="row">
+<div class="col-9">
+    <app-area-chart
+        [data]="data"
+        [selectedFields]="selectedFields"
+        fieldType="switch"
+        aggregation="monthly"
+    ></app-area-chart>
+</div>
+<div class="col-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-check">
+                <div *ngFor="let field of fieldOptions">
+                    <input type="checkbox" 
+                        [checked]="selectedFields.includes(field)" 
+                        class="form-check-input"
+                        [id]="field"
+                        [disabled]="(!selectedFields.includes(field) && selectedFields.length >= 5)
+                                    || (selectedFields.includes(field) && selectedFields.length == 1)"
+                        (click)="onUpdateFields($event)"
+                    >
+                    <label [for]="field" class="form-check-label">{{field}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
