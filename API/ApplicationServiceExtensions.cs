@@ -16,7 +16,16 @@ namespace API.Extensions {
 
             services.AddCors((options) => {
                 options.AddPolicy("client", (corsBuilder) => {
-                    corsBuilder.WithOrigins("https://localhost:4200")
+                    corsBuilder.WithOrigins("https://localhost:4200", 
+                                "https://localhost:8100", 
+                                "http://localhost:8100",
+                                "https://localhost:8080",
+                                "http://localhost:8080",
+                                "capacitor://localhost",
+                                "ionic://localhost",
+                                "https://localhost",
+                                "http://localhost"
+                        )
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();

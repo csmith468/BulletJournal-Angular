@@ -31,7 +31,7 @@ export class AreaChartComponent implements OnInit {
     this.chartService.removedField$.subscribe((field) => this.removeField(field));
 
     for (const field of this.selectedFields) {
-      this.initializeChartData(field);
+      this.initializeChartData(field); 
     }
     this.createChart();
   }
@@ -49,26 +49,24 @@ export class AreaChartComponent implements OnInit {
   }
 
   initializeChartData(field: string) {
-    var data: any[] = [];
+    var dataTemp: any[] = [];
 
     if (this.fieldType == 'slider') {
       this.data.forEach(q => {
-        data.push([new Date(q.date), (q[field] ? q[field] : null)])
+        dataTemp.push([new Date(q.date), (q[field] ? q[field] : null)])
       })
-    }
-
-    if (this.fieldType === 'switch') {
+    } else if (this.fieldType === 'switch') {
       this.data.forEach(q => {
         var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;
-        data.push([new Date(q.date), value]);
+        dataTemp.push([new Date(q.date), value]);
       })
     }
 
     if (this.aggregation == 'monthly') {
-      this.aggregate(data, field);
+      this.aggregate(dataTemp, field);
     } else {
-      if (this.dateAxis.length == 0) this.dateAxis.push(data.map(dates => dates[0]));
-      this.chartData.push({name: field, data: data.map(values => values[1])});
+      if (this.dateAxis.length == 0) this.dateAxis.push(dataTemp.map(dates => dates[0]));
+      this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
     }
   }
 

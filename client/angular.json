@@ -33,7 +33,6 @@
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/bootswatch/dist/customBlue/bootstrap.css",
               "./node_modules/ngx-spinner/animations/square-jelly-box.css",
-              "./node_modules/@ng-select/ng-select/themes/custom.theme.css",
               "@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "allowedCommonJsDependencies": [
@@ -48,8 +47,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
