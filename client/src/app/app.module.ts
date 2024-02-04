@@ -13,7 +13,6 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ToastrModule } from 'ngx-toastr';
@@ -45,7 +44,6 @@ import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';
 import { ChartComponent } from './components/trends/chart/chart.component';
-import { AreaChartNgxComponent } from './components/trends/chart/area-chart-ngx/area-chart-ngx.component';
 
 @NgModule({
   declarations: [
@@ -65,8 +63,7 @@ import { AreaChartNgxComponent } from './components/trends/chart/area-chart-ngx/
     TableComponent,
     TextInputComponent,
     TrendsComponent,
-    ChartComponent,
-    AreaChartNgxComponent
+    ChartComponent
   ],
   imports: [
     AppRoutingModule,
@@ -80,7 +77,6 @@ import { AreaChartNgxComponent } from './components/trends/chart/area-chart-ngx/
     LayoutModule,
     NgApexchartsModule,
     NgSelectModule,
-    NgxChartsModule,
     NgxSpinnerModule.forRoot({
       type: 'square-jelly-box'
     }),
