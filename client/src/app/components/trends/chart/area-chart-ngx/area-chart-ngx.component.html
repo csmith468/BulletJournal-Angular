@@ -1,0 +1,19 @@
+<div *ngIf="chartData && chartData.length > 0">
+    <ngx-charts-area-chart
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [timeline]="timeline"
+        [results]="chartData"
+    >
+    </ngx-charts-area-chart>
+</div>
+
+<!-- (select)="onSelect($event)" -->
+
+<!-- [scheme]="colorScheme" -->
+        <!-- [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel" -->
+        <!-- [view]="view" -->
