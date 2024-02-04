@@ -5,19 +5,19 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ChartService {
-  private addedFieldSource = new Subject<string>();
-  private removedFieldSource = new Subject<string>();
+  private addedFieldSource = new Subject<{field: string, chartNumber: number}>();
+  private removedFieldSource = new Subject<{field: string, chartNumber: number}>();
 
   constructor() { }
 
   addedField$ = this.addedFieldSource.asObservable();
   removedField$ = this.removedFieldSource.asObservable();
 
-  emitAddedField(field: string) {
-    this.addedFieldSource.next(field);
+  emitAddedField(field: string, chartNumber: number) {
+    this.addedFieldSource.next({field, chartNumber});
   }
 
-  emitRemovedField(field: string) {
-    this.removedFieldSource.next(field);
+  emitRemovedField(field: string, chartNumber: number) {
+    this.removedFieldSource.next({field, chartNumber});
   }
 }

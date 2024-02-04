@@ -17,6 +17,7 @@ export class AreaChartComponent implements OnInit {
   @Input() selectedFields: string[] = [];
   @Input() fieldType: string = 'switch';
   @Input() aggregation: string = 'monthly';
+  @Input() chartNumber: number = 0;
 
   dates: Date[] = [];
   dateAxis: any[] = [];
@@ -27,8 +28,16 @@ export class AreaChartComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
-    this.chartService.addedField$.subscribe((field) => this.addField(field));
-    this.chartService.removedField$.subscribe((field) => this.removeField(field));
+    this.chartService.addedField$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber) {
+        this.addField(event.field);
+      }
+    });
+    this.chartService.removedField$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber) {
+        this.removeField(event.field);
+      }
+    });
 
     for (const field of this.selectedFields) {
       this.initializeChartData(field); 
@@ -50,6 +59,7 @@ export class AreaChartComponent implements OnInit {
 
   initializeChartData(field: string) {
     var dataTemp: any[] = [];
+    console.log(this.fieldType)
 
     if (this.fieldType === 'slider') {
       this.data.forEach(q => {
@@ -86,15 +96,7 @@ export class AreaChartComponent implements OnInit {
         groupedData[month].count += 1;
       }
     });
-    // start with null and count 0, 
-    // if value is not null and sum is null then sum = value and count = 1
-    // if value is not null and sum is not null then above
-    // if value is null and sum is not null then skip
 
-    //actually nvm, start both with 0, but if null then don't add one, 
-    // in next section, if count = 0 then average is null
-  
-    // Calculate averages
     const averages: { month: string; average: number | null }[] = [];
     for (const month in groupedData) {
       const { sum, count } = groupedData[month];
@@ -106,11 +108,15 @@ export class AreaChartComponent implements OnInit {
   }
 
   createChart() {
+    if ((this.fieldType === 'switch')) this.createChartSwitch();
+    if ((this.fieldType === 'slider')) this.createChartSlider();
+  }
+
+  createChartSwitch() {
     var tooltip_x_format = "MM DD YYYY"
     if (this.aggregation == 'monthly') {
       tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
     } 
-    var label = (this.fieldType === 'switch') ? 'percentage' : 'number';
 
     this.chartOptions = {
       series: this.chartData,
@@ -123,12 +129,10 @@ export class AreaChartComponent implements OnInit {
           enabled: true,
           autoScaleYaxis: true
         },
-        toolbar: {
-          autoSelected: "zoom"
-        }
+        toolbar: { autoSelected: "zoom" }
       },
       dataLabels: { enabled: false },
-      markers: { size: 0 },
+      markers: { size: 0.5 },
       stroke: {
         curve: "smooth"
       },
@@ -141,22 +145,69 @@ export class AreaChartComponent implements OnInit {
         max: 1,
         labels: {
           formatter: function(value) {
-            return (label === 'percentage') ? ((value*100).toFixed(0)) + '%' : ((value).toFixed(0));
+            return (value*100).toFixed(0) + '%';
           }
         }
       },
       tooltip: {
         shared: false,
-        x: {
-          format: tooltip_x_format, // Set the tooltip format for x-axis
-        },
+        x: { format: tooltip_x_format },
         y: {
           formatter: function(value) {
-            return (label === 'percentage') ? ((value*100).toFixed(0)) + '%' : ((value).toFixed(0));
+            return (value*100).toFixed(0) + '%';
           }
         }
       }
     }
-  };
+  }
+
+  createChartSlider() {
+    var tooltip_x_format = "MM DD YYYY"
+    if (this.aggregation == 'monthly') {
+      tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
+    } 
+
+    this.chartOptions = {
+      series: this.chartData,
+      chart: {
+        height: 350,
+        type: "area",
+        stacked: false,
+        zoom: {
+          type: "x",
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        toolbar: { autoSelected: "zoom" }
+      },
+      dataLabels: { enabled: false },
+      markers: { size: 0.5 },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "datetime",
+        categories: this.dateAxis[0]
+      },
+      yaxis: {
+        min: 0,
+        max: 10,
+        labels: {
+          formatter: function(value) {
+            return (value).toFixed(0);
+          }
+        }
+      },
+      tooltip: {
+        shared: false,
+        x: { format: tooltip_x_format },
+        y: {
+          formatter: function(value) {
+            return (value).toFixed(2);
+          }
+        }
+      }
+    }
+  }
 }
 

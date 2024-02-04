@@ -3,8 +3,9 @@
     <app-area-chart
         [data]="data"
         [selectedFields]="selectedFields"
-        fieldType="switch"
+        [fieldType]="selectedType"
         aggregation="monthly"
+        [chartNumber]="chartNumber"
     ></app-area-chart>
 </div>
 <div class="col-3">
