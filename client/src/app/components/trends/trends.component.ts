@@ -19,10 +19,10 @@ export class TrendsComponent {
   fields: FieldType[] = [];
   typesInQuestionSet: string[] = [];
   chart1Visible: boolean = true;
-  chart2Visible: boolean = true;
-  chart3Visible: boolean = true;
-  chart4Visible: boolean = true;
-  chart5Visible: boolean = true;
+  chart2Visible: boolean = false;
+  chart3Visible: boolean = false;
+  chart4Visible: boolean = false;
+  chart5Visible: boolean = false;
 
 
   commonOptions: Partial<ChartOptions> = {
@@ -58,6 +58,7 @@ export class TrendsComponent {
           this.fields.push({field: q.key, type: q.type});
           if (!this.typesInQuestionSet.includes(q.type)) this.typesInQuestionSet.push(q.type);
         })
+        this.setInitialVisibility();
       }
     )
   
@@ -87,5 +88,12 @@ export class TrendsComponent {
         currentDate.setDate(currentDate.getDate() + 1);
       }
     }
+  }
+
+  setInitialVisibility() {
+    if (this.typesInQuestionSet.length >= 2) this.chart2Visible = true;
+    if (this.typesInQuestionSet.length >= 3) this.chart3Visible = true;
+    if (this.typesInQuestionSet.length >= 4) this.chart4Visible = true;
+    if (this.typesInQuestionSet.length >= 5) this.chart5Visible = true;
   }
 }

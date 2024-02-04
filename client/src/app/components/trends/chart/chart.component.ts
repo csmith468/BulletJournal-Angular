@@ -11,16 +11,20 @@ export class ChartComponent implements OnInit{
   @Input() data: Array<any> = [];
   @Input() fields: FieldType[] = [];
   @Input() typesInQuestionSet: string[] = [];
+  @Input() chartNumber: number = 0;
 
   selectedFields: string[] = [];
   fieldOptions: string[] = [];
   selectedType: string = 'switch';
   selectedRangeType: string = 'monthly';
 
-  constructor(private chartService: ChartService) {
-  }
+
+  constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
+    this.selectedType = (this.typesInQuestionSet.length >= this.chartNumber - 1) 
+      ? this.typesInQuestionSet[this.chartNumber - 1] 
+      : this.typesInQuestionSet[this.typesInQuestionSet.length - 1];
     this.selectedFields = this.fields.map(field => field['field']).slice(0, 5);
     this.fieldOptions = this.fields.filter(field => field.type == this.selectedType).map(field => field.field);
   }

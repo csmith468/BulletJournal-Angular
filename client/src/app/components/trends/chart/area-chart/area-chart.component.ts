@@ -51,7 +51,7 @@ export class AreaChartComponent implements OnInit {
   initializeChartData(field: string) {
     var dataTemp: any[] = [];
 
-    if (this.fieldType == 'slider') {
+    if (this.fieldType === 'slider') {
       this.data.forEach(q => {
         dataTemp.push([new Date(q.date), (q[field] ? q[field] : null)])
       })
@@ -63,12 +63,15 @@ export class AreaChartComponent implements OnInit {
     }
 
     if (this.aggregation == 'monthly') {
-      this.aggregate(dataTemp, field);
-    } else {
-      if (this.dateAxis.length == 0) this.dateAxis.push(dataTemp.map(dates => dates[0]));
-      this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
-    }
+      dataTemp = this.aggregate(dataTemp, field);
+    } 
+
+    if (this.dateAxis.length == 0) 
+      this.dateAxis.push(dataTemp.map(dates => dates[0]));
+    
+    this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
   }
+  
 
   aggregate(data: any[], field: string) {
     const groupedData: { [month: string]: { sum: number; count: number } } = {};
@@ -78,22 +81,28 @@ export class AreaChartComponent implements OnInit {
       if (!groupedData[month]) {
         groupedData[month] = { sum: 0, count: 0 };
       }
-      groupedData[month].sum += value;
-      groupedData[month].count += 1;
+      if (value != null) {
+        groupedData[month].sum += value;
+        groupedData[month].count += 1;
+      }
     });
+    // start with null and count 0, 
+    // if value is not null and sum is null then sum = value and count = 1
+    // if value is not null and sum is not null then above
+    // if value is null and sum is not null then skip
+
+    //actually nvm, start both with 0, but if null then don't add one, 
+    // in next section, if count = 0 then average is null
   
     // Calculate averages
-    const averages: { month: string; average: number }[] = [];
+    const averages: { month: string; average: number | null }[] = [];
     for (const month in groupedData) {
       const { sum, count } = groupedData[month];
-      const average = count === 0 ? 0 : sum / count;
+      const average = count === 0 ? null : sum / count;
       averages.push({ month, average });
     }
 
-    var listData:any[] = averages.map(({ month, average }) => [month, average]);
-  
-    if (this.dateAxis.length == 0) this.dateAxis.push(listData.map(dates => dates[0]));
-    this.chartData.push({name: field, data: listData.map(values => values[1])});
+    return averages.map(({ month, average }) => [month, average]);
   }
 
   createChart() {
@@ -101,6 +110,7 @@ export class AreaChartComponent implements OnInit {
     if (this.aggregation == 'monthly') {
       tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
     } 
+    var label = (this.fieldType === 'switch') ? 'percentage' : 'number';
 
     this.chartOptions = {
       series: this.chartData,
@@ -131,7 +141,7 @@ export class AreaChartComponent implements OnInit {
         max: 1,
         labels: {
           formatter: function(value) {
-            return ((value*100).toFixed(0)) + '%';
+            return (label === 'percentage') ? ((value*100).toFixed(0)) + '%' : ((value).toFixed(0));
           }
         }
       },
@@ -142,7 +152,7 @@ export class AreaChartComponent implements OnInit {
         },
         y: {
           formatter: function(value) {
-            return ((value*100).toFixed(0)) + '%';
+            return (label === 'percentage') ? ((value*100).toFixed(0)) + '%' : ((value).toFixed(0));
           }
         }
       }

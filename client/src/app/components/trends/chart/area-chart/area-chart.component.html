@@ -9,16 +9,16 @@
 
 <div *ngIf="chartData && chartData.length > 0 && chartOptions && chartOptions">
     <apx-chart
-    [series]="chartOptions.series!"
-    [chart]="chartOptions.chart"
-    [dataLabels]="chartOptions.dataLabels!"
-    [markers]="chartOptions.markers!"
-    [title]="chartOptions.title!"
-    [fill]="chartOptions.fill!"
-    [yaxis]="chartOptions.yaxis!"
-    [xaxis]="chartOptions.xaxis!"
-    [tooltip]="chartOptions.tooltip!"
-    [autoUpdateSeries]="true"
-    
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart"
+        [dataLabels]="chartOptions.dataLabels!"
+        [markers]="chartOptions.markers!"
+        [title]="chartOptions.title!"
+        [fill]="chartOptions.fill!"
+        [yaxis]="chartOptions.yaxis!"
+        [xaxis]="chartOptions.xaxis!"
+        [tooltip]="chartOptions.tooltip!"
+        [autoUpdateSeries]="true"
+        [stroke]="chartOptions.stroke!"
     ></apx-chart>
 </div>
