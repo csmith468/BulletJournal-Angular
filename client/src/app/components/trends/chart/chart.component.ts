@@ -17,6 +17,7 @@ export class ChartComponent implements OnInit{
   fieldOptions: string[] = [];
   selectedType: string = 'switch';
   selectedRangeType: string = 'monthly';
+  maxFields: number = 6;
 
 
   constructor(private chartService: ChartService) { }
@@ -26,7 +27,7 @@ export class ChartComponent implements OnInit{
       ? this.typesInQuestionSet[this.chartNumber - 1] 
       : this.typesInQuestionSet[this.typesInQuestionSet.length - 1];
     this.fieldOptions = this.fields.filter(field => field.type == this.selectedType).map(field => field.field);
-    this.selectedFields = this.fieldOptions.slice(0, 5);
+    this.selectedFields = this.fieldOptions.slice(0, this.maxFields);
   }
 
   onUpdateFields(type: any) {
@@ -39,9 +40,7 @@ export class ChartComponent implements OnInit{
       this.selectedFields.push(field);
       this.chartService.emitAddedField(field, this.chartNumber);
     }
-    // this.selectedFields.push(field);
   }
-
 
   onUpdateSelectedType(type: any) {
     this.selectedType = type;

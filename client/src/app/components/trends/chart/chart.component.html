@@ -17,7 +17,7 @@
                         [checked]="selectedFields.includes(field)" 
                         class="form-check-input"
                         [id]="field"
-                        [disabled]="(!selectedFields.includes(field) && selectedFields.length >= 5)
+                        [disabled]="(!selectedFields.includes(field) && selectedFields.length >= maxFields)
                                     || (selectedFields.includes(field) && selectedFields.length == 1)"
                         (click)="onUpdateFields($event)"
                     >

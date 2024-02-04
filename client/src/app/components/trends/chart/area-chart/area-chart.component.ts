@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartOptions } from '../chartOptions';
+import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/helpers/services/chart.service';
 
 export type FieldValues = {
@@ -108,104 +108,66 @@ export class AreaChartComponent implements OnInit {
   }
 
   createChart() {
+    var tooltip_x_format = "MM DD YYYY"
+    if (this.aggregation == 'monthly') {
+      tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
+    } 
+    this.chartOptions = {
+      ...baseChartOptions,
+      series: this.chartData,
+      chart: {
+        height: baseChartOptions.chart.height,
+        type: "area",
+        stacked: false,
+        zoom: baseChartOptions.chart.zoom,
+        toolbar: baseChartOptions.chart.toolbar
+      },
+      markers: { size: 0.5 },
+      stroke: { curve: "smooth" },
+      xaxis: {
+        type: "datetime",
+        categories: this.dateAxis[0]
+      },
+      tooltip: {
+        shared: true,
+        x: { format: tooltip_x_format }
+      },
+    }
+    
     if ((this.fieldType === 'switch')) this.createChartSwitch();
     if ((this.fieldType === 'slider')) this.createChartSlider();
   }
 
   createChartSwitch() {
-    var tooltip_x_format = "MM DD YYYY"
-    if (this.aggregation == 'monthly') {
-      tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
-    } 
-
-    this.chartOptions = {
-      series: this.chartData,
-      chart: {
-        height: 350,
-        type: "area",
-        stacked: false,
-        zoom: {
-          type: "x",
-          enabled: true,
-          autoScaleYaxis: true
-        },
-        toolbar: { autoSelected: "zoom" }
-      },
-      dataLabels: { enabled: false },
-      markers: { size: 0.5 },
-      stroke: {
-        curve: "smooth"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.dateAxis[0]
-      },
-      yaxis: {
-        min: 0,
-        max: 1,
-        labels: {
-          formatter: function(value) {
-            return (value*100).toFixed(0) + '%';
-          }
+    this.chartOptions!.yaxis = {
+      min: 0,
+      max: 1,
+      labels: {
+        formatter: function(value) {
+          return (value*100).toFixed(0) + '%';
         }
-      },
-      tooltip: {
-        shared: false,
-        x: { format: tooltip_x_format },
-        y: {
-          formatter: function(value) {
-            return (value*100).toFixed(0) + '%';
-          }
-        }
+      }
+    }
+    this.chartOptions!.tooltip!.y = {
+      formatter: function(value) {
+        return (value*100).toFixed(0) + '%';
       }
     }
   }
 
   createChartSlider() {
-    var tooltip_x_format = "MM DD YYYY"
-    if (this.aggregation == 'monthly') {
-      tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
-    } 
-
-    this.chartOptions = {
-      series: this.chartData,
-      chart: {
-        height: 350,
-        type: "area",
-        stacked: false,
-        zoom: {
-          type: "x",
-          enabled: true,
-          autoScaleYaxis: true
-        },
-        toolbar: { autoSelected: "zoom" }
-      },
-      dataLabels: { enabled: false },
-      markers: { size: 0.5 },
-      stroke: {
-        curve: "smooth"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: this.dateAxis[0]
-      },
-      yaxis: {
-        min: 0,
-        max: 10,
-        labels: {
-          formatter: function(value) {
-            return (value).toFixed(0);
-          }
+    this.chartOptions!.yaxis = {
+      min: 0,
+      max: 10,
+      labels: {
+        formatter: function(value) {
+          return (value).toFixed(0);
         }
-      },
-      tooltip: {
-        shared: false,
-        x: { format: tooltip_x_format },
-        y: {
-          formatter: function(value) {
-            return (value).toFixed(2);
-          }
-        }
+      }
+    }
+    this.chartOptions!.tooltip!.y = {
+      formatter: function(value) {
+        return (value).toFixed(2);
       }
     }
   }

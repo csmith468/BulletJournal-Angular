@@ -10,7 +10,7 @@
 <div *ngIf="chartData && chartData.length > 0 && chartOptions && chartOptions">
     <apx-chart
         [series]="chartOptions.series!"
-        [chart]="chartOptions.chart"
+        [chart]="chartOptions.chart!"
         [dataLabels]="chartOptions.dataLabels!"
         [markers]="chartOptions.markers!"
         [title]="chartOptions.title!"
@@ -20,5 +20,6 @@
         [tooltip]="chartOptions.tooltip!"
         [autoUpdateSeries]="true"
         [stroke]="chartOptions.stroke!"
+        [colors]="chartOptions.colors"
     ></apx-chart>
 </div>
