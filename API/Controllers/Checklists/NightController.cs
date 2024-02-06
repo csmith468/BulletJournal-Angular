@@ -48,7 +48,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> DeleteMessage(int id) {
+        public async Task<ActionResult> DeleteChecklist(int id) {
             return await DeleteChecklist<Night>(id);
         }
 
