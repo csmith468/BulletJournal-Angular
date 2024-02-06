@@ -1,0 +1,5 @@
+.card-body {
+    max-height: 225px;
+    overflow-y: auto;
+    white-space: nowrap;
+}

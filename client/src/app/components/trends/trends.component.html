@@ -1,19 +1,10 @@
-<!-- <div *ngIf="commonOptions && data && data.length > 0 && lineChartFields && lineChartFields.length > 0">
-<app-line-chart
-    [data]="data"
-    [fields]="lineChartFields"
-    selectedField="happiness"
-    fieldType="slider"
-></app-line-chart>
-</div>
-<app-area-chart></app-area-chart> -->
-
 <div *ngIf="commonOptions && data && data.length > 0 && fields && fields.length > 0">
     <div *ngIf="chart1Visible">
         <app-chart
             [data]="data"
             [fields]="fields"
             [typesInQuestionSet]="typesInQuestionSet"
+            [selectedRangeType]="initialRangeType"
             [chartNumber]=1
         ></app-chart>
     </div>
@@ -22,6 +13,7 @@
             [data]="data"
             [fields]="fields"
             [typesInQuestionSet]="typesInQuestionSet"
+            [selectedRangeType]="initialRangeType"
             [chartNumber]=2
         ></app-chart>
     </div>
@@ -30,6 +22,7 @@
             [data]="data"
             [fields]="fields"
             [typesInQuestionSet]="typesInQuestionSet"
+            [selectedRangeType]="initialRangeType"
             [chartNumber]=3
         ></app-chart>
     </div>
@@ -38,6 +31,7 @@
             [data]="data"
             [fields]="fields"
             [typesInQuestionSet]="typesInQuestionSet"
+            [selectedRangeType]="initialRangeType"
             [chartNumber]=4
         ></app-chart>
     </div>
@@ -46,37 +40,8 @@
             [data]="data"
             [fields]="fields"
             [typesInQuestionSet]="typesInQuestionSet"
+            [selectedRangeType]="initialRangeType"
             [chartNumber]=5
         ></app-chart>
     </div>
-
-  <!-- @Input() data: Array<any> = [];
-    @Input() fields: FieldType[] = [];
-    @Input() typesInQuestionSet: string[] = []; -->
-
-    <!-- <app-line-chart
-        [data]="data"
-        [fields]="lineChartFields"
-        selectedField="breakfast"
-        fieldType="slider"
-    ></app-line-chart>
-    <app-line-chart
-        [data]="data"
-        [fields]="lineChartFields"
-        selectedField="glassOfWater"
-        fieldType="slider"
-    ></app-line-chart>
-    <app-line-chart
-        [data]="data"
-        [fields]="lineChartFields"
-        selectedField="meds"
-        fieldType="slider"
-    ></app-line-chart>
-    <app-line-chart
-        [data]="data"
-        [fields]="lineChartFields"
-        selectedField="vitamins"
-        fieldType="slider"
-    ></app-line-chart> -->
 </div>
-<!-- <app-area-chart></app-area-chart> -->

@@ -19,7 +19,6 @@ export class AreaChartComponent implements OnInit {
   @Input() aggregation: string = 'monthly';
   @Input() chartNumber: number = 0;
 
-  dates: Date[] = [];
   dateAxis: any[] = [];
   chartData: FieldValues[] = [];
 
@@ -28,21 +27,96 @@ export class AreaChartComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
-    this.chartService.addedField$.subscribe(event => {
-      if (event.chartNumber === this.chartNumber) {
-        this.addField(event.field);
-      }
-    });
-    this.chartService.removedField$.subscribe(event => {
-      if (event.chartNumber === this.chartNumber) {
-        this.removeField(event.field);
-      }
-    });
+    this.createSubscriptions();
+    this.startCreation();
+  }
 
+  // create data for each field, then create chart
+  startCreation() {
     for (const field of this.selectedFields) {
       this.initializeChartData(field); 
     }
     this.createChart();
+  }
+
+  // create data for field
+  initializeChartData(field: string) {
+    var dataTemp: any[] = [];
+
+    // if slider, use value, if switch, true = 1, false = 0
+    if (this.fieldType === 'slider') {
+      this.data.forEach(q => {
+        dataTemp.push([new Date(q.date), (q[field] ? q[field] : null)])
+      })
+    } else if (this.fieldType === 'switch') {
+      this.data.forEach(q => {
+        var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;
+        dataTemp.push([new Date(q.date), value]);
+      })
+    }
+
+    // aggregate by time period
+    dataTemp = this.aggregate(dataTemp, field);
+
+    // create date axis if not existing
+    if (this.dateAxis.length == 0) 
+      this.dateAxis.push(dataTemp.map(dates => dates[0]));
+    
+    this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
+  }
+  
+  // aggregate by month/year
+  aggregate(data: any[], field: string) {
+    const groupedData: { [range: string]: { sum: number; count: number } } = {};
+
+    data.forEach(([date, value]) => {
+      var range = date.toISOString().substring(0, 7); // monthly by default
+      if (this.aggregation == 'yearly') range = date.getFullYear().toString();
+      if (this.aggregation == 'weekly') {
+        var weekNumber = this.getWeekNumber(date);
+        range = `Week ${weekNumber}, ${date.getFullYear()}`;
+      }
+
+      if (!groupedData[range]) {
+        groupedData[range] = { sum: 0, count: 0 };
+      }
+      if (value != null) {
+        groupedData[range].sum += value;
+        groupedData[range].count += 1;
+      }
+    });
+
+    const averages: { range: string; average: number | null }[] = [];
+    for (const range in groupedData) {
+      const { sum, count } = groupedData[range];
+      const average = count === 0 ? null : sum / count;
+      averages.push({ range, average });
+    }
+
+    return averages.map(({ range, average }) => [range, average]);
+  }
+
+  createSubscriptions() {
+    this.chartService.addedField$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber) 
+        this.addField(event.field);
+    });
+    this.chartService.removedField$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber) 
+        this.removeField(event.field);
+    });
+    this.chartService.resetChart$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber) {
+        this.selectedFields = event.selectedFields;
+        this.fieldType = event.fieldType;
+        this.aggregation = event.aggregation;
+        this.dateAxis = [];
+        this.chartData = [];
+        this.chartOptions = undefined;
+
+        this.startCreation();
+      }
+    });
   }
 
   removeField(field: string) {
@@ -57,61 +131,11 @@ export class AreaChartComponent implements OnInit {
     this.createChart();
   }
 
-  initializeChartData(field: string) {
-    var dataTemp: any[] = [];
-    console.log(this.fieldType)
-
-    if (this.fieldType === 'slider') {
-      this.data.forEach(q => {
-        dataTemp.push([new Date(q.date), (q[field] ? q[field] : null)])
-      })
-    } else if (this.fieldType === 'switch') {
-      this.data.forEach(q => {
-        var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;
-        dataTemp.push([new Date(q.date), value]);
-      })
-    }
-
-    if (this.aggregation == 'monthly') {
-      dataTemp = this.aggregate(dataTemp, field);
-    } 
-
-    if (this.dateAxis.length == 0) 
-      this.dateAxis.push(dataTemp.map(dates => dates[0]));
-    
-    this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
-  }
-  
-
-  aggregate(data: any[], field: string) {
-    const groupedData: { [month: string]: { sum: number; count: number } } = {};
-
-    data.forEach(([date, value]) => {
-      const month = date.toISOString().substring(0, 7); // Extract year and month
-      if (!groupedData[month]) {
-        groupedData[month] = { sum: 0, count: 0 };
-      }
-      if (value != null) {
-        groupedData[month].sum += value;
-        groupedData[month].count += 1;
-      }
-    });
-
-    const averages: { month: string; average: number | null }[] = [];
-    for (const month in groupedData) {
-      const { sum, count } = groupedData[month];
-      const average = count === 0 ? null : sum / count;
-      averages.push({ month, average });
-    }
-
-    return averages.map(({ month, average }) => [month, average]);
-  }
-
   createChart() {
     var tooltip_x_format = "MM DD YYYY"
-    if (this.aggregation == 'monthly') {
-      tooltip_x_format = "MMMM yyyy" // Set the tooltip format for x-axis
-    } 
+    if (this.aggregation == 'monthly') tooltip_x_format = "MMMM yyyy" 
+    if (this.aggregation == 'yearly') tooltip_x_format = "yyyy" 
+    
     this.chartOptions = {
       ...baseChartOptions,
       series: this.chartData,
@@ -125,7 +149,7 @@ export class AreaChartComponent implements OnInit {
       markers: { size: 0.5 },
       stroke: { curve: "smooth" },
       xaxis: {
-        type: "datetime",
+        type: (this.aggregation == 'monthly') ? "datetime" : "category",
         categories: this.dateAxis[0]
       },
       tooltip: {
@@ -170,6 +194,13 @@ export class AreaChartComponent implements OnInit {
         return (value).toFixed(2);
       }
     }
+  }
+  
+  getWeekNumber(date: Date): number {
+    const d: any = new Date(date);
+    const yearStart: any = new Date(d.getFullYear(), 0, 1); 
+    const weekNumber = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    return weekNumber;
   }
 }
 

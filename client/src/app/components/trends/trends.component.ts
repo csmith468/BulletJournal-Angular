@@ -18,6 +18,7 @@ export class TrendsComponent {
   type: string = '';  // morning, night, etc
   fields: FieldType[] = [];
   typesInQuestionSet: string[] = [];
+  initialRangeType: string = 'monthly';
   chart1Visible: boolean = true;
   chart2Visible: boolean = false;
   chart3Visible: boolean = false;
@@ -68,6 +69,9 @@ export class TrendsComponent {
           this.data = <any[]>response.result;
           this.pagination = response.pagination;
           this.fillMissingDates();
+          this.data = this.data.sort((a, b) => {
+            return a.date.localeCompare(b.date);
+          })
         }
       }
     })
@@ -75,8 +79,12 @@ export class TrendsComponent {
 
   fillMissingDates() {
     if (this.pagination?.minDate && this.pagination.maxDate) {
-      var currentDate = new Date(this.pagination.minDate);
-      var finalDate = new Date(this.pagination.maxDate);
+      var currentDate: any = new Date(this.pagination.minDate);
+      var finalDate: any = new Date(this.pagination.maxDate);
+
+      var totalDays = (finalDate - currentDate)/86400000;
+      if (totalDays < 120) this.initialRangeType = 'weekly';
+      if (totalDays > 1825) this.initialRangeType = 'yearly';
 
       while (currentDate <= finalDate) {
         this.dates.push(new Date(currentDate));

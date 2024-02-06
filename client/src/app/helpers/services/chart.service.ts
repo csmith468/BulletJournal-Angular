@@ -7,11 +7,13 @@ import { Subject } from 'rxjs';
 export class ChartService {
   private addedFieldSource = new Subject<{field: string, chartNumber: number}>();
   private removedFieldSource = new Subject<{field: string, chartNumber: number}>();
+  private resetChartSource = new Subject<{selectedFields: string[], fieldType: string, aggregation: string, chartNumber: number}>();
 
   constructor() { }
 
   addedField$ = this.addedFieldSource.asObservable();
   removedField$ = this.removedFieldSource.asObservable();
+  resetChart$ = this.resetChartSource.asObservable();
 
   emitAddedField(field: string, chartNumber: number) {
     this.addedFieldSource.next({field, chartNumber});
@@ -19,5 +21,9 @@ export class ChartService {
 
   emitRemovedField(field: string, chartNumber: number) {
     this.removedFieldSource.next({field, chartNumber});
+  }
+
+  emitResetChart(selectedFields: string[], fieldType: string, aggregation: string, chartNumber: number) {
+    this.resetChartSource.next({selectedFields, fieldType, aggregation, chartNumber});
   }
 }
