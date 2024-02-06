@@ -3,22 +3,22 @@
         <app-area-chart
             [data]="data"
             [selectedFields]="selectedFields"
-            [fieldType]="selectedType"
-            aggregation="monthly"
+            [fieldTypeDetail]="selectedTypeDetail"
+            aggregation="Monthly"
             [chartNumber]="chartNumber"
         ></app-area-chart>
     </div>
     <div class="col-3">
         <form [formGroup]="selectForm" class="dropdown">
-            <select class="custom-select" id="selectForm_{{chartNumber}}" formControlName="type" 
+            <select class="custom-select" id="selectForm_{{chartNumber}}" formControlName="typeDetail" 
                 (change)="onUpdateSelect($event)">
-                <option *ngFor="let t of typesInQuestionSet" [ngValue]="t">{{t}}</option>
+                <option *ngFor="let t of typeDetailsInQuestionSet" [ngValue]="t">{{t}}</option>
             </select>
             <select class="custom-select" id="selectForm_{{chartNumber}}" formControlName="rangeType" 
                 (change)="onUpdateSelect($event)">
-                <option ngValue="weekly">weekly</option>
-                <option ngValue="monthly">monthly</option>
-                <option ngValue="yearly">yearly</option>
+                <option ngValue="Weekly">Weekly</option>
+                <option ngValue="Monthly">Monthly</option>
+                <option ngValue="Yearly">Yearly</option>
             </select>
         </form>
         <div class="card mt-2">

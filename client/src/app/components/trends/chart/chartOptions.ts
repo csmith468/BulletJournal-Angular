@@ -1,14 +1,16 @@
-import { ApexAnnotations, ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexMarkers, ApexStroke, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent } from "ng-apexcharts"
+import { ApexAnnotations, ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexLegend, ApexMarkers, ApexStroke, ApexTitleSubtitle, ApexTooltip, ApexXAxis, ApexYAxis, ChartComponent } from "ng-apexcharts"
 
 
 export type BaseChartOptions = {
     chart: ApexChart;
+    legend: ApexLegend;
     dataLabels: ApexDataLabels;
     colors: any;
 }
 
 export type ChartOptions = BaseChartOptions & {
     series: ApexAxisChartSeries;
+    legend: ApexLegend;
     dataLabels: ApexDataLabels;
     markers: ApexMarkers;
     title: ApexTitleSubtitle;
@@ -51,6 +53,7 @@ export const baseChartOptions: BaseChartOptions = {
             autoSelected: 'zoom' 
         }
     },
+    legend: { showForSingleSeries: true, },
     dataLabels: { enabled: false },
     colors: ['#f396c0', '#a1d354', '#ffa000', '#20c997', '#e83e8c', '#51c8ee']
 }

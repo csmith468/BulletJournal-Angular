@@ -1,5 +1,5 @@
 <div *ngIf="questions && questions.length > 1 && form">
-    <h4>{{editMode ? 'Edit' : 'Add'}} {{type.charAt(0).toUpperCase() + type.slice(1)}} Entry</h4>
+    <h4>{{editMode ? 'Edit' : 'Add'}} {{source.charAt(0).toUpperCase() + source.slice(1)}} Entry</h4>
     <i *ngIf="!changeMade && editMode">No changes made.</i>
     <form class="mt-3" [formGroup]="form">
         <div *ngFor="let question of questions" class="form-row">

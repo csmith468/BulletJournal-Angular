@@ -1,9 +1,9 @@
-<div *ngIf="commonOptions && data && data.length > 0 && fields && fields.length > 0">
+<div *ngIf="data && data.length > 0 && fields && fields.length > 0">
     <div *ngIf="chart1Visible">
         <app-chart
             [data]="data"
             [fields]="fields"
-            [typesInQuestionSet]="typesInQuestionSet"
+            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
             [selectedRangeType]="initialRangeType"
             [chartNumber]=1
         ></app-chart>
@@ -12,7 +12,7 @@
         <app-chart
             [data]="data"
             [fields]="fields"
-            [typesInQuestionSet]="typesInQuestionSet"
+            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
             [selectedRangeType]="initialRangeType"
             [chartNumber]=2
         ></app-chart>
@@ -21,7 +21,7 @@
         <app-chart
             [data]="data"
             [fields]="fields"
-            [typesInQuestionSet]="typesInQuestionSet"
+            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
             [selectedRangeType]="initialRangeType"
             [chartNumber]=3
         ></app-chart>
@@ -30,7 +30,7 @@
         <app-chart
             [data]="data"
             [fields]="fields"
-            [typesInQuestionSet]="typesInQuestionSet"
+            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
             [selectedRangeType]="initialRangeType"
             [chartNumber]=4
         ></app-chart>
@@ -39,7 +39,7 @@
         <app-chart
             [data]="data"
             [fields]="fields"
-            [typesInQuestionSet]="typesInQuestionSet"
+            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
             [selectedRangeType]="initialRangeType"
             [chartNumber]=5
         ></app-chart>

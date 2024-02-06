@@ -3,6 +3,7 @@ export interface QuestionSet {
     source: string;
     key: string;
     type: string;
+    typeDetail: string;
     question: string;
     options: [];
     minValue: number;

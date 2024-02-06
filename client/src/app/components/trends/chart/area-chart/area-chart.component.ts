@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/helpers/services/chart.service';
 
@@ -15,8 +15,8 @@ export type FieldValues = {
 export class AreaChartComponent implements OnInit {
   @Input() data: Array<any> = [];
   @Input() selectedFields: string[] = [];
-  @Input() fieldType: string = 'switch';
-  @Input() aggregation: string = 'monthly';
+  @Input() fieldTypeDetail: string = '';
+  @Input() aggregation: string = 'Monthly';
   @Input() chartNumber: number = 0;
 
   dateAxis: any[] = [];
@@ -43,12 +43,13 @@ export class AreaChartComponent implements OnInit {
   initializeChartData(field: string) {
     var dataTemp: any[] = [];
 
-    // if slider, use value, if switch, true = 1, false = 0
-    if (this.fieldType === 'slider') {
+    // if rating, use value, if yes/no, true = 1, false = 0
+    if (this.fieldTypeDetail === 'Rating' || this.fieldTypeDetail === 'Large Numbers' || this.fieldTypeDetail === 'Money'
+      || this.fieldTypeDetail === 'Money' || this.fieldTypeDetail === 'Hours') {
       this.data.forEach(q => {
         dataTemp.push([new Date(q.date), (q[field] ? q[field] : null)])
       })
-    } else if (this.fieldType === 'switch') {
+    } else if (this.fieldTypeDetail === 'Yes/No') {
       this.data.forEach(q => {
         var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;
         dataTemp.push([new Date(q.date), value]);
@@ -70,9 +71,9 @@ export class AreaChartComponent implements OnInit {
     const groupedData: { [range: string]: { sum: number; count: number } } = {};
 
     data.forEach(([date, value]) => {
-      var range = date.toISOString().substring(0, 7); // monthly by default
-      if (this.aggregation == 'yearly') range = date.getFullYear().toString();
-      if (this.aggregation == 'weekly') {
+      var range = date.toISOString().substring(0, 7); // Monthly by default
+      if (this.aggregation == 'Yearly') range = date.getFullYear().toString();
+      if (this.aggregation == 'Weekly') {
         var weekNumber = this.getWeekNumber(date);
         range = `Week ${weekNumber}, ${date.getFullYear()}`;
       }
@@ -108,7 +109,7 @@ export class AreaChartComponent implements OnInit {
     this.chartService.resetChart$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
         this.selectedFields = event.selectedFields;
-        this.fieldType = event.fieldType;
+        this.fieldTypeDetail = event.fieldType;
         this.aggregation = event.aggregation;
         this.dateAxis = [];
         this.chartData = [];
@@ -133,8 +134,8 @@ export class AreaChartComponent implements OnInit {
 
   createChart() {
     var tooltip_x_format = "MM DD YYYY"
-    if (this.aggregation == 'monthly') tooltip_x_format = "MMMM yyyy" 
-    if (this.aggregation == 'yearly') tooltip_x_format = "yyyy" 
+    if (this.aggregation == 'Monthly') tooltip_x_format = "MMMM yyyy" 
+    if (this.aggregation == 'Yearly') tooltip_x_format = "yyyy" 
     
     this.chartOptions = {
       ...baseChartOptions,
@@ -149,7 +150,7 @@ export class AreaChartComponent implements OnInit {
       markers: { size: 0.5 },
       stroke: { curve: "smooth" },
       xaxis: {
-        type: (this.aggregation == 'monthly') ? "datetime" : "category",
+        type: (this.aggregation == 'Monthly') ? "datetime" : "category",
         categories: this.dateAxis[0]
       },
       tooltip: {
@@ -157,12 +158,17 @@ export class AreaChartComponent implements OnInit {
         x: { format: tooltip_x_format }
       },
     }
+
+    this.setChartColors();
     
-    if ((this.fieldType === 'switch')) this.createChartSwitch();
-    if ((this.fieldType === 'slider')) this.createChartSlider();
+    if ((this.fieldTypeDetail === 'Yes/No')) this.createChartYesNo();
+    if ((this.fieldTypeDetail === 'Rating')) this.createChartRatingHours();
+    if ((this.fieldTypeDetail === 'Hours')) this.createChartRatingHours();
+    if ((this.fieldTypeDetail === 'Large Numbers')) this.createChartLargeNumbers();
+    if ((this.fieldTypeDetail === 'Money')) this.createChartMoney();
   }
 
-  createChartSwitch() {
+  createChartYesNo() {
     this.chartOptions!.yaxis = {
       min: 0,
       max: 1,
@@ -179,10 +185,10 @@ export class AreaChartComponent implements OnInit {
     }
   }
 
-  createChartSlider() {
+  createChartRatingHours() {
     this.chartOptions!.yaxis = {
       min: 0,
-      max: 10,
+      max: (this.fieldTypeDetail === 'Rating') ? 10 : 12, // make 12 into max of all within type
       labels: {
         formatter: function(value) {
           return (value).toFixed(0);
@@ -195,7 +201,49 @@ export class AreaChartComponent implements OnInit {
       }
     }
   }
+
+  createChartLargeNumbers() {
+    this.chartOptions!.yaxis = {
+      min: 0,
+      max: 10000, // make max of all within type
+      labels: {
+        formatter: function(value) {
+          return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+      }
+    }
+    this.chartOptions!.tooltip!.y = {
+      formatter: function(value) {
+        return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+    }
+  }
   
+  createChartMoney() {
+    this.chartOptions!.yaxis = {
+      min: 0,
+      max: 150, // make max of all within type
+      labels: {
+        formatter: function(value) {
+          return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+      }
+    }
+    this.chartOptions!.tooltip!.y = {
+      formatter: function(value) {
+        return (value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+    }
+  }
+
+  setChartColors() {
+    if (this.chartNumber === 1) this.chartOptions!.colors = ['#f396c0', '#a1d354', '#ffa000', '#20c997', '#e83e8c', '#51c8ee'];
+    if (this.chartNumber === 2) this.chartOptions!.colors = ['#a1d354', '#ffa000', '#20c997', '#e83e8c', '#51c8ee', '#f396c0'];
+    if (this.chartNumber === 3) this.chartOptions!.colors = ['#ffa000', '#20c997', '#e83e8c', '#51c8ee', '#f396c0', '#a1d354'];
+    if (this.chartNumber === 4) this.chartOptions!.colors = ['#20c997', '#e83e8c', '#51c8ee', '#f396c0', '#a1d354', '#ffa000'];
+    if (this.chartNumber === 5) this.chartOptions!.colors = ['#e83e8c', '#51c8ee', '#f396c0', '#a1d354', '#ffa000', '#20c997'];
+  }
+
   getWeekNumber(date: Date): number {
     const d: any = new Date(date);
     const yearStart: any = new Date(d.getFullYear(), 0, 1); 

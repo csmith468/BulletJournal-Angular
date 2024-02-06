@@ -19,10 +19,10 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {path: 'checklists/:type/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
-      {path: 'checklists/:type/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
-      {path: 'tables/:type', component: TableComponent, resolve: {metadata: typeResolver}},
-      {path: 'trends/:type', component: TrendsComponent, resolve: {metadata: typeResolver}},
+      {path: 'checklists/:source/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
+      {path: 'checklists/:source/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
+      {path: 'tables/:source', component: TableComponent, resolve: {metadata: typeResolver}},
+      {path: 'trends/:source', component: TrendsComponent, resolve: {metadata: typeResolver}},
       {path: 'profile', component: ProfileComponent}
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
       // {path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
