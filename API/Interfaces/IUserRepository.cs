@@ -12,5 +12,8 @@ namespace API.Data.Interfaces {
         Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync();
         Task<TimezoneLocation> GetTimezoneLocationByID(int id);
         Task<bool> TimezoneExists(int id);
+        Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesAsync(int userId);
+        Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesByTypeAsync(int userId, string type);
+        Task<UserQuestionPreferences> GetUserQuestionPreferencesByIdAsync(int userId, int id);
     }
 }

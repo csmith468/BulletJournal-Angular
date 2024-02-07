@@ -9,3 +9,41 @@ html { background-color: #f4f7fa; }
 .horizontal-line {
   border: solid 0.5px #b2b8ba;
 }
+
+
+/* wrapper around tabset */
+.tab-panel {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* bottom border of hovered tab */
+.nav-tabs > li.open, .profile-tabset > .nav-tabs > li:hover {
+  border-bottom: 4px solid #fbcdcf;
+}
+
+/* bottom border of active tab */
+.profile-tabset > .nav-tabs > li.active {
+  border-bottom: 4px solid #f3969a;
+  position: relative;
+}
+
+/* font color when hover over inactive tab */
+.profile-tabset > .nav-tabs > li.open > a, .profile-tabset > .nav-tabs > li:hover > a {
+  color: #290608;
+}
+
+/* font color of inactive tabs */
+.nav-tabs > li > a {
+  color: #d96369;
+}
+
+/* tab content */
+.profile-tabset > .tab-content {
+  margin-top: -3px; /* -3 lines up with bottom of tabs */
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 15px;
+}

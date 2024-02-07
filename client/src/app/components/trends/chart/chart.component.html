@@ -12,11 +12,11 @@
     <div class="col-3">
         <form [formGroup]="selectForm" class="dropdown">
             <select *ngIf="typeDetailsInQuestionSet.length > 1" class="custom-select" 
-                id="selectForm_{{chartNumber}}" formControlName="typeDetail" 
+                id="selectType_{{chartNumber}}" formControlName="typeDetail" 
                 (change)="onUpdateSelect($event)">
                 <option *ngFor="let t of typeDetailsInQuestionSet" [ngValue]="t">{{t}}</option>
             </select>
-            <select class="custom-select" id="selectForm_{{chartNumber}}" formControlName="rangeType" 
+            <select class="custom-select" id="selectRange_{{chartNumber}}" formControlName="rangeType" 
                 (change)="onUpdateSelect($event)">
                 <option ngValue="Weekly">Weekly</option>
                 <option ngValue="Monthly">Monthly</option>

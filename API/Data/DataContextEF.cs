@@ -14,6 +14,7 @@ namespace API.Data {
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<UserQuestionPreferences> userQuestionPreferences { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
         public DbSet<QuestionSet> QuestionSets { get; set; }
         
@@ -39,6 +40,9 @@ namespace API.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<AppUser>().ToTable("user", "app").HasKey(u => u.UserID);
+            modelBuilder.Entity<UserQuestionPreferences>().ToTable("userQuestionPreferences", "app")
+                .HasKey(u => u.UserQuestionPreferencesID);
+
             modelBuilder.Entity<Morning>().ToTable("morning", "app")
                 .HasKey(u => u.MorningID);
             modelBuilder.Entity<Night>().ToTable("night", "app")

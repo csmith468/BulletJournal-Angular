@@ -1,0 +1,12 @@
+
+.form-row-custom {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.form-row-custom p {
+    position: relative;
+    transform: translateY(40%);
+    margin-right: 10px;
+}

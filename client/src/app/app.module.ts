@@ -10,6 +10,7 @@ import { RouteReuseStrategy } from '@angular/router';
 // other external modules
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -44,6 +45,8 @@ import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';
 import { ChartComponent } from './components/trends/chart/chart.component';
+import { ChooseQuestionsComponent } from './components/account/profile/choose-questions/choose-questions.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,8 @@ import { ChartComponent } from './components/trends/chart/chart.component';
     TableComponent,
     TextInputComponent,
     TrendsComponent,
-    ChartComponent
+    ChartComponent,
+    ChooseQuestionsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -82,9 +86,11 @@ import { ChartComponent } from './components/trends/chart/chart.component';
     }),
     PaginationModule.forRoot(),
     ReactiveFormsModule,
+    TabsModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
-    })
+    }),
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

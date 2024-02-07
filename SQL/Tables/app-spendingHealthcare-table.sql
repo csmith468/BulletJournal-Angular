@@ -26,3 +26,8 @@ ALTER TABLE [app].[spendingHealthcare] ADD PRIMARY KEY CLUSTERED
 	[SpendingHealthcareID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+ALTER TABLE [app].[spendingHealthcare]  WITH CHECK ADD  CONSTRAINT [FK_spendingHealthcare_User] FOREIGN KEY([UserID])
+REFERENCES [app].[user] ([UserID])
+GO
+ALTER TABLE [app].[spendingHealthcare] CHECK CONSTRAINT [FK_spendingHealthcare_User]
+GO
