@@ -1,47 +1,36 @@
+<div class="d-flex justify-content-between">
+  <h4 class="mt-2 mb-3">{{this.header}}</h4>
+  <div class="row">
+    <button class="btn btn-secondary" (click)="viewData()">View Data</button>
+    <button class="btn btn-success" (click)="addChart()"><i class="fa fa-plus"></i></button>
+  </div>
+</div>
 <div *ngIf="data && data.length > 0 && fields && fields.length > 0">
-    <div *ngIf="chart1Visible">
-        <app-chart
-            [data]="data"
-            [fields]="fields"
-            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
-            [selectedRangeType]="initialRangeType"
-            [chartNumber]=1
-        ></app-chart>
+  <div *ngFor="let chart of chartVisibility">
+    <div class="card" *ngIf="chart.visibility !== 'closed'">
+      <div class="row row-buttons">
+        <button class="btn btn-danger" (click)="closeChart(chart.chartNumber)">
+          <i class="fa fa-times"></i>
+        </button>
+        <button
+          *ngIf="chart.visibility === 'open'"
+          class="btn btn-warning"
+          (click)="minimizeChart(chart.chartNumber)">
+          <i class="fa fa-window-minimize"></i>
+        </button>
+        <button
+          *ngIf="chart.visibility === 'minimized'"
+          class="btn btn-info"
+          (click)="openChart(chart.chartNumber)">
+          <i class="fa fa-window-maximize"></i>
+        </button>
+      </div>
+      <app-chart
+        [data]="data"
+        [fields]="fields"
+        [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
+        [selectedRangeType]="initialRangeType"
+        [chartNumber]="chart.chartNumber"></app-chart>
     </div>
-    <div *ngIf="chart2Visible">
-        <app-chart
-            [data]="data"
-            [fields]="fields"
-            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
-            [selectedRangeType]="initialRangeType"
-            [chartNumber]=2
-        ></app-chart>
-    </div>
-    <div *ngIf="chart3Visible">
-        <app-chart
-            [data]="data"
-            [fields]="fields"
-            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
-            [selectedRangeType]="initialRangeType"
-            [chartNumber]=3
-        ></app-chart>
-    </div>
-    <div *ngIf="chart4Visible">
-        <app-chart
-            [data]="data"
-            [fields]="fields"
-            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
-            [selectedRangeType]="initialRangeType"
-            [chartNumber]=4
-        ></app-chart>
-    </div>
-    <div *ngIf="chart5Visible">
-        <app-chart
-            [data]="data"
-            [fields]="fields"
-            [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
-            [selectedRangeType]="initialRangeType"
-            [chartNumber]=5
-        ></app-chart>
-    </div>
+  </div>
 </div>

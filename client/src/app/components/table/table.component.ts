@@ -22,8 +22,7 @@ export class TableComponent implements OnInit {
     var cols = checklistService.getColumns(this.source).subscribe(
         qs => qs.forEach(q => this.columns.push(q.key))
     );
-    this.header = this.source.charAt(0).toUpperCase() + this.source.slice(1) + ' Data';
-    if (this.source === 'physical') this.header = 'Physical Symptoms Data'
+    this.header = this.route.snapshot.data['metadata']['header'] + ' Data';
   }
 
   ngOnInit(): void {
@@ -56,5 +55,9 @@ export class TableComponent implements OnInit {
       this.pageNumber = event.page;
       this.loadData();
     }
+  }
+
+  viewTrends() {
+    this.router.navigateByUrl('/trends/' + this.source);
   }
 }

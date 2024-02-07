@@ -1,4 +1,5 @@
-<div class="row">
+
+<div *ngIf="isVisible" class="row">
     <div class="col-9">
         <app-area-chart
             [data]="data"
@@ -10,7 +11,8 @@
     </div>
     <div class="col-3">
         <form [formGroup]="selectForm" class="dropdown">
-            <select class="custom-select" id="selectForm_{{chartNumber}}" formControlName="typeDetail" 
+            <select *ngIf="typeDetailsInQuestionSet.length > 1" class="custom-select" 
+                id="selectForm_{{chartNumber}}" formControlName="typeDetail" 
                 (change)="onUpdateSelect($event)">
                 <option *ngFor="let t of typeDetailsInQuestionSet" [ngValue]="t">{{t}}</option>
             </select>
@@ -29,8 +31,7 @@
                             [checked]="selectedFields.includes(field)" 
                             class="form-check-input"
                             [id]="field"
-                            [disabled]="(!selectedFields.includes(field) && selectedFields.length >= maxFields)
-                                        || (selectedFields.includes(field) && selectedFields.length == 1)"
+                            [disabled]="(selectedFields.includes(field) && selectedFields.length == 1)"
                             (click)="onUpdateFields($event)"
                         >
                         <label [for]="field" class="form-check-label">{{field}}</label>

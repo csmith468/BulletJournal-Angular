@@ -18,8 +18,8 @@ export class ChartComponent implements OnInit{
   selectedFields: string[] = [];
   fieldOptions: string[] = [];
   selectedTypeDetail: string = '';
-  maxFields: number = 6;
-
+  maxFieldsInitial: number = 6;
+  isVisible: boolean = true;
   selectForm: FormGroup;
 
   constructor(private chartService: ChartService) {
@@ -27,22 +27,25 @@ export class ChartComponent implements OnInit{
       typeDetail: new FormControl(null),
       rangeType: new FormControl(null)
     });
+
+    this.chartService.chartVisibility$.subscribe(event => {
+      if (event.chartNumber === this.chartNumber)
+        this.isVisible = event.isVisible;
+    });
   }
 
   ngOnInit(): void {
-    this.selectedTypeDetail = (this.typeDetailsInQuestionSet.length >= this.chartNumber - 1) 
-      ? this.typeDetailsInQuestionSet[this.chartNumber - 1] 
-      : this.typeDetailsInQuestionSet[this.typeDetailsInQuestionSet.length - 1];
+    this.selectedTypeDetail = (this.typeDetailsInQuestionSet.length > this.chartNumber) 
+      ? this.typeDetailsInQuestionSet[this.chartNumber] 
+      : this.typeDetailsInQuestionSet[0];
     this.setValues();
     this.selectForm.controls['typeDetail'].setValue(this.selectedTypeDetail);
     this.selectForm.controls['rangeType'].setValue(this.selectedRangeType);
-
-    console.log(this.selectedTypeDetail)
   }
 
   setValues() {
     this.fieldOptions = this.fields.filter(field => field.typeDetail == this.selectedTypeDetail).map(field => field.field);
-    this.selectedFields = this.fieldOptions.slice(0, this.maxFields);
+    this.selectedFields = this.fieldOptions.slice(0, this.maxFieldsInitial);
   }
 
   onUpdateFields(typeDetail: any) {

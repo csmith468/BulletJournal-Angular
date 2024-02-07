@@ -32,6 +32,33 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'Add Physical Symptoms',
             },
             {
+                routeLink: 'checklists/spending',
+                icon: 'fa fa-usd',
+                label: 'Add Spending',
+                items: [
+                    {
+                        routeLink: 'checklists/spendingFinancial/add',
+                        icon: 'fa fa-university',
+                        label: 'Add Financial',
+                    },
+                    {
+                        routeLink: 'checklists/spendingHealthcare/add',
+                        icon: 'fa fa-medkit',
+                        label: 'Add Healthcare',
+                    },
+                    {
+                        routeLink: 'checklists/spendingPersonal/add',
+                        icon: 'fa fa-shopping-basket',
+                        label: 'Add Personal',
+                    },
+                    {
+                        routeLink: 'checklists/spendingRegular/add',
+                        icon: 'fa fa-repeat',
+                        label: 'Add Regular',
+                    },
+                ]
+            },
+            {
                 routeLink: 'checklists/sleep',
                 icon: 'fa fa-bed',
                 label: 'Add Sleep',
@@ -83,6 +110,33 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 label: 'View Physical Symptoms',
             },
             {
+                routeLink: 'tables/spending',
+                icon: 'fa fa-usd',
+                label: 'View Spending Data',
+                items: [
+                    {
+                        routeLink: 'tables/spendingFinancial',
+                        icon: 'fa fa-university',
+                        label: 'View Financial Data',
+                    },
+                    {
+                        routeLink: 'tables/spendingHealthcare',
+                        icon: 'fa fa-medkit',
+                        label: 'View Healthcare Data',
+                    },
+                    {
+                        routeLink: 'tables/spendingPersonal',
+                        icon: 'fa fa-shopping-basket',
+                        label: 'View Personal Data',
+                    },
+                    {
+                        routeLink: 'tables/spendingRegular',
+                        icon: 'fa fa-repeat',
+                        label: 'View Regular Data',
+                    },
+                ]
+            },
+            {
                 routeLink: 'tables/sleep',
                 icon: 'fa fa-bed',
                 label: 'View Sleep Data',
@@ -96,7 +150,7 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
         items: [
             {
                 routeLink: 'trends/morning',
-                icon: 'fa fa-sun-o',
+                icon: 'fa fa-coffee',
                 label: 'View Morning Trends',
             },
             {
@@ -118,6 +172,33 @@ export const sidenav_links_loggedIn: ISideNavData[] = [
                 routeLink: 'trends/physical',
                 icon: 'fa fa-heartbeat',
                 label: 'View Physical Trends',
+            },
+            {
+                routeLink: 'trends/spending',
+                icon: 'fa fa-usd',
+                label: 'View Spending',
+                items: [
+                    {
+                        routeLink: 'trends/spendingFinancial',
+                        icon: 'fa fa-university',
+                        label: 'View Financial Trends',
+                    },
+                    {
+                        routeLink: 'trends/spendingHealthcare',
+                        icon: 'fa fa-medkit',
+                        label: 'View Healthcare Trends',
+                    },
+                    {
+                        routeLink: 'trends/spendingPersonal',
+                        icon: 'fa fa-shopping-basket',
+                        label: 'View Personal Trends',
+                    },
+                    {
+                        routeLink: 'trends/spendingRegular',
+                        icon: 'fa fa-repeat',
+                        label: 'View Regular Trends',
+                    },
+                ]
             },
             {
                 routeLink: 'trends/sleep',

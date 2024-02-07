@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { FieldType } from './fieldType';
+import { ChartService } from 'src/app/helpers/services/chart.service';
 
 @Component({
   selector: 'app-trends',
@@ -18,15 +19,14 @@ export class TrendsComponent {
   fields: FieldType[] = [];
   typeDetailsInQuestionSet: string[] = [];
   initialRangeType: string = 'Monthly';
-  chart1Visible: boolean = true;
-  chart2Visible: boolean = false;
-  chart3Visible: boolean = false;
-  chart4Visible: boolean = false;
-  chart5Visible: boolean = false;
+  header: string = '';
+  chartVisibility: {chartNumber: number, visibility: string}[] = [];
 
-  constructor(private checklistService: ChecklistService, private route: ActivatedRoute) {
+  constructor(private checklistService: ChecklistService, private chartService: ChartService, 
+      private route: ActivatedRoute,  private router: Router) {
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
+    this.header = this.route.snapshot.data['metadata']['header'] + ' Trends';
 
     this.checklistService.getQuestions(this.source, routeData['checklist']).subscribe(
       qs => {
@@ -34,8 +34,10 @@ export class TrendsComponent {
           this.fields.push({field: q.key, typeDetail: q.typeDetail});
           if (!this.typeDetailsInQuestionSet.includes(q.typeDetail)) this.typeDetailsInQuestionSet.push(q.typeDetail);
         })
-        this.setInitialVisibility();
-        console.log(this.typeDetailsInQuestionSet)
+        this.chartVisibility = Array.from({ length: this.typeDetailsInQuestionSet.length }, (_, index) => ({
+          chartNumber: index,
+          visibility: 'open'
+        }));
       }
     )
   
@@ -74,10 +76,32 @@ export class TrendsComponent {
     }
   }
 
-  setInitialVisibility() {
-    if (this.typeDetailsInQuestionSet.length >= 2) this.chart2Visible = true;
-    if (this.typeDetailsInQuestionSet.length >= 3) this.chart3Visible = true;
-    if (this.typeDetailsInQuestionSet.length >= 4) this.chart4Visible = true;
-    if (this.typeDetailsInQuestionSet.length >= 5) this.chart5Visible = true;
+  closeChart(chartNo: any) {
+    console.log(`Closing chart ${chartNo}`);
+    this.chartVisibility[chartNo].visibility = 'closed';
+    console.log(this.chartVisibility)
+  }
+  
+  minimizeChart(chartNo: any) {
+    console.log(`Minimizing chart ${chartNo}`);
+    this.chartVisibility[chartNo].visibility = 'minimized';
+    this.chartService.updateChartVisibility(false, chartNo);
+  }
+
+  openChart(chartNo: any) {
+    console.log(`Opening chart ${chartNo}`);
+    this.chartVisibility[chartNo].visibility = 'open';
+    this.chartService.updateChartVisibility(true, chartNo);
+  }
+
+  addChart() {
+    var newChartNumber = this.chartVisibility.reduce((max, chart) => (
+      chart.chartNumber > max ? chart.chartNumber : max
+      ), -1) + 1;
+    this.chartVisibility.push({chartNumber: newChartNumber, visibility: 'open'});
+  }
+
+  viewData() {
+    this.router.navigateByUrl('/tables/' + this.source);
   }
 }

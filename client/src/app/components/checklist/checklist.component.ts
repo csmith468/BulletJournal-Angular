@@ -34,6 +34,7 @@ export class ChecklistComponent implements OnInit {
   form!: FormGroup;
   originalPayload = '';
   changeMade: boolean = true;
+  header: string = '';
   private readonly subscription = new Subscription();
 
   constructor(private checklistService: ChecklistService, private router: Router, 
@@ -42,6 +43,9 @@ export class ChecklistComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
     if (routeData['checklist']) this.editMode = true;
+
+    this.header = this.editMode ? 'Edit ' : 'Add ' + this.route.snapshot.data['metadata']['header'] + ' Entry';
+
     this.checklistService.getQuestions(this.source, routeData['checklist']).subscribe(
       qs => {
         qs.forEach(q => {
