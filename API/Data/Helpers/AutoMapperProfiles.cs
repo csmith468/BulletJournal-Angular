@@ -16,6 +16,11 @@ namespace API.Data.Helpers {
             CreateMap<Daily, Daily>();
             CreateMap<Wellbeing, Wellbeing>();
             CreateMap<Physical, Physical>();
+
+            CreateMap<SpendingFinancial, SpendingFinancial>();
+            CreateMap<SpendingHealthcare, SpendingHealthcare>();
+            CreateMap<SpendingPersonal, SpendingPersonal>();
+            CreateMap<SpendingRegular, SpendingRegular>();
         }
     }
 }
