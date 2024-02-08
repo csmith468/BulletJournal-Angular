@@ -9,5 +9,6 @@ namespace API.Data.Interfaces {
         Task<IEnumerable<TablePreferences>> GetTablePreferencesByTypeAsync(int userId, string type);
         Task<TablePreferences> GetTablePreferencesByIdAsync(int userId, int id);
         Task<IEnumerable<Tables>> GetTablesAsync();
+        Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId);
     }
 }

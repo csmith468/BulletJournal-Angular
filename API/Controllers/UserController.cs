@@ -116,5 +116,17 @@ namespace API.Controllers
         public async Task<ActionResult> GetTables() {
             return Ok(await _uow.SettingsRepository.GetTablesAsync());
         }
+
+        [HttpGet("getMyTables")]
+        public async Task<ActionResult> GetMyTables() {
+            var invisibleTables = await _uow.SettingsRepository.GetInvisibleTablesAsync(User.GetUserId());
+            var allTables = await _uow.SettingsRepository.GetTablesAsync();
+
+            if (allTables == null) return NotFound();
+            if (invisibleTables.Count() >= allTables.Count()) return Ok(allTables);
+
+            var filteredTables = allTables.Where(table => !invisibleTables.Contains(table.Key)).ToList();
+            return Ok(filteredTables);
+        }
     }
 }

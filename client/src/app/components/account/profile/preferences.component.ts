@@ -6,11 +6,11 @@ import { AccountService } from 'src/app/helpers/services/account.service';
 import { SettingsService } from 'src/app/helpers/services/settings.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-preferences',
+  templateUrl: './preferences.component.html',
+  styleUrls: ['./preferences.component.css']
 })
-export class ProfileComponent {
+export class PreferencesComponent {
   // @ViewChild('profileTabs', {static: true}) profileTabs?: TabsetComponent; //if you want to set tab with route
   activeTab?: TabDirective;
   tableNames: string[] = ['Morning', 'Night', 'Daily', 'Wellbeing', 'Physical Symptoms', 'Spending', 'Sleep'];

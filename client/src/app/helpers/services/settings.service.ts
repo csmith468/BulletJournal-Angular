@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { QuestionPreferences } from '../models/data-models/questionPreferences';
 import { TablePreferences } from '../models/data-models/tablePreferences';
 import { environment } from 'src/environments/environment';
@@ -42,33 +42,29 @@ export class SettingsService {
     return result;
   }
 
-  setSideNav() {
-    var tables = this.http.get<Tables[]>(this.baseUrl + 'user/getTables').subscribe(
-      t => {
-        var navItems: ISideNavData[] = [
-          {
-            routeLink: 'checklist',
-            icon: 'fa fa-check-square-o',
-            label: 'Checklists',
-            items: this.createSection(t, 'checklists', '/add', 'Add')
-          },
-          {
-            routeLink: 'data',
-            icon: 'fa fa-table',
-            label: 'Data',
-            items: this.createSection(t, 'data', '', 'View')
-          },
-          {
-            routeLink: 'trends',
-            icon: 'fa fa-line-chart',
-            label: 'Checklists',
-            items: this.createSection(t, 'trends', '', 'View')
-          },
-        ]
-
-        console.log(navItems)
-      }
-    )
+  setSideNav(): Observable<ISideNavData[]> {
+    return this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(
+      map(t => [
+        {
+          routeLink: 'checklist',
+          icon: 'fa fa-check-square-o',
+          label: 'Checklists',
+          items: this.createSection(t, 'checklists', '/add', 'Add')
+        },
+        {
+          routeLink: 'data',
+          icon: 'fa fa-table',
+          label: 'Data',
+          items: this.createSection(t, 'data', '', 'View')
+        },
+        {
+          routeLink: 'trends',
+          icon: 'fa fa-line-chart',
+          label: 'Trends',
+          items: this.createSection(t, 'trends', '', 'View')
+        },
+      ])
+    );
   }
 
   createSection(t: Tables[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {

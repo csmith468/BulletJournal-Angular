@@ -37,7 +37,7 @@ import { HomeComponent } from './components/layout/home/home.component';
 import { AreaChartComponent } from './components/trends/chart/area-chart/area-chart.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
-import { ProfileComponent } from './components/account/profile/profile.component';
+import { PreferencesComponent } from './components/account/profile/preferences.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
@@ -60,7 +60,7 @@ import { TablePrefsComponent } from './components/account/profile/table-prefs/ta
     AreaChartComponent,
     LoginComponent,
     NotFoundComponent,
-    ProfileComponent,
+    PreferencesComponent,
     RegisterComponent,
     SidenavComponent,
     SubLevelMenuComponent,

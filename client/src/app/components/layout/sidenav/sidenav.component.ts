@@ -30,7 +30,7 @@ export class SidenavComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   navOpen = false;
   screenWidth = 0;
-  navData_loggedIn = sidenav_links_loggedIn;
+  navData_loggedIn: ISideNavData[] = [];
   navData_loggedOut = sidenav_links_loggedOut;
   multiple: boolean = false;
 
@@ -48,12 +48,12 @@ export class SidenavComponent implements OnInit {
 
   constructor(public settingsService: SettingsService, public accountService: AccountService, 
     public router: Router) {
-      // this.settingsService.setSideNav().subscribe(
-      //   s => this.navData_loggedIn = s
-      // )
   }
 
   ngOnInit(): void {
+    this.settingsService.setSideNav().subscribe(navData => {
+      if ((this.accountService.currentUser$)) this.navData_loggedIn = navData;
+    })
     this.screenWidth = window.innerWidth;
   }
 

@@ -6,7 +6,7 @@ import { NotFoundComponent } from './components/static/not-found/not-found.compo
 import { authGuard } from './helpers/guards/auth.guard';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
-import { ProfileComponent } from './components/account/profile/profile.component';
+import { PreferencesComponent } from './components/account/profile/preferences.component';
 import { TableComponent } from './components/table/table.component';
 import { typeResolver } from './helpers/resolvers/type.resolver';
 import { ChecklistComponent } from './components/checklist/checklist.component';
@@ -23,7 +23,8 @@ const routes: Routes = [
       {path: 'checklists/:source/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
       {path: 'tables/:source', component: TableComponent, resolve: {metadata: typeResolver}},
       {path: 'trends/:source', component: TrendsComponent, resolve: {metadata: typeResolver}},
-      {path: 'profile', component: ProfileComponent}
+      {path: 'preferences', component: PreferencesComponent},
+      // {path: 'profile', component: ProfileComponent}
       // {path: 'members/:username', component: MemberDetailComponent, resolve: {member: memberDetailedResolver}},
       // {path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
       // {path: 'admin', component: AdminPanelComponent}, // set to view-only if not admin, no longer using adminGuard

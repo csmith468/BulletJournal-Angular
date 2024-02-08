@@ -51,25 +51,24 @@ export class TablePrefsComponent implements OnDestroy {
 
 
   submitForm() {
-    this.settingsService.setSideNav();
-    // var finalPrefs: TablePrefDto[] = [];
+    var finalPrefs: TablePrefDto[] = [];
 
-    // Object.keys(this.form.controls).forEach(c => {
-    //   const control = this.form.get(c);
+    Object.keys(this.form.controls).forEach(c => {
+      const control = this.form.get(c);
 
-    //   if (control && control.dirty) {
-    //     const checklist = this.checklists.find(q => q.tableName == c);
-    //     if (checklist && checklist.isTableVisible != control.value) {
-    //       checklist.isTableVisible = control.value;
-    //       finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isTableVisible: control.value});
-    //     }
-    //   }
-    // })
-    // if (finalPrefs.length > 0) {
-    //   this.settingsService.updateTablePreferences(finalPrefs).subscribe({
-    //     next: () => this.getData()
-    //   })
-    // }
+      if (control && control.dirty) {
+        const checklist = this.checklists.find(q => q.tableName == c);
+        if (checklist && checklist.isTableVisible != control.value) {
+          checklist.isTableVisible = control.value;
+          finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isTableVisible: control.value});
+        }
+      }
+    })
+    if (finalPrefs.length > 0) {
+      this.settingsService.updateTablePreferences(finalPrefs).subscribe({
+        next: () => this.getData()
+      })
+    }
   }
 
   cancelForm() {

@@ -59,5 +59,13 @@ namespace API.Data.Repositories {
         public async Task<IEnumerable<Tables>> GetTablesAsync() {
             return await _contextEF.Tables.ToListAsync();
         }
+
+        public async Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId) {
+            return await _contextEF.TablePreferences
+                .Where(t => t.UserID == userId && t.IsTableVisible == false)
+                .Select(p => p.TableName)
+                .ToListAsync();
+        }
+
     }
 }
