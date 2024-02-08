@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subscription } from 'rxjs';
-import { UserQuestionPreferences } from 'src/app/helpers/models/data-models/userQuestionPreferences';
+import { UserQuestionPrefDto, UserQuestionPreferences } from 'src/app/helpers/models/data-models/userQuestionPreferences';
 import { AccountService } from 'src/app/helpers/services/account.service';
+import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
   selector: 'app-choose-questions',
@@ -24,7 +26,7 @@ export class ChooseQuestionsComponent implements OnDestroy {
   originalPayload: string = '';
   changeMade: boolean = false;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private router: Router) {
     this.getData();
   }
 
@@ -58,9 +60,9 @@ export class ChooseQuestionsComponent implements OnDestroy {
     )
   }
 
-
-
   submitForm() {
+    var finalPrefs: UserQuestionPrefDto[] = [];
+
     Object.keys(this.form.controls).forEach(c => {
       const control = this.form.get(c);
 
@@ -69,10 +71,15 @@ export class ChooseQuestionsComponent implements OnDestroy {
             && q.columnName == c);
         if (question && question.isColumnVisible != control.value) {
           question.isColumnVisible = control.value;
-          this.accountService.updateUserQuestionPreferences(question);
+          finalPrefs.push({userQuestionPreferencesID: question.userQuestionPreferencesID, isColumnVisible: control.value});
         }
       }
     })
+    if (finalPrefs.length > 0) {
+      this.accountService.updateUserQuestionPreferences(finalPrefs).subscribe({
+        next: () => this.router.navigateByUrl('/profile')
+      })
+    }
   }
 
   cancelForm() {

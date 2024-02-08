@@ -86,7 +86,7 @@ namespace API.Data.Repositories {
 
         public async Task<UserQuestionPreferences> GetUserQuestionPreferencesByIdAsync(int userId, int id) {
             return await _contextEF.userQuestionPreferences   
-                .Where(x => x.UserID == id && x.UserQuestionPreferencesID == id)
+                .Where(x => x.UserID == userId && x.UserQuestionPreferencesID == id)
                 .SingleOrDefaultAsync();
         }
         

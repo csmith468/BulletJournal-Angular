@@ -6,6 +6,7 @@ using API.Models.Entities;
 using AutoMapper;
 using API.Models.DTOs;
 using API.Extensions;
+using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
@@ -75,6 +76,21 @@ namespace API.Controllers
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to update user question preferences.");
+        }
+
+        [HttpPut("updateMultipleQuestionPreferences")]
+        public async Task<ActionResult> UpdateMultipleQuestionPreferences(List<UserQuestionPreferencesDto> prefDtos) {
+            if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
+
+            foreach (UserQuestionPreferencesDto p in prefDtos) {
+                var pref = await _uow.UserRepository.GetUserQuestionPreferencesByIdAsync(User.GetUserId(), p.UserQuestionPreferencesID);
+                if (pref == null) return NotFound();
+
+                pref.IsColumnVisible = p.IsColumnVisible;
+                if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
+            }
+
+            return NoContent();
         }
     }
 }

@@ -4,3 +4,9 @@ export interface UserQuestionPreferences {
     columnName: string;
     isColumnVisible: boolean;
 }
+
+
+export interface UserQuestionPrefDto {
+    userQuestionPreferencesID: number;
+    isColumnVisible: boolean;
+}

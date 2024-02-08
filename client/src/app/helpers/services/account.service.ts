@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Subject, map, of } from 'rxjs';
 import { User } from '../models/data-models/user';
 import { TimezoneLocation } from '../models/data-models/timezoneLocation';
-import { UserQuestionPreferences } from '../models/data-models/userQuestionPreferences';
+import { UserQuestionPrefDto, UserQuestionPreferences } from '../models/data-models/userQuestionPreferences';
 
 @Injectable({
   providedIn: 'root'
@@ -64,8 +64,12 @@ export class AccountService {
     return this.http.get<UserQuestionPreferences[]>(this.baseUrl + 'user/getUserQuestionPreferencesByType/' + type);
   }
 
-  updateUserQuestionPreferences(prefs: UserQuestionPreferences) {
-    console.log(prefs);
-    return this.http.put(this.baseUrl + 'user/updateUserQuestionPreferences', prefs);
+  updateUserQuestionPreferences(list: any) {
+    return this.http.put(this.baseUrl + 'user/updateMultipleQuestionPreferences', list);
   }
+
+  // updateUserQuestionPreferences(prefs: UserQuestionPreferences) {
+  //   console.log(prefs);
+  //   return this.http.put(this.baseUrl + 'user/updateUserQuestionPreferences', prefs);
+  // }
 }
