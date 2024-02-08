@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
 import { AccountService } from 'src/app/helpers/services/account.service';
+import { SettingsService } from 'src/app/helpers/services/settings.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +18,8 @@ export class ProfileComponent {
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
 
-  constructor(private accountService: AccountService) {
-    this.accountService.changeQuestionPreferencesSource(this.activeTabName);
+  constructor(private settingsService: SettingsService) {
+    this.settingsService.changeQuestionPreferencesSource(this.activeTabName);
   }
 
   onTabActivated(data: TabDirective) {
@@ -35,7 +36,7 @@ export class ProfileComponent {
     
     console.log(this.activeTabName)
 
-    this.accountService.getQuestionPreferences(this.activeTabName).subscribe(
+    this.settingsService.getQuestionPreferences(this.activeTabName).subscribe(
       columns => {
         columns.forEach(
           c => {

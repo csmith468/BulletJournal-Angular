@@ -14,16 +14,8 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
-  private questionPrefsSource = new Subject<{source: string}>();
 
-  constructor(private http: HttpClient) { 
-  }
-
-  questionPrefs$ = this.questionPrefsSource.asObservable();
-
-  changeQuestionPreferencesSource(source: string) {
-    this.questionPrefsSource.next({source});
-  }
+  constructor(private http: HttpClient) { }
 
   login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
@@ -61,25 +53,4 @@ export class AccountService {
     return this.http.get<TimezoneLocation[]>(this.baseUrl + 'account/timezones');
   }
 
-  getQuestionPreferences(type: string) {
-    return this.http.get<QuestionPreferences[]>(this.baseUrl + 'user/getQuestionPreferencesByType/' + type);
-  }
-
-  updateQuestionPreferences(list: any) {
-    return this.http.put(this.baseUrl + 'user/updateMultipleQuestionPreferences', list);
-  }
-
-  getTablePreferences() {
-    return this.http.get<TablePreferences[]>(this.baseUrl + 'user/getTablePreferences');
-  }
-
-  updateTablePreferences(list: any) {
-    return this.http.put(this.baseUrl + 'user/updateMultipleTablePreferences', list);
-  }
-
-
-  // updateQuestionPreferences(prefs: QuestionPreferences) {
-  //   console.log(prefs);
-  //   return this.http.put(this.baseUrl + 'user/updateQuestionPreferences', prefs);
-  // }
 }

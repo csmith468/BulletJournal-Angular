@@ -5,5 +5,6 @@ namespace API.Models.Entities {
         public string DisplayName { get; set; }
         public string Icon { get; set; }
         public string Category { get; set; }
+        public bool? IsHeader { get; set; }
     }
 }

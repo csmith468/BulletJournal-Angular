@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subscription } from 'rxjs';
 import { QuestionPrefDto, QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
-import { AccountService } from 'src/app/helpers/services/account.service';
+import { SettingsService } from 'src/app/helpers/services/settings.service';
 
 @Component({
   selector: 'app-question-prefs',
@@ -25,7 +25,7 @@ export class QuestionPrefsComponent implements OnDestroy {
   originalPayload: string = '';
   changeMade: boolean = false;
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private settingsService: SettingsService, private router: Router) {
     this.getData();
   }
 
@@ -44,7 +44,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     const group: any = {};
     this.questions = [];
 
-    this.accountService.getQuestionPreferences(this.tableNames[this.activeTabName]).subscribe(
+    this.settingsService.getQuestionPreferences(this.tableNames[this.activeTabName]).subscribe(
       columns => {
         columns.forEach(
           c => {
@@ -76,7 +76,7 @@ export class QuestionPrefsComponent implements OnDestroy {
       }
     })
     if (finalPrefs.length > 0) {
-      this.accountService.updateQuestionPreferences(finalPrefs).subscribe({
+      this.settingsService.updateQuestionPreferences(finalPrefs).subscribe({
         next: () => this.getData()
       })
     }

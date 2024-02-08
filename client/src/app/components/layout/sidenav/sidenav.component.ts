@@ -7,6 +7,7 @@ import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
 import { sidenav_links_loggedIn } from '../../../helpers/models/sidenav-data/sidenav-links-loggedIn';
 import { Router } from '@angular/router';
 import { sidenav_links_loggedOut } from '../../../helpers/models/sidenav-data/sidenav-links-loggedOut';
+import { SettingsService } from 'src/app/helpers/services/settings.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -45,7 +46,12 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  constructor(public accountService: AccountService, public router: Router) { }
+  constructor(public settingsService: SettingsService, public accountService: AccountService, 
+    public router: Router) {
+      // this.settingsService.setSideNav().subscribe(
+      //   s => this.navData_loggedIn = s
+      // )
+  }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;

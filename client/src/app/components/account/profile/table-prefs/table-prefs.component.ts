@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TablePrefDto, TablePreferences } from 'src/app/helpers/models/data-models/tablePreferences';
-import { AccountService } from 'src/app/helpers/services/account.service';
+import { SettingsService } from 'src/app/helpers/services/settings.service';
 
 @Component({
   selector: 'app-table-prefs',
@@ -20,7 +20,7 @@ export class TablePrefsComponent implements OnDestroy {
   originalPayload: string = '';
   changeMade: boolean = false;
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private settingsService: SettingsService, private router: Router) {
     this.getData();
   }
 
@@ -33,7 +33,7 @@ export class TablePrefsComponent implements OnDestroy {
     const group: any = {};
     this.checklists = [];
 
-    this.accountService.getTablePreferences().subscribe(
+    this.settingsService.getTablePreferences().subscribe(
       checklists => {
         checklists.forEach(
           c => {
@@ -51,24 +51,25 @@ export class TablePrefsComponent implements OnDestroy {
 
 
   submitForm() {
-    var finalPrefs: TablePrefDto[] = [];
+    this.settingsService.setSideNav();
+    // var finalPrefs: TablePrefDto[] = [];
 
-    Object.keys(this.form.controls).forEach(c => {
-      const control = this.form.get(c);
+    // Object.keys(this.form.controls).forEach(c => {
+    //   const control = this.form.get(c);
 
-      if (control && control.dirty) {
-        const checklist = this.checklists.find(q => q.tableName == c);
-        if (checklist && checklist.isTableVisible != control.value) {
-          checklist.isTableVisible = control.value;
-          finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isTableVisible: control.value});
-        }
-      }
-    })
-    if (finalPrefs.length > 0) {
-      this.accountService.updateTablePreferences(finalPrefs).subscribe({
-        next: () => this.getData()
-      })
-    }
+    //   if (control && control.dirty) {
+    //     const checklist = this.checklists.find(q => q.tableName == c);
+    //     if (checklist && checklist.isTableVisible != control.value) {
+    //       checklist.isTableVisible = control.value;
+    //       finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isTableVisible: control.value});
+    //     }
+    //   }
+    // })
+    // if (finalPrefs.length > 0) {
+    //   this.settingsService.updateTablePreferences(finalPrefs).subscribe({
+    //     next: () => this.getData()
+    //   })
+    // }
   }
 
   cancelForm() {
