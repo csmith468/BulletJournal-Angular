@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
-import { UserQuestionPreferences } from 'src/app/helpers/models/data-models/userQuestionPreferences';
+import { QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
 import { AccountService } from 'src/app/helpers/services/account.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class ProfileComponent {
   activeTab?: TabDirective;
   tableNames: string[] = ['Morning', 'Night', 'Daily', 'Wellbeing', 'Physical Symptoms', 'Spending', 'Sleep'];
   activeTabName: string = 'Morning';
-  questions: UserQuestionPreferences[] = [];
+  questions: QuestionPreferences[] = [];
   form!: FormGroup;
 
   constructor(private accountService: AccountService) {
-    this.accountService.changeUserQuestionPreferencesSource(this.activeTabName);
+    this.accountService.changeQuestionPreferencesSource(this.activeTabName);
   }
 
   onTabActivated(data: TabDirective) {
@@ -35,7 +35,7 @@ export class ProfileComponent {
     
     console.log(this.activeTabName)
 
-    this.accountService.getUserQuestionPreferences(this.activeTabName).subscribe(
+    this.accountService.getQuestionPreferences(this.activeTabName).subscribe(
       columns => {
         columns.forEach(
           c => {

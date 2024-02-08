@@ -10,7 +10,8 @@ namespace API.Data.Helpers {
 
             CreateMap<AppUser, AppUserDto>();
             CreateMap<AppUserUpdateDto, AppUser>();
-            CreateMap<UserQuestionPreferences, UserQuestionPreferences>();
+            CreateMap<QuestionPreferences, QuestionPreferences>();
+            CreateMap<TablePreferences, TablePreferences>();
 
             CreateMap<Morning, Morning>();
             CreateMap<Night, Night>();

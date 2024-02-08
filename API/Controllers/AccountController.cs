@@ -20,9 +20,9 @@ namespace API.Controllers
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto) {
-            if (await _uow.UserRepository.EmailExistsAsync(registerDto.Email)) 
+            if (await _uow.AccountRepository.EmailExistsAsync(registerDto.Email)) 
                 return BadRequest("Email is taken.");
-            if (!await _uow.UserRepository.TimezoneExists(registerDto.TimezoneLocationID))
+            if (!await _uow.AccountRepository.TimezoneExists(registerDto.TimezoneLocationID))
                 return BadRequest("Invalid timezone.");
             
             using var hmac = new HMACSHA512();
@@ -35,7 +35,7 @@ namespace API.Controllers
                 PasswordSalt = hmac.Key
             };
 
-            var result = _uow.UserRepository.RegisterUserAsync(user);
+            var result = _uow.AccountRepository.RegisterUserAsync(user);
 
             return new AppUserDto{
                 UserID = result.Result.UserID,
@@ -49,7 +49,7 @@ namespace API.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto) {
-            var user = await _uow.UserRepository.GetAppUserByEmailAsync(loginDto.Email);
+            var user = await _uow.AccountRepository.GetAppUserByEmailAsync(loginDto.Email);
 
             if (user == null) return Unauthorized("Invalid email.");
 
@@ -71,12 +71,12 @@ namespace API.Controllers
 
         [HttpGet("timezones")]
         public async Task<ActionResult<IEnumerable<TimezoneLocation>>> GetTimezoneLocation() {
-            return Ok(await _uow.UserRepository.GetTimezoneLocationsAsync());
+            return Ok(await _uow.AccountRepository.GetTimezoneLocationsAsync());
         }
 
         [HttpGet("timezone/{id}")]
         public async Task<ActionResult<TimezoneLocation>> GetTimezoneById(int id) {
-            return Ok(await _uow.UserRepository.GetTimezoneLocationByID(id));
+            return Ok(await _uow.AccountRepository.GetTimezoneLocationByID(id));
         }
     }
 }

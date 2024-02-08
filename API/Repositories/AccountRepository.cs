@@ -7,11 +7,11 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories {
-    public class UserRepository : IUserRepository {
+    public class AccountRepository : IAccountRepository {
         // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
-        public UserRepository(DataContextEF contextEF, IMapper mapper) {
+        public AccountRepository(DataContextEF contextEF, IMapper mapper) {
             _contextEF = contextEF;
             _mapper = mapper;
         }
@@ -69,26 +69,5 @@ namespace API.Data.Repositories {
         public async Task<bool> TimezoneExists(int id) {
             return await _contextEF.TimezoneLocations.AnyAsync(x => x.TimezoneLocationID == id);
         }
-
-        public async Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesAsync(int userId) {
-            return await _contextEF.userQuestionPreferences   
-                .Where(x => x.UserID == userId)
-                .OrderBy(x => x.TableName)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesByTypeAsync(int userId, string type) {
-            return await _contextEF.userQuestionPreferences   
-                .Where(x => x.UserID == userId && x.TableName == type)
-                .OrderBy(x => x.TableName)
-                .ToListAsync();
-        }
-
-        public async Task<UserQuestionPreferences> GetUserQuestionPreferencesByIdAsync(int userId, int id) {
-            return await _contextEF.userQuestionPreferences   
-                .Where(x => x.UserID == userId && x.UserQuestionPreferencesID == id)
-                .SingleOrDefaultAsync();
-        }
-        
     }
 }

@@ -20,29 +20,9 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        // [AllowAnonymous]
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<AppUserDto>>> GetUsers() {
-        //     var users = await _uow.UserRepository.GetAppUsersAsync();
-        //     var usersToReturn = _mapper.Map<IEnumerable<AppUserDto>>(users);
-        //     return Ok(usersToReturn);
-        // }
-
-        // [HttpGet("email/{email}")]
-        // public async Task<ActionResult<AppUserDto>> GetUserByEmail(string email) {
-        //     var user = await _uow.UserRepository.GetAppUserByEmailAsync(email);
-        //     return _mapper.Map<AppUserDto>(user);
-        // }
-
-        // [HttpGet("id/{id}")]
-        // public async Task<ActionResult<AppUserDto>> GetUserById(int id) {
-        //     var user = await _uow.UserRepository.GetAppUserByIdAsync(id);
-        //     return _mapper.Map<AppUserDto>(user);
-        // }
-
         [HttpPut("update")]
         public async Task<ActionResult> UpdateUser(AppUserUpdateDto appUserUpdateDto) {
-            var user = await _uow.UserRepository.GetAppUserByIdAsync(User.GetUserId());
+            var user = await _uow.AccountRepository.GetAppUserByIdAsync(User.GetUserId());
             if (user == null) return NotFound();
 
             _mapper.Map(appUserUpdateDto, user);
@@ -51,27 +31,27 @@ namespace API.Controllers
             return BadRequest("Failed to update user.");
         }
 
-        [HttpGet("getUserQuestionPreferences")]
-        public async Task<ActionResult<IEnumerable<UserQuestionPreferences>>> GetUserQuestionPreferences() {
-            return Ok(await _uow.UserRepository.GetUserQuestionPreferencesAsync(User.GetUserId()));
+        [HttpGet("getQuestionPreferences")]
+        public async Task<ActionResult<IEnumerable<QuestionPreferences>>> GetQuestionPreferences() {
+            return Ok(await _uow.SettingsRepository.GetQuestionPreferencesAsync(User.GetUserId()));
         }
 
-        [HttpGet("getUserQuestionPreferencesByType/{type}")]
-        public async Task<ActionResult<IEnumerable<UserQuestionPreferences>>> GetUserQuestionPreferencesByType(string type) {
-            return Ok(await _uow.UserRepository.GetUserQuestionPreferencesByTypeAsync(User.GetUserId(), type));
+        [HttpGet("getQuestionPreferencesByType/{type}")]
+        public async Task<ActionResult<IEnumerable<QuestionPreferences>>> GetQuestionPreferencesByType(string type) {
+            return Ok(await _uow.SettingsRepository.GetQuestionPreferencesByTypeAsync(User.GetUserId(), type));
         }
 
-        [HttpGet("getUserQuestionPreferencesById/{id}")]
-        public async Task<ActionResult<UserQuestionPreferences>> GetUserQuestionPreferencesById(int id) {
-            return Ok(await _uow.UserRepository.GetUserQuestionPreferencesByIdAsync(User.GetUserId(), id));
+        [HttpGet("getQuestionPreferencesById/{id}")]
+        public async Task<ActionResult<QuestionPreferences>> GetQuestionPreferencesById(int id) {
+            return Ok(await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), id));
         }
 
-        [HttpPut("updateUserQuestionPreferences")]
-        public async Task<ActionResult> UpdateUserQuestionPreferences(UserQuestionPreferences userQuestionPrefs) {
-            var prefs = await _uow.UserRepository.GetUserQuestionPreferencesByIdAsync(User.GetUserId(), userQuestionPrefs.UserQuestionPreferencesID);
+        [HttpPut("updateQuestionPreferences")]
+        public async Task<ActionResult> UpdateQuestionPreferences(QuestionPreferences questionPrefs) {
+            var prefs = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.QuestionPreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.IsColumnVisible = userQuestionPrefs.IsColumnVisible;
+            prefs.IsColumnVisible = questionPrefs.IsColumnVisible;
             prefs.UserID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
@@ -79,11 +59,11 @@ namespace API.Controllers
         }
 
         [HttpPut("updateMultipleQuestionPreferences")]
-        public async Task<ActionResult> UpdateMultipleQuestionPreferences(List<UserQuestionPreferencesDto> prefDtos) {
+        public async Task<ActionResult> UpdateMultipleQuestionPreferences(List<QuestionPreferencesDto> prefDtos) {
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
-            foreach (UserQuestionPreferencesDto p in prefDtos) {
-                var pref = await _uow.UserRepository.GetUserQuestionPreferencesByIdAsync(User.GetUserId(), p.UserQuestionPreferencesID);
+            foreach (QuestionPreferencesDto p in prefDtos) {
+                var pref = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), p.QuestionPreferencesID);
                 if (pref == null) return NotFound();
 
                 pref.IsColumnVisible = p.IsColumnVisible;
@@ -91,6 +71,50 @@ namespace API.Controllers
             }
 
             return NoContent();
+        }
+
+
+
+        [HttpGet("getTablePreferences")]
+        public async Task<ActionResult<IEnumerable<TablePreferences>>> GetTablePreferences() {
+            return Ok(await _uow.SettingsRepository.GetTablePreferencesAsync(User.GetUserId()));
+        }
+
+        [HttpGet("getTablePreferencesById/{id}")]
+        public async Task<ActionResult<TablePreferences>> GetTablePreferencesById(int id) {
+            return Ok(await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), id));
+        }
+
+        [HttpPut("updateTablePreferences")]
+        public async Task<ActionResult> UpdateTablePreferences(TablePreferences tablePrefs) {
+            var prefs = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), tablePrefs.TablePreferencesID);
+            if (prefs == null) return NotFound();
+
+            prefs.IsTableVisible = tablePrefs.IsTableVisible;
+            prefs.UserID = User.GetUserId();
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to update user question preferences.");
+        }
+
+        [HttpPut("updateMultipleTablePreferences")]
+        public async Task<ActionResult> UpdateMultipleTablePreferences(List<TablePreferencesDto> prefDtos) {
+            if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
+
+            foreach (TablePreferencesDto p in prefDtos) {
+                var pref = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), p.TablePreferencesID);
+                if (pref == null) return NotFound();
+
+                pref.IsTableVisible = p.IsTableVisible;
+                if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
+            }
+
+            return NoContent();
+        }
+
+        [HttpGet("getTables")]
+        public async Task<ActionResult> GetTables() {
+            return Ok(await _uow.SettingsRepository.GetTablesAsync());
         }
     }
 }

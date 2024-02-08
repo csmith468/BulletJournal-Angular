@@ -2,7 +2,7 @@ using API.Models.DTOs;
 using API.Models.Entities;
 
 namespace API.Data.Interfaces {
-    public interface IUserRepository {
+    public interface IAccountRepository {
         Task<AppUser> GetAppUserByEmailAsync(string email);
         Task<AppUser> GetAppUserByIdAsync(int id);
         Task<IEnumerable<AppUser>> GetAppUsersAsync();
@@ -12,8 +12,5 @@ namespace API.Data.Interfaces {
         Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync();
         Task<TimezoneLocation> GetTimezoneLocationByID(int id);
         Task<bool> TimezoneExists(int id);
-        Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesAsync(int userId);
-        Task<IEnumerable<UserQuestionPreferences>> GetUserQuestionPreferencesByTypeAsync(int userId, string type);
-        Task<UserQuestionPreferences> GetUserQuestionPreferencesByIdAsync(int userId, int id);
     }
 }

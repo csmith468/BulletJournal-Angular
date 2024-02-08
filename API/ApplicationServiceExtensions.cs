@@ -33,7 +33,8 @@ namespace API.Extensions {
             });
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ISettingsRepository, SettingsRepository>();
             services.AddScoped<IChecklistRepository, ChecklistRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

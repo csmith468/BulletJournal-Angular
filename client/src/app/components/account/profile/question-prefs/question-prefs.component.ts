@@ -3,23 +3,22 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subscription } from 'rxjs';
-import { UserQuestionPrefDto, UserQuestionPreferences } from 'src/app/helpers/models/data-models/userQuestionPreferences';
+import { QuestionPrefDto, QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
 import { AccountService } from 'src/app/helpers/services/account.service';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
-  selector: 'app-choose-questions',
-  templateUrl: './choose-questions.component.html',
-  styleUrls: ['./choose-questions.component.css']
+  selector: 'app-question-prefs',
+  templateUrl: './question-prefs.component.html',
+  styleUrls: ['./question-prefs.component.css']
 })
-export class ChooseQuestionsComponent implements OnDestroy {
+export class QuestionPrefsComponent implements OnDestroy {
   @ViewChild('questionTabs') questionTabs!: TabsetComponent;
 
   activeTab?: TabDirective;
   tableNames: { [key: string]: string } = {'Morning': 'morning', 'Night': 'night', 'Daily': 'daily', 'Wellbeing': 'wellbeing', 
     'Physical Symptoms': 'physical', 'Spending': 'spending', 'Sleep': 'sleep'};
   activeTabName: string = 'Daily';
-  questions: UserQuestionPreferences[] = [];
+  questions: QuestionPreferences[] = [];
   form!: FormGroup;
   private readonly subscription = new Subscription();
   payload: string = '';
@@ -41,10 +40,11 @@ export class ChooseQuestionsComponent implements OnDestroy {
   }
 
   getData() {
+    this.changeMade = false;
     const group: any = {};
     this.questions = [];
 
-    this.accountService.getUserQuestionPreferences(this.tableNames[this.activeTabName]).subscribe(
+    this.accountService.getQuestionPreferences(this.tableNames[this.activeTabName]).subscribe(
       columns => {
         columns.forEach(
           c => {
@@ -61,7 +61,7 @@ export class ChooseQuestionsComponent implements OnDestroy {
   }
 
   submitForm() {
-    var finalPrefs: UserQuestionPrefDto[] = [];
+    var finalPrefs: QuestionPrefDto[] = [];
 
     Object.keys(this.form.controls).forEach(c => {
       const control = this.form.get(c);
@@ -71,13 +71,13 @@ export class ChooseQuestionsComponent implements OnDestroy {
             && q.columnName == c);
         if (question && question.isColumnVisible != control.value) {
           question.isColumnVisible = control.value;
-          finalPrefs.push({userQuestionPreferencesID: question.userQuestionPreferencesID, isColumnVisible: control.value});
+          finalPrefs.push({questionPreferencesID: question.questionPreferencesID, isColumnVisible: control.value});
         }
       }
     })
     if (finalPrefs.length > 0) {
-      this.accountService.updateUserQuestionPreferences(finalPrefs).subscribe({
-        next: () => this.router.navigateByUrl('/profile')
+      this.accountService.updateQuestionPreferences(finalPrefs).subscribe({
+        next: () => this.getData()
       })
     }
   }

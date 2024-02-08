@@ -4,7 +4,8 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Subject, map, of } from 'rxjs';
 import { User } from '../models/data-models/user';
 import { TimezoneLocation } from '../models/data-models/timezoneLocation';
-import { UserQuestionPrefDto, UserQuestionPreferences } from '../models/data-models/userQuestionPreferences';
+import { QuestionPrefDto, QuestionPreferences } from '../models/data-models/questionPreferences';
+import { TablePreferences } from '../models/data-models/tablePreferences';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,15 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
-  private userQuestionPrefsSource = new Subject<{source: string}>();
+  private questionPrefsSource = new Subject<{source: string}>();
 
   constructor(private http: HttpClient) { 
   }
 
-  userQuestionPrefs$ = this.userQuestionPrefsSource.asObservable();
+  questionPrefs$ = this.questionPrefsSource.asObservable();
 
-  changeUserQuestionPreferencesSource(source: string) {
-    this.userQuestionPrefsSource.next({source});
+  changeQuestionPreferencesSource(source: string) {
+    this.questionPrefsSource.next({source});
   }
 
   login(model: any) {
@@ -60,16 +61,25 @@ export class AccountService {
     return this.http.get<TimezoneLocation[]>(this.baseUrl + 'account/timezones');
   }
 
-  getUserQuestionPreferences(type: string) {
-    return this.http.get<UserQuestionPreferences[]>(this.baseUrl + 'user/getUserQuestionPreferencesByType/' + type);
+  getQuestionPreferences(type: string) {
+    return this.http.get<QuestionPreferences[]>(this.baseUrl + 'user/getQuestionPreferencesByType/' + type);
   }
 
-  updateUserQuestionPreferences(list: any) {
+  updateQuestionPreferences(list: any) {
     return this.http.put(this.baseUrl + 'user/updateMultipleQuestionPreferences', list);
   }
 
-  // updateUserQuestionPreferences(prefs: UserQuestionPreferences) {
+  getTablePreferences() {
+    return this.http.get<TablePreferences[]>(this.baseUrl + 'user/getTablePreferences');
+  }
+
+  updateTablePreferences(list: any) {
+    return this.http.put(this.baseUrl + 'user/updateMultipleTablePreferences', list);
+  }
+
+
+  // updateQuestionPreferences(prefs: QuestionPreferences) {
   //   console.log(prefs);
-  //   return this.http.put(this.baseUrl + 'user/updateUserQuestionPreferences', prefs);
+  //   return this.http.put(this.baseUrl + 'user/updateQuestionPreferences', prefs);
   // }
 }

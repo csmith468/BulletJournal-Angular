@@ -12,7 +12,8 @@ namespace API.Data.Repositories {
             _mapper = mapper;
         }
 
-        public IUserRepository UserRepository => new UserRepository(_contextEF, _mapper);
+        public IAccountRepository AccountRepository => new AccountRepository(_contextEF, _mapper);
+        public ISettingsRepository SettingsRepository => new SettingsRepository(_contextEF, _mapper);
         public IChecklistRepository ChecklistRepository => new ChecklistRepository(_contextEF, _mapper);
         public async Task<bool> Complete() {
             var r = HasChanges();

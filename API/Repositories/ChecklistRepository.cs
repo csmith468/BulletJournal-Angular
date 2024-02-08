@@ -67,7 +67,7 @@ namespace API.Data.Repositories {
         }
 
         public async Task<IEnumerable<string>> GetInvisibleColumnsAsync<T>(int userId) where T : Checklist {
-            return await _contextEF.userQuestionPreferences
+            return await _contextEF.QuestionPreferences
                 .Where(p => p.UserID == userId && p.TableName == typeof(T).Name && p.IsColumnVisible == false)
                 .Select(p => p.ColumnName)
                 .ToListAsync();

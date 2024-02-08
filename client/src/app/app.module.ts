@@ -45,8 +45,9 @@ import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';
 import { ChartComponent } from './components/trends/chart/chart.component';
-import { ChooseQuestionsComponent } from './components/account/profile/choose-questions/choose-questions.component';
+import { QuestionPrefsComponent } from './components/account/profile/question-prefs/question-prefs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TablePrefsComponent } from './components/account/profile/table-prefs/table-prefs.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TextInputComponent,
     TrendsComponent,
     ChartComponent,
-    ChooseQuestionsComponent
+    QuestionPrefsComponent,
+    TablePrefsComponent
   ],
   imports: [
     AppRoutingModule,
