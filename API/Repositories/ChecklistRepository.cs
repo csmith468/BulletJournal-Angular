@@ -65,5 +65,13 @@ namespace API.Data.Repositories {
         public async Task<IEnumerable<QuestionSet>> GetQuestionSet<T>() where T : Checklist {
             return await _contextEF.QuestionSets.Where(x => x.Source == typeof(T).Name).ToListAsync();
         }
+
+        public async Task<IEnumerable<string>> GetInvisibleColumnsAsync<T>(int userId) where T : Checklist {
+            return await _contextEF.userQuestionPreferences
+                .Where(p => p.UserID == userId && p.TableName == typeof(T).Name && p.IsColumnVisible == false)
+                .Select(p => p.ColumnName)
+                .ToListAsync();
+        }
+
     }
 }
