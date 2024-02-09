@@ -36,6 +36,12 @@ namespace API.Controllers
             };
 
             var result = _uow.AccountRepository.RegisterUserAsync(user);
+            if (result == null) return BadRequest("Failed to register user.");
+
+            var resultAddTables = await _uow.SettingsRepository.CreateTablePreferencesAsync(result.Result.UserID);
+            var resultAddQuestions = await _uow.SettingsRepository.CreateQuestionPreferencesAsync(result.Result.UserID);
+
+            if (!resultAddTables || !resultAddQuestions) return BadRequest("Failed to register user.");
 
             return new AppUserDto{
                 UserID = result.Result.UserID,

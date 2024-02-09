@@ -10,5 +10,7 @@ namespace API.Data.Interfaces {
         Task<TablePreferences> GetTablePreferencesByIdAsync(int userId, int id);
         Task<IEnumerable<Tables>> GetTablesAsync();
         Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId);
+        Task<bool> CreateTablePreferencesAsync(int userId);
+        Task<bool> CreateQuestionPreferencesAsync(int userId);
     }
 }

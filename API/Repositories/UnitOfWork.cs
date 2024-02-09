@@ -4,16 +4,18 @@ using AutoMapper;
 
 namespace API.Data.Repositories {
     public class UnitOfWork : IUnitOfWork {
-        // private readonly DataContextDapper _contextDapper;
+        private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
-        public UnitOfWork(DataContextEF contextEF, IMapper mapper) {
+        
+        public UnitOfWork(DataContextEF contextEF, IMapper mapper, DataContextDapper contextDapper) {
             _contextEF = contextEF;
             _mapper = mapper;
+            _contextDapper = contextDapper;
         }
 
         public IAccountRepository AccountRepository => new AccountRepository(_contextEF, _mapper);
-        public ISettingsRepository SettingsRepository => new SettingsRepository(_contextEF, _mapper);
+        public ISettingsRepository SettingsRepository => new SettingsRepository(_contextEF, _mapper, _contextDapper);
         public IChecklistRepository ChecklistRepository => new ChecklistRepository(_contextEF, _mapper);
         public async Task<bool> Complete() {
             var r = HasChanges();
