@@ -4,7 +4,6 @@ import { ISideNavData } from '../../../helpers/models/sidenav-data/sidenav-ISide
 import { AccountService } from 'src/app/helpers/services/account.service';
 import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
-import { sidenav_links_loggedIn } from '../../../helpers/models/sidenav-data/sidenav-links-loggedIn';
 import { Router } from '@angular/router';
 import { sidenav_links_loggedOut } from '../../../helpers/models/sidenav-data/sidenav-links-loggedOut';
 import { SettingsService } from 'src/app/helpers/services/settings.service';
@@ -48,12 +47,12 @@ export class SidenavComponent implements OnInit {
 
   constructor(public settingsService: SettingsService, public accountService: AccountService, 
     public router: Router) {
+      this.settingsService.sideNav$.subscribe(navData => {
+        if ((this.accountService.currentUser$)) this.navData_loggedIn = navData;
+      })
   }
 
   ngOnInit(): void {
-    this.settingsService.setSideNav().subscribe(navData => {
-      if ((this.accountService.currentUser$)) this.navData_loggedIn = navData;
-    })
     this.screenWidth = window.innerWidth;
   }
 

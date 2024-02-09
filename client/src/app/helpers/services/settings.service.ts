@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { QuestionPreferences } from '../models/data-models/questionPreferences';
 import { TablePreferences } from '../models/data-models/tablePreferences';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,9 @@ import { sidenav_fadeInOut } from 'src/app/components/layout/sidenav/sidenav-sty
 export class SettingsService {
   baseUrl = environment.apiUrl;
   private questionPrefsSource = new Subject<{ source: string }>();
+  private sideNavSubject = new BehaviorSubject<ISideNavData[]>([]);
+
+  sideNav$: Observable<ISideNavData[]> = this.sideNavSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -37,13 +40,16 @@ export class SettingsService {
   }
 
   updateTablePreferences(list: any) {
-    var result = this.http.put(this.baseUrl + 'user/updateMultipleTablePreferences', list);
-    this.setSideNav();
-    return result;
+    return this.http.put(this.baseUrl + 'user/updateMultipleTablePreferences', list).pipe(
+      map(response => {
+        this.setSideNav();
+        return response;
+      })
+    );
   }
 
-  setSideNav(): Observable<ISideNavData[]> {
-    return this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(
+  setSideNav() {
+    this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(
       map(t => [
         {
           routeLink: 'checklist',
@@ -64,7 +70,9 @@ export class SettingsService {
           items: this.createSection(t, 'trends', '', 'View')
         },
       ])
-    );
+    ).subscribe((sideNavData: ISideNavData[]) => {
+      this.sideNavSubject.next(sideNavData);
+    })
   }
 
   createSection(t: Tables[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
