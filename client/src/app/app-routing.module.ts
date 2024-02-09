@@ -6,7 +6,7 @@ import { NotFoundComponent } from './components/static/not-found/not-found.compo
 import { authGuard } from './helpers/guards/auth.guard';
 import { LoginComponent } from './components/account/login/login.component';
 import { AboutComponent } from './components/static/about/about.component';
-import { PreferencesComponent } from './components/account/profile/preferences.component';
+import { PreferencesComponent } from './components/account/preferences/preferences.component';
 import { TableComponent } from './components/table/table.component';
 import { typeResolver } from './helpers/resolvers/type.resolver';
 import { ChecklistComponent } from './components/checklist/checklist.component';
@@ -21,7 +21,7 @@ const routes: Routes = [
     children: [
       {path: 'checklists/:source/edit/:id', component: ChecklistComponent, resolve: {metadata: typeResolver, checklist: checklistResolver}},
       {path: 'checklists/:source/add', component: ChecklistComponent, resolve: {metadata: typeResolver}},
-      {path: 'tables/:source', component: TableComponent, resolve: {metadata: typeResolver}},
+      {path: 'data/:source', component: TableComponent, resolve: {metadata: typeResolver}},
       {path: 'trends/:source', component: TrendsComponent, resolve: {metadata: typeResolver}},
       {path: 'preferences', component: PreferencesComponent},
       // {path: 'profile', component: ProfileComponent}

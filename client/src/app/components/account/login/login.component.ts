@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: _ => this.router.navigateByUrl('/checklists'),
+      next: _ => this.router.navigateByUrl(''),
       error: error => this.toastr.error(error.error)
     })
   }

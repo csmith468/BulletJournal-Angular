@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { ISideNavData } from '../../../helpers/models/sidenav-data/sidenav-ISideNavData';
+import { ISideNavData } from '../../../helpers/models/sidenav-data/ISideNavData';
 import { AccountService } from 'src/app/helpers/services/account.service';
 import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { SideNavToggle } from './sidenav-styling/sidenav-toggle';

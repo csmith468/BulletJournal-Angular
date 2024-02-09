@@ -15,9 +15,8 @@ export class QuestionPrefsComponent implements OnDestroy {
   @ViewChild('questionTabs') questionTabs!: TabsetComponent;
 
   activeTab?: TabDirective;
-  tableNames: { [key: string]: string } = {'Morning': 'morning', 'Night': 'night', 'Daily': 'daily', 'Wellbeing': 'wellbeing', 
-    'Physical Symptoms': 'physical', 'Spending': 'spending', 'Sleep': 'sleep'};
-  activeTabName: string = 'Daily';
+  tableNames: { [key: string]: string } = {};
+  activeTabName: string = '';
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
   private readonly subscription = new Subscription();
@@ -26,7 +25,15 @@ export class QuestionPrefsComponent implements OnDestroy {
   changeMade: boolean = false;
 
   constructor(private settingsService: SettingsService, private router: Router) {
-    this.getData();
+    this.settingsService.getMyTables().subscribe(
+      tables => {
+        tables.forEach(t => {
+          this.tableNames[t.displayName] = t.key;
+          if (this.activeTabName == '') this.activeTabName = t.displayName
+        })
+        this.getData();
+      }
+    )
   }
 
   ngOnDestroy(): void {

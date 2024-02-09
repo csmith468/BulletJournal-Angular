@@ -39,7 +39,7 @@
             cursor: pointer;
         }
 
-         /* what it looks like when you click the X */
+         /* x button */
         .btn-close {
             margin-left: auto;
             cursor: pointer;
@@ -48,12 +48,13 @@
             border-radius: 50%;
             background-color: transparent;
             border: none;
-
-            .fa-times {
-                color: #fff;
+            
+            .fa-xmark {
+                /* color: #ffffff; */
                 font-size: 27px;
             }
         }
+
     }
 }
 

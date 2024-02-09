@@ -87,12 +87,12 @@ export class ChecklistComponent implements OnInit {
 
   cancelForm() {
     if (this.editMode) this.subscription.unsubscribe();
-    this.router.navigateByUrl('/tables/' + this.source);
+    this.router.navigateByUrl('/data/' + this.source);
   }
 
   deleteEntry() {
     this.checklistService.deleteEntry(this.source, this.route.snapshot.data['metadata']['id']).subscribe({
-      next: () => this.router.navigateByUrl('/tables/' + this.source)
+      next: () => this.router.navigateByUrl('/data/' + this.source)
     });
   }
 
@@ -101,7 +101,7 @@ export class ChecklistComponent implements OnInit {
     if (this.editMode) this.subscription.unsubscribe();
     var id = this.route.snapshot.data['metadata']['id'];
     this.checklistService.addOrUpdateEntry(this.source, this.payload, id).subscribe({
-      next: () => this.router.navigateByUrl('/tables/' + this.source)
+      next: () => this.router.navigateByUrl('/data/' + this.source)
     })
   }
 

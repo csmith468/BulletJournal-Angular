@@ -5,7 +5,7 @@ import { QuestionPreferences } from '../models/data-models/questionPreferences';
 import { TablePreferences } from '../models/data-models/tablePreferences';
 import { environment } from 'src/environments/environment';
 import { Tables } from '../models/data-models/tables';
-import { ISideNavData } from '../models/sidenav-data/sidenav-ISideNavData';
+import { ISideNavData } from '../models/sidenav-data/ISideNavData';
 import { sidenav_fadeInOut } from 'src/app/components/layout/sidenav/sidenav-styling/sidenav-fadeInOut';
 
 @Injectable({
@@ -48,26 +48,50 @@ export class SettingsService {
     );
   }
 
+  getMyTables() {
+    return this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(map(
+      tables => {
+        return tables.map(table => {
+          if (table.category) {
+            // If the table has a category, update the displayName
+            table.displayName = table.category + ' ' + table.displayName;
+          }
+          return table;
+        }).filter(table => !table.isHeader);
+      }
+    ))
+  }
+
   setSideNav() {
     this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(
       map(t => [
         {
+          routeLink: '',
+          icon: 'fa-solid fa-house',
+          label: 'Home'
+        },
+        {
           routeLink: 'checklist',
-          icon: 'fa fa-check-square-o',
+          icon: 'fa-solid fa-check',
           label: 'Checklists',
           items: this.createSection(t, 'checklists', '/add', 'Add')
         },
         {
           routeLink: 'data',
-          icon: 'fa fa-table',
+          icon: 'fa-solid fa-table-list',
           label: 'Data',
           items: this.createSection(t, 'data', '', 'View')
         },
         {
           routeLink: 'trends',
-          icon: 'fa fa-line-chart',
+          icon: 'fa-solid fa-chart-line',
           label: 'Trends',
           items: this.createSection(t, 'trends', '', 'View')
+        },
+        {
+          routeLink: 'about',
+          icon: 'fa-solid fa-circle-info',
+          label: 'About'
         },
       ])
     ).subscribe((sideNavData: ISideNavData[]) => {

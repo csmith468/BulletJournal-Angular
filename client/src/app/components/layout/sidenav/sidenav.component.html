@@ -1,10 +1,11 @@
+
 <div class="sidenav" [ngClass]="navOpen ? 'sidenav-navOpen': ''">
     <div class="logo-container">
         <button class="logo" (click)="toggleCollapse()">
-            <i class="fa fa-bars"></i>
+            <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="btn-close" @rotate *ngIf="navOpen" (click)="closeSideNav()">
-            <i class="fa fa-times"></i>
+        <button class="btn-close btn-close-white" @rotate *ngIf="navOpen" (click)="closeSideNav()" aria-label="Close Menu">
+            <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
     <hr class="horizontal-line-sidenav">
@@ -18,9 +19,10 @@
                 >
                     <i class="sidenav-link-icon" [class]="data.icon"></i>
                     <span class="sidenav-link-text" *ngIf="navOpen" @fadeInOut>{{data.label}}</span>
-                    <i *ngIf="data.items && navOpen" class="menu-collapse-icon"
-                        [ngClass]="!data.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'"
-                    ></i>
+                    <div *ngIf="data.items && navOpen" class="menu-collapse-icon">
+                        <i *ngIf="data.expanded" class="fa-solid fa-angle-down"></i>
+                        <i *ngIf="!data.expanded" class="fa-solid fa-angle-right"></i>
+                    </div>
                 </a>
                 
                 <a class="sidenav-nav-link" 

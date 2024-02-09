@@ -1,6 +1,11 @@
-import { ISideNavData } from "./sidenav-ISideNavData";
+import { ISideNavData } from "./ISideNavData";
 
 export const sidenav_links_loggedOut: ISideNavData[] = [
+    {
+        routeLink: '',
+        icon: 'fa fa-home',
+        label: 'Home'
+    },
     {
         routeLink: 'about',
         icon: 'fa fa-info-circle',

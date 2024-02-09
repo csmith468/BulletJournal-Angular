@@ -37,7 +37,7 @@ import { HomeComponent } from './components/layout/home/home.component';
 import { AreaChartComponent } from './components/trends/chart/area-chart/area-chart.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
-import { PreferencesComponent } from './components/account/profile/preferences.component';
+import { PreferencesComponent } from './components/account/preferences/preferences.component';
 import { RegisterComponent } from './components/account/register/register.component';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
@@ -45,9 +45,10 @@ import { TableComponent } from './components/table/table.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';
 import { ChartComponent } from './components/trends/chart/chart.component';
-import { QuestionPrefsComponent } from './components/account/profile/question-prefs/question-prefs.component';
+import { QuestionPrefsComponent } from './components/account/preferences/question-prefs/question-prefs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TablePrefsComponent } from './components/account/profile/table-prefs/table-prefs.component';
+import { TablePrefsComponent } from './components/account/preferences/table-prefs/table-prefs.component';
+import { SetupComponent } from './components/account/preferences/setup/setup.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { TablePrefsComponent } from './components/account/profile/table-prefs/ta
     TrendsComponent,
     ChartComponent,
     QuestionPrefsComponent,
-    TablePrefsComponent
+    TablePrefsComponent,
+    SetupComponent
   ],
   imports: [
     AppRoutingModule,

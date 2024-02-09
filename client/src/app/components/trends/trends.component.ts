@@ -102,6 +102,6 @@ export class TrendsComponent {
   }
 
   viewData() {
-    this.router.navigateByUrl('/tables/' + this.source);
+    this.router.navigateByUrl('/data/' + this.source);
   }
 }
