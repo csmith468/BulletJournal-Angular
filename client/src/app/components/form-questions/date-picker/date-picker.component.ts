@@ -15,6 +15,9 @@ import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
 export class DatePickerComponent implements OnInit {
   @Input() question!: QuestionBase<any>;
   @Input() form!: FormGroup;
+  @Input() minDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() - 10 ))
+  @Input() maxDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() + 5 ))
+  @Input() validityCheck? = true;
 
   bsConfig = {
     dateInputFormat: 'MMM DD, YYYY',

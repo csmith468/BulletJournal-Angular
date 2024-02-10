@@ -5,6 +5,7 @@ using API.Data.Pagination;
 using API.Models.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace API.Data.Repositories {
     public class ChecklistRepository : IChecklistRepository {
@@ -31,9 +32,15 @@ namespace API.Data.Repositories {
 
         public async Task<PagedList<T>> GetListAsync<T>(int userId, PageParams pageParams) where T : Checklist {
             var dbSet = _contextEF.Set<T>();
-            var query = dbSet.Where(x => x.UserID == userId)
-                .OrderByDescending(x => x.Date)
-                .AsNoTracking();
+
+            var query = dbSet.AsQueryable();
+            query = query.Where(x => x.UserID == userId).OrderByDescending(x => x.Date);
+
+            if (pageParams.MinDate != null) query = query.Where(x => x.Date >= pageParams.MinDate);
+            if (pageParams.MaxDate != null) query = query.Where(x => x.Date <= pageParams.MaxDate);
+
+            query = query.AsNoTracking();
+            
             return await PagedList<T>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize); // pageSize = -1 will return all entries on one page
         }
 
@@ -56,6 +63,16 @@ namespace API.Data.Repositories {
             var whereLambda = Expression.Lambda<Func<T, bool>>(itemIdPredicate, parameter);
 
             return await dbSet.Where(x => x.UserID == userId).Where(whereLambda).SingleOrDefaultAsync();
+        }
+
+        public async Task<T> GetMinDateEntry<T>(int userID) where T : Checklist {
+            var dbSet = _contextEF.Set<T>();
+            return await dbSet.Where(x => x.UserID == userID).OrderBy(x => x.Date).FirstOrDefaultAsync();
+        }
+
+        public async Task<T> GetMaxDateEntry<T>(int userID) where T : Checklist {
+            var dbSet = _contextEF.Set<T>();
+            return await dbSet.Where(x => x.UserID == userID).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
         }
 
         public void DeleteChecklist<T>(T checklist) where T : Checklist {

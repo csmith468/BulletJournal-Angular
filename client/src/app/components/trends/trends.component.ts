@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
+import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { Pagination } from 'src/app/helpers/models/data-models/pagination';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { FieldType } from './fieldType';
@@ -77,19 +77,15 @@ export class TrendsComponent {
   }
 
   closeChart(chartNo: any) {
-    console.log(`Closing chart ${chartNo}`);
     this.chartVisibility[chartNo].visibility = 'closed';
-    console.log(this.chartVisibility)
   }
   
   minimizeChart(chartNo: any) {
-    console.log(`Minimizing chart ${chartNo}`);
     this.chartVisibility[chartNo].visibility = 'minimized';
     this.chartService.updateChartVisibility(false, chartNo);
   }
 
   openChart(chartNo: any) {
-    console.log(`Opening chart ${chartNo}`);
     this.chartVisibility[chartNo].visibility = 'open';
     this.chartService.updateChartVisibility(true, chartNo);
   }

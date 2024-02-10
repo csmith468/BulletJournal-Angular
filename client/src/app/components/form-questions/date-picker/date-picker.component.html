@@ -11,8 +11,9 @@
         bsDatepicker
         [bsConfig]="bsConfig"
         [bsValue]="bsValue"
-        [class.is-invalid]="!isValid"
-        [class.is-valid]="isValid"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [ngClass]="validityCheck ? (isValid ? 'is-valid' : 'is-invalid') : ''"
     >
     <span >
     </span>

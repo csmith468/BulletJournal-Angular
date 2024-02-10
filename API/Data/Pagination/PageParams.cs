@@ -8,5 +8,8 @@ namespace API.Data.Pagination {
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+
+        public DateOnly? MinDate { get; set; }
+        public DateOnly? MaxDate { get; set; }
     }
 }

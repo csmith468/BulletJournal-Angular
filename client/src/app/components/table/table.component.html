@@ -1,11 +1,41 @@
 <div *ngIf="table">
   <div class="d-flex justify-content-between">
-  <h4 class="mt-2 mb-3">{{this.header}}</h4>
-  <div class="row">
-    <button class="btn btn-secondary" (click)="viewTrends()">View Trends</button>
+    <h4 class="mt-2 mb-3">{{ this.header }}</h4>
+    <div *ngIf="minDate && maxDate && startDateInput && endDateInput">
+      <form [formGroup]="dateForm">
+        <div class="form-row">
+          <app-date-picker
+            [question]="startDateInput!"
+            [form]="dateForm"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [validityCheck]="false"
+            class="date-input"></app-date-picker>
+          <app-date-picker
+            [question]="endDateInput!"
+            [form]="dateForm"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [validityCheck]="false"
+            class="date-input"></app-date-picker>
+          <button
+            class="btn btn-secondary"
+            [disabled]="!(validDateRange && changeMadeDate)"
+            (click)="setDateRange()">
+            Set Date Range
+          </button>
+        </div>
+        <div
+          class="invalid-feedback-custom"
+          *ngIf="!validDateRange && validDateInput">
+          Start date must be before end date.
+        </div>
+        <div class="invalid-feedback-custom" *ngIf="!validDateInput">
+          Invalid date.
+        </div>
+      </form>
+    </div>
   </div>
-</div>
-  <p *ngIf="pagination?.maxDate && pagination?.minDate">Max Date: {{pagination?.maxDate}}, Min Date: {{pagination?.minDate}}, Total Rows: {{pagination?.totalItems}}</p>
   <div class="row">
     <table class="table table-striped">
       <thead>
@@ -51,8 +81,7 @@
       previousText="&lsaquo;"
       nextText="&rsaquo;"
       firstText="&laquo;"
-      lastText="&raquo;"
-    >
+      lastText="&raquo;">
     </pagination>
   </div>
 </div>

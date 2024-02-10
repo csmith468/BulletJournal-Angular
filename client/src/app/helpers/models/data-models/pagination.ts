@@ -5,6 +5,8 @@ export interface Pagination {
     totalPages: number;
     minDate: string;
     maxDate: string;
+    minDateInRange: string;
+    maxDateInRange: string;
 }
 
 export class PaginatedResult<T> {

@@ -84,7 +84,6 @@ export class SidenavComponent implements OnInit {
     }
     if (this.expandedItem == item.label) this.expandedItem = null;
     else this.expandedItem = item.label;
-    console.log(this.expandedItem)
   }
 
   // shrinkItems(item: ISideNavData) {

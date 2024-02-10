@@ -24,7 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet("getMyChecklists")] //?pageNumber=2&pageSize=3 (pageSize = -1 will return all entries)
-        public async Task<ActionResult<PagedList<Daily>>> GetMyDailyChecklists([FromQuery]PageParams pageParams) {
+        public async Task<ActionResult<PagedList<Daily>>> GetMyMorningChecklists([FromQuery]PageParams pageParams) {
             return await GetMyChecklists<Daily>(pageParams);
         }
 

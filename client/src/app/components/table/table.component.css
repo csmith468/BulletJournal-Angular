@@ -1,9 +1,20 @@
 
 .btn-secondary {
     width: 100px;
-    height: 40px;
-    margin: 0 0.2rem; 
+    height: 57px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.date-input {
+    max-width: 125px;
+    margin-right: 5px;
+}
+
+.invalid-feedback-custom {
+    width: 100%;
+    /* margin-top: 0.25rem; */
+    font-size: 80%;
+    color: #e83e8c; 
 }

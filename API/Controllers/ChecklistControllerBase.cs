@@ -45,8 +45,11 @@ namespace API.Controllers
                 return expandoObj;
             }).ToList();
 
+            var minDateChecklist = await _uow.ChecklistRepository.GetMinDateEntry<T>(User.GetUserId());
+            var maxDateChecklist = await _uow.ChecklistRepository.GetMaxDateEntry<T>(User.GetUserId());
+
             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
-                checklists.TotalPages, checklists.MinDate, checklists.MaxDate));
+                checklists.TotalPages, minDateChecklist.Date, maxDateChecklist.Date, checklists.MinDate, checklists.MaxDate));
 
             return Ok(expandoList);
         }
@@ -67,6 +70,18 @@ namespace API.Controllers
             }
 
             return Ok(expandoObj);
+        }
+
+        public async Task<ActionResult<T>> GetMinDateEntry<T>() where T : Checklist {
+            var checklist = await _uow.ChecklistRepository.GetMinDateEntry<T>(User.GetUserId());
+            if (checklist == null) return NotFound();
+            return Ok(checklist);
+        }
+
+        public async Task<ActionResult<T>> GetMaxDateEntry<T>() where T : Checklist {
+            var checklist = await _uow.ChecklistRepository.GetMaxDateEntry<T>(User.GetUserId());
+            if (checklist == null) return NotFound();
+            return Ok(checklist);
         }
 
         public async Task<ActionResult> UpdateChecklist<T>(T inputChecklist) where T : Checklist {

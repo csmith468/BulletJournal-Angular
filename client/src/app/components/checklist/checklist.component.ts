@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { QuestionControlService } from 'src/app/helpers/services/question-control.service';
-import { getDateOnly } from 'src/app/helpers/getDateOnlyFn';
+import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { TextboxComponent } from '../form-questions/textbox/textbox.component';
 import { SwitchComponent } from '../form-questions/switch/switch.component';
 import { DropdownComponent } from '../form-questions/dropdown/dropdown.component';
@@ -102,7 +102,10 @@ export class ChecklistComponent implements OnInit {
     if (this.editMode) this.subscription.unsubscribe();
     var id = this.route.snapshot.data['metadata']['id'];
     this.checklistService.addOrUpdateEntry(this.source, this.payload, id).subscribe({
-      next: () => this.router.navigateByUrl('/data/' + this.source)
+      next: () => {
+        this.changeMade = false;  // disables guard
+        this.router.navigateByUrl('/data/' + this.source);
+      }
     })
   }
 

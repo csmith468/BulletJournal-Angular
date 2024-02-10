@@ -3,18 +3,17 @@ import { CompletedChecklists } from 'src/app/helpers/models/data-models/complete
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 
 @Component({
-  selector: 'app-todo',
-  templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css']
+  selector: 'app-checklists-completed',
+  templateUrl: './checklists-completed.component.html',
+  styleUrls: ['./checklists-completed.component.css']
 })
-export class TodoComponent {
+export class ChecklistsCompletedComponent {
   completedChecklists: CompletedChecklists[] = [];
 
   constructor(private checklistService: ChecklistService) {
     this.checklistService.getCompletedToday().subscribe(
       c => {
         this.completedChecklists = c;
-        console.log(this.completedChecklists);
       }
     );
   }

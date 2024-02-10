@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, of } from 'rxjs';
+import { map, min, of } from 'rxjs';
 import { PaginatedResult } from '../models/data-models/pagination';
 import { QuestionSet } from '../models/form-models/questionSet';
 import { CompletedChecklists } from '../models/data-models/completedChecklists';
+import { getDateOnly } from '../functions/getDateOnlyFn';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,14 @@ export class ChecklistService {
     return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
+  getMinDateEntry(type: string) {
+    return this.http.get<any>(this.baseUrl + type + '/getMinDateEntry');
+  }
+
+  getMaxDateEntry(type: string) {
+    return this.http.get<any>(this.baseUrl + type + '/getMaxDateEntry');
+  }
+
   deleteEntry(type: string, id: string) {
     return this.http.delete(this.baseUrl + type + '/delete/' + id.toString());
   }
@@ -38,12 +47,16 @@ export class ChecklistService {
     return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
-  getData(type: string, page?: number, itemsPerPage?: number) {
+  getData(type: string, page?: number, itemsPerPage?: number, minDate?: string, maxDate?: string) {
     let params = new HttpParams();
 
     if (page && itemsPerPage) {
       params = params.append('pageNumber', page);
       params = params.append('pageSize', itemsPerPage);
+    }
+    if (minDate && maxDate) {
+      params = params.append('minDate', getDateOnly(minDate)!);
+      params = params.append('maxDate', getDateOnly(maxDate)!);
     }
 
     return this.http.get<any[]>(this.baseUrl + type + '/getMyChecklists',
