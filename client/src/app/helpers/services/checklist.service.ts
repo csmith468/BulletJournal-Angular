@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, of } from 'rxjs';
 import { PaginatedResult } from '../models/data-models/pagination';
 import { QuestionSet } from '../models/form-models/questionSet';
+import { CompletedChecklists } from '../models/data-models/completedChecklists';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,9 @@ export class ChecklistService {
 
   getQuestions(type: string, initialChecklist?: any) {
     return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
+  }
+
+  getCompletedToday() {
+    return this.http.get<CompletedChecklists[]>(this.baseUrl + 'user/getCompletedToday');
   }
 }

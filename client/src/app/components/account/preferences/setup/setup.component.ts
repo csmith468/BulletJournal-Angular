@@ -20,5 +20,3 @@ export class SetupComponent {
 // detailed setup - create custom form from questionprefs that goes thorugh every page of every table
 // would have next button instead of save and next woudl take you to the next tab
 // also probably good to have tutorial of what you're selecting (which questions you want to fill out in each section)
-
-// djkfls

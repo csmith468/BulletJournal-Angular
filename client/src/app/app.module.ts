@@ -33,7 +33,7 @@ import { AboutComponent } from './components/static/about/about.component';
 import { BodyComponent } from './components/layout/body/body.component';
 import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
 import { HeaderComponent } from './components/layout/header/header.component';
-import { HomeComponent } from './components/layout/home/home.component';
+import { HomeComponent } from './components/home/home.component';
 import { AreaChartComponent } from './components/trends/chart/area-chart/area-chart.component';
 import { LoginComponent } from './components/account/login/login.component';
 import { NotFoundComponent } from './components/static/not-found/not-found.component';
@@ -49,6 +49,7 @@ import { QuestionPrefsComponent } from './components/account/preferences/questio
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TablePrefsComponent } from './components/account/preferences/table-prefs/table-prefs.component';
 import { SetupComponent } from './components/account/preferences/setup/setup.component';
+import { TodoComponent } from './components/home/todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { SetupComponent } from './components/account/preferences/setup/setup.com
     ChartComponent,
     QuestionPrefsComponent,
     TablePrefsComponent,
-    SetupComponent
+    SetupComponent,
+    TodoComponent
   ],
   imports: [
     AppRoutingModule,

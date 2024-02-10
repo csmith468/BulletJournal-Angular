@@ -31,7 +31,7 @@ export class SidenavComponent implements OnInit {
   screenWidth = 0;
   navData_loggedIn: ISideNavData[] = [];
   navData_loggedOut = sidenav_links_loggedOut;
-  multiple: boolean = false;
+  expandedItem: string | null = null;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -56,6 +56,10 @@ export class SidenavComponent implements OnInit {
     this.screenWidth = window.innerWidth;
   }
 
+  isExpanded(label: string) {
+    return (label == this.expandedItem);
+  }
+
   toggleCollapse() {
     this.navOpen = !this.navOpen;
     this.emitToggleSideNav();
@@ -68,27 +72,24 @@ export class SidenavComponent implements OnInit {
 
   closeSideNav() {
     this.navOpen = false;
+    this.expandedItem = '';
     this.emitToggleSideNav();
   }
 
   handleClick(item: ISideNavData) {
-    this.shrinkItems(item);
+    // event.preventDefault();
     if (!this.navOpen) {
       this.navOpen = true;
       this.emitToggleSideNav();
     }
-    item.expanded = !item.expanded;
+    if (this.expandedItem == item.label) this.expandedItem = null;
+    else this.expandedItem = item.label;
+    console.log(this.expandedItem)
   }
 
-  shrinkItems(item: ISideNavData) {
-    if (!this.multiple) {
-      for(let modelItem of (this.accountService.currentUser$) ? this.navData_loggedIn : this.navData_loggedOut) {
-        if (item !== modelItem && modelItem.expanded) {
-          modelItem.expanded = false;
-        }
-      }
-    }
-  }
+  // shrinkItems(item: ISideNavData) {
+  //   this.expandedItem = 
+  // }
 
   getActiveClass(data: ISideNavData) {
     return this.router.url.includes(data.routeLink) ? 'sub-active' : '';

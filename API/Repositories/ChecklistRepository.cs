@@ -84,11 +84,14 @@ namespace API.Data.Repositories {
             for (var i = 0; i < tables.Count; i++) {
                 sql += @$"
                 SELECT '{tables[i]}' AS TableName,
+                    ISNULL([category].[DisplayName] + ' ', '') + [tables].[DisplayName] AS TableLabel,
                     CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date) AS [Date],
-                    CASE WHEN [{tables[i]}].[UserID] IS NOT NULL THEN 1 ELSE 0 END AS IsCompleted
+                    [{tables[i]}].[{tables[i]}ID] AS ID
                 FROM [app_sys].[user]
                 LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[UserID] = [user].[UserID] 
                     AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date)
+                LEFT JOIN [app_sys].[tables] ON [tables].[key] = '{tables[i]}'
+                LEFT JOIN [app_sys].[tables] [category] ON [category].[key] = [tables].[category]
                 AND [user].[UserID] = {userId} 
                 ";
                 if (i < tables.Count - 1) {

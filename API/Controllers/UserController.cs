@@ -130,7 +130,7 @@ namespace API.Controllers
             return Ok(filteredTables);
         }
 
-        [HttpGet("todoList")]
+        [HttpGet("getCompletedToday")]
         public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
             return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
         }

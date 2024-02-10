@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
             *ngIf="navOpen">{{item.label}}
         </span>
         <i *ngIf="item.items && navOpen" 
-          class="menu-collapse-icon {{!item.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'}}" >
+          class="menu-collapse-icon {{!isExpanded(item.label) ? 'fa-solid fa-angle-right' : 'fa-solid fa-angle-down'}}" >
         </i>
       </a>
       <a class="sublevel-nav-link"
@@ -45,8 +45,7 @@ import { Router } from '@angular/router';
         <app-sub-level-menu
           [data]="item"
           [navOpen]="navOpen"
-          [multiple]="multiple"
-          [expanded]="item.expanded"
+          [expanded]="(item.label == expandedItem)"
         ></app-sub-level-menu>
       </div>
     </li>
@@ -69,6 +68,7 @@ import { Router } from '@angular/router';
     ])
   ]
 })
+
 export class SubLevelMenuComponent implements OnInit{
   @Input() data: ISideNavData = {
     routeLink: '',
@@ -79,7 +79,7 @@ export class SubLevelMenuComponent implements OnInit{
   @Input() navOpen = true;
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
-  @Input() multiple: boolean = false;
+  expandedItem: string | null = null;
 
   constructor(private accountService: AccountService, public router: Router) { }
 
@@ -88,19 +88,15 @@ export class SubLevelMenuComponent implements OnInit{
   }
 
   handleClick(item: any) {
-    if (!this.multiple) {
-      if (this.data.items && this.data.items.length > 0) {
-        for (let modelItem of this.data.items) {
-          if (item !== modelItem && modelItem.expanded) {
-            modelItem.expanded = false;
-          }
-        }
-      }
-    }
-    item.expanded = !item.expanded;
+    if (this.expandedItem == item.label) this.expandedItem = null;
+    else this.expandedItem = item.label;
   }
 
   getActiveClass(item: ISideNavData) {
-    return item.expanded && this.router.url.includes(item.routeLink) ? 'subactive-sublevel' : '';
+    return (item.label == this.expandedItem) && this.router.url.includes(item.routeLink) ? 'subactive-sublevel' : '';
+  }
+
+  isExpanded(label: string) {
+    return (label == this.expandedItem);
   }
 }
