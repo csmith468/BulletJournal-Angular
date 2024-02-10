@@ -13,8 +13,7 @@ import { SettingsService } from 'src/app/helpers/services/settings.service';
 export class PreferencesComponent {
   // @ViewChild('profileTabs', {static: true}) profileTabs?: TabsetComponent; //if you want to set tab with route
   activeTab?: TabDirective;
-  tableNames: string[] = ['Morning', 'Night', 'Daily', 'Wellbeing', 'Physical Symptoms', 'Spending', 'Sleep'];
-  activeTabName: string = 'Morning';
+  activeTabName: string = '';
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
 
@@ -33,8 +32,6 @@ export class PreferencesComponent {
   getData() {
     const group: any = {};
     this.form = new FormGroup(group);
-    
-    console.log(this.activeTabName)
 
     this.settingsService.getQuestionPreferences(this.activeTabName).subscribe(
       columns => {

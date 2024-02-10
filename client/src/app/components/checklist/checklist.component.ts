@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/helpers/services/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
@@ -27,13 +27,16 @@ import { SliderComponent } from '../form-questions/slider/slider.component';
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
 export class ChecklistComponent implements OnInit {
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.changeMade && this.form.dirty) $event.returnValue = true;
+  }
   questions: QuestionBase<any>[] = [];
   payload: string = '';
   editMode: boolean = false;
   source: string = '';
   form!: FormGroup;
   originalPayload = '';
-  changeMade: boolean = true;
+  changeMade: boolean = false;
   header: string = '';
   private readonly subscription = new Subscription();
 
@@ -68,11 +71,9 @@ export class ChecklistComponent implements OnInit {
   createForm() {
     this.form = this.qcs.toFormGroup(this.questions);
     this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
-    if (this.editMode) {
-      this.originalPayload = JSON.stringify(this.updatePayload());
-      this.changeMade = false;
-      this.onChange();
-    } 
+    this.originalPayload = JSON.stringify(this.updatePayload());
+    this.changeMade = false;
+    this.onChange();
   }
   
   //on change - run function to check validity, compare payload to original payload

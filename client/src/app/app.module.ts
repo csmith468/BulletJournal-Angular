@@ -11,7 +11,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalModule } from 'ngx-bootstrap/modal'
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -50,6 +50,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TablePrefsComponent } from './components/account/preferences/table-prefs/table-prefs.component';
 import { SetupComponent } from './components/account/preferences/setup/setup.component';
 import { TodoComponent } from './components/home/todo/todo.component';
+import { ConfirmDialogComponent } from './components/layout/modals/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { TodoComponent } from './components/home/todo/todo.component';
     HeaderComponent,
     HomeComponent,
     AreaChartComponent,
+    ConfirmDialogComponent,
     LoginComponent,
     NotFoundComponent,
     PreferencesComponent,
@@ -81,22 +83,18 @@ import { TodoComponent } from './components/home/todo/todo.component';
     BrowserModule,
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
-    FontAwesomeModule,
     FormsModule,
     HttpClientModule,
     LayoutModule,
+    ModalModule.forRoot(),
     NgApexchartsModule,
+    NgbModule,
     NgSelectModule,
-    NgxSpinnerModule.forRoot({
-      type: 'square-jelly-box'
-    }),
+    NgxSpinnerModule.forRoot({ type: 'square-jelly-box' }),
     PaginationModule.forRoot(),
     ReactiveFormsModule,
     TabsModule.forRoot(),
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right'
-    }),
-    NgbModule
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-right' })
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
