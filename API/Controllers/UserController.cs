@@ -114,6 +114,7 @@ namespace API.Controllers
 
         [HttpGet("getTables")]
         public async Task<ActionResult> GetTables() {
+            await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId());
             return Ok(await _uow.SettingsRepository.GetTablesAsync());
         }
 
@@ -127,6 +128,11 @@ namespace API.Controllers
 
             var filteredTables = allTables.Where(table => !invisibleTables.Contains(table.Key)).ToList();
             return Ok(filteredTables);
+        }
+
+        [HttpGet("todoList")]
+        public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
+            return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
         }
     }
 }

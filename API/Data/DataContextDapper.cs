@@ -13,5 +13,9 @@ namespace API.Data {
         public async Task<bool> ExecuteAsync(string sql) {
             return await _dbConnection.ExecuteAsync(sql) > 0;
         }
+
+        public async Task<IEnumerable<T>> QueryAsync<T>(string sql) {
+            return await _dbConnection.QueryAsync<T>(sql);
+        }
     }
 }

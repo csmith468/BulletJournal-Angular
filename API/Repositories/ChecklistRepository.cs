@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories {
     public class ChecklistRepository : IChecklistRepository {
-        // private readonly DataContextDapper _contextDapper;
+        private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
-        public ChecklistRepository(DataContextEF contextEF, IMapper mapper) {
+        public ChecklistRepository(DataContextEF contextEF, IMapper mapper, DataContextDapper contextDapper) {
             _contextEF = contextEF;
             _mapper = mapper;
+            _contextDapper = contextDapper;
         }
 
         public async Task<T> AddAsync<T>(T item) where T : Checklist {
@@ -71,6 +72,31 @@ namespace API.Data.Repositories {
                 .Where(p => p.UserID == userId && p.TableName == typeof(T).Name && p.IsColumnVisible == false)
                 .Select(p => p.ColumnName)
                 .ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
+            List<string> tables = await _contextEF.TablePreferences
+                .Where(t => t.UserID == userId && t.IsTableVisible == true)
+                .Select(t => t.TableName).ToListAsync();
+
+            string sql = "";
+            for (var i = 0; i < tables.Count; i++) {
+                sql += @$"
+                SELECT '{tables[i]}' AS TableName,
+                    CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date) AS [Date],
+                    CASE WHEN [{tables[i]}].[UserID] IS NOT NULL THEN 1 ELSE 0 END AS IsCompleted
+                FROM [app_sys].[user]
+                LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[UserID] = [user].[UserID] 
+                    AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date)
+                AND [user].[UserID] = {userId} 
+                ";
+                if (i < tables.Count - 1) {
+                    sql += " UNION ALL ";
+                }
+            }
+
+            return await _contextDapper.QueryAsync<CompletedChecklists>(sql);
         }
 
     }

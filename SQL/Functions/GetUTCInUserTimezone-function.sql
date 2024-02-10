@@ -2,7 +2,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION [app].[GetUTCInUserTimezone](
+ALTER FUNCTION [app_sys].[GetUTCInUserTimezone](
     @UTCDatetime datetime,
     @UserId int
 )
@@ -12,7 +12,7 @@ BEGIN
 
     DECLARE @TimezoneID int = (
         SELECT timezoneLocation.TimezoneID 
-        FROM app.[user] 
+        FROM app_sys.[user] 
         JOIN dbo.timezoneLocation ON [user].[TimezoneLocationID] = timezoneLocation.TimezoneLocationID
         WHERE UserID = @UserId
     );
@@ -36,7 +36,7 @@ BEGIN
     DECLARE @TransitionTimeOfDay time = (SELECT TOP(1) TransitionTimeOfDay FROM dbo.timezoneBias WHERE TimezoneBiasID = @TimezoneBiasID);
 
     -- get UTC datetime in current timezone
-    DECLARE @DatetimeInTimezone datetime = (SELECT DATEADD(minute, @StandardBias, @UTCDatetime));
+    DECLARE @DatetimeInTimezone datetime = (SELECT DATEADD(minute, -@StandardBias, @UTCDatetime));
 
     -- get start and end dates of daylight savings
     DECLARE @SubtractDatetime datetime;
@@ -90,7 +90,7 @@ BEGIN
     RETURN CASE 
         WHEN @TimezoneBiasID IS NULL THEN @DatetimeInTimezone
         WHEN @DatetimeInTimezone BETWEEN @AddDatetime AND @SubtractDatetime THEN @DatetimeInTimezone
-        ELSE DATEADD(minute, @TransitionBias, @DatetimeInTimezone) END
+        ELSE DATEADD(minute, -@TransitionBias, @DatetimeInTimezone) END
 
 END
 

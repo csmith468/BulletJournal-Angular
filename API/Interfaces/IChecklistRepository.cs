@@ -10,5 +10,6 @@ namespace API.Data.Interfaces {
         void DeleteChecklist<T>(T checklist) where T : Checklist;
         Task<IEnumerable<QuestionSet>> GetQuestionSet<T>() where T : Checklist;
         Task<IEnumerable<string>> GetInvisibleColumnsAsync<T>(int userId) where T : Checklist;
+        Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId);
     }
 }
