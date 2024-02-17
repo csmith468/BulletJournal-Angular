@@ -66,7 +66,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdAsync(userId, id);
+            var checklist = await checklistRepository.GetByIdFilteredAsync(userId, id);
             if (checklist == null) return NotFound();
 
             return Ok(checklist);
@@ -93,7 +93,7 @@ namespace API.Controllers
             var checklist = await checklistRepository.GetByIdAsync(User.GetUserId(), id);
             if (checklist == null) return NotFound();
 
-            checklistRepository.DeleteChecklist(type, checklist);
+            checklistRepository.DeleteChecklist(checklist);
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to remove entry.");
@@ -112,7 +112,7 @@ namespace API.Controllers
             var userId = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdAsync(userId, inputChecklist.ID);
+            var checklist = await checklistRepository.GetByIdFilteredAsync(userId, inputChecklist.ID);
             if (checklist == null) return NotFound();
             inputChecklist.UserID = userId;
 

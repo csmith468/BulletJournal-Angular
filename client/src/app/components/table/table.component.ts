@@ -75,11 +75,11 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   editEntry(row: any) {
-    this.router.navigateByUrl('/checklists/'+ this.source + '/edit/' + row[this.source + 'ID'].toString());
+    this.router.navigateByUrl('/checklists/'+ this.source + '/edit/' + row.id.toString());
   }
 
   deleteEntry(row: any) {
-    this.checklistService.deleteEntry(this.source, row[this.source + 'ID']).subscribe({
+    this.checklistService.deleteEntry(this.source, row.id).subscribe({
       next: () => this.loadData()
     });
   }

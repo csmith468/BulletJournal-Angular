@@ -8,6 +8,7 @@ using API.Models.DTOs;
 using API.Models.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -62,14 +63,21 @@ namespace API.Data.Repositories {
             return Tuple.Create(filteredChecklists, paginationHeader);
         }
 
-        public async Task<IDictionary<string, object>> GetByIdAsync(int userId, int itemID) {
+        public async Task<IDictionary<string, object>> GetByIdFilteredAsync(int userId, int itemID) {
             var dbSet = _contextEF.Set<T>();
             
             dynamic checklist = await dbSet
                 .Where(x => x.UserID == userId && x.ID == itemID)
                 .FirstOrDefaultAsync();
 
+            if (checklist == null) return null;
+
             return await GetFilteredChecklistSingle(userId, checklist);
+        }
+
+        public async Task<T> GetByIdAsync(int userId, int itemID) {
+            var dbSet = _contextEF.Set<T>();
+            return await dbSet.Where(x => x.UserID == userId && x.ID == itemID).FirstOrDefaultAsync();
         }
 
         public async Task<T> GetMinDateEntry(int userID) {
@@ -129,6 +137,8 @@ namespace API.Data.Repositories {
         }
 
         private async Task<Dictionary<string, object>> GetFilteredChecklistSingle(int userId, T checklist) {
+            if (checklist == null) return null;
+
             var visibleColumns = await GetVisibleColumnsAsync(userId);
             // var columnNames = ((IEnumerable<dynamic>)visibleColumns).Cast<string>().ToList();
 

@@ -46,6 +46,7 @@ export class ChecklistService {
   }
 
   getChecklistById(type: string, id: string) {
+    console.log(this.baseUrl + type + '/getMyChecklistById/' + id)
     return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
