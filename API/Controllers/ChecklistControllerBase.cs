@@ -1,122 +1,135 @@
-using API.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using API.Models.Entities;
-using AutoMapper;
-using API.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using API.Data.Pagination;
-using System.Dynamic;
-using System.Text.Json;
+// using API.Data.Interfaces;
+// using Microsoft.AspNetCore.Mvc;
+// using API.Models.Entities;
+// using AutoMapper;
+// using API.Extensions;
+// using Microsoft.AspNetCore.Authorization;
+// using API.Data.Pagination;
+// using Microsoft.EntityFrameworkCore;
+// using System.Dynamic;
+// using System.Text.Json;
 
-namespace API.Controllers
-{
-    [Authorize]
-    public class ChecklistControllerBase : BaseApiController {
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+// namespace API.Controllers
+// {
+//     [Authorize]
+//     public class ChecklistController : BaseApiController {
+//         private readonly IUnitOfWork _uow;
+//         private readonly IMapper _mapper;
 
-        public ChecklistControllerBase(IUnitOfWork uow, IMapper mapper) {
-            _uow = uow;
-            _mapper = mapper;
-        }
+//         public ChecklistController(IUnitOfWork uow, IMapper mapper) {
+//             _uow = uow;
+//             _mapper = mapper;
+//         }
 
-        public async Task<ActionResult<T>> AddChecklist<T>(T checklist) where T : Checklist {
-            checklist.UserID = User.GetUserId();
-            if (await _uow.ChecklistRepository.DateUsedAsync<T>(checklist.Date, checklist.UserID)) 
-                return BadRequest("You already submitted an entry for this date.");
-            var result = await _uow.ChecklistRepository.AddAsync(checklist);
-            return Ok(result);
-        }
+//         [HttpPost("{type}/add")]
+//         public async Task<ActionResult<Checklist>> AddChecklist(string type, Checklist checklist) {
+//             checklist.UserID = User.GetUserId();
+//             if (await _uow.ChecklistRepository.DateUsedAsync<Checklist>(checklist.Date, checklist.UserID)) 
+//                 return BadRequest("You already submitted an entry for this date.");
+//             var result = await _uow.ChecklistRepository.AddAsync(type, checklist);
+//             return Ok(result);
+//         }
 
-        //  (pageSize = -1 will return all entries)
-        public async Task<ActionResult<PagedList<T>>> GetMyChecklists<T>(PageParams pageParams) where T : Checklist { 
-            var invisibleColumns = await _uow.ChecklistRepository.GetInvisibleColumnsAsync<T>(User.GetUserId());
-            var checklists = await _uow.ChecklistRepository.GetListAsync<T>(User.GetUserId(), pageParams);
+//         [HttpGet("{type}/getMyChecklists")] //?pageNumber=2&pageSize=3 (pageSize = -1 will return all entries)
+//         public async Task<ActionResult<PagedList<Checklist>>> GetMyChecklists(string type, [FromQuery]PageParams pageParams) {
+//             var userId = User.GetUserId();
+//             var visibleColumns = await _uow.ChecklistRepository.GetVisibleColumnsAsync(type, userId);
+//             var checklists = await _uow.ChecklistRepository.GetListAsync(type, userId, pageParams);
 
-            var expandoList = checklists.Select(c => {
-                var expandoObj = new ExpandoObject() as IDictionary<string, Object>;
+//             // visibleColumns.Append("Date").Append("ID");
 
-                foreach (var prop in typeof(T).GetProperties()) {
-                    if (!invisibleColumns.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)) {
-                        var camelCaseName = JsonNamingPolicy.CamelCase.ConvertName(prop.Name);
-                        expandoObj.Add(camelCaseName, prop.GetValue(c));
-                    }
-                }
-                return expandoObj;
-            }).ToList();
+//             var expandoList = checklists.Select(c => {
+//                 var expandoObj = new ExpandoObject() as IDictionary<string, Object>;
 
-            var minDateChecklist = await _uow.ChecklistRepository.GetMinDateEntry<T>(User.GetUserId());
-            var maxDateChecklist = await _uow.ChecklistRepository.GetMaxDateEntry<T>(User.GetUserId());
+//                 foreach (var prop in typeof(Checklist).GetProperties()) {
+//                     if (visibleColumns.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)) {
+//                         var camelCaseName = JsonNamingPolicy.CamelCase.ConvertName(prop.Name);
+//                         expandoObj.Add(camelCaseName, prop.GetValue(c));
+//                     }
+//                 }
+//                 return expandoObj;
+//             }).ToList();
 
-            Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
-                checklists.TotalPages, minDateChecklist.Date, maxDateChecklist.Date, checklists.MinDate, checklists.MaxDate));
+//             var minDateChecklist = await _uow.ChecklistRepository.GetMinDateEntry(type, userId);
+//             var maxDateChecklist = await _uow.ChecklistRepository.GetMaxDateEntry(type, userId);
 
-            return Ok(expandoList);
-        }
+//             Response.AddPaginationHeader(new PaginationHeader(checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
+//                 checklists.TotalPages, minDateChecklist.Date, maxDateChecklist.Date, checklists.MinDate, checklists.MaxDate));
 
-        public async Task<ActionResult<T>> GetMyChecklistById<T>(int id) where T : Checklist {
-            var invisibleColumns = await _uow.ChecklistRepository.GetInvisibleColumnsAsync<T>(User.GetUserId());
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(User.GetUserId(), id);
+//             return Ok(expandoList);
+//         }
 
-            if (checklist == null) return NotFound();
+//         [HttpGet("{type}/getMyChecklistById/{id}")]
+//         public async Task<ActionResult<Checklist>> GetMyChecklistById(string type, int id) {
+//             var userId = User.GetUserId();
+//             var visibleColumns = await _uow.ChecklistRepository.GetVisibleColumnsAsync(type, userId);
+//             var checklist = await _uow.ChecklistRepository.GetByIdAsync(type, userId, id);
 
-            var expandoObj = new ExpandoObject() as IDictionary<string, Object>;
+//             if (checklist == null) return NotFound();
 
-            foreach (var prop in typeof(T).GetProperties()) {
-                if (!invisibleColumns.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)) {
-                    var camelCaseName = JsonNamingPolicy.CamelCase.ConvertName(prop.Name);
-                    expandoObj.Add(camelCaseName, prop.GetValue(checklist));
-                }
-            }
+//             var expandoObj = new ExpandoObject() as IDictionary<string, Object>;
 
-            return Ok(expandoObj);
-        }
+//             foreach (var prop in typeof(Checklist).GetProperties()) {
+//                 if (visibleColumns.Contains(prop.Name, StringComparer.OrdinalIgnoreCase)) {
+//                     var camelCaseName = JsonNamingPolicy.CamelCase.ConvertName(prop.Name);
+//                     expandoObj.Add(camelCaseName, prop.GetValue(checklist));
+//                 }
+//             }
 
-        public async Task<ActionResult<T>> GetMinDateEntry<T>() where T : Checklist {
-            var checklist = await _uow.ChecklistRepository.GetMinDateEntry<T>(User.GetUserId());
-            if (checklist == null) return NotFound();
-            return Ok(checklist);
-        }
+//             return Ok(expandoObj);
+//         }
 
-        public async Task<ActionResult<T>> GetMaxDateEntry<T>() where T : Checklist {
-            var checklist = await _uow.ChecklistRepository.GetMaxDateEntry<T>(User.GetUserId());
-            if (checklist == null) return NotFound();
-            return Ok(checklist);
-        }
+//         [HttpPut("{type}/update")]
+//         public async Task<ActionResult> UpdateMorningChecklist(string type, Checklist checklist) {
+//            return await UpdateChecklistHelper(type, checklist);
+//         }
 
-        public async Task<ActionResult> UpdateChecklist<T>(T inputChecklist) where T : Checklist {
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(User.GetUserId(), inputChecklist.GetID());
-            if (checklist == null) return NotFound();
-            inputChecklist.UserID = User.GetUserId();
 
-            if (checklist.Date != inputChecklist.Date) {
-                if (await _uow.ChecklistRepository.DateUsedAsync<T>(inputChecklist.Date, User.GetUserId())) 
-                    return BadRequest("You already submitted an entry for this date.");
-            }
+//         [HttpPut("{type}/updateById/{id}")]
+//         public async Task<ActionResult> UpdateMorningChecklistById(string type, int id, [FromBody]Checklist checklist) {
+//             checklist.ID = id;
+//             checklist.UserID = User.GetUserId();
 
-            _mapper.Map(inputChecklist, checklist);
-            if (await _uow.Complete()) return NoContent();
+//             return await UpdateChecklistHelper(type, checklist);
+//         }
 
-            return BadRequest("Failed to update entry.");
-        }
+//         [HttpDelete("{type}/delete/{id}")]
+//         public async Task<ActionResult> DeleteChecklist(string type, int id) {
+//             var checklist = await _uow.ChecklistRepository.GetByIdAsync(type, User.GetUserId(), id);
+//             if (checklist == null) return NotFound();
 
-        public async Task<ActionResult> DeleteChecklist<T>(int id) where T : Checklist {
-            var checklist = await _uow.ChecklistRepository.GetByIdAsync<T>(User.GetUserId(), id);
-            if (checklist == null) return NotFound();
+//             _uow.ChecklistRepository.DeleteChecklist(type, checklist);
+//             if (await _uow.Complete()) return NoContent();
 
-            _uow.ChecklistRepository.DeleteChecklist(checklist);
-            if (await _uow.Complete()) return NoContent();
+//             return BadRequest("Failed to remove entry.");
+//         }
 
-            return BadRequest("Failed to remove entry.");
-        }
+//         [HttpGet("{type}/getQuestionSet")]
+//         public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet(string type) {
+//             var userId = User.GetUserId();
+//             var visibleColumns = await _uow.ChecklistRepository.GetVisibleColumnsAsync(type, userId);
+//             var questionSet = await _uow.SettingsRepository.GetQuestionPreferencesByTypeAsync(userId, type);
+//             if (questionSet == null) return NotFound();
 
-        public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet<T>() where T : Checklist {
-            var invisibleColumns = await _uow.ChecklistRepository.GetInvisibleColumnsAsync<T>(User.GetUserId());
-            var questionSet = await _uow.ChecklistRepository.GetQuestionSet<T>();
-            if (questionSet == null) return NotFound();
+//             var visibleQuestionSet = questionSet.Where(q => visibleColumns.Contains(q.QuestionKey, StringComparer.OrdinalIgnoreCase));
+//             return Ok(visibleQuestionSet);
+//         }
 
-            var visibleQuestionSet = questionSet.Where(q => !invisibleColumns.Contains(q.Key, StringComparer.OrdinalIgnoreCase));
-            return Ok(visibleQuestionSet);
-        }
-    }
-}
+//         private async Task<ActionResult> UpdateChecklistHelper(string type, Checklist inputChecklist) {
+//             var userId = User.GetUserId();
+//             var checklist = await _uow.ChecklistRepository.GetByIdAsync(type, userId, inputChecklist.ID);
+//             if (checklist == null) return NotFound();
+//             inputChecklist.UserID = userId;
+
+//             if (checklist.Date != inputChecklist.Date) {
+//                 if (await _uow.ChecklistRepository.DateUsedAsync(type, inputChecklist.Date, userId)) 
+//                     return BadRequest("You already submitted an entry for this date.");
+//             }
+
+//             _mapper.Map(inputChecklist, checklist);
+//             if (await _uow.Complete()) return NoContent();
+
+//             return BadRequest("Failed to update entry.");
+//         }
+//     }
+// }

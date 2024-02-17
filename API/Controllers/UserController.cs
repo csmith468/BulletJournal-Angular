@@ -1,12 +1,10 @@
 using API.Data.Interfaces;
-using API.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using API.Models.Entities;
 using AutoMapper;
 using API.Models.DTOs;
 using API.Extensions;
-using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
@@ -51,7 +49,7 @@ namespace API.Controllers
             var prefs = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.QuestionPreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.IsColumnVisible = questionPrefs.IsColumnVisible;
+            prefs.IsQuestionVisible = questionPrefs.IsQuestionVisible;
             prefs.UserID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
@@ -66,7 +64,7 @@ namespace API.Controllers
                 var pref = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), p.QuestionPreferencesID);
                 if (pref == null) return NotFound();
 
-                pref.IsColumnVisible = p.IsColumnVisible;
+                pref.IsQuestionVisible = p.IsQuestionVisible;
                 if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
             }
 
@@ -112,11 +110,11 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpGet("getTables")]
-        public async Task<ActionResult> GetTables() {
-            await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId());
-            return Ok(await _uow.SettingsRepository.GetTablesAsync());
-        }
+        // [HttpGet("getTables")]
+        // public async Task<ActionResult> GetTables() {
+        //     await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId());
+        //     return Ok(await _uow.SettingsRepository.GetTablesAsync());
+        // }
 
         [HttpGet("getMyTables")]
         public async Task<ActionResult> GetMyTables() {
@@ -130,9 +128,9 @@ namespace API.Controllers
             return Ok(filteredTables);
         }
 
-        [HttpGet("getCompletedToday")]
-        public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
-            return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
-        }
+        // [HttpGet("getCompletedToday")]
+        // public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
+        //     return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
+        // }
     }
 }

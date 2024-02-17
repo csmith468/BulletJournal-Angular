@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Data
 {
     public class DataContextEF: DbContext {
-
         private readonly IConfiguration _config;
 
         public DataContextEF(IConfiguration config) {
@@ -17,15 +16,14 @@ namespace API.Data
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
         public DbSet<TablePreferences> TablePreferences { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
-        public DbSet<QuestionSet> QuestionSets { get; set; }
         public DbSet<Tables> Tables { get; set; }
         
-        public DbSet<Morning> Mornings { get; set; }
-        public DbSet<Night> Nights { get; set; }
-        public DbSet<Daily> Dailies { get; set; }
+        public DbSet<Morning> Morning { get; set; }
+        public DbSet<Night> Night { get; set; }
+        public DbSet<Daily> Daily { get; set; }
         public DbSet<Wellbeing> Wellbeing { get; set; }
-        public DbSet<Physical> Physicals { get; set; }
-        public DbSet<Sleep> Sleep { get; set; }
+        public DbSet<Physical> Physical { get; set; }
+        // public DbSet<Sleep> Sleep { get; set; }
 
         public DbSet<SpendingFinancial> SpendingFinancial { get; set; }
         public DbSet<SpendingHealthcare> SpendingHealthcare { get; set; }
@@ -46,31 +44,31 @@ namespace API.Data
                 .HasKey(u => u.QuestionPreferencesID);
             modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app_sys")
                 .HasKey(u => u.TablePreferencesID);
-            modelBuilder.Entity<QuestionSet>().ToTable("questions", "app_sys")
-                .HasKey(u => u.QuestionID);
+            modelBuilder.Entity<QuestionTypes>().ToTable("questionTypes", "app_sys")
+                .HasKey(u => u.QuestionTypeID);
             modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
                 .HasKey(u => u.TableID);
 
             modelBuilder.Entity<Morning>().ToTable("morning", "app")
-                .HasKey(u => u.MorningID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<Night>().ToTable("night", "app")
-                .HasKey(u => u.NightID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<Daily>().ToTable("daily", "app")
-                .HasKey(u => u.DailyID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<Wellbeing>().ToTable("wellbeing", "app")
-                .HasKey(u => u.WellbeingID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<Physical>().ToTable("physical", "app")
-                .HasKey(u => u.PhysicalID);
+                .HasKey(u => u.ID);
 
             modelBuilder.Entity<SpendingFinancial>().ToTable("spendingFinancial", "app")
-                .HasKey(u => u.SpendingFinancialID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<SpendingHealthcare>().ToTable("spendingHealthcare", "app")
-                .HasKey(u => u.SpendingHealthcareID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<SpendingPersonal>().ToTable("spendingPersonal", "app")
-                .HasKey(u => u.SpendingPersonalID);
+                .HasKey(u => u.ID);
             modelBuilder.Entity<SpendingRegular>().ToTable("spendingRegular", "app")
-                .HasKey(u => u.SpendingRegularID);
-            modelBuilder.Entity<Sleep>().ToTable("sleep", "app").HasKey(u => u.SleepID);
+                .HasKey(u => u.ID);
+            // modelBuilder.Entity<Sleep>().ToTable("sleep", "app").HasKey(u => u.SleepID);
 
             modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
                 .HasKey(u => u.TimezoneLocationID);

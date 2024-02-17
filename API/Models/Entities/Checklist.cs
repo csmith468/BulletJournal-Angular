@@ -1,14 +1,108 @@
 namespace API.Models.Entities {
-    public interface IChecklist {
-        int UserID { get; set; }
-        DateOnly Date { get; set; }
-        int GetID();
-    }
-
-    public abstract class Checklist : IChecklist {
-        public abstract int UserID { get; set; }
-        public abstract DateOnly Date { get; set; }
-        public abstract int GetID();
+    public class Checklist {
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public DateOnly Date { get; set; }
+        public double? Question1 { get; set; }
+        public double? Question2 { get; set; }
+        public double? Question3 { get; set; }
+        public double? Question4 { get; set; }
+        public double? Question5 { get; set; }
+        public double? Question6 { get; set; }
+        public double? Question7 { get; set; }
+        public double? Question8 { get; set; }
+        public double? Question9 { get; set; }
+        public double? Question10 { get; set; }
+        public double? Question11 { get; set; }
+        public double? Question12 { get; set; }
+        public double? Question13 { get; set; }
+        public double? Question14 { get; set; }
+        public double? Question15 { get; set; }
+        public double? Question16 { get; set; }
+        public double? Question17 { get; set; }
+        public double? Question18 { get; set; }
+        public double? Question19 { get; set; }
+        public double? Question20 { get; set; }
+        public double? Question21 { get; set; }
+        public double? Question22 { get; set; }
+        public double? Question23 { get; set; }
+        public double? Question24 { get; set; }
+        public double? Question25 { get; set; }
+        public double? Question26 { get; set; }
+        public double? Question27 { get; set; }
+        public double? Question28 { get; set; }
+        public double? Question29 { get; set; }
+        public double? Question30 { get; set; }
+        public double? Question31 { get; set; }
+        public double? Question32 { get; set; }
+        public double? Question33 { get; set; }
+        public double? Question34 { get; set; }
+        public double? Question35 { get; set; }
+        public double? Question36 { get; set; }
+        public double? Question37 { get; set; }
+        public double? Question38 { get; set; }
+        public double? Question39 { get; set; }
+        public double? Question40 { get; set; }
+        public double? Question41 { get; set; }
+        public double? Question42 { get; set; }
+        public double? Question43 { get; set; }
+        public double? Question44 { get; set; }
+        public double? Question45 { get; set; }
+        public double? Question46 { get; set; }
+        public double? Question47 { get; set; }
+        public double? Question48 { get; set; }
+        public double? Question49 { get; set; }
+        public double? Question50 { get; set; }
+        public double? Question51 { get; set; }
+        public double? Question52 { get; set; }
+        public double? Question53 { get; set; }
+        public double? Question54 { get; set; }
+        public double? Question55 { get; set; }
+        public double? Question56 { get; set; }
+        public double? Question57 { get; set; }
+        public double? Question58 { get; set; }
+        public double? Question59 { get; set; }
+        public double? Question60 { get; set; }
+        public double? Question61 { get; set; }
+        public double? Question62 { get; set; }
+        public double? Question63 { get; set; }
+        public double? Question64 { get; set; }
+        public double? Question65 { get; set; }
+        public double? Question66 { get; set; }
+        public double? Question67 { get; set; }
+        public double? Question68 { get; set; }
+        public double? Question69 { get; set; }
+        public double? Question70 { get; set; }
+        public double? Question71 { get; set; }
+        public double? Question72 { get; set; }
+        public double? Question73 { get; set; }
+        public double? Question74 { get; set; }
+        public double? Question75 { get; set; }
+        public double? Question76 { get; set; }
+        public double? Question77 { get; set; }
+        public double? Question78 { get; set; }
+        public double? Question79 { get; set; }
+        public double? Question80 { get; set; }
+        public double? Question81 { get; set; }
+        public double? Question82 { get; set; }
+        public double? Question83 { get; set; }
+        public double? Question84 { get; set; }
+        public double? Question85 { get; set; }
+        public double? Question86 { get; set; }
+        public double? Question87 { get; set; }
+        public double? Question88 { get; set; }
+        public double? Question89 { get; set; }
+        public double? Question90 { get; set; }
+        public double? Question91 { get; set; }
+        public double? Question92 { get; set; }
+        public double? Question93 { get; set; }
+        public double? Question94 { get; set; }
+        public double? Question95 { get; set; }
+        public double? Question96 { get; set; }
+        public double? Question97 { get; set; }
+        public double? Question98 { get; set; }
+        public double? Question99 { get; set; }
+        public double? Question100 { get; set; }
     }
 }
 

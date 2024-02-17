@@ -37,7 +37,7 @@ namespace API.Extensions {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
-            services.AddScoped<IChecklistRepository, ChecklistRepository>();
+            services.AddScoped(typeof(IChecklistRepository<>), typeof(ChecklistRepository<>));
 
             services.AddTransient<IDbConnection>(c => 
                 new SqlConnection(config.GetConnectionString("DefaultConnection")));

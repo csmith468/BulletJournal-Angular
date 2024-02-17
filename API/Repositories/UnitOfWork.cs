@@ -16,7 +16,10 @@ namespace API.Data.Repositories {
 
         public IAccountRepository AccountRepository => new AccountRepository(_contextEF, _mapper);
         public ISettingsRepository SettingsRepository => new SettingsRepository(_contextEF, _mapper, _contextDapper);
-        public IChecklistRepository ChecklistRepository => new ChecklistRepository(_contextEF, _mapper, _contextDapper);
+        public IChecklistRepository<T> GetChecklistRepository<T>() where T : Checklist {
+            return new ChecklistRepository<T>(_contextEF, _mapper, _contextDapper);
+        }        
+        
         public async Task<bool> Complete() {
             var r = HasChanges();
             var result = await _contextEF.SaveChangesAsync();
@@ -26,5 +29,6 @@ namespace API.Data.Repositories {
         public bool HasChanges() {
             return _contextEF.ChangeTracker.HasChanges();
         }
+        
     }
 }
