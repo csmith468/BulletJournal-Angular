@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { ISideNavData } from '../models/sidenav-data/ISideNavData';
+import { environment } from 'src/environments/environment';
 import { QuestionPreferences } from '../models/data-models/questionPreferences';
 import { TablePreferences } from '../models/data-models/tablePreferences';
-import { environment } from 'src/environments/environment';
 import { Tables } from '../models/data-models/tables';
-import { ISideNavData } from '../models/sidenav-data/ISideNavData';
-import { sidenav_fadeInOut } from 'src/app/components/layout/sidenav/sidenav-styling/sidenav-fadeInOut';
 
 @Injectable({
   providedIn: 'root'

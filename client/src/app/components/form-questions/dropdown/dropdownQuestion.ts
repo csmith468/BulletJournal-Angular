@@ -1,4 +1,4 @@
-import { QuestionBase } from "../../../helpers/models/form-models/questionBase";
+import { QuestionBase } from "../../../models/form-models/questionBase";
 
 export class DropdownQuestion extends QuestionBase<any> {
     override type = 'dropdown';

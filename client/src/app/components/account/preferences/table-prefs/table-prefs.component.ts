@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TablePrefDto, TablePreferences } from 'src/app/helpers/models/data-models/tablePreferences';
-import { SettingsService } from 'src/app/helpers/services/settings.service';
+import { TablePrefDto, TablePreferences } from 'src/app/models/data-models/tablePreferences';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-table-prefs',

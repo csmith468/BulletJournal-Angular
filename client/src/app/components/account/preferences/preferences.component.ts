@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
-import { QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
-import { AccountService } from 'src/app/helpers/services/account.service';
-import { SettingsService } from 'src/app/helpers/services/settings.service';
+import { QuestionPreferences } from 'src/app/models/data-models/questionPreferences';
+import { AccountService } from 'src/app/services/account.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-preferences',

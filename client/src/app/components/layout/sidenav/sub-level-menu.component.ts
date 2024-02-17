@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ISideNavData } from '../../../helpers/models/sidenav-data/ISideNavData';
+import { ISideNavData } from '../../../models/sidenav-data/ISideNavData';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
-import { AccountService } from 'src/app/helpers/services/account.service';
+import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 
 

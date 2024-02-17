@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Subject, map, of } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
+import { SettingsService } from './settings.service';
 import { User } from '../models/data-models/user';
 import { TimezoneLocation } from '../models/data-models/timezoneLocation';
-import { QuestionPrefDto, QuestionPreferences } from '../models/data-models/questionPreferences';
-import { TablePreferences } from '../models/data-models/tablePreferences';
-import { SettingsService } from './settings.service';
 
 @Injectable({
   providedIn: 'root'

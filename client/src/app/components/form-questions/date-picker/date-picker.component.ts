@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
+import { QuestionBase } from 'src/app/models/form-models/questionBase';
 
 
 @Component({

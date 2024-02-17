@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination } from 'src/app/helpers/models/data-models/pagination';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { Pagination } from 'src/app/models/data-models/pagination';
+import { ChecklistService } from 'src/app/services/checklist.service';
 import { DateQuestion, createDateQuestion } from '../form-questions/date-picker/dateQuestion';
 import { DatePickerComponent } from '../form-questions/date-picker/date-picker.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';

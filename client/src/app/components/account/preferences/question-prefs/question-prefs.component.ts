@@ -3,8 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subscription } from 'rxjs';
-import { QuestionPrefDto, QuestionPreferences } from 'src/app/helpers/models/data-models/questionPreferences';
-import { SettingsService } from 'src/app/helpers/services/settings.service';
+import { QuestionPrefDto, QuestionPreferences } from 'src/app/models/data-models/questionPreferences';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-question-prefs',

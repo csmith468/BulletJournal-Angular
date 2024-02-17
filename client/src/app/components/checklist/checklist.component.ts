@@ -1,11 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ChecklistService } from 'src/app/helpers/services/checklist.service';
+import { ChecklistService } from 'src/app/services/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { QuestionBase } from 'src/app/helpers/models/form-models/questionBase';
+import { QuestionBase } from 'src/app/models/form-models/questionBase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { QuestionControlService } from 'src/app/helpers/services/question-control.service';
+import { QuestionControlService } from 'src/app/services/question-control.service';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { TextboxComponent } from '../form-questions/textbox/textbox.component';
 import { SwitchComponent } from '../form-questions/switch/switch.component';
