@@ -3,7 +3,7 @@ export class QuestionBase<T> {
     key: string;
     label: string;
     required: boolean;
-    order: number;
+    questionOrder: number;
     controlType: string;
     type: string;
     inputType: string; // textboxes only
@@ -16,7 +16,7 @@ export class QuestionBase<T> {
         key?: string;
         label?: string;
         required?: boolean;
-        order?: number;
+        questionOrder?: number;
         controlType?: string;
         type?: string;
         inputType?: string; // textboxes only
@@ -28,7 +28,7 @@ export class QuestionBase<T> {
         this.key = options.key || '';
         this.label = options.label || '';
         this.required = !!options.required;
-        this.order = options.order === undefined ? 1 : options.order;
+        this.questionOrder = options.questionOrder === undefined ? 1 : options.questionOrder;
         this.controlType = options.controlType || '';
         this.type = options.type || '';
         this.inputType = options.inputType || ''; // textboxes only

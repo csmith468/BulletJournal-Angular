@@ -11,7 +11,7 @@ import { QuestionSet } from '../models/form-models/questionSet';
   providedIn: 'root'
 })
 export class ChecklistService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl + 'checklist/';
   table: any[] = [];
   type: string = '';
   paginatedResult: PaginatedResult<any[]> = new PaginatedResult<any[]>;
@@ -35,11 +35,13 @@ export class ChecklistService {
     return this.http.get<any>(this.baseUrl + type + '/getMaxDateEntry');
   }
 
+  // ng update @angular/cli@^16.2 @angular/core@^16.2
+
   deleteEntry(type: string, id: string) {
     return this.http.delete(this.baseUrl + type + '/delete/' + id.toString());
   }
 
-  getColumns(type: string) {
+  getQuestions(type: string) {
     return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
   }
 
@@ -68,10 +70,6 @@ export class ChecklistService {
           return this.paginatedResult;
         }
     ))
-  }
-
-  getQuestions(type: string, initialChecklist?: any) {
-    return this.http.get<QuestionSet[]>(this.baseUrl + type + '/getQuestionSet');
   }
 
   getCompletedToday() {

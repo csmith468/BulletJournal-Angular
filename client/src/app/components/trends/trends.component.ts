@@ -28,7 +28,7 @@ export class TrendsComponent {
     this.source = routeData['metadata']['source'];
     this.header = this.route.snapshot.data['metadata']['header'] + ' Trends';
 
-    this.checklistService.getQuestions(this.source, routeData['checklist']).subscribe(
+    this.checklistService.getQuestions(this.source).subscribe(
       qs => {
         qs.forEach(q => {
           this.fields.push({field: q.key, typeDetail: q.typeDetail});

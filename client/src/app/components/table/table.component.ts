@@ -9,6 +9,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
+import { QuestionSet } from 'src/app/models/form-models/questionSet';
 
 @Component({
   standalone: true,
@@ -20,7 +21,7 @@ import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
 export class TableComponent implements OnInit, OnDestroy {
   table: Array<any> = [];
   pagination: Pagination | undefined;
-  columns: Array<keyof any> = ['date']
+  questions: QuestionSet[] = []
   pageNumber = 1;
   pageSize = 10;
   source: string = '';
@@ -42,8 +43,8 @@ export class TableComponent implements OnInit, OnDestroy {
   constructor(private checklistService: ChecklistService, private router: Router, 
       private route: ActivatedRoute) {
     this.source = this.route.snapshot.data['metadata']['source'];
-    var cols = checklistService.getColumns(this.source).subscribe(
-        qs => qs.forEach(q => this.columns.push(q.key))
+    checklistService.getQuestions(this.source).subscribe(
+        qs => this.questions = qs
     );
     this.header = this.route.snapshot.data['metadata']['header'] + ' Data';
   }

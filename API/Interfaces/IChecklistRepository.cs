@@ -1,4 +1,5 @@
 using API.Data.Pagination;
+using API.Models.DTOs;
 using API.Models.Entities;
 
 namespace API.Data.Interfaces {
@@ -12,6 +13,7 @@ namespace API.Data.Interfaces {
         void DeleteChecklist(T checklist);
         // Task<IEnumerable<QuestionSet>> GetQuestionSet(string type);
         Task<IEnumerable<string>> GetVisibleColumnsAsync(int userId);
+        Task<IEnumerable<QuestionSetDto>> GetQuestionSetAsync(int userId);
         // Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(string type, int userId);
     }
 }

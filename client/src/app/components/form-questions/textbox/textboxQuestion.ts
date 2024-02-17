@@ -11,7 +11,7 @@ export function createTextboxQuestion(key: string, label: string, type: string, 
         label: label,
         type: type,
         value: (item && item[key] != null) ? item[key] : '',
-        inputType: (type && type.startsWith('number')) ? 'number' : 'text',
+        inputType: type,
         minValue: minValue,
         maxValue: maxValue
     });

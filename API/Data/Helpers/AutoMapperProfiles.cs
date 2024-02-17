@@ -15,6 +15,7 @@ namespace API.Data.Helpers {
 
             CreateMap<Checklist, Checklist>();
             CreateMap<QuestionPreferences, QuestionPreferencesDto>();
+            CreateMap<QuestionPreferences, QuestionSetDto>();
             
             CreateMap<Morning, Morning>();
             CreateMap<Night, Night>();

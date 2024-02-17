@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text.Json;
 using API.Data.Interfaces;
 using API.Data.Pagination;
+using API.Models.DTOs;
 using API.Models.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -88,42 +89,25 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<string>> GetVisibleColumnsAsync(int userId) {
             var visibleColumns = await _contextEF.QuestionPreferences
-                .Where(p => p.UserID == userId && p.TableName.ToLower() == typeof(T).Name.ToLower() && p.IsQuestionVisible == true)
-                .Select(p => p.QuestionKey)
+                .Where(p => p.UserID == userId 
+                    && p.TableName.ToLower() == typeof(T).Name.ToLower() 
+                    && p.IsQuestionVisible == true)
+                .Select(p => p.Key)
                 .ToListAsync();
 
             var result = new List<string>(visibleColumns) { "ID" }; //or result.Add("ID");
             return result;
         }
 
-
-        // public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
-        //     List<string> tables = await _contextEF.TablePreferences
-        //         .Where(t => t.UserID == userId && t.IsTableVisible == true)
-        //         .Select(t => t.TableName).ToListAsync();
-
-        //     string sql = "";
-        //     for (var i = 0; i < tables.Count; i++) {
-        //         sql += @$"
-        //         SELECT '{tables[i]}' AS TableName,
-        //             ISNULL([category].[DisplayName] + ' ', '') + [tables].[DisplayName] AS TableLabel,
-        //             CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date) AS [Date],
-        //             [{tables[i]}].[{tables[i]}ID] AS ID
-        //         FROM [app_sys].[user]
-        //         LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[UserID] = [user].[UserID] 
-        //             AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date)
-        //         LEFT JOIN [app_sys].[tables] ON [tables].[key] = '{tables[i]}'
-        //         LEFT JOIN [app_sys].[tables] [category] ON [category].[key] = [tables].[category]
-        //         AND [user].[UserID] = {userId} 
-        //         ";
-        //         if (i < tables.Count - 1) {
-        //             sql += " UNION ALL ";
-        //         }
-        //     }
-
-        //     return await _contextDapper.QueryAsync<CompletedChecklists>(sql);
-        // }
-
+        public async Task<IEnumerable<QuestionSetDto>> GetQuestionSetAsync(int userId) {
+            var visibleQuestions = await _contextEF.QuestionPreferences
+                .Where(p => p.UserID == userId 
+                    && p.TableName.ToLower() == typeof(T).Name.ToLower() 
+                    && p.IsQuestionVisible == true
+                ).ToListAsync();
+            
+            return visibleQuestions.Select(q => _mapper.Map<QuestionPreferences, QuestionSetDto>(q)).ToList();
+        }
 
         private async Task<List<Dictionary<string, object>>> GetFilteredChecklistList(int userId, PagedList<T> checklists) {
             var visibleColumns = await GetVisibleColumnsAsync(userId);
@@ -158,6 +142,34 @@ namespace API.Data.Repositories {
             }
             return expandoObj;
         }
+
+        public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
+            List<string> tables = await _contextEF.TablePreferences
+                .Where(t => t.UserID == userId && t.IsTableVisible == true)
+                .Select(t => t.TableName).ToListAsync();
+
+            string sql = "";
+            for (var i = 0; i < tables.Count; i++) {
+                sql += @$"
+                SELECT '{tables[i]}' AS TableName,
+                    ISNULL([category].[DisplayName] + ' ', '') + [tables].[DisplayName] AS TableLabel,
+                    CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date) AS [Date],
+                    [{tables[i]}].[{tables[i]}ID] AS ID
+                FROM [app_sys].[user]
+                LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[UserID] = [user].[UserID] 
+                    AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date)
+                LEFT JOIN [app_sys].[tables] ON [tables].[key] = '{tables[i]}'
+                LEFT JOIN [app_sys].[tables] [category] ON [category].[key] = [tables].[category]
+                AND [user].[UserID] = {userId} 
+                ";
+                if (i < tables.Count - 1) {
+                    sql += " UNION ALL ";
+                }
+            }
+
+            return await _contextDapper.QueryAsync<CompletedChecklists>(sql);
+        }
+
 
 
         // private DbSet<Checklist> GetDbSetByType(string type) {

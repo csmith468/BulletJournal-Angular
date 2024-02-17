@@ -29,7 +29,7 @@
             <button 
                 class="btn btn-success" type="submit" 
                 (click)="submitForm()" 
-                [disabled]="!form.valid || !changeMade"
+                [disabled]="!(form.valid && changeMade)"
             >Submit</button>
             <div *ngIf="editMode">
                 <button class="btn btn-warning ml-2" type="button"

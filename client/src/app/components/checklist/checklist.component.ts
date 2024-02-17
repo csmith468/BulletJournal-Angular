@@ -27,9 +27,9 @@ import { SliderComponent } from '../form-questions/slider/slider.component';
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
 export class ChecklistComponent implements OnInit {
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
-    if (this.changeMade && this.form.dirty) $event.returnValue = true;
-  }
+  // @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+  //   if (this.changeMade && this.form.dirty) $event.returnValue = true;
+  // }
   questions: QuestionBase<any>[] = [];
   payload: string = '';
   editMode: boolean = false;
@@ -46,19 +46,21 @@ export class ChecklistComponent implements OnInit {
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
     if (routeData['checklist']) this.editMode = true;
+    else this.changeMade = true;
 
     this.header = this.editMode ? 'Edit ' : 'Add ' + this.route.snapshot.data['metadata']['header'] + ' Entry';
-
-    this.checklistService.getQuestions(this.source, routeData['checklist']).subscribe(
+    this.checklistService.getQuestions(this.source).subscribe(
       qs => {
         qs.forEach(q => {
-          if (q.type == 'switch') this.questions.push(createSwitchQuestion(q.key, q.question, routeData['checklist']))
+          var key = q.key.toLowerCase();
+          if (q.type == 'date') this.questions.push(createDateQuestion(key, q.label, true, routeData['checklist']))
+          if (q.type == 'switch') this.questions.push(createSwitchQuestion(key, q.label, routeData['checklist']))
           if (q.type == 'text' || q.type == 'number') {
-            this.questions.push(createTextboxQuestion(q.key, q.question, q.type, q.minValue, q.maxValue, routeData['checklist']))
+            this.questions.push(createTextboxQuestion(key, q.label, q.type, q.minValue, q.maxValue, routeData['checklist']))
           }
-          if (q.type == 'slider') this.questions.push(createSliderQuestion(q.key, q.question, q.minValue, q.maxValue, routeData['checklist']))
+          if (q.type == 'slider') this.questions.push(createSliderQuestion(key, q.label, q.minValue, q.maxValue, routeData['checklist']))
         })
-        this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
+        // this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
         this.createForm();
       }
     )
@@ -72,7 +74,6 @@ export class ChecklistComponent implements OnInit {
     this.form = this.qcs.toFormGroup(this.questions);
     this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
     this.originalPayload = JSON.stringify(this.updatePayload());
-    this.changeMade = false;
     this.onChange();
   }
   
@@ -80,14 +81,18 @@ export class ChecklistComponent implements OnInit {
   onChange() {
     const subscription = this.form!.valueChanges.subscribe(() => {
       this.payload = JSON.stringify(this.updatePayload());
-      if (this.payload != this.originalPayload) this.changeMade = true;
-      else this.changeMade = false;
+      if (this.editMode) {
+        if (this.payload != this.originalPayload) this.changeMade = true;
+        else this.changeMade = false;
+      } else {
+        this.changeMade = true;
+      }
     })
     this.subscription.add(subscription);
   }
 
   cancelForm() {
-    if (this.editMode) this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
     this.router.navigateByUrl('/data/' + this.source);
   }
 
@@ -118,7 +123,11 @@ export class ChecklistComponent implements OnInit {
     // all un-touched questions of type checkbox as false instead of empty string
     if (this.questions) {
       for (let q of this.questions) {
-        if (q.controlType == 'checkbox' && payloadJSON[q.key] === "") payloadJSON[q.key] = false;
+        if (q.controlType == 'checkbox') {
+          if (payloadJSON[q.key] === "") payloadJSON[q.key] = 0;
+          if (payloadJSON[q.key] === false) payloadJSON[q.key] = 0;
+          if (payloadJSON[q.key] === true) payloadJSON[q.key] = 1;
+        }
         if (q.controlType == 'textbox' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
         if ((q.type == 'number' && payloadJSON[q.key] != "" && payloadJSON[q.key] != null && typeof(payloadJSON[q.key]) === 'number')
             || payloadJSON[q.key] === 0) {

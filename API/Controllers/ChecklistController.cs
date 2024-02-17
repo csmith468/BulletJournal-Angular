@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Dynamic;
 using System.Text.Json;
 using System.Reflection;
+using API.Models.DTOs;
 
 namespace API.Controllers
 {
@@ -99,16 +100,12 @@ namespace API.Controllers
         }
 
         [HttpGet("{type}/getQuestionSet")]
-        public async Task<ActionResult<IEnumerable<QuestionSet>>> GetQuestionSet(string type) {
+        public async Task<ActionResult<IEnumerable<QuestionSetDto>>> GetQuestionSet(string type) {
             var userId = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
-            var visibleColumns = await checklistRepository.GetVisibleColumnsAsync(userId);
-
-            var questionSet = await _uow.SettingsRepository.GetQuestionPreferencesByTypeAsync(userId, type);
+            var questionSet = await checklistRepository.GetQuestionSetAsync(userId);
             if (questionSet == null) return NotFound();
-
-            var visibleQuestionSet = questionSet.Where(q => visibleColumns.Contains(q.QuestionKey));
-            return Ok(visibleQuestionSet);
+            return Ok(questionSet);
         }
 
         private async Task<ActionResult> UpdateChecklistHelper(string type, Checklist inputChecklist) {

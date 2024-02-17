@@ -5,7 +5,6 @@ export interface QuestionPreferences {
     isColumnVisible: boolean;
 }
 
-
 export interface QuestionPrefDto {
     questionPreferencesID: number;
     isColumnVisible: boolean;

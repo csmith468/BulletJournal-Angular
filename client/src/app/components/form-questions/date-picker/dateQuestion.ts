@@ -2,7 +2,6 @@ import { GetDateType } from "src/app/helpers/functions/getDateTypeFn";
 import { QuestionBase } from "../../../models/form-models/questionBase";
 
 export class DateQuestion extends QuestionBase<any> {
-    override order = 0;
     override controlType = 'text';
     override type = 'date';
 }
