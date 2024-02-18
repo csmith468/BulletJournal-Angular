@@ -12,9 +12,6 @@ import { QuestionSet } from '../models/form-models/questionSet';
 })
 export class ChecklistService {
   baseUrl = environment.apiUrl + 'checklist/';
-  table: any[] = [];
-  type: string = '';
-  paginatedResult: PaginatedResult<any[]> = new PaginatedResult<any[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -46,11 +43,11 @@ export class ChecklistService {
   }
 
   getChecklistById(type: string, id: string) {
-    console.log(this.baseUrl + type + '/getMyChecklistById/' + id)
     return this.http.get<any>(this.baseUrl + type + '/getMyChecklistById/' + id);
   }
 
   getData(type: string, page?: number, itemsPerPage?: number, minDate?: string, maxDate?: string) {
+    var paginatedResult: PaginatedResult<any[]> = new PaginatedResult<any[]>;
     let params = new HttpParams();
 
     if (page && itemsPerPage) {
@@ -65,10 +62,10 @@ export class ChecklistService {
     return this.http.get<any[]>(this.baseUrl + type + '/getMyChecklists',
       {observe: 'response', params}).pipe(map(
         response => {
-          if (response.body) this.paginatedResult.result = response.body;
+          if (response.body) paginatedResult.result = response.body;
           const pagination = response.headers.get('Pagination');
-          if (pagination) this.paginatedResult.pagination = JSON.parse(pagination);
-          return this.paginatedResult;
+          if (pagination) paginatedResult.pagination = JSON.parse(pagination);
+          return paginatedResult;
         }
     ))
   }

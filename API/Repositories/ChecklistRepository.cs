@@ -26,23 +26,23 @@ namespace API.Data.Repositories {
         public async Task<Dictionary<string, object>> AddAsync(T item) {
             _contextEF.Add(item);
             var result = await _contextEF.SaveChangesAsync() > 0;
-            if (result) return await GetFilteredChecklistSingle(item.UserID, item);
+            if (result) return await GetFilteredChecklistSingle(item.userID, item);
             return null;
         }
 
         public async Task<bool> DateUsedAsync(DateOnly date, int userId) {
             var dbSet = _contextEF.Set<T>();
-            return await dbSet.AnyAsync(x => x.Date == date && x.UserID == userId);
+            return await dbSet.AnyAsync(x => x.date == date && x.userID == userId);
         }
 
         public async Task<Tuple<List<Dictionary<string, object>>, PaginationHeader>> GetListAsync(int userId, PageParams pageParams) {
             var dbSet = _contextEF.Set<T>();
 
             var query = dbSet.AsQueryable();
-            query = query.Where(x => x.UserID == userId).OrderByDescending(x => x.Date);
+            query = query.Where(x => x.userID == userId).OrderByDescending(x => x.date);
 
-            if (pageParams.MinDate != null) query = query.Where(x => x.Date >= pageParams.MinDate);
-            if (pageParams.MaxDate != null) query = query.Where(x => x.Date <= pageParams.MaxDate);
+            if (pageParams.MinDate != null) query = query.Where(x => x.date >= pageParams.MinDate);
+            if (pageParams.MaxDate != null) query = query.Where(x => x.date <= pageParams.MaxDate);
 
             query = query.AsNoTracking();
             
@@ -57,7 +57,7 @@ namespace API.Data.Repositories {
 
             var paginationHeader = new PaginationHeader(
                 checklists.CurrentPage, checklists.PageSize, checklists.TotalCount,
-                checklists.TotalPages, minDateChecklist.Date, maxDateChecklist.Date,
+                checklists.TotalPages, minDateChecklist.date, maxDateChecklist.date,
                 checklists.MinDate, checklists.MaxDate);
 
             return Tuple.Create(filteredChecklists, paginationHeader);
@@ -67,7 +67,7 @@ namespace API.Data.Repositories {
             var dbSet = _contextEF.Set<T>();
             
             dynamic checklist = await dbSet
-                .Where(x => x.UserID == userId && x.ID == itemID)
+                .Where(x => x.userID == userId && x.id == itemID)
                 .FirstOrDefaultAsync();
 
             if (checklist == null) return null;
@@ -77,17 +77,17 @@ namespace API.Data.Repositories {
 
         public async Task<T> GetByIdAsync(int userId, int itemID) {
             var dbSet = _contextEF.Set<T>();
-            return await dbSet.Where(x => x.UserID == userId && x.ID == itemID).FirstOrDefaultAsync();
+            return await dbSet.Where(x => x.userID == userId && x.id == itemID).FirstOrDefaultAsync();
         }
 
         public async Task<T> GetMinDateEntry(int userID) {
             var dbSet = _contextEF.Set<T>();
-            return await dbSet.Where(x => x.UserID == userID).OrderBy(x => x.Date).FirstOrDefaultAsync();
+            return await dbSet.Where(x => x.userID == userID).OrderBy(x => x.date).FirstOrDefaultAsync();
         }
 
         public async Task<T> GetMaxDateEntry(int userID) {
             var dbSet = _contextEF.Set<T>();
-            return await dbSet.Where(x => x.UserID == userID).OrderByDescending(x => x.Date).FirstOrDefaultAsync();
+            return await dbSet.Where(x => x.userID == userID).OrderByDescending(x => x.date).FirstOrDefaultAsync();
         }
 
         public void DeleteChecklist(T checklist) {
@@ -103,7 +103,7 @@ namespace API.Data.Repositories {
                 .Select(p => p.Key)
                 .ToListAsync();
 
-            var result = new List<string>(visibleColumns) { "ID" }; //or result.Add("ID");
+            var result = new List<string>(visibleColumns) { "id" }; //or result.Add("ID");
             return result;
         }
 

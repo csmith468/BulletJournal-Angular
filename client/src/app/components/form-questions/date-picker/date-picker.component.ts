@@ -32,7 +32,6 @@ export class DatePickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.bsValue = <Date>this.question.value;
-    console.log(this.bsValue)
   }
 
   constructor() {

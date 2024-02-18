@@ -3,34 +3,34 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [app].[spendingHealthcare](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[UserID] [int] NOT NULL,
-	[Date] [date] NOT NULL,
-	[Question1] [float] NULL,
-	[Question2] [float] NULL,
-	[Question3] [float] NULL,
-	[Question4] [float] NULL,
-	[Question5] [float] NULL,
-	[Question6] [float] NULL,
-	[Question7] [float] NULL,
-	[Question8] [float] NULL,
-	[Question9] [float] NULL,
-	[Question10] [float] NULL,
-	[Question11] [float] NULL,
-	[Question12] [float] NULL,
-	[Question13] [float] NULL,
-	[Question14] [float] NULL,
-	[Question15] [float] NULL,
-	[Question16] [float] NULL,
-	[Question17] [float] NULL,
-	[Question18] [float] NULL,
-	[Question19] [float] NULL,
-	[Question20] [float] NULL,
-	[Question21] [float] NULL,
-	[Question22] [float] NULL,
-	[Question23] [float] NULL,
-	[Question24] [float] NULL,
-	[Question25] [float] NULL
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[userID] [int] NOT NULL,
+	[date] [date] NOT NULL,
+	[question1] [float] NULL,
+	[question2] [float] NULL,
+	[question3] [float] NULL,
+	[question4] [float] NULL,
+	[question5] [float] NULL,
+	[question6] [float] NULL,
+	[question7] [float] NULL,
+	[question8] [float] NULL,
+	[question9] [float] NULL,
+	[question10] [float] NULL,
+	[question11] [float] NULL,
+	[question12] [float] NULL,
+	[question13] [float] NULL,
+	[question14] [float] NULL,
+	[question15] [float] NULL,
+	[question16] [float] NULL,
+	[question17] [float] NULL,
+	[question18] [float] NULL,
+	[question19] [float] NULL,
+	[question20] [float] NULL,
+	[question21] [float] NULL,
+	[question22] [float] NULL,
+	[question23] [float] NULL,
+	[question24] [float] NULL,
+	[question25] [float] NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [app].[spendingHealthcare] ADD PRIMARY KEY CLUSTERED 
@@ -38,8 +38,8 @@ ALTER TABLE [app].[spendingHealthcare] ADD PRIMARY KEY CLUSTERED
 	[ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-ALTER TABLE [app].[spendingHealthcare]  WITH CHECK ADD  CONSTRAINT [FK_SpendingHealthcareUser] FOREIGN KEY([UserID])
+ALTER TABLE [app].[spendingHealthcare]  WITH CHECK ADD  CONSTRAINT [FK_spendingHealthcareUser] FOREIGN KEY([userID])
 REFERENCES [app_sys].[user] ([UserID])
 GO
-ALTER TABLE [app].[spendingHealthcare] CHECK CONSTRAINT [FK_SpendingHealthcareUser]
+ALTER TABLE [app].[spendingHealthcare] CHECK CONSTRAINT [FK_spendingHealthcareUser]
 GO

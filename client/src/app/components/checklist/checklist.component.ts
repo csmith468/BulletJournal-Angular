@@ -27,9 +27,9 @@ import { SliderComponent } from '../form-questions/slider/slider.component';
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
 export class ChecklistComponent implements OnInit {
-  // @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
-  //   if (this.changeMade && this.form.dirty) $event.returnValue = true;
-  // }
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.changeMade && this.form.dirty && !this.saving) $event.returnValue = true;
+  }
   questions: QuestionBase<any>[] = [];
   payload: string = '';
   editMode: boolean = false;
@@ -38,20 +38,16 @@ export class ChecklistComponent implements OnInit {
   originalPayload = '';
   changeMade: boolean = false;
   header: string = '';
+  saving: boolean = false;
   private readonly subscription = new Subscription();
 
   constructor(private checklistService: ChecklistService, private router: Router, 
     private route: ActivatedRoute, private qcs: QuestionControlService) 
   {
-
-    console.log('check API - I think it is filtering out all columns but ID for some reason - its doing it in Postman too (https://localhost:5001/api/checklist/daily/getMyChecklistById/216)')
-    console.log('so try to figure out why - probalby in whatever I changed in get filtered checklists or something, but its causing edit mode to not work bc whats being passed in through resolver just has ID')
-
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
     if (routeData['checklist']) this.editMode = true;
     else this.changeMade = true;
-    console.log(routeData)
 
     this.header = this.editMode ? 'Edit ' : 'Add ' + this.route.snapshot.data['metadata']['header'] + ' Entry';
     this.checklistService.getQuestions(this.source).subscribe(
@@ -108,6 +104,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   submitForm() {
+    this.saving = true;
     this.payload = this.updatePayload();
     if (this.editMode) this.subscription.unsubscribe();
     var id = this.route.snapshot.data['metadata']['id'];

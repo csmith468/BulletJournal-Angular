@@ -26,14 +26,14 @@ namespace API.Controllers
         [HttpPost("{type}/add")]
         public async Task<ActionResult<Checklist>> AddChecklist(string type, Checklist checklist) {
             var userId = User.GetUserId();
-            checklist.UserID = userId;
+            checklist.userID = userId;
             dynamic checklistRepository = GetTypedRepository(type);
 
             var targetType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.Name.ToLower() == type.ToLower());
             if (targetType == null || !targetType.IsSubclassOf(typeof(Checklist))) 
                 return BadRequest("Invalid checklist type");
 
-            if (await checklistRepository.DateUsedAsync(checklist.Date, userId)) 
+            if (await checklistRepository.DateUsedAsync(checklist.date, userId)) 
                 return BadRequest("You already submitted an entry for this date.");
             
             var typedChecklist = Activator.CreateInstance(targetType);
@@ -80,8 +80,8 @@ namespace API.Controllers
 
         [HttpPut("{type}/updateById/{id}")]
         public async Task<ActionResult> UpdateMorningChecklistById(string type, int id, [FromBody]Checklist checklist) {
-            checklist.ID = id;
-            checklist.UserID = User.GetUserId();
+            checklist.id = id;
+            checklist.userID = User.GetUserId();
 
             return await UpdateChecklistHelper(type, checklist);
         }
@@ -112,12 +112,12 @@ namespace API.Controllers
             var userId = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdFilteredAsync(userId, inputChecklist.ID);
+            var checklist = await checklistRepository.GetByIdAsync(userId, inputChecklist.id);
             if (checklist == null) return NotFound();
-            inputChecklist.UserID = userId;
+            inputChecklist.userID = userId;
 
-            if (checklist.Date != inputChecklist.Date) {
-                if (await checklistRepository.DateUsedAsync(inputChecklist.Date, userId)) 
+            if (checklist.date != inputChecklist.date) {
+                if (await checklistRepository.DateUsedAsync(inputChecklist.date, userId)) 
                     return BadRequest("You already submitted an entry for this date.");
             }
 

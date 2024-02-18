@@ -1,33 +1,33 @@
 namespace API.Models.Entities {
     public class Checklist {
-        public int ID { get; set; }
-        public int UserID { get; set; }
-        public DateOnly Date { get; set; }
-        public double? Question1 { get; set; }
-        public double? Question2 { get; set; }
-        public double? Question3 { get; set; }
-        public double? Question4 { get; set; }
-        public double? Question5 { get; set; }
-        public double? Question6 { get; set; }
-        public double? Question7 { get; set; }
-        public double? Question8 { get; set; }
-        public double? Question9 { get; set; }
-        public double? Question10 { get; set; }
-        public double? Question11 { get; set; }
-        public double? Question12 { get; set; }
-        public double? Question13 { get; set; }
-        public double? Question14 { get; set; }
-        public double? Question15 { get; set; }
-        public double? Question16 { get; set; }
-        public double? Question17 { get; set; }
-        public double? Question18 { get; set; }
-        public double? Question19 { get; set; }
-        public double? Question20 { get; set; }
-        public double? Question21 { get; set; }
-        public double? Question22 { get; set; }
-        public double? Question23 { get; set; }
-        public double? Question24 { get; set; }
-        public double? Question25 { get; set; }
+        public int id { get; set; }
+        public int userID { get; set; }
+        public DateOnly date { get; set; }
+        public double? question1 { get; set; }
+        public double? question2 { get; set; }
+        public double? question3 { get; set; }
+        public double? question4 { get; set; }
+        public double? question5 { get; set; }
+        public double? question6 { get; set; }
+        public double? question7 { get; set; }
+        public double? question8 { get; set; }
+        public double? question9 { get; set; }
+        public double? question10 { get; set; }
+        public double? question11 { get; set; }
+        public double? question12 { get; set; }
+        public double? question13 { get; set; }
+        public double? question14 { get; set; }
+        public double? question15 { get; set; }
+        public double? question16 { get; set; }
+        public double? question17 { get; set; }
+        public double? question18 { get; set; }
+        public double? question19 { get; set; }
+        public double? question20 { get; set; }
+        public double? question21 { get; set; }
+        public double? question22 { get; set; }
+        public double? question23 { get; set; }
+        public double? question24 { get; set; }
+        public double? question25 { get; set; }
     }
 }
 
