@@ -1,4 +1,5 @@
 export type FieldType = {
-    field: any;
-    typeDetail: any;
+    key: string;
+    label: string;
+    typeDetail: string;
 }

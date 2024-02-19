@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/services/chart.service';
+import { FieldType } from '../../fieldType';
 
 export type FieldValues = {
   name: string;
@@ -14,7 +15,7 @@ export type FieldValues = {
 })
 export class AreaChartComponent implements OnInit {
   @Input() data: Array<any> = [];
-  @Input() selectedFields: string[] = [];
+  @Input() selectedFields: FieldType[] = [];
   @Input() fieldTypeDetail: string = '';
   @Input() aggregation: string = 'Monthly';
   @Input() chartNumber: number = 0;
@@ -40,33 +41,33 @@ export class AreaChartComponent implements OnInit {
   }
 
   // create data for field
-  initializeChartData(field: string) {
+  initializeChartData(field: FieldType) {
     var dataTemp: any[] = [];
 
     // if rating, use value, if yes/no, true = 1, false = 0
     if (this.fieldTypeDetail === 'Yes/No') {
       this.data.forEach(q => {
-        var value = (q[field] != null) ? ((q[field] == true) ? 1 : 0) : null;
+        var value = (q[field.key] != null) ? ((q[field.key] == true) ? 1 : 0) : null;
         dataTemp.push([new Date(q.date), value]);
       })
     } else {
       this.data.forEach(q => {
-        dataTemp.push([new Date(q.date), (q[field] != null ? q[field] : null)])
+        dataTemp.push([new Date(q.date), (q[field.key] != null ? q[field.key] : null)])
       })
     }
 
     // aggregate by time period
-    dataTemp = this.aggregate(dataTemp, field);
+    dataTemp = this.aggregate(dataTemp);
 
     // create date axis if not existing
     if (this.dateAxis.length == 0) 
       this.dateAxis.push(dataTemp.map(dates => dates[0]));
     
-    this.chartData.push({name: field, data: dataTemp.map(values => values[1])});
+    this.chartData.push({name: field.label, data: dataTemp.map(values => values[1])});
   }
   
   // aggregate by month/year
-  aggregate(data: any[], field: string) {
+  aggregate(data: any[]) {
     const groupedData: { [range: string]: { sum: number; count: number } } = {};
 
     data.forEach(([date, value]) => {
@@ -96,15 +97,21 @@ export class AreaChartComponent implements OnInit {
     return averages.map(({ range, average }) => [range, average]);
   }
 
+  // Subscribe to updates from chart component
   createSubscriptions() {
+    // Subscribe to if a field is added and add the field
     this.chartService.addedField$.subscribe(event => {
-      if (event.chartNumber === this.chartNumber) 
+      if (event.chartNumber === this.chartNumber) {
         this.addField(event.field);
+      }
     });
+    // Subscribe to if a field is removed and remove the field
     this.chartService.removedField$.subscribe(event => {
-      if (event.chartNumber === this.chartNumber) 
+      if (event.chartNumber === this.chartNumber) {
         this.removeField(event.field);
+      }
     });
+    // Reset all aspects of the chart (when field type or range type changes)
     this.chartService.resetChart$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
         this.selectedFields = event.selectedFields;
@@ -119,13 +126,13 @@ export class AreaChartComponent implements OnInit {
     });
   }
 
-  removeField(field: string) {
+  removeField(field: FieldType) {
     this.selectedFields = this.selectedFields.filter(sf => sf !== field);
-    this.chartData = this.chartData.filter(data => data.name !== field);
+    this.chartData = this.chartData.filter(data => data.name !== field.label);
     this.createChart();
   }
 
-  addField(field: string) {
+  addField(field: FieldType) {
     this.selectedFields.push(field);
     this.initializeChartData(field);
     this.createChart();
@@ -163,7 +170,7 @@ export class AreaChartComponent implements OnInit {
     if ((this.fieldTypeDetail === 'Yes/No')) this.createChartYesNo();
     if ((this.fieldTypeDetail === 'Rating')) this.createChartRatingHours();
     if ((this.fieldTypeDetail === 'Hours')) this.createChartRatingHours();
-    if ((this.fieldTypeDetail === 'Large Numbers')) this.createChartLargeNumbers();
+    if ((this.fieldTypeDetail === 'Large Numbers (1000+)')) this.createChartLargeNumbers();
     if ((this.fieldTypeDetail === 'Money')) this.createChartMoney();
   }
 
@@ -173,13 +180,13 @@ export class AreaChartComponent implements OnInit {
       max: 1,
       labels: {
         formatter: function(value) {
-          return (value*100).toFixed(0) + '%';
+          return (value*100).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '%';
         }
       }
     }
     this.chartOptions!.tooltip!.y = {
       formatter: function(value) {
-        return (value*100).toFixed(0) + '%';
+        return (value*100).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '%';
       }
     }
   }
@@ -187,10 +194,10 @@ export class AreaChartComponent implements OnInit {
   createChartRatingHours() {
     this.chartOptions!.yaxis = {
       min: 0,
-      max: (this.fieldTypeDetail === 'Rating') ? 10 : 12, // make 12 into max of all within type
+      max: (this.fieldTypeDetail === 'Rating') ? 10 : 24, // make 12 into max of all within type
       labels: {
         formatter: function(value) {
-          return (value).toFixed(0);
+          return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
       }
     }
@@ -201,20 +208,29 @@ export class AreaChartComponent implements OnInit {
     }
   }
 
+  formatNumber(num: number) {
+    const formattedNumber = num.toLocaleString(undefined, {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    });
+    return formattedNumber;
+  }
+
   createChartLargeNumbers() {
     this.chartOptions!.yaxis = {
       min: 0,
       max: 10000, // make max of all within type
       labels: {
         formatter: function(value) {
-          return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          return (value).toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          });
         }
       }
     }
     this.chartOptions!.tooltip!.y = {
-      formatter: function(value) {
-        return (value).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      }
+      formatter: (value: number) => { return this.formatNumber(value); }
     }
   }
   

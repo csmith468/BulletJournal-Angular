@@ -15,8 +15,8 @@ export class ChartComponent implements OnInit{
   @Input() chartNumber: number = 0;
   @Input() selectedRangeType: string = 'Monthly';
 
-  selectedFields: string[] = [];
-  fieldOptions: string[] = [];
+  selectedFields: FieldType[] = [];
+  fieldOptions: FieldType[] = [];
   selectedTypeDetail: string = '';
   maxFieldsInitial: number = 6;
   isVisible: boolean = true;
@@ -28,6 +28,7 @@ export class ChartComponent implements OnInit{
       rangeType: new FormControl(null)
     });
 
+    // Subscribe to visibility of chart from trends component to not show chart if "minimized"
     this.chartService.chartVisibility$.subscribe(event => {
       if (event.chartNumber === this.chartNumber)
         this.isVisible = event.isVisible;
@@ -35,41 +36,54 @@ export class ChartComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // Set the type of chart to the index of the chart number so each chart shows one type initially
     this.selectedTypeDetail = (this.typeDetailsInQuestionSet.length > this.chartNumber) 
       ? this.typeDetailsInQuestionSet[this.chartNumber] 
       : this.typeDetailsInQuestionSet[0];
     this.setValues();
+
+    // Form for setting type of form and range 
     this.selectForm.controls['typeDetail'].setValue(this.selectedTypeDetail);
     this.selectForm.controls['rangeType'].setValue(this.selectedRangeType);
   }
 
+  // Get the fields within that field type and select up to the maximum number of fields initially
   setValues() {
-    this.fieldOptions = this.fields.filter(field => field.typeDetail == this.selectedTypeDetail).map(field => field.field);
+    this.fieldOptions = this.fields.filter(field => field.typeDetail == this.selectedTypeDetail);
     this.selectedFields = this.fieldOptions.slice(0, this.maxFieldsInitial);
   }
 
+  // Send the actual chart the fields available to it (user can select/deselect fields to see in chart through checkbox panel)
   onUpdateFields(typeDetail: any) {
-    const field = typeDetail.target.id;
-    if (this.selectedFields.includes(field)) {
+    const fieldLabel = typeDetail.target.id;
+    var field = this.selectedFields.find(f => f.label === fieldLabel);
+    if (field) {
       this.selectedFields.splice(this.selectedFields.indexOf(field, 0), 1);
       this.chartService.emitRemovedField(field, this.chartNumber);
     }
     else {
-      this.selectedFields.push(field);
-      this.chartService.emitAddedField(field, this.chartNumber);
+      field = this.fieldOptions!.find(f => f.label === fieldLabel);
+      if (field) {
+        this.selectedFields.push();
+        this.chartService.emitAddedField(field, this.chartNumber);
+      }
     }
   }
 
+  // When form updates for the range type or the field types
   onUpdateSelect(typeDetail: any) {
+    // Reset available fields for that field type if applicable
     if (this.selectedTypeDetail != this.selectForm.value['typeDetail']) {
       this.selectedTypeDetail = this.selectForm.value['typeDetail'];
       this.setValues();
     }
 
+    // Reset range type if applicable
     if (this.selectedTypeDetail != this.selectForm.value['rangeType']) {
       this.selectedRangeType = this.selectForm.value['rangeType'];
     }
 
+    // Send the actual chart component the updated data
     this.chartService.emitResetChart(this.selectedFields, this.selectedTypeDetail, this.selectedRangeType, this.chartNumber);
   }
 }

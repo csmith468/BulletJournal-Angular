@@ -30,11 +30,11 @@
                         <input type="checkbox" 
                             [checked]="selectedFields.includes(field)" 
                             class="form-check-input"
-                            [id]="field"
+                            [id]="field.label"
                             [disabled]="(selectedFields.includes(field) && selectedFields.length == 1)"
                             (click)="onUpdateFields($event)"
                         >
-                        <label [for]="field" class="form-check-label">{{field}}</label>
+                        <label [for]="field" class="form-check-label">{{field.label}}</label>
                     </div>
                 </div>
             </div>

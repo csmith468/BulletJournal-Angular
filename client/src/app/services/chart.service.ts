@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { FieldType } from '../components/trends/fieldType';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartService {
-  private addedFieldSource = new Subject<{field: string, chartNumber: number}>();
-  private removedFieldSource = new Subject<{field: string, chartNumber: number}>();
-  private resetChartSource = new Subject<{selectedFields: string[], fieldType: string, aggregation: string, chartNumber: number}>();
+  private addedFieldSource = new Subject<{field: FieldType, chartNumber: number}>();
+  private removedFieldSource = new Subject<{field: FieldType, chartNumber: number}>();
+  private resetChartSource = new Subject<{selectedFields: FieldType[], fieldType: string, aggregation: string, chartNumber: number}>();
   private chartVisibilitySource = new Subject<{isVisible: boolean, chartNumber: number}>();
 
   constructor() { }
@@ -17,15 +18,15 @@ export class ChartService {
   resetChart$ = this.resetChartSource.asObservable();
   chartVisibility$ = this.chartVisibilitySource.asObservable();
 
-  emitAddedField(field: string, chartNumber: number) {
+  emitAddedField(field: FieldType, chartNumber: number) {
     this.addedFieldSource.next({field, chartNumber});
   }
 
-  emitRemovedField(field: string, chartNumber: number) {
+  emitRemovedField(field: FieldType, chartNumber: number) {
     this.removedFieldSource.next({field, chartNumber});
   }
 
-  emitResetChart(selectedFields: string[], fieldType: string, aggregation: string, chartNumber: number) {
+  emitResetChart(selectedFields: FieldType[], fieldType: string, aggregation: string, chartNumber: number) {
     this.resetChartSource.next({selectedFields, fieldType, aggregation, chartNumber});
   }
 

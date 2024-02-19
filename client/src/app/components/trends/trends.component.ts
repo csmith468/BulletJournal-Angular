@@ -28,12 +28,16 @@ export class TrendsComponent {
     this.source = routeData['metadata']['source'];
     this.header = this.route.snapshot.data['metadata']['header'] + ' Trends';
 
+    // Get all fields to include in charts
     this.checklistService.getQuestions(this.source).subscribe(
       qs => {
         qs.forEach(q => {
-          this.fields.push({field: q.key, typeDetail: q.typeDetail});
-          if (!this.typeDetailsInQuestionSet.includes(q.typeDetail)) this.typeDetailsInQuestionSet.push(q.typeDetail);
+          if (q.key != 'date') {
+            this.fields.push({key: q.key, label: q.label, typeDetail: q.typeDetail});
+            if (!this.typeDetailsInQuestionSet.includes(q.typeDetail)) this.typeDetailsInQuestionSet.push(q.typeDetail);
+          }
         })
+        // Set chart visibility for all charts to open initially with one chart per question type
         this.chartVisibility = Array.from({ length: this.typeDetailsInQuestionSet.length }, (_, index) => ({
           chartNumber: index,
           visibility: 'open'
@@ -41,6 +45,7 @@ export class TrendsComponent {
       }
     )
   
+    // Get all data for chart
     this.checklistService.getData(this.source, 1, -1).subscribe({
       next: response => {
         if (response.result && response.pagination) {
@@ -55,11 +60,13 @@ export class TrendsComponent {
     })
   }
 
+  // Fill in missing dates to x-axis will have every date included in range, regardless of if data exists
   fillMissingDates() {
     if (this.pagination?.minDate && this.pagination.maxDate) {
       var currentDate: any = new Date(this.pagination.minDate);
       var finalDate: any = new Date(this.pagination.maxDate);
 
+      // Set date range for charts initially based on number of days in range
       var totalDays = (finalDate - currentDate)/86400000;
       if (totalDays < 120) this.initialRangeType = 'Weekly';
       if (totalDays > 1825) this.initialRangeType = 'Yearly';
@@ -76,10 +83,12 @@ export class TrendsComponent {
     }
   }
 
+  // Remove chart entirely
   closeChart(chartNo: any) {
     this.chartVisibility[chartNo].visibility = 'closed';
   }
   
+  // Close all but header of chart but keep chart data available for if maximized
   minimizeChart(chartNo: any) {
     this.chartVisibility[chartNo].visibility = 'minimized';
     this.chartService.updateChartVisibility(false, chartNo);

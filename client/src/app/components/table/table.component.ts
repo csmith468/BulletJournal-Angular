@@ -42,7 +42,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
   constructor(private checklistService: ChecklistService, private router: Router, 
       private route: ActivatedRoute) {
-    if (this.questions.length > 0) this.resetComponent();
     this.source = this.route.snapshot.data['metadata']['source'];
     checklistService.getQuestions(this.source).subscribe(
         qs => this.questions = qs
@@ -87,7 +86,6 @@ export class TableComponent implements OnInit, OnDestroy {
         if ((p.currentPage == p.totalPages && p.currentPage != 1) && 
           (p.itemsPerPage - ((p.currentPage * p.itemsPerPage) % p.totalItems) == 1)) {
             this.pageNumber = this.pageNumber - 1;
-            console.log(this.pageNumber)
           }
         this.loadData()
       }
@@ -130,28 +128,5 @@ export class TableComponent implements OnInit, OnDestroy {
       this.validDateRange = (this.dateForm!.getRawValue().startDate <= this.dateForm!.getRawValue().endDate);
     })
     this.dateSubscription.add(subscription);
-  }
-
-  resetComponent() {
-    console.log('reseting')
-  //   table: Array<any> = [];
-  // pagination: Pagination | undefined;
-  // questions: QuestionSet[] = []
-  // pageNumber = 1;
-  // pageSize = 10;
-  // source: string = '';
-  // header: string = 'Data';
-
-  // dateForm!: FormGroup;
-  // minDate: Date | undefined;
-  // maxDate: Date | undefined;
-  // startDateInput: DateQuestion | undefined;
-  // endDateInput: DateQuestion | undefined;
-  // datePayload = '';
-  // originalDatePayload = '';
-  // private readonly dateSubscription = new Subscription();
-  // changeMadeDate = false;
-  // validDateRange = true;
-  // validDateInput = true;
   }
 }
