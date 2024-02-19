@@ -1,8 +1,8 @@
 using System.Data;
 using Dapper;
-using Microsoft.Data.SqlClient;
 
-namespace API.Data {
+namespace API.Data
+{
     public class DataContextDapper {
         private readonly IDbConnection _dbConnection;
 

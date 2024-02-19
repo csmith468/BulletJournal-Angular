@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { TabDirective } from 'ngx-bootstrap/tabs';
 import { QuestionPreferences } from 'src/app/models/data-models/questionPreferences';
-import { AccountService } from 'src/app/services/http/account.service';
-import { SettingsService } from 'src/app/services/http/settings.service';
+import { PreferencesService } from 'src/app/services/http/preferences.service';
 
 @Component({
   selector: 'app-preferences',
@@ -17,8 +16,8 @@ export class PreferencesComponent {
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
 
-  constructor(private settingsService: SettingsService) {
-    this.settingsService.changeQuestionPreferencesSource(this.activeTabName);
+  constructor(private preferencesService: PreferencesService) {
+    this.preferencesService.changeQuestionPreferencesSource(this.activeTabName);
   }
 
   onTabActivated(data: TabDirective) {
@@ -33,7 +32,7 @@ export class PreferencesComponent {
     const group: any = {};
     this.form = new FormGroup(group);
 
-    this.settingsService.getQuestionPreferences(this.activeTabName).subscribe(
+    this.preferencesService.getQuestionPreferences(this.activeTabName).subscribe(
       columns => {
         columns.forEach(
           c => {

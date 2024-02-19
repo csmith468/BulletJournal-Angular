@@ -1,5 +1,4 @@
 using API.Data.Helpers;
-using API.Models.DTOs;
 using API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +13,7 @@ namespace API.Data
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
+        public DbSet<QuestionTypes> QuestionTypes { get; set; }
         public DbSet<TablePreferences> TablePreferences { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
         public DbSet<Tables> Tables { get; set; }

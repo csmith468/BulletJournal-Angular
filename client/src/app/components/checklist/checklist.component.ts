@@ -1,11 +1,11 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { QuestionBase } from 'src/app/models/form-models/questionBase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { QuestionControlService } from 'src/app/services/component/question-control.service';
+import { QuestionControlService } from 'src/app/services/components/question-control.service';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { TextboxComponent } from '../form-questions/textbox/textbox.component';
 import { SwitchComponent } from '../form-questions/switch/switch.component';
@@ -16,6 +16,7 @@ import { createTextboxQuestion } from '../form-questions/textbox/textboxQuestion
 import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
 import { createSliderQuestion } from '../form-questions/slider/sliderQuestion';
 import { SliderComponent } from '../form-questions/slider/slider.component';
+import { MetadataService } from 'src/app/services/http/metadata.service';
 
 @Component({
   standalone: true,
@@ -41,8 +42,8 @@ export class ChecklistComponent implements OnInit {
   saving: boolean = false;
   private readonly subscription = new Subscription();
 
-  constructor(private checklistService: ChecklistService, private router: Router, 
-    private route: ActivatedRoute, private qcs: QuestionControlService) 
+  constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute, 
+    private qcs: QuestionControlService, private metadataService: MetadataService) 
   {
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
@@ -50,7 +51,7 @@ export class ChecklistComponent implements OnInit {
     else this.changeMade = true;
 
     this.header = this.editMode ? 'Edit ' : 'Add ' + this.route.snapshot.data['metadata']['header'] + ' Entry';
-    this.checklistService.getQuestions(this.source).subscribe(
+    this.metadataService.getQuestions(this.source).subscribe(
       qs => {
         qs.forEach(q => {
           var key = q.key.toLowerCase();

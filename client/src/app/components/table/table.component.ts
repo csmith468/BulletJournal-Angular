@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
 import { QuestionSet } from 'src/app/models/form-models/questionSet';
+import { MetadataService } from 'src/app/services/http/metadata.service';
 
 @Component({
   standalone: true,
@@ -41,9 +42,9 @@ export class TableComponent implements OnInit, OnDestroy {
   
 
   constructor(private checklistService: ChecklistService, private router: Router, 
-      private route: ActivatedRoute) {
+      private route: ActivatedRoute, private metadataService: MetadataService) {
     this.source = this.route.snapshot.data['metadata']['source'];
-    checklistService.getQuestions(this.source).subscribe(
+    metadataService.getQuestions(this.source).subscribe(
         qs => this.questions = qs
     );
     this.header = this.route.snapshot.data['metadata']['header'] + ' Data';
@@ -60,7 +61,7 @@ export class TableComponent implements OnInit, OnDestroy {
   loadData() {
     var minDateParam = this.dateForm ? this.dateForm!.getRawValue().startDate : null;
     var maxDateParam = this.dateForm ? this.dateForm!.getRawValue().endDate : null;
-    this.checklistService.getData(this.source, this.pageNumber, this.pageSize, minDateParam, maxDateParam).subscribe({
+    this.checklistService.getTableData(this.source, this.pageNumber, this.pageSize, minDateParam, maxDateParam).subscribe({
       next: response => {
         if (response.result && response.pagination) {
           this.table = <any[]>response.result;

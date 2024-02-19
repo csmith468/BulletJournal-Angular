@@ -11,10 +11,10 @@ export class ChecklistsCompletedComponent {
   completedChecklists: CompletedChecklists[] = [];
 
   constructor(private checklistService: ChecklistService) {
-    this.checklistService.getCompletedToday().subscribe(
-      c => {
-        this.completedChecklists = c;
-      }
-    );
+    // this.checklistService.getCompletedToday().subscribe(
+    //   c => {
+    //     this.completedChecklists = c;
+    //   }
+    // );
   }
 }

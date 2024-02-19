@@ -1,16 +1,15 @@
 using API.Data.Interfaces;
 using API.Models.Entities;
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
 {
-    public class SettingsRepository : ISettingsRepository {
+    public class PreferencesRepository : IPreferencesRepository {
         private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
-        public SettingsRepository(DataContextEF contextEF, IMapper mapper, DataContextDapper contextDapper) {
+        public PreferencesRepository(DataContextEF contextEF, IMapper mapper, DataContextDapper contextDapper) {
             _contextEF = contextEF;
             _mapper = mapper;
             _contextDapper = contextDapper;
@@ -57,16 +56,6 @@ namespace API.Data.Repositories
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Tables>> GetTablesAsync() {
-            return await _contextEF.Tables.OrderBy(x => x.displayName).ToListAsync();
-        }
-
-        public async Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId) {
-            return await _contextEF.TablePreferences
-                .Where(t => t.userID == userId && t.isTableVisible == false)
-                .Select(p => p.tableName)
-                .ToListAsync();
-        }
 
         public async Task<bool> CreateTablePreferencesAsync(int userId) {
             string sql = @"INSERT INTO [app_sys].[tablePreferences]

@@ -6,7 +6,7 @@ import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
 import { SideNavToggle } from './sidenav-styling/sidenav-toggle';
 import { Router } from '@angular/router';
 import { sidenav_links_loggedOut } from '../../../models/sidenav-data/sidenav-links-loggedOut';
-import { SettingsService } from 'src/app/services/http/settings.service';
+import { SidenavService } from 'src/app/services/components/sidenav.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -45,9 +45,9 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  constructor(public settingsService: SettingsService, public accountService: AccountService, 
+  constructor(public sidenavService: SidenavService, public accountService: AccountService, 
     public router: Router) {
-      this.settingsService.sideNav$.subscribe(navData => {
+      this.sidenavService.sideNav$.subscribe(navData => {
         if ((this.accountService.currentUser$)) this.navData_loggedIn = navData;
       })
   }

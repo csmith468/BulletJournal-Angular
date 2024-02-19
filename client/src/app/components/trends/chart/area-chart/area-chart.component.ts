@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
-import { ChartService } from 'src/app/services/component/chart.service';
+import { ChartService } from 'src/app/services/components/chart.service';
 import { FieldType } from '../../fieldType';
 
 export type FieldValues = {

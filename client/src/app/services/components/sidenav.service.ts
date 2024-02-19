@@ -1,68 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-import { ISideNavData } from '../../models/sidenav-data/ISideNavData';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Tables } from 'src/app/models/data-models/tables';
+import { ISideNavData } from 'src/app/models/sidenav-data/ISideNavData';
 import { environment } from 'src/environments/environment';
-import { QuestionPreferences } from '../../models/data-models/questionPreferences';
-import { TablePreferences } from '../../models/data-models/tablePreferences';
-import { Tables } from '../../models/data-models/tables';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SettingsService {
+export class SidenavService {
   baseUrl = environment.apiUrl;
-  private questionPrefsSource = new Subject<{ source: string }>();
   private sideNavSubject = new BehaviorSubject<ISideNavData[]>([]);
-
   sideNav$: Observable<ISideNavData[]> = this.sideNavSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
-  questionPrefs$ = this.questionPrefsSource.asObservable();
-
-  changeQuestionPreferencesSource(source: string) {
-    this.questionPrefsSource.next({ source });
-  }
-
-  getQuestionPreferences(type: string) {
-    return this.http.get<QuestionPreferences[]>(this.baseUrl + 'user/getQuestionPreferencesByType/' + type);
-  }
-
-  updateQuestionPreferences(list: any) {
-    return this.http.put(this.baseUrl + 'user/updateMultipleQuestionPreferences', list);
-  }
-
-  getTablePreferences() {
-    return this.http.get<TablePreferences[]>(this.baseUrl + 'user/getTablePreferences');
-  }
-
-  updateTablePreferences(list: any) {
-    return this.http.put(this.baseUrl + 'user/updateMultipleTablePreferences', list).pipe(
-      map(response => {
-        this.setSideNav();
-        return response;
-      })
-    );
-  }
-
-  getMyTables() {
-    return this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(map(
-      tables => {
-        return tables.map(table => {
-          if (table.category) {
-            // If the table has a category, update the displayName
-            table.displayName = table.category + ' ' + table.displayName;
-          }
-          return table;
-        }).filter(table => !table.isHeader);
-      }
-    ))
-  }
 
   setSideNav() {
-    this.http.get<Tables[]>(this.baseUrl + 'user/getMyTables').pipe(
+    this.http.get<Tables[]>(this.baseUrl + 'metadata/getMyTables').pipe(
       map(t => [
         {
           routeLink: '',

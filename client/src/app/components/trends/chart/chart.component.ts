@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FieldType } from '../fieldType';
-import { ChartService } from 'src/app/services/component/chart.service';
+import { ChartService } from 'src/app/services/components/chart.service';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({

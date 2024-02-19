@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TablePrefDto, TablePreferences } from 'src/app/models/data-models/tablePreferences';
-import { SettingsService } from 'src/app/services/http/settings.service';
+import { PreferencesService } from 'src/app/services/http/preferences.service';
 
 @Component({
   selector: 'app-table-prefs',
@@ -20,7 +20,7 @@ export class TablePrefsComponent implements OnDestroy {
   originalPayload: string = '';
   changeMade: boolean = false;
 
-  constructor(private settingsService: SettingsService, private router: Router) {
+  constructor(private preferencesService: PreferencesService, private router: Router) {
     this.getData();
   }
 
@@ -33,7 +33,7 @@ export class TablePrefsComponent implements OnDestroy {
     const group: any = {};
     this.checklists = [];
 
-    this.settingsService.getTablePreferences().subscribe(
+    this.preferencesService.getTablePreferences().subscribe(
       checklists => {
         checklists.forEach(
           c => {
@@ -65,7 +65,7 @@ export class TablePrefsComponent implements OnDestroy {
       }
     })
     if (finalPrefs.length > 0) {
-      this.settingsService.updateTablePreferences(finalPrefs).subscribe({
+      this.preferencesService.updateTablePreferences(finalPrefs).subscribe({
         next: () => this.getData()
       })
     }

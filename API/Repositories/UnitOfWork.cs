@@ -15,10 +15,12 @@ namespace API.Data.Repositories {
         }
 
         public IAccountRepository AccountRepository => new AccountRepository(_contextEF, _mapper);
-        public ISettingsRepository SettingsRepository => new SettingsRepository(_contextEF, _mapper, _contextDapper);
         public IChecklistRepository<T> GetChecklistRepository<T>() where T : Checklist {
             return new ChecklistRepository<T>(_contextEF, _mapper, _contextDapper);
         }        
+        public IMetadataRepository MetadataRepository => new MetadataRepository(_contextEF, _mapper);
+        public IPreferencesRepository PreferencesRepository => new PreferencesRepository(_contextEF, _mapper, _contextDapper);
+        public IStaticRepository StaticRepository => new StaticRepository(_contextEF, _mapper);
         
         public async Task<bool> Complete() {
             var r = HasChanges();

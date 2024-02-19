@@ -22,7 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
-import { CustomRouteReuseStrategy } from './services/component/routeReuseStategy';
+import { CustomRouteReuseStrategy } from './services/components/routeReuseStategy';
 
 // Interceptors
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';
@@ -48,7 +48,6 @@ import { RegisterComponent } from './components/account/register/register.compon
 import { SetupComponent } from './components/account/preferences/setup/setup.component';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
-import { TableComponent } from './components/table/table.component';
 import { TablePrefsComponent } from './components/account/preferences/table-prefs/table-prefs.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';

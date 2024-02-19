@@ -4,7 +4,8 @@ import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { Pagination } from 'src/app/models/data-models/pagination';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { FieldType } from './fieldType';
-import { ChartService } from 'src/app/services/component/chart.service';
+import { ChartService } from 'src/app/services/components/chart.service';
+import { MetadataService } from 'src/app/services/http/metadata.service';
 
 @Component({
   selector: 'app-trends',
@@ -23,13 +24,13 @@ export class TrendsComponent {
   chartVisibility: {chartNumber: number, visibility: string}[] = [];
 
   constructor(private checklistService: ChecklistService, private chartService: ChartService, 
-      private route: ActivatedRoute,  private router: Router) {
+      private route: ActivatedRoute,  private router: Router, private metadataService: MetadataService) {
     const routeData = this.route.snapshot.data;
     this.source = routeData['metadata']['source'];
     this.header = this.route.snapshot.data['metadata']['header'] + ' Trends';
 
     // Get all fields to include in charts
-    this.checklistService.getQuestions(this.source).subscribe(
+    this.metadataService.getQuestions(this.source).subscribe(
       qs => {
         qs.forEach(q => {
           if (q.key != 'date') {
@@ -46,7 +47,7 @@ export class TrendsComponent {
     )
   
     // Get all data for chart
-    this.checklistService.getData(this.source, 1, -1).subscribe({
+    this.checklistService.getTableData(this.source, 1, -1).subscribe({
       next: response => {
         if (response.result && response.pagination) {
           this.data = <any[]>response.result;

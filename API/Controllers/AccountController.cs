@@ -6,23 +6,28 @@ using API.Data.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using API.Models.Entities;
+using API.Extensions;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
     public class AccountController : BaseApiController {
         private readonly IUnitOfWork _uow;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
-        public AccountController(IUnitOfWork uow, ITokenService tokenService) {
+        public AccountController(IUnitOfWork uow, ITokenService tokenService, IMapper mapper) {
             _uow = uow;
             _tokenService = tokenService;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto) {
             if (await _uow.AccountRepository.EmailExistsAsync(registerDto.email)) 
                 return BadRequest("Email is taken.");
-            if (!await _uow.AccountRepository.TimezoneExists(registerDto.timezoneLocationID))
+            if (!await _uow.StaticRepository.TimezoneExistsAsync(registerDto.timezoneLocationID))
                 return BadRequest("Invalid timezone.");
             
             using var hmac = new HMACSHA512();
@@ -38,8 +43,8 @@ namespace API.Controllers
             var result = _uow.AccountRepository.RegisterUserAsync(user);
             if (result == null) return BadRequest("Failed to register user.");
 
-            var resultAddTables = await _uow.SettingsRepository.CreateTablePreferencesAsync(result.Result.userID);
-            var resultAddQuestions = await _uow.SettingsRepository.CreateQuestionPreferencesAsync(result.Result.userID);
+            var resultAddTables = await _uow.PreferencesRepository.CreateTablePreferencesAsync(result.Result.userID);
+            var resultAddQuestions = await _uow.PreferencesRepository.CreateQuestionPreferencesAsync(result.Result.userID);
 
             if (!resultAddTables || !resultAddQuestions) return BadRequest("Failed to register user.");
 
@@ -75,14 +80,16 @@ namespace API.Controllers
             };
         }
 
-        [HttpGet("timezones")]
-        public async Task<ActionResult<IEnumerable<TimezoneLocation>>> GetTimezoneLocation() {
-            return Ok(await _uow.AccountRepository.GetTimezoneLocationsAsync());
-        }
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateUser(AppUserUpdateDto appUserUpdateDto) {
+            var user = await _uow.AccountRepository.GetAppUserByIdAsync(User.GetUserId());
+            if (user == null) return NotFound();
 
-        [HttpGet("timezone/{id}")]
-        public async Task<ActionResult<TimezoneLocation>> GetTimezoneById(int id) {
-            return Ok(await _uow.AccountRepository.GetTimezoneLocationByID(id));
+            _mapper.Map(appUserUpdateDto, user);
+            if (await _uow.Complete()) return NoContent();
+
+            return BadRequest("Failed to update user.");
         }
     }
 }

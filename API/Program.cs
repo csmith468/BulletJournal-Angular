@@ -1,7 +1,5 @@
-using API.Data;
 using API.Extensions;
 using API.Middleware;
-using Microsoft.AspNetCore.Components.Forms;
 
 var builder = WebApplication.CreateBuilder(args);
 

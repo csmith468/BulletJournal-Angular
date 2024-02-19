@@ -5,12 +5,9 @@ using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Data.Pagination;
-using Microsoft.EntityFrameworkCore;
-using System.Dynamic;
-using System.Text.Json;
 using System.Reflection;
-using API.Models.DTOs;
 
+// Where you actually have to go into checklist 
 namespace API.Controllers
 {
     [Authorize]
@@ -93,20 +90,16 @@ namespace API.Controllers
             var checklist = await checklistRepository.GetByIdAsync(User.GetUserId(), id);
             if (checklist == null) return NotFound();
 
-            checklistRepository.DeleteChecklist(checklist);
+            checklistRepository.DeleteAsync(checklist);
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to remove entry.");
         }
 
-        [HttpGet("{type}/getQuestionSet")]
-        public async Task<ActionResult<IEnumerable<QuestionSetDto>>> GetQuestionSet(string type) {
-            var userID = User.GetUserId();
-            dynamic checklistRepository = GetTypedRepository(type);
-            var questionSet = await checklistRepository.GetQuestionSetAsync(userID);
-            if (questionSet == null) return NotFound();
-            return Ok(questionSet);
-        }
+        // [HttpGet("getCompletedToday")]
+        // public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
+        //     return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
+        // }
 
         private async Task<ActionResult> UpdateChecklistHelper(string type, Checklist inputChecklist) {
             var userID = User.GetUserId();
