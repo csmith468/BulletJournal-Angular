@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CompletedChecklists } from 'src/app/models/data-models/completedChecklists';
-import { ChecklistService } from 'src/app/services/checklist.service';
+import { ChecklistService } from 'src/app/services/http/checklist.service';
 
 @Component({
   selector: 'app-checklists-completed',

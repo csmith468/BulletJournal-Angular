@@ -50,8 +50,8 @@
       <tbody>
         <tr *ngFor="let data of table">
           <td *ngFor="let q of questions">
-            {{  q.type == 'switch' ? (data[q.key] == 1) 
-                : q.type == 'number' ? (data[q.key] | number) 
+            {{  q.baseType == 'switch' ? (data[q.key] == 1) 
+                : q.baseType == 'number' ? (data[q.key] | number) 
                 : data[q.key] }}
           </td>
           <td>

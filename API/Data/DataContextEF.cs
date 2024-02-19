@@ -39,15 +39,15 @@ namespace API.Data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<AppUser>().ToTable("user", "app_sys").HasKey(u => u.UserID);
+            modelBuilder.Entity<AppUser>().ToTable("user", "app_sys").HasKey(u => u.userID);
             modelBuilder.Entity<QuestionPreferences>().ToTable("questionPreferences", "app_sys")
-                .HasKey(u => u.QuestionPreferencesID);
+                .HasKey(u => u.questionPreferencesID);
             modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app_sys")
-                .HasKey(u => u.TablePreferencesID);
+                .HasKey(u => u.tablePreferencesID);
             modelBuilder.Entity<QuestionTypes>().ToTable("questionTypes", "app_sys")
-                .HasKey(u => u.QuestionTypeID);
+                .HasKey(u => u.questionTypeID);
             modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
-                .HasKey(u => u.TableID);
+                .HasKey(u => u.tableID);
 
             modelBuilder.Entity<Morning>().ToTable("morning", "app")
                 .HasKey(u => u.id);
@@ -71,7 +71,7 @@ namespace API.Data
             // modelBuilder.Entity<Sleep>().ToTable("sleep", "app").HasKey(u => u.SleepID);
 
             modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
-                .HasKey(u => u.TimezoneLocationID);
+                .HasKey(u => u.timezoneLocationID);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {

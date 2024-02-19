@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { Pagination } from 'src/app/models/data-models/pagination';
-import { ChecklistService } from 'src/app/services/checklist.service';
+import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { FieldType } from './fieldType';
-import { ChartService } from 'src/app/services/chart.service';
+import { ChartService } from 'src/app/services/component/chart.service';
 
 @Component({
   selector: 'app-trends',

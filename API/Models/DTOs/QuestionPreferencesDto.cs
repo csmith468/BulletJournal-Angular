@@ -1,6 +1,6 @@
 namespace API.Models.DTOs {
     public class QuestionPreferencesDto {
-        public int QuestionPreferencesID { get; set; }
-        public bool IsQuestionVisible { get; set; }
+        public int questionPreferencesID { get; set; }
+        public bool isQuestionVisible { get; set; }
     }
 }

@@ -97,10 +97,10 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<string>> GetVisibleColumnsAsync(int userId) {
             var visibleColumns = await _contextEF.QuestionPreferences
-                .Where(p => p.UserID == userId 
-                    && p.TableName.ToLower() == typeof(T).Name.ToLower() 
-                    && p.IsQuestionVisible == true)
-                .Select(p => p.Key)
+                .Where(p => p.userID == userId 
+                    && p.tableName.ToLower() == typeof(T).Name.ToLower() 
+                    && p.isQuestionVisible == true)
+                .Select(p => p.key)
                 .ToListAsync();
 
             var result = new List<string>(visibleColumns) { "id" }; //or result.Add("ID");
@@ -109,9 +109,9 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<QuestionSetDto>> GetQuestionSetAsync(int userId) {
             var visibleQuestions = await _contextEF.QuestionPreferences
-                .Where(p => p.UserID == userId 
-                    && p.TableName.ToLower() == typeof(T).Name.ToLower() 
-                    && p.IsQuestionVisible == true
+                .Where(p => p.userID == userId 
+                    && p.tableName.ToLower() == typeof(T).Name.ToLower() 
+                    && p.isQuestionVisible == true
                 ).ToListAsync();
             
             return visibleQuestions.Select(q => _mapper.Map<QuestionPreferences, QuestionSetDto>(q)).ToList();
@@ -155,22 +155,22 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
             List<string> tables = await _contextEF.TablePreferences
-                .Where(t => t.UserID == userId && t.IsTableVisible == true)
-                .Select(t => t.TableName).ToListAsync();
+                .Where(t => t.userID == userId && t.isTableVisible == true)
+                .Select(t => t.tableName).ToListAsync();
 
             string sql = "";
             for (var i = 0; i < tables.Count; i++) {
                 sql += @$"
-                SELECT '{tables[i]}' AS TableName,
+                SELECT '{tables[i]}' AS TtableName,
                     ISNULL([category].[DisplayName] + ' ', '') + [tables].[DisplayName] AS TableLabel,
-                    CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date) AS [Date],
+                    CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[userID]) AS Date) AS [Date],
                     [{tables[i]}].[{tables[i]}ID] AS ID
                 FROM [app_sys].[user]
-                LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[UserID] = [user].[UserID] 
-                    AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[UserID]) AS Date)
+                LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[userID] = [user].[userID] 
+                    AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[userID]) AS Date)
                 LEFT JOIN [app_sys].[tables] ON [tables].[key] = '{tables[i]}'
                 LEFT JOIN [app_sys].[tables] [category] ON [category].[key] = [tables].[category]
-                AND [user].[UserID] = {userId} 
+                AND [user].[userID] = {userId} 
                 ";
                 if (i < tables.Count - 1) {
                     sql += " UNION ALL ";
@@ -191,7 +191,7 @@ namespace API.Data.Repositories {
         //         );
 
         //     return (DbSet<Checklist>)dbSetProperty?.GetValue(_contextEF);
-        //     // return dbSetValue.Where(x => x.UserID == userId && x.ID == itemID).SingleOrDefaultAsync();
+        //     // return dbSetValue.Where(x => x.userID == userId && x.ID == itemID).SingleOrDefaultAsync();
         // }
         // private IQueryable<Checklist> GetDbSetByType(string type) {
         //     var baseDbSet = _contextEF.Set<Checklist>();

@@ -3,17 +3,17 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [app_sys].[user](
-	[UserID] [int] IDENTITY(1,1) NOT NULL,
-	[Email] [nvarchar](100) NOT NULL,
-	[FirstName] [nvarchar](50) NOT NULL,
-	[LastName] [nvarchar](50) NOT NULL,
-	[PasswordHash] [varbinary](max) NULL,
-	[PasswordSalt] [varbinary](max) NULL,
-	[TimezoneLocationID] [int] NULL
+	[userID] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](100) NOT NULL,
+	[firstName] [nvarchar](50) NOT NULL,
+	[lastName] [nvarchar](50) NOT NULL,
+	[passwordHash] [varbinary](max) NULL,
+	[passwordSalt] [varbinary](max) NULL,
+	[timezoneLocationID] [int] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [app_sys].[user] ADD PRIMARY KEY CLUSTERED 
 (
-	[UserID] ASC
+	[userID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO

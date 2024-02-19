@@ -1,6 +1,6 @@
 namespace API.Models.Entities {
     public class TimezoneLocation {
-        public int TimezoneLocationID { get; set; }
-        public string TimezoneLocationName { get; set; }
+        public int timezoneLocationID { get; set; }
+        public string timezoneLocationName { get; set; }
     }
 }

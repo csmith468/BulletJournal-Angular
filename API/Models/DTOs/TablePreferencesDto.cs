@@ -1,6 +1,6 @@
 namespace API.Models.DTOs {
     public class TablePreferencesDto {
-        public int TablePreferencesID { get; set; }
-        public bool IsTableVisible { get; set; }
+        public int tablePreferencesID { get; set; }
+        public bool isTableVisible { get; set; }
     }
 }

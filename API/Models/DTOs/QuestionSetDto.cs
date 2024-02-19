@@ -1,12 +1,12 @@
 namespace API.Models.DTOs {
     public class QuestionSetDto {
-        public string TableName { get; set; }   // Source
-        public string Key { get; set; }  // Key 
-        public string Label { get; set; } // Question
-        public int QuestionOrder { get; set; }
-        public string Type { get; set; }
-        public string TypeDetail { get; set; }
-        public int? MinValue { get; set; }
-        public int? MaxValue { get; set; }
+        public string tableName { get; set; }   // Source
+        public string key { get; set; }  // Key 
+        public string label { get; set; } // Question
+        public int questionOrder { get; set; }
+        public string baseType { get; set; }
+        public string typeDetail { get; set; }
+        public int? minValue { get; set; }
+        public int? maxValue { get; set; }
     }
 }

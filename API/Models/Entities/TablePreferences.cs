@@ -1,8 +1,8 @@
 namespace API.Models.Entities {
     public class TablePreferences {
-        public int TablePreferencesID { get; set; }
-        public int UserID { get; set; }
-        public string TableName { get; set; }
-        public bool? IsTableVisible { get; set; }
+        public int tablePreferencesID { get; set; }
+        public int userID { get; set; }
+        public string tableName { get; set; }
+        public bool? isTableVisible { get; set; }
     }
 }

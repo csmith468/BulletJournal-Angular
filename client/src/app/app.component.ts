@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from './services/account.service';
+import { AccountService } from './services/http/account.service';
 import { User } from './models/data-models/user';
 import { SideNavToggle } from './components/layout/sidenav/sidenav-styling/sidenav-toggle';
 

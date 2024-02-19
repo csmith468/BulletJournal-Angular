@@ -1,11 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ChecklistService } from 'src/app/services/checklist.service';
+import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { QuestionBase } from 'src/app/models/form-models/questionBase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { QuestionControlService } from 'src/app/services/question-control.service';
+import { QuestionControlService } from 'src/app/services/component/question-control.service';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { TextboxComponent } from '../form-questions/textbox/textbox.component';
 import { SwitchComponent } from '../form-questions/switch/switch.component';
@@ -54,12 +54,12 @@ export class ChecklistComponent implements OnInit {
       qs => {
         qs.forEach(q => {
           var key = q.key.toLowerCase();
-          if (q.type == 'date') this.questions.push(createDateQuestion(key, q.label, true, routeData['checklist']))
-          if (q.type == 'switch') this.questions.push(createSwitchQuestion(key, q.label, routeData['checklist']))
-          if (q.type == 'text' || q.type == 'number') {
-            this.questions.push(createTextboxQuestion(key, q.label, q.type, q.minValue, q.maxValue, routeData['checklist']))
+          if (q.baseType == 'date') this.questions.push(createDateQuestion(key, q.label, true, routeData['checklist']))
+          if (q.baseType == 'switch') this.questions.push(createSwitchQuestion(key, q.label, routeData['checklist']))
+          if (q.baseType == 'text' || q.baseType == 'number') {
+            this.questions.push(createTextboxQuestion(key, q.label, q.baseType, q.minValue, q.maxValue, routeData['checklist']))
           }
-          if (q.type == 'slider') this.questions.push(createSliderQuestion(key, q.label, q.minValue, q.maxValue, routeData['checklist']))
+          if (q.baseType == 'slider') this.questions.push(createSliderQuestion(key, q.label, q.minValue, q.maxValue, routeData['checklist']))
         })
         // this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
         this.createForm();

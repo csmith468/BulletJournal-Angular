@@ -15,7 +15,7 @@ export interface QuestionSet {
     key: string;
     label: string;
     questionOrder: number;
-    type: string;
+    baseType: string;
     typeDetail: string;
     minValue: number;
     maxValue: number;

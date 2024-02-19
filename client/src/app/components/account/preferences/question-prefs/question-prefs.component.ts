@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subscription } from 'rxjs';
 import { QuestionPrefDto, QuestionPreferences } from 'src/app/models/data-models/questionPreferences';
-import { SettingsService } from 'src/app/services/settings.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
   selector: 'app-question-prefs',

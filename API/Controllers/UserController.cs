@@ -46,11 +46,11 @@ namespace API.Controllers
 
         [HttpPut("updateQuestionPreferences")]
         public async Task<ActionResult> UpdateQuestionPreferences(QuestionPreferences questionPrefs) {
-            var prefs = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.QuestionPreferencesID);
+            var prefs = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.questionPreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.IsQuestionVisible = questionPrefs.IsQuestionVisible;
-            prefs.UserID = User.GetUserId();
+            prefs.isQuestionVisible = questionPrefs.isQuestionVisible;
+            prefs.userID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to update user question preferences.");
@@ -61,10 +61,10 @@ namespace API.Controllers
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
             foreach (QuestionPreferencesDto p in prefDtos) {
-                var pref = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), p.QuestionPreferencesID);
+                var pref = await _uow.SettingsRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), p.questionPreferencesID);
                 if (pref == null) return NotFound();
 
-                pref.IsQuestionVisible = p.IsQuestionVisible;
+                pref.isQuestionVisible = p.isQuestionVisible;
                 if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
             }
 
@@ -85,11 +85,11 @@ namespace API.Controllers
 
         [HttpPut("updateTablePreferences")]
         public async Task<ActionResult> UpdateTablePreferences(TablePreferences tablePrefs) {
-            var prefs = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), tablePrefs.TablePreferencesID);
+            var prefs = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), tablePrefs.tablePreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.IsTableVisible = tablePrefs.IsTableVisible;
-            prefs.UserID = User.GetUserId();
+            prefs.isTableVisible = tablePrefs.isTableVisible;
+            prefs.userID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
             return BadRequest("Failed to update user question preferences.");
@@ -100,10 +100,10 @@ namespace API.Controllers
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
             foreach (TablePreferencesDto p in prefDtos) {
-                var pref = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), p.TablePreferencesID);
+                var pref = await _uow.SettingsRepository.GetTablePreferencesByIdAsync(User.GetUserId(), p.tablePreferencesID);
                 if (pref == null) return NotFound();
 
-                pref.IsTableVisible = p.IsTableVisible;
+                pref.isTableVisible = p.isTableVisible;
                 if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
             }
 
@@ -124,7 +124,7 @@ namespace API.Controllers
             if (allTables == null) return NotFound();
             if (invisibleTables.Count() >= allTables.Count()) return Ok(allTables);
 
-            var filteredTables = allTables.Where(table => !invisibleTables.Contains(table.Key)).ToList();
+            var filteredTables = allTables.Where(table => !invisibleTables.Contains(table.key)).ToList();
             return Ok(filteredTables);
         }
 

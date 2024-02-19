@@ -20,58 +20,58 @@ namespace API.Controllers
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> Register(RegisterDto registerDto) {
-            if (await _uow.AccountRepository.EmailExistsAsync(registerDto.Email)) 
+            if (await _uow.AccountRepository.EmailExistsAsync(registerDto.email)) 
                 return BadRequest("Email is taken.");
-            if (!await _uow.AccountRepository.TimezoneExists(registerDto.TimezoneLocationID))
+            if (!await _uow.AccountRepository.TimezoneExists(registerDto.timezoneLocationID))
                 return BadRequest("Invalid timezone.");
             
             using var hmac = new HMACSHA512();
             var user = new AppUser {
-                Email = registerDto.Email.ToLower(),
-                FirstName = HelperFunctions.StringTitleCase(registerDto.FirstName),
-                LastName = HelperFunctions.StringTitleCase(registerDto.LastName),
-                TimezoneLocationID = registerDto.TimezoneLocationID,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
+                email = registerDto.email.ToLower(),
+                firstName = HelperFunctions.StringTitleCase(registerDto.firstName),
+                lastName = HelperFunctions.StringTitleCase(registerDto.lastName),
+                timezoneLocationID = registerDto.timezoneLocationID,
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.password)),
+                passwordSalt = hmac.Key
             };
 
             var result = _uow.AccountRepository.RegisterUserAsync(user);
             if (result == null) return BadRequest("Failed to register user.");
 
-            var resultAddTables = await _uow.SettingsRepository.CreateTablePreferencesAsync(result.Result.UserID);
-            var resultAddQuestions = await _uow.SettingsRepository.CreateQuestionPreferencesAsync(result.Result.UserID);
+            var resultAddTables = await _uow.SettingsRepository.CreateTablePreferencesAsync(result.Result.userID);
+            var resultAddQuestions = await _uow.SettingsRepository.CreateQuestionPreferencesAsync(result.Result.userID);
 
             if (!resultAddTables || !resultAddQuestions) return BadRequest("Failed to register user.");
 
             return new AppUserDto{
-                UserID = result.Result.UserID,
-                Email = result.Result.Email,
-                FirstName = HelperFunctions.StringTitleCase(result.Result.FirstName),
-                LastName = HelperFunctions.StringTitleCase(result.Result.LastName),
-                TimezoneLocationID = result.Result.TimezoneLocationID,
-                Token = _tokenService.CreateToken(user)
+                userID = result.Result.userID,
+                email = result.Result.email,
+                firstName = HelperFunctions.StringTitleCase(result.Result.firstName),
+                lastName = HelperFunctions.StringTitleCase(result.Result.lastName),
+                timezoneLocationID = result.Result.timezoneLocationID,
+                token = _tokenService.CreateToken(user)
             };
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto) {
-            var user = await _uow.AccountRepository.GetAppUserByEmailAsync(loginDto.Email);
+            var user = await _uow.AccountRepository.GetAppUserByEmailAsync(loginDto.email);
 
             if (user == null) return Unauthorized("Invalid email.");
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            using var hmac = new HMACSHA512(user.passwordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.password));
             for (int i = 0; i < computedHash.Length; i++) {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+                if (computedHash[i] != user.passwordHash[i]) return Unauthorized("Invalid password");
             }
 
             return new AppUserDto {
-                UserID = user.UserID,
-                Email = user.Email,
-                FirstName = HelperFunctions.StringTitleCase(user.FirstName),
-                LastName = HelperFunctions.StringTitleCase(user.LastName),
-                TimezoneLocationID = user.TimezoneLocationID,
-                Token = _tokenService.CreateToken(user)
+                userID = user.userID,
+                email = user.email,
+                firstName = HelperFunctions.StringTitleCase(user.firstName),
+                lastName = HelperFunctions.StringTitleCase(user.lastName),
+                timezoneLocationID = user.timezoneLocationID,
+                token = _tokenService.CreateToken(user)
             };
         }
 

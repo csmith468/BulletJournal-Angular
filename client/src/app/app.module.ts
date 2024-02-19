@@ -22,7 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
-import { CustomRouteReuseStrategy } from './services/routeReuseStategy';
+import { CustomRouteReuseStrategy } from './services/component/routeReuseStategy';
 
 // Interceptors
 import { ErrorInterceptor } from './helpers/interceptors/error.interceptor';

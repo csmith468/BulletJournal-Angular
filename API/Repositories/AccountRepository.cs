@@ -18,13 +18,13 @@ namespace API.Data.Repositories {
 
         public async Task<AppUser> GetAppUserByEmailAsync(string email) {
             return await _contextEF.AppUsers   
-                .Where(x => x.Email.ToLower() == email.ToLower())
+                .Where(x => x.email.ToLower() == email.ToLower())
                 .SingleOrDefaultAsync();
         }
         
         public async Task<AppUser> GetAppUserByIdAsync(int id) {
             return await _contextEF.AppUsers   
-                .Where(x => x.UserID == id)
+                .Where(x => x.userID == id)
                 .SingleOrDefaultAsync();
         }
 
@@ -33,7 +33,7 @@ namespace API.Data.Repositories {
         }
 
         public async Task<bool> EmailExistsAsync(string email) {
-            return await _contextEF.AppUsers.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+            return await _contextEF.AppUsers.AnyAsync(x => x.email.ToLower() == email.ToLower());
         }
 
         public async Task<AppUserDto> RegisterUserAsync(AppUser user) {
@@ -42,11 +42,11 @@ namespace API.Data.Repositories {
             if (!result) return null;
 
             return new AppUserDto{
-                UserID = user.UserID,
-                Email = user.Email,
-                FirstName = HelperFunctions.StringTitleCase(user.FirstName),
-                LastName = HelperFunctions.StringTitleCase(user.LastName),
-                TimezoneLocationID = user.TimezoneLocationID
+                userID = user.userID,
+                email = user.email,
+                firstName = HelperFunctions.StringTitleCase(user.firstName),
+                lastName = HelperFunctions.StringTitleCase(user.lastName),
+                timezoneLocationID = user.timezoneLocationID
             };
         }
 
@@ -56,18 +56,18 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync() {
             return await _contextEF.TimezoneLocations
-                .OrderBy(t => t.TimezoneLocationName)
+                .OrderBy(t => t.timezoneLocationName)
                 .ToListAsync();
         }
 
         public async Task<TimezoneLocation> GetTimezoneLocationByID(int id) {
             return await _contextEF.TimezoneLocations
-                .Where(t => t.TimezoneLocationID == id)
+                .Where(t => t.timezoneLocationID == id)
                 .SingleOrDefaultAsync();
         }
 
         public async Task<bool> TimezoneExists(int id) {
-            return await _contextEF.TimezoneLocations.AnyAsync(x => x.TimezoneLocationID == id);
+            return await _contextEF.TimezoneLocations.AnyAsync(x => x.timezoneLocationID == id);
         }
     }
 }

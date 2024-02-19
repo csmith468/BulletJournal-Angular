@@ -3,15 +3,16 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [app_sys].[tables](
-	[TablesID] [int] IDENTITY(1,1) NOT NULL,
-	[Key] [nvarchar](100) NOT NULL,
-	[DisplayName] [nvarchar](100) NOT NULL,
-	[Icon] [nvarchar](100) NOT NULL,
-    [Category] [nvarchar](100) NULL
-) ON [PRIMARY] 
+	[tableID] [int] IDENTITY(1,1) NOT NULL,
+	[key] [nvarchar](100) NOT NULL,
+	[displayName] [nvarchar](100) NOT NULL,
+	[icon] [nvarchar](100) NOT NULL,
+	[category] [nvarchar](100) NULL,
+	[isHeader] [bit] NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [app_sys].[tables] ADD PRIMARY KEY CLUSTERED 
 (
-	[TablesID] ASC
+	[tableID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO

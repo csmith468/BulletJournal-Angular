@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FieldType } from '../components/trends/fieldType';
+import { FieldType } from '../../components/trends/fieldType';
 
 @Injectable({
   providedIn: 'root'

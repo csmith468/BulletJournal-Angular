@@ -2,8 +2,8 @@ namespace API.Models.DTOs
 {
 
     public class AppUserUpdateDto {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int TimezoneLocationID { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public int timezoneLocationID { get; set; }
     }
 }

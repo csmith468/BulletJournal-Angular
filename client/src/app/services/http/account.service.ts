@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, map, of } from 'rxjs';
 import { SettingsService } from './settings.service';
-import { User } from '../models/data-models/user';
-import { TimezoneLocation } from '../models/data-models/timezoneLocation';
+import { User } from '../../models/data-models/user';
+import { TimezoneLocation } from '../../models/data-models/timezoneLocation';
 
 @Injectable({
   providedIn: 'root'

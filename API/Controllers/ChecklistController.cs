@@ -25,15 +25,15 @@ namespace API.Controllers
 
         [HttpPost("{type}/add")]
         public async Task<ActionResult<Checklist>> AddChecklist(string type, Checklist checklist) {
-            var userId = User.GetUserId();
-            checklist.userID = userId;
+            var userID = User.GetUserId();
+            checklist.userID = userID;
             dynamic checklistRepository = GetTypedRepository(type);
 
             var targetType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.Name.ToLower() == type.ToLower());
             if (targetType == null || !targetType.IsSubclassOf(typeof(Checklist))) 
                 return BadRequest("Invalid checklist type");
 
-            if (await checklistRepository.DateUsedAsync(checklist.date, userId)) 
+            if (await checklistRepository.DateUsedAsync(checklist.date, userID)) 
                 return BadRequest("You already submitted an entry for this date.");
             
             var typedChecklist = Activator.CreateInstance(targetType);
@@ -46,10 +46,10 @@ namespace API.Controllers
 
         [HttpGet("{type}/getMyChecklists")] //?pageNumber=2&pageSize=3 (pageSize = -1 will return all entries)
         public async Task<ActionResult<PagedList<Checklist>>> GetMyChecklists(string type, [FromQuery]PageParams pageParams) {
-            var userId = User.GetUserId();
+            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
             
-            var result = await checklistRepository.GetListAsync(userId, pageParams);
+            var result = await checklistRepository.GetListAsync(userID, pageParams);
 
             if (result == null) return NoContent();
 
@@ -63,10 +63,10 @@ namespace API.Controllers
 
         [HttpGet("{type}/getMyChecklistById/{id}")]
         public async Task<ActionResult<Checklist>> GetMyChecklistById(string type, int id) {
-            var userId = User.GetUserId();
+            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdFilteredAsync(userId, id);
+            var checklist = await checklistRepository.GetByIdFilteredAsync(userID, id);
             if (checklist == null) return NotFound();
 
             return Ok(checklist);
@@ -101,23 +101,23 @@ namespace API.Controllers
 
         [HttpGet("{type}/getQuestionSet")]
         public async Task<ActionResult<IEnumerable<QuestionSetDto>>> GetQuestionSet(string type) {
-            var userId = User.GetUserId();
+            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
-            var questionSet = await checklistRepository.GetQuestionSetAsync(userId);
+            var questionSet = await checklistRepository.GetQuestionSetAsync(userID);
             if (questionSet == null) return NotFound();
             return Ok(questionSet);
         }
 
         private async Task<ActionResult> UpdateChecklistHelper(string type, Checklist inputChecklist) {
-            var userId = User.GetUserId();
+            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdAsync(userId, inputChecklist.id);
+            var checklist = await checklistRepository.GetByIdAsync(userID, inputChecklist.id);
             if (checklist == null) return NotFound();
-            inputChecklist.userID = userId;
+            inputChecklist.userID = userID;
 
             if (checklist.date != inputChecklist.date) {
-                if (await checklistRepository.DateUsedAsync(inputChecklist.date, userId)) 
+                if (await checklistRepository.DateUsedAsync(inputChecklist.date, userID)) 
                     return BadRequest("You already submitted an entry for this date.");
             }
 

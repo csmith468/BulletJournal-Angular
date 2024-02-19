@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TablePrefDto, TablePreferences } from 'src/app/models/data-models/tablePreferences';
-import { SettingsService } from 'src/app/services/settings.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
   selector: 'app-table-prefs',

@@ -18,62 +18,62 @@ namespace API.Data.Repositories
 
         public async Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesAsync(int userId) {
             return await _contextEF.QuestionPreferences   
-                .Where(x => x.UserID == userId)
-                .OrderBy(x => x.TableName)
+                .Where(x => x.userID == userId)
+                .OrderBy(x => x.tableName)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesByTypeAsync(int userId, string type) {
             return await _contextEF.QuestionPreferences   
-                .Where(x => x.UserID == userId && x.TableName == type)
-                .OrderBy(x => x.TableName)
+                .Where(x => x.userID == userId && x.tableName == type)
+                .OrderBy(x => x.tableName)
                 .ToListAsync();
         }
 
         public async Task<QuestionPreferences> GetQuestionPreferencesByIdAsync(int userId, int id) {
             return await _contextEF.QuestionPreferences   
-                .Where(x => x.UserID == userId && x.QuestionPreferencesID == id)
+                .Where(x => x.userID == userId && x.questionPreferencesID == id)
                 .SingleOrDefaultAsync();
         }
 
 
         public async Task<IEnumerable<TablePreferences>> GetTablePreferencesAsync(int userId) {
             return await _contextEF.TablePreferences   
-                .Where(x => x.UserID == userId)
-                .OrderBy(x => x.TableName)
+                .Where(x => x.userID == userId)
+                .OrderBy(x => x.tableName)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<TablePreferences>> GetTablePreferencesByTypeAsync(int userId, string type) {
             return await _contextEF.TablePreferences   
-                .Where(x => x.UserID == userId)
-                .OrderBy(x => x.TableName)
+                .Where(x => x.userID == userId)
+                .OrderBy(x => x.tableName)
                 .ToListAsync();
         }
 
         public async Task<TablePreferences> GetTablePreferencesByIdAsync(int userId, int id) {
             return await _contextEF.TablePreferences   
-                .Where(x => x.UserID == userId && x.TablePreferencesID == id)
+                .Where(x => x.userID == userId && x.tablePreferencesID == id)
                 .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Tables>> GetTablesAsync() {
-            return await _contextEF.Tables.OrderBy(x => x.DisplayName).ToListAsync();
+            return await _contextEF.Tables.OrderBy(x => x.displayName).ToListAsync();
         }
 
         public async Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId) {
             return await _contextEF.TablePreferences
-                .Where(t => t.UserID == userId && t.IsTableVisible == false)
-                .Select(p => p.TableName)
+                .Where(t => t.userID == userId && t.isTableVisible == false)
+                .Select(p => p.tableName)
                 .ToListAsync();
         }
 
         public async Task<bool> CreateTablePreferencesAsync(int userId) {
             string sql = @"INSERT INTO [app_sys].[tablePreferences]
                             SELECT " + userId.ToString()
-                                + @" AS [UserID]
-                                ,[TableName]
-                                ,1 AS [IsTableVisible]
+                                + @" AS [userID]
+                                ,[tableName]
+                                ,1 AS [isTableVisible]
                             FROM [dbo].[tablePreferencesSetup]
                         ";
             return await _contextDapper.ExecuteAsync(sql);
@@ -82,10 +82,10 @@ namespace API.Data.Repositories
         public async Task<bool> CreateQuestionPreferencesAsync(int userId) {
             string sql = @"INSERT INTO [app_sys].[questionPreferences]
                             SELECT " + userId.ToString()
-                                + @" AS [UserID]
-                                ,[TableName]
-                                ,[ColumnName]
-                                ,1 AS [IsColumnVisible]
+                                + @" AS [userID]
+                                ,[tableName]
+                                ,[columnName]
+                                ,1 AS [isColumnVisible]
                             FROM [dbo].[questionPreferencesSetup]
                         ";
             return await _contextDapper.ExecuteAsync(sql);
