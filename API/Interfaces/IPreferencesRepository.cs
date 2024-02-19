@@ -1,7 +1,8 @@
-using API.Models.Entities;
-
 // everything is related to user preferences for questions/tables
-namespace API.Data.Interfaces {
+using API.Models.Tables.Entities;
+
+namespace API.Data.Interfaces
+{
     public interface IPreferencesRepository {
         Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesAsync(int userId);
         Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesByTypeAsync(int userId, string type);

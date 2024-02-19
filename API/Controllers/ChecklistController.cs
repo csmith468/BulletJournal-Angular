@@ -1,11 +1,11 @@
 using API.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using API.Models.Entities;
 using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Data.Pagination;
 using System.Reflection;
+using API.Models.Tables.Entities;
 
 // Where you actually have to go into checklist 
 namespace API.Controllers

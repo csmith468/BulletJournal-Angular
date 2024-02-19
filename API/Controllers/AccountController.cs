@@ -1,14 +1,14 @@
 using System.Security.Cryptography;
 using System.Text;
-using API.Models.DTOs;
 using API.Data.Helpers;
 using API.Data.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
-using API.Models.Entities;
 using API.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using API.Models.Tables.DTOs;
+using API.Models.Tables.Entities;
 
 namespace API.Controllers
 {

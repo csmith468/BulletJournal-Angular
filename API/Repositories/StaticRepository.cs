@@ -1,11 +1,13 @@
 
 using API.Data.Interfaces;
-using API.Models.Entities;
+using API.Models.Tables.Entities;
+using API.Models.Views.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 // static data that is un-related to any user or user data
-namespace API.Data.Repositories {
+namespace API.Data.Repositories
+{
     public class StaticRepository : IStaticRepository {
         // private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
@@ -31,15 +33,15 @@ namespace API.Data.Repositories {
             return await _contextEF.TimezoneLocationsView.AnyAsync(x => x.timezoneLocationID == id);
         }
 
-        public async Task<IEnumerable<QuestionKinds>> GetQuestionKindsAsync() {
+        public async Task<IEnumerable<QuestionKind>> GetQuestionKindsAsync() {
             return await _contextEF.QuestionKinds.ToListAsync();
         }
 
-        public async Task<IEnumerable<QuestionKinds>> GetChartQuestionKindsAsync() {
+        public async Task<IEnumerable<QuestionKind>> GetChartQuestionKindsAsync() {
             return await _contextEF.QuestionKinds.Where(q => q.includeInCharts == true).ToListAsync();
         }
 
-        public async Task<QuestionKinds> GetQuestionKindByIdAsync(int id) {
+        public async Task<QuestionKind> GetQuestionKindByIdAsync(int id) {
             return await _contextEF.QuestionKinds.Where(q => q.questionKindID == id).FirstOrDefaultAsync();
         }
     }

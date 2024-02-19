@@ -1,4 +1,4 @@
-namespace API.Models.Entities {
+namespace API.Models.Tables.Entities {
     public class QuestionPreferences {
         public int questionPreferencesID { get; set; }
         public int userID { get; set; }

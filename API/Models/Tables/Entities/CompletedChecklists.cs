@@ -1,4 +1,4 @@
-namespace API.Models.Entities {
+namespace API.Models.Tables.Entities {
     public class CompletedChecklists {
         public string tableName { get; set; }
         public string tableLabel { get; set; }

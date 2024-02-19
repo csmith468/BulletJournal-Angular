@@ -1,9 +1,11 @@
-using API.Models.DTOs;
-using API.Models.Entities;
-using API.Models.Views;
+using API.Models.Tables.DTOs;
+using API.Models.Tables.Entities;
+using API.Models.Views.DTOs;
+using API.Models.Views.Entities;
 using AutoMapper;
 
-namespace API.Data.Helpers {
+namespace API.Data.Helpers
+{
     public class AutoMapperProfiles : Profile {
         public AutoMapperProfiles() {
             CreateMap<DateTime, DateTime>().ConvertUsing(
@@ -14,9 +16,12 @@ namespace API.Data.Helpers {
             CreateMap<QuestionPreferences, QuestionPreferences>();
             CreateMap<TablePreferences, TablePreferences>();
             CreateMap<QuestionPreferences, QuestionPreferencesDto>();
-            CreateMap<ChartQuestionsView, ChartQuestionsViewDto>();
-            CreateMap<ChecklistQuestionsView, ChecklistQuestionsViewDto>();
 
+            // Views with relevant data for each component in the UI
+            CreateMap<QuestionView, ChartQuestionViewDto>();
+            CreateMap<QuestionView, ChecklistQuestionViewDto>();
+            CreateMap<QuestionView, TableQuestionViewDto>();
+            CreateMap<TableTypeView, TableTypeLayoutDto>();
 
             CreateMap<Checklist, Checklist>();
             

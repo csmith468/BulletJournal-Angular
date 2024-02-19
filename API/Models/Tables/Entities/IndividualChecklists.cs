@@ -1,4 +1,4 @@
-namespace API.Models.Entities {
+namespace API.Models.Tables.Entities {
     public class Morning: Checklist { } 
     public class Night: Checklist { } 
     public class Daily: Checklist { } 

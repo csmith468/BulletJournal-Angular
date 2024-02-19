@@ -1,4 +1,4 @@
-namespace API.Models.Entities {
+namespace API.Models.Tables.Entities {
     public class Checklist {
         public int id { get; set; }
         public int userID { get; set; }

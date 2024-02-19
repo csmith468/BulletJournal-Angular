@@ -1,6 +1,7 @@
-using API.Models.Entities;
-
 // static data that is un-related to any user or user data
+using API.Models.Tables.Entities;
+using API.Models.Views.Entities;
+
 namespace API.Data.Interfaces
 {
     public interface IStaticRepository {
@@ -8,8 +9,8 @@ namespace API.Data.Interfaces
         Task<TimezoneLocationView> GetTimezoneLocationByIDAsync(int id);
         Task<bool> TimezoneExistsAsync(int id);
 
-        Task<IEnumerable<QuestionKinds>> GetQuestionKindsAsync();
-        Task<IEnumerable<QuestionKinds>> GetChartQuestionKindsAsync();
-        Task<QuestionKinds> GetQuestionKindByIdAsync(int id);
+        Task<IEnumerable<QuestionKind>> GetQuestionKindsAsync();
+        Task<IEnumerable<QuestionKind>> GetChartQuestionKindsAsync();
+        Task<QuestionKind> GetQuestionKindByIdAsync(int id);
     }
 }

@@ -1,9 +1,10 @@
 using API.Data;
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers {
+namespace API.Controllers
+{
 
     public class ErrorController : BaseApiController {
     private readonly DataContextEF _contextEF;

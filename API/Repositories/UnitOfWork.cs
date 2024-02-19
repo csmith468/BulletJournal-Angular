@@ -1,8 +1,9 @@
 using API.Data.Interfaces;
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 using AutoMapper;
 
-namespace API.Data.Repositories {
+namespace API.Data.Repositories
+{
     public class UnitOfWork : IUnitOfWork {
         private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;

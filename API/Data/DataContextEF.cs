@@ -1,6 +1,6 @@
 using API.Data.Helpers;
-using API.Models.Entities;
-using API.Models.Views;
+using API.Models.Tables.Entities;
+using API.Models.Views.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -18,13 +18,13 @@ namespace API.Data
         public DbSet<TablePreferences> TablePreferences { get; set; }
         // public DbSet<HiddenQuestions> HiddenQuestions { get; set; }
 
-        public DbSet<ChartQuestionsView> ChartQuestionsView { get; set; }
-        public DbSet<ChecklistQuestionsView> ChecklistQuestionsView { get; set; }
+        public DbSet<QuestionView> QuestionsView { get; set; }
+        public DbSet<TableTypeView> TableTypeView { get; set; }
 
 
         // Static tables/views
-        public DbSet<QuestionKinds> QuestionKinds { get; set; }
-        public DbSet<Tables> Tables { get; set; }
+        public DbSet<QuestionKind> QuestionKinds { get; set; }
+        public DbSet<TableType> Tables { get; set; }
         public DbSet<TimezoneLocationView> TimezoneLocationsView { get; set; }
         
         // Checklist data
@@ -61,16 +61,15 @@ namespace API.Data
             //     .HasKey(u => u.hiddenQuestionID);
 
             // Metadata views related to user
-            modelBuilder.Entity<ChartQuestionsView>().ToView("v_chartQuestions", "app")
+            modelBuilder.Entity<QuestionView>().ToView("v_questions", "app")
                 .HasKey(q => q.questionPreferencesId);
-            modelBuilder.Entity<ChecklistQuestionsView>().ToView("v_checklistQuestions", "app")
-                .HasKey(q => q.questionPreferencesId);
-
+            modelBuilder.Entity<TableTypeView>().ToView("v_tableTypes", "app")
+                .HasKey(t => t.tablePreferencesID);
 
             // Static tables
-            modelBuilder.Entity<QuestionKinds>().ToTable("questionKinds", "app_sys")
+            modelBuilder.Entity<QuestionKind>().ToTable("questionKind", "app_sys")
                 .HasKey(u => u.questionKindID);
-            modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
+            modelBuilder.Entity<TableType>().ToTable("tableType", "app_sys")
                 .HasKey(u => u.tableID);
             modelBuilder.Entity<TimezoneLocationView>().ToView("v_timezoneLocation", "app_sys")
                 .HasKey(u => u.timezoneLocationID);

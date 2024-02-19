@@ -2,12 +2,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE VIEW [app].[v_checklistQuestions] AS
+CREATE VIEW [app].[v_question] AS
     SELECT qp.[questionPreferencesID]
         ,qp.[userID]
         ,qp.[tableName]
         ,qp.[key]
         ,qp.[label]
+        ,qk.[includeInCharts]
         ,qp.[questionKindID]
         ,qk.[kindBase]
         ,qk.[kindDetail]

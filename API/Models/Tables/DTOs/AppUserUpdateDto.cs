@@ -1,4 +1,4 @@
-namespace API.Models.DTOs
+namespace API.Models.Tables.DTOs
 {
 
     public class AppUserUpdateDto {

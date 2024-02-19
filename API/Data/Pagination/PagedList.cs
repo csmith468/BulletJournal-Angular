@@ -1,8 +1,9 @@
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data.Pagination {
-    public class PagedList<T> : List<T> where T : Checklist{
+namespace API.Data.Pagination
+{
+    public class PagedList<T> : List<T> where T : Checklist {
         
         public PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize, DateOnly? minDate, DateOnly? maxDate) {
             CurrentPage = pageNumber;

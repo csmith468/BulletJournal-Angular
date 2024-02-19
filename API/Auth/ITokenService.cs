@@ -1,6 +1,7 @@
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 
-namespace API.Services {
+namespace API.Services
+{
     public interface ITokenService {
         string CreateToken(AppUser user);
     }

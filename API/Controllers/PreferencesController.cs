@@ -2,9 +2,9 @@ using API.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using API.Models.Entities;
 using API.Extensions;
-using API.Models.DTOs;
+using API.Models.Tables.Entities;
+using API.Models.Tables.DTOs;
 
 // everything is related to user preferences for questions/tables
 namespace API.Controllers

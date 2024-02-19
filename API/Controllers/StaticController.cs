@@ -2,7 +2,8 @@ using API.Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using API.Models.Entities;
+using API.Models.Views.Entities;
+using API.Models.Tables.Entities;
 
 // static data that is un-related to any user or user data
 namespace API.Controllers
@@ -29,21 +30,21 @@ namespace API.Controllers
 
 
         [HttpGet("getQuestionKinds")]
-        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetQuestionKinds() {
+        public async Task<ActionResult<IEnumerable<QuestionKind>>> GetQuestionKinds() {
             var questionKinds = await _uow.StaticRepository.GetQuestionKindsAsync();
             if (questionKinds == null) return NotFound();
             return Ok(questionKinds);
         }
 
         [HttpGet("getChartQuestionKinds")]
-        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetChartQuestionKinds() {
+        public async Task<ActionResult<IEnumerable<QuestionKind>>> GetChartQuestionKinds() {
             var questionKinds = await _uow.StaticRepository.GetChartQuestionKindsAsync();
             if (questionKinds == null) return NotFound();
             return Ok(questionKinds);
         }
 
         [HttpGet("getQuestionKindById/{id}")]
-        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetChartQuestionKindById(int id) {
+        public async Task<ActionResult<IEnumerable<QuestionKind>>> GetChartQuestionKindById(int id) {
             var questionKind = await _uow.StaticRepository.GetQuestionKindByIdAsync(id);
             if (questionKind == null) return NotFound();
             return Ok(questionKind);

@@ -1,5 +1,5 @@
 using API.Data.Pagination;
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 
 // Where you actually have to go into checklist 
 namespace API.Data.Interfaces

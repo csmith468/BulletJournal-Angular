@@ -1,5 +1,5 @@
 using API.Data.Interfaces;
-using API.Models.Entities;
+using API.Models.Tables.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
