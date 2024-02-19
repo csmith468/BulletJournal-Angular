@@ -11,9 +11,7 @@ import { PreferencesService } from 'src/app/services/http/preferences.service';
   styleUrls: ['./table-prefs.component.css']
 })
 export class TablePrefsComponent implements OnDestroy {
-  checklists: TablePreferences[] = [];
-  tableNames: { [key: string]: string } = {'Morning': 'morning', 'Night': 'night', 'Daily': 'daily', 'Wellbeing': 'wellbeing', 
-    'Physical Symptoms': 'physical', 'Spending': 'spending', 'Sleep': 'sleep'};
+  tables: TablePreferences[] = [];
   form!: FormGroup;
   private readonly subscription = new Subscription();
   payload: string = '';
@@ -31,14 +29,14 @@ export class TablePrefsComponent implements OnDestroy {
   getData() {
     this.changeMade = false;
     const group: any = {};
-    this.checklists = [];
+    this.tables = [];
 
     this.preferencesService.getTablePreferences().subscribe(
       checklists => {
         checklists.forEach(
           c => {
-            group[c.tableName] = new FormControl(c.isTableVisible);
-            this.checklists.push(c);
+            group[c.key] = new FormControl(c.isVisible);
+            this.tables.push(c);
           }
         )
         this.form = new FormGroup(group);
@@ -57,10 +55,10 @@ export class TablePrefsComponent implements OnDestroy {
       const control = this.form.get(c);
 
       if (control && control.dirty) {
-        const checklist = this.checklists.find(q => q.tableName == c);
-        if (checklist && checklist.isTableVisible != control.value) {
-          checklist.isTableVisible = control.value;
-          finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isTableVisible: control.value});
+        const checklist = this.tables.find(q => q.key == c);
+        if (checklist && checklist.isVisible != control.value) {
+          checklist.isVisible = control.value;
+          finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isVisible: control.value});
         }
       }
     })

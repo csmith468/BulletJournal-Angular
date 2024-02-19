@@ -1,7 +1,9 @@
 export interface TablePreferences {
     tablePreferencesID: number;
-    tableName: string;
-    isVisible: boolean;
+    userID: number;
+    key: string;
+    label: string;
+    isVisible?: boolean;
 }
 
 

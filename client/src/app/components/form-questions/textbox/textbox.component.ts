@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { QuestionBase } from 'src/app/models/question-models/questionBase';
+import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
 
 @Component({
   standalone: true,
@@ -11,25 +11,35 @@ import { QuestionBase } from 'src/app/models/question-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class TextboxComponent {
-  @Input() question!: QuestionBase<any>;
+  @Input() item!: ChecklistFormItem<any>;
   @Input() form!: FormGroup;
 
   get isValid() {
-    return this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched  && this.question.required
-      && !this.emptyButRequired && !this.isTooSmall && !this.isTooLarge;
+    return this.form.controls[this.item.key].valid 
+      && this.form.controls[this.item.key].touched 
+      && this.item.required
+      && !this.emptyButRequired 
+      && !this.isTooSmall 
+      && !this.isTooLarge;
   }
 
   get emptyButRequired() {
-    return !this.form.controls[this.question.key].valid && this.form.controls[this.question.key].touched && this.question.required;
+    return !this.form.controls[this.item.key].valid 
+      && this.form.controls[this.item.key].touched 
+      && this.item.required;
   }
 
   get isTooSmall() {
-    return this.form.controls[this.question.key].touched && this.question.type == 'number'
-    && this.question.minValue != null && this.form.controls[this.question.key].value < this.question.minValue;
+    return this.form.controls[this.item.key].touched 
+      && this.item.kindBase == 'number'
+      && this.item.minValue
+      && this.form.controls[this.item.key].value < this.item.minValue;
   }
 
   get isTooLarge() {
-    return this.form.controls[this.question.key].touched && this.question.type == 'number'
-    && this.question.maxValue != null && this.form.controls[this.question.key].value > this.question.maxValue;
+    return this.form.controls[this.item.key].touched 
+      && this.item.kindBase == 'number'
+      && this.item.maxValue
+      && this.form.controls[this.item.key].value > this.item.maxValue;
   }
 }

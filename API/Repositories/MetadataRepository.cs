@@ -17,42 +17,34 @@ namespace API.Data.Repositories {
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<QuestionSetDto>> GetQuestionSetAsync(int userId, string type) {
-            var visibleQuestions = await _contextEF.QuestionPreferences
-                .Where(p => p.userID == userId 
-                    && p.tableName.ToLower() == type.ToLower() 
-                    && p.isVisible == true
-                ).ToListAsync();
-            return visibleQuestions.Select(q => _mapper.Map<QuestionPreferences, QuestionSetDto>(q)).ToList();
-        }
-
         public async Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId) {
             return await _contextEF.TablePreferences
                 .Where(t => t.userID == userId && t.isVisible == false)
-                .Select(p => p.tableName)
+                .Select(p => p.key)
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsAsync(int userId) {
-            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByTypeAsync(int userId, string type) {
-            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
-        }
-
-        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByKindIdAsync(int userId, int kindId) {
-            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId && q.questionKindID == kindId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByTypeAndKindIdAsync(int userId, string type, int kindId) {
-            return await _contextEF.ChartQuestionsViews.Where(q => 
-                q.userID == userId && q.tableName == type && q.questionKindID == kindId
-            ).ToListAsync();
         }
 
         public async Task<IEnumerable<Tables>> GetTablesAsync() {
             return await _contextEF.Tables.OrderBy(x => x.displayName).ToListAsync();
+        }
+
+        // Chart Questions
+        public async Task<IEnumerable<ChartQuestionsViewDto>> GetChartQuestionsAsync(int userId, string type) {
+            var questions = await _contextEF.ChartQuestionsView.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
+            return questions.Select(q => _mapper.Map<ChartQuestionsView, ChartQuestionsViewDto>(q)).ToList();
+        }
+
+        public async Task<IEnumerable<ChartQuestionsViewDto>> GetChartQuestionsByKindAsync(int userId, string type, int kindId) {
+            var questions = await _contextEF.ChartQuestionsView.Where(q => 
+                q.userID == userId && q.tableName == type && q.questionKindID == kindId
+            ).ToListAsync();
+            return questions.Select(q => _mapper.Map<ChartQuestionsView, ChartQuestionsViewDto>(q)).ToList();
+        }
+
+        // Checklist Questions
+        public async Task<IEnumerable<ChecklistQuestionsViewDto>> GetChecklistQuestionsAsync(int userId, string type) {
+            var questions = await _contextEF.ChecklistQuestionsView.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
+            return questions.Select(q => _mapper.Map<ChecklistQuestionsView, ChecklistQuestionsViewDto>(q)).ToList();
         }
     }
 }

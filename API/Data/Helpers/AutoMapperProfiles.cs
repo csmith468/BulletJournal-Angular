@@ -1,5 +1,6 @@
 using API.Models.DTOs;
 using API.Models.Entities;
+using API.Models.Views;
 using AutoMapper;
 
 namespace API.Data.Helpers {
@@ -12,10 +13,12 @@ namespace API.Data.Helpers {
             CreateMap<AppUserUpdateDto, AppUser>();
             CreateMap<QuestionPreferences, QuestionPreferences>();
             CreateMap<TablePreferences, TablePreferences>();
+            CreateMap<QuestionPreferences, QuestionPreferencesDto>();
+            CreateMap<ChartQuestionsView, ChartQuestionsViewDto>();
+            CreateMap<ChecklistQuestionsView, ChecklistQuestionsViewDto>();
+
 
             CreateMap<Checklist, Checklist>();
-            CreateMap<QuestionPreferences, QuestionPreferencesDto>();
-            CreateMap<QuestionPreferences, QuestionSetDto>();
             
             CreateMap<Morning, Morning>();
             CreateMap<Night, Night>();

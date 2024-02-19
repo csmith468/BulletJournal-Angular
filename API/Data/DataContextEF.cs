@@ -12,14 +12,22 @@ namespace API.Data
             _config = config;
         }
 
+        // Metadata tables/views related to user 
         public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<ChartQuestionsView> ChartQuestionsViews { get; set; }
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
-        public DbSet<QuestionKinds> QuestionKinds { get; set; }
         public DbSet<TablePreferences> TablePreferences { get; set; }
-        public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
+        // public DbSet<HiddenQuestions> HiddenQuestions { get; set; }
+
+        public DbSet<ChartQuestionsView> ChartQuestionsView { get; set; }
+        public DbSet<ChecklistQuestionsView> ChecklistQuestionsView { get; set; }
+
+
+        // Static tables/views
+        public DbSet<QuestionKinds> QuestionKinds { get; set; }
         public DbSet<Tables> Tables { get; set; }
+        public DbSet<TimezoneLocationView> TimezoneLocationsView { get; set; }
         
+        // Checklist data
         public DbSet<Morning> Morning { get; set; }
         public DbSet<Night> Night { get; set; }
         public DbSet<Daily> Daily { get; set; }
@@ -42,22 +50,29 @@ namespace API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
-            // Metadata ables related to user 
+            // Metadata tables related to user 
             modelBuilder.Entity<AppUser>().ToTable("user", "app")
                 .HasKey(u => u.userID);
             modelBuilder.Entity<QuestionPreferences>().ToTable("questionPreferences", "app")
                 .HasKey(u => u.questionPreferencesID);
             modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app")
                 .HasKey(u => u.tablePreferencesID);
-            // hidden questions
+            // modelBuilder.Entity<HiddenQuestions>().ToTable("hiddenQuestions", "app")
+            //     .HasKey(u => u.hiddenQuestionID);
+
+            // Metadata views related to user
             modelBuilder.Entity<ChartQuestionsView>().ToView("v_chartQuestions", "app")
+                .HasKey(q => q.questionPreferencesId);
+            modelBuilder.Entity<ChecklistQuestionsView>().ToView("v_checklistQuestions", "app")
                 .HasKey(q => q.questionPreferencesId);
 
 
             // Static tables
             modelBuilder.Entity<QuestionKinds>().ToTable("questionKinds", "app_sys")
                 .HasKey(u => u.questionKindID);
-            modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "app_sys")
+            modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
+                .HasKey(u => u.tableID);
+            modelBuilder.Entity<TimezoneLocationView>().ToView("v_timezoneLocation", "app_sys")
                 .HasKey(u => u.timezoneLocationID);
 
 
@@ -73,7 +88,7 @@ namespace API.Data
             modelBuilder.Entity<Physical>().ToTable("physical", "checklist")
                 .HasKey(u => u.id);
             // modelBuilder.Entity<Sleep>().ToTable("sleep", "app")
-            //  .HasKey(u => u.SleepID);
+            //     .HasKey(u => u.SleepID);
 
             modelBuilder.Entity<SpendingFinancial>().ToTable("spendingFinancial", "checklist")
                 .HasKey(u => u.id);

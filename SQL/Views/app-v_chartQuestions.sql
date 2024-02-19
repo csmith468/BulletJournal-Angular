@@ -11,7 +11,7 @@ CREATE VIEW [app].[v_chartQuestions] AS
         ,qp.[questionKindID]
         ,qk.[kindBase]
         ,qk.[kindDetail]
-        ,qp.[questionOrder]
+        ,COALESCE(qp.[questionOrder], qp.[keyNumber]) AS [questionOrder]
     FROM [app].[questionPreferences] qp
     JOIN [app_sys].[questionKinds] qk ON qk.[questionKindID] = qp.[questionKindID]
     WHERE qk.[includeInCharts] = 1 AND qp.[isVisible] = 1

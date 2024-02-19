@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { QuestionBase } from 'src/app/models/question-models/questionBase';
+import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
 import { createSliderQuestion } from '../form-questions/slider/sliderQuestion';
 import { SliderComponent } from '../form-questions/slider/slider.component';
 import { MetadataService } from 'src/app/services/http/metadata.service';
+import { ChecklistQuestion } from 'src/app/models/question-models/checklistQuestion';
 
 @Component({
   standalone: true,
@@ -31,7 +32,7 @@ export class ChecklistComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.changeMade && this.form.dirty && !this.saving) $event.returnValue = true;
   }
-  questions: QuestionBase<any>[] = [];
+  checklistFormItems: ChecklistFormItem<any>[] = [];
   payload: string = '';
   editMode: boolean = false;
   source: string = '';
@@ -51,21 +52,30 @@ export class ChecklistComponent implements OnInit {
     else this.changeMade = true;
 
     this.header = this.editMode ? 'Edit ' : 'Add ' + this.route.snapshot.data['metadata']['header'] + ' Entry';
-    this.metadataService.getQuestions(this.source).subscribe(
+    this.metadataService.getChecklistQuestions(this.source).subscribe(
       qs => {
-        qs.forEach(q => {
-          var key = q.key.toLowerCase();
-          if (q.baseType == 'date') this.questions.push(createDateQuestion(key, q.label, true, routeData['checklist']))
-          if (q.baseType == 'switch') this.questions.push(createSwitchQuestion(key, q.label, routeData['checklist']))
-          if (q.baseType == 'text' || q.baseType == 'number') {
-            this.questions.push(createTextboxQuestion(key, q.label, q.baseType, q.minValue, q.maxValue, routeData['checklist']))
-          }
-          if (q.baseType == 'slider') this.questions.push(createSliderQuestion(key, q.label, q.minValue, q.maxValue, routeData['checklist']))
-        })
-        // this.questions.unshift(createDateQuestion('date', 'Date', true, routeData['checklist']));
+        qs.forEach(
+          q => this.createFormItem(q, routeData['checklist'])
+        )
         this.createForm();
       }
     )
+  }
+
+  createFormItem(q: ChecklistQuestion, checklist: any) {
+    if (q.kindBase == 'date') 
+      this.checklistFormItems.push(createDateQuestion(q, checklist))
+    
+    if (q.kindBase == 'switch') 
+      this.checklistFormItems.push(createSwitchQuestion(q, checklist))
+    
+    if (q.kindBase == 'text' || q.kindBase == 'number') 
+      this.checklistFormItems.push(createTextboxQuestion(q, checklist))
+
+    if (q.kindBase == 'slider' && q.minValue && q.maxValue) 
+      this.checklistFormItems.push(createSliderQuestion(q, checklist))
+
+    // eventually add textarea question
   }
 
 
@@ -73,7 +83,7 @@ export class ChecklistComponent implements OnInit {
   }
 
   createForm() {
-    this.form = this.qcs.toFormGroup(this.questions);
+    this.form = this.qcs.toFormGroup(this.checklistFormItems);
     this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
     this.originalPayload = JSON.stringify(this.updatePayload());
     this.onChange();
@@ -118,23 +128,25 @@ export class ChecklistComponent implements OnInit {
   }
 
   updatePayload() {
-    // convert date to correct format
     var payloadJSON = JSON.parse(JSON.stringify(this.form!.getRawValue()));
-    if (payloadJSON['date']) {
-      payloadJSON['date'] = getDateOnly(payloadJSON['date']);
-    }
-    // all un-touched questions of type checkbox as false instead of empty string
-    if (this.questions) {
-      for (let q of this.questions) {
-        if (q.controlType == 'checkbox') {
-          if (payloadJSON[q.key] === "") payloadJSON[q.key] = 0;
-          if (payloadJSON[q.key] === false) payloadJSON[q.key] = 0;
-          if (payloadJSON[q.key] === true) payloadJSON[q.key] = 1;
+    // if (payloadJSON['date']) payloadJSON['date'] = getDateOnly(payloadJSON['date']);
+    
+    if (this.checklistFormItems) {
+      for (let q of this.checklistFormItems) {
+        
+        if (q.kindBase == 'switch') {
+          payloadJSON[q.key] = (payloadJSON[q.key] === true) ? 1 : 0; // empty string (untouched) or false = 0
         }
-        if (q.controlType == 'textbox' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
-        if ((q.type == 'number' && payloadJSON[q.key] != "" && payloadJSON[q.key] != null && typeof(payloadJSON[q.key]) === 'number')
+
+        if (q.kindBase == 'text' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;
+
+        if ((q.kindBase == 'number' && payloadJSON[q.key] != "" && payloadJSON[q.key] != null && typeof(payloadJSON[q.key]) === 'number')
             || payloadJSON[q.key] === 0) {
           payloadJSON[q.key] = payloadJSON[q.key].toString();
+        }
+
+        if (q.kindBase == 'date') {
+          payloadJSON[q.key] = getDateOnly(payloadJSON[q.key])
         }
       }
     }

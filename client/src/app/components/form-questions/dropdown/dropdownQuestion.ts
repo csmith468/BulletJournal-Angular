@@ -1,23 +1,23 @@
-import { QuestionBase } from "../../../models/question-models/questionBase";
+import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
+import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
 
-export class DropdownQuestion extends QuestionBase<any> {
-    override type = 'dropdown';
-    override controlType = 'dropdown';
-}
+export class DropdownQuestion extends ChecklistFormItem<any> { }
 
 
-export function createDropdownQuestion(key: string, label: string, required: boolean, options: { key: string, value: string }[], value?: string) {
-    if (!('' in options.keys())) {
-        options.unshift({key: '',  value: ''})
+export function createDropdownQuestion(q: ChecklistQuestion, options: { key: string, value: string }[], item?: any) {
+    if ('' in options.keys() || '' in options.values()) {
+        options.unshift({key: '',  value: ''}) // move empty value first to be default option
     }
 
-
     return new DropdownQuestion({
-        key: key,
-        label: label,
-        required: required,
-        options: options,
-        value: (value) ? value : ''
+        value: (item && item[q.key]) ? item[q.key] : '',
+        key: q.key,
+        label: q.label,
+        questionOrder: (q.questionOrder) ? q.questionOrder : 1,
+        kindBase: q.kindBase,
+        kindDetail: q.kindDetail,
+        required: false,
+        options: options
     });
 }
 

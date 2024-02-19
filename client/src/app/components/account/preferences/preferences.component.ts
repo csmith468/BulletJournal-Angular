@@ -23,25 +23,25 @@ export class PreferencesComponent {
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
     this.activeTabName = data.heading!;
-    this.getData();
+    // this.getData();
 
     // if (this.activeTab.heading === 'Messages') {
   }
 
-  getData() {
-    const group: any = {};
-    this.form = new FormGroup(group);
+  // getData() {
+  //   const group: any = {};
+  //   this.form = new FormGroup(group);
 
-    this.preferencesService.getQuestionPreferences(this.activeTabName).subscribe(
-      columns => {
-        columns.forEach(
-          c => {
-            group[c.columnName] = new FormControl(c.isColumnVisible);
-            this.questions.push(c);
-          }
-        )
-        this.form = new FormGroup(group);
-      }
-    )
-  }
+  //   this.preferencesService.getQuestionPreferences(this.activeTabName).subscribe(
+  //     columns => {
+  //       columns.forEach(
+  //         c => {
+  //           group[c.key] = new FormControl(c.key);
+  //           this.questions.push(c);
+  //         }
+  //       )
+  //       this.form = new FormGroup(group);
+  //     }
+  //   )
+  // }
 }

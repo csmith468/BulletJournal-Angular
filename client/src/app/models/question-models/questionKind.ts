@@ -1,6 +1,7 @@
-export interface QuestionType {
-    typeDetail: string;
-    type: string;
+export interface QuestionKind {
+    questionKindID: number;
+    kindBase: string;
+    kindDetail: string;
     includeInCharts: boolean;
     isPercentage?: boolean;
     isCurrency?: boolean;

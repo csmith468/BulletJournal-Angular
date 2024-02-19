@@ -39,14 +39,14 @@ namespace API.Data.Repositories
         public async Task<IEnumerable<TablePreferences>> GetTablePreferencesAsync(int userId) {
             return await _contextEF.TablePreferences   
                 .Where(x => x.userID == userId)
-                .OrderBy(x => x.tableName)
+                .OrderBy(x => x.key)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<TablePreferences>> GetTablePreferencesByTypeAsync(int userId, string type) {
             return await _contextEF.TablePreferences   
                 .Where(x => x.userID == userId)
-                .OrderBy(x => x.tableName)
+                .OrderBy(x => x.key)
                 .ToListAsync();
         }
 

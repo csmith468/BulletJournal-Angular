@@ -2,9 +2,9 @@
     <div class="input-group">
     <div class="form-floating mb-2 custom-textbox">
     <input type="text"
-        [id]="question.key"
-        [formControlName]="question.key"
-        [name]="question.key"
+        [id]="item.key"
+        [formControlName]="item.key"
+        [name]="item.key"
         placeholder="DD/MM/YYYY"
         class="form-control"
         #dp="bsDatepicker"
@@ -18,10 +18,10 @@
     <span >
     </span>
     <div class="invalid-feedback" *ngIf="!isValid">
-      Please enter a {{ question.label }}.
+      Please enter a {{ item.label }}.
     </div>
     <div class="valid-feedback" *ngIf="isValid"></div>
-    <label [for]="question.key">{{question.label}}</label>
+    <label [for]="item.key">{{item.label}}</label>
 
   </div>
 </div>

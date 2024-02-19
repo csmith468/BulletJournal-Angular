@@ -11,7 +11,7 @@ CREATE VIEW [app].[v_checklistQuestions] AS
         ,qp.[questionKindID]
         ,qk.[kindBase]
         ,qk.[kindDetail]
-        ,qp.[questionOrder]
+        ,COALESCE(qp.[questionOrder], qp.[keyNumber]) AS [questionOrder]
         ,COALESCE(qp.[minValue], qk.[minValue]) AS [minValue]
         ,COALESCE(qp.[maxValue], qk.[maxValue]) AS [maxValue]
     FROM [app].[questionPreferences] qp

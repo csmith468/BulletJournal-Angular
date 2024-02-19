@@ -1,27 +1,29 @@
-<div *ngIf="questions && questions.length > 1 && form">
+<div *ngIf="checklistFormItems && checklistFormItems.length > 1 && form">
     <h4>{{this.header}}</h4>
+    <!-- Explain why submit button may be disabled (if not changes are made when editing) -->
     <i *ngIf="!changeMade && editMode">No changes made.</i>
     <form class="mt-3" [formGroup]="form">
-        <div *ngFor="let question of questions" class="form-row">
+        <div *ngFor="let checklistItem of checklistFormItems" class="form-row">
             
-            <div [ngSwitch]="question.type">
-                <div *ngSwitchCase="'text'">
-                    <app-textbox [question]="question" [form]="form"></app-textbox>
-                </div>
-                <div *ngSwitchCase="'number'">
-                    <app-textbox [question]="question" [form]="form"></app-textbox>
+            <!-- Create each question based on its kind -->
+            <div [ngSwitch]="checklistItem.kindBase">
+                <!-- <div *ngSwitchCase="'text'">
+                    <app-textbox [item]="checklistItem" [form]="form"></app-textbox>
+                </div> -->
+                <div *ngSwitchCase="'number' || 'text'">
+                    <app-textbox [item]="checklistItem" [form]="form"></app-textbox>
                 </div>
                 <div *ngSwitchCase="'dropdown'">
-                    <app-dropdown [question]="question" [form]="form"></app-dropdown>
+                    <app-dropdown [item]="checklistItem" [form]="form"></app-dropdown>
                 </div>  
                 <div *ngSwitchCase="'switch'">
-                    <app-switch [question]="question" [form]="form"></app-switch>
+                    <app-switch [item]="checklistItem" [form]="form"></app-switch>
                 </div>
                 <div *ngSwitchCase="'date'" >
-                    <app-date-picker [question]="question" [form]="form"></app-date-picker>
+                    <app-date-picker [item]="checklistItem" [form]="form" [validityCheck]="checklistItem.key.toLowerCase() == 'date' || checklistItem.required"></app-date-picker>
                 </div>
                 <div *ngSwitchCase="'slider'" >
-                    <app-slider [question]="question" [form]="form"></app-slider>
+                    <app-slider [item]="checklistItem" [form]="form"></app-slider>
                 </div>
             </div>
         </div>

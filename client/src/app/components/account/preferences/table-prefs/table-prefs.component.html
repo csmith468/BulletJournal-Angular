@@ -1,16 +1,16 @@
 
 <h4 class="mt-3">Table Visibility</h4>
-<div *ngIf="checklists && checklists.length > 1 && form">
+<div *ngIf="tables && tables.length > 1 && form">
     <form class="mt-3" [formGroup]="form">
-        <div *ngFor="let checklist of checklists" class="form-row">
+        <div *ngFor="let table of tables" class="form-row">
           <div class="form-check mb-2 ml-5">
             <input
               class="form-check-input"
               type="checkbox"
-              [id]="checklist.tableName"
-              [formControlName]="checklist.tableName" />
-            <label class="form-check-label" [for]="checklist.tableName"
-              >{{ checklist.tableName }}
+              [id]="table.key"
+              [formControlName]="table.key" />
+            <label class="form-check-label" [for]="table.key"
+              >{{ table.label }}
             </label>
           </div>
         </div>

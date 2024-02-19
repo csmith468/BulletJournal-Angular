@@ -1,52 +1,37 @@
-<tabset class="profile-tabset" #questionTabs>
+<tabset class="profile-tabset" *ngIf="(tableNames | keyvalue).length > 0"  #questionTabs>
   <div *ngFor="let t of tableNames | keyvalue">
+
+    <!-- Create tab for each table -->
     <tab [heading]="t.key" (selectTab)="onTabActivated($event)">
       <div *ngIf="t.key === activeTabName">
         <div *ngIf="activeTabName && questions && questions.length > 1 && form">
+
+          <!-- Create questions for selected table tab -->
           <form class="mt-3" [formGroup]="form">
+
+            <!-- Mark all as true or false -->
             <div class="form-row-custom mt-3 mb-3">
               <p class="markAllLabel">Mark All:</p>
-              <button
-                id="markAll"
-                class="btn btn-warning"
-                type="button"
-                (click)="markAllTrue()">
+              <button id="markAll" class="btn btn-warning" type="button" (click)="markAllTrue()">
                 <i class="fa-solid fa-square-check"></i>
               </button>
-              <button
-                class="btn btn-danger ml-2"
-                type="button"
-                (click)="markAllFalse()">
+              <button class="btn btn-danger ml-2" type="button" (click)="markAllFalse()">
               <i class="fa-solid fa-square-minus"></i>
               </button>
             </div>
+
+            <!-- Create checkboxes for each question's visibility -->
             <div *ngFor="let question of questions" class="form-row">
               <div class="form-check mb-2 ml-5">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [id]="question.columnName"
-                  [formControlName]="question.columnName" />
-                <label class="form-check-label" [for]="question.columnName"
-                  >{{ question.columnName }}
-                </label>
+                <input class="form-check-input" type="checkbox" [id]="question.key" [formControlName]="question.key" />
+                <label class="form-check-label" [for]="question.key">{{ question.label }}</label>
               </div>
             </div>
+
+            <!-- Create submit and cancel buttons -->
             <div class="form-row mt-3 mb-3">
-              <button
-                class="btn btn-success"
-                type="submit"
-                (click)="submitForm()"
-                [disabled]="!changeMade">
-                Save
-              </button>
-              <button
-                class="btn btn-danger ml-2"
-                type="submit"
-                (click)="cancelForm()"
-                [disabled]="!changeMade">
-                Cancel
-              </button>
+              <button class="btn btn-success" type="submit" (click)="submitForm()" [disabled]="!changeMade">Save</button>
+              <button class="btn btn-danger ml-2" type="submit" (click)="cancelForm()" [disabled]="!changeMade">Cancel</button>
             </div>
           </form>
         </div>

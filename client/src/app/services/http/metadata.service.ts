@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Tables } from 'src/app/models/data-models/tables';
-import { QuestionSet } from 'src/app/models/question-models/questionSet';
-import { QuestionType } from 'src/app/models/question-models/questionType';
+import { ChartQuestion } from 'src/app/models/question-models/chartQuestion';
+import { ChecklistQuestion } from 'src/app/models/question-models/checklistQuestion';
+import { QuestionKind } from 'src/app/models/question-models/questionKind';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,10 +14,6 @@ export class MetadataService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-
-  getQuestions(type: string) {
-    return this.http.get<QuestionSet[]>(this.baseUrl + 'metadata/' + type + '/getQuestionSet');
-  }
 
   getMyTables() {
     return this.http.get<Tables[]>(this.baseUrl + 'metadata/getMyTables').pipe(map(
@@ -32,11 +29,24 @@ export class MetadataService {
     ))
   }
 
-  getChartQuestionTypes() {
-    return this.http.get<QuestionType[]>(this.baseUrl + 'metadata/getChartQuestionTypes');
+  getQuestionKindById(questionKindId: number) {
+    return this.http.get<QuestionKind>(this.baseUrl + 'static/getQuestionKindById' + questionKindId.toString());
   }
 
-  getQuestionTypeByLabel(typeDetail: string) {
-    return this.http.get<QuestionType>(this.baseUrl + 'metadata/getQuestionTypeByLabel/' + typeDetail);
+
+  getChecklistQuestions(type: string) {
+    return this.http.get<ChecklistQuestion[]>(this.baseUrl + 'metadata/' + type + '/getChecklistQuestions');
   }
+
+
+  getChartQuestions(type: string) {
+    return this.http.get<ChartQuestion[]>(this.baseUrl + 'metadata/' + type + '/getChartQuestions');
+  }
+
+  getChartQuestionsByKind(type: string, questionKindId: number) {
+    return this.http.get<ChartQuestion[]>(
+      this.baseUrl + 'metadata/' + type + '/getChartQuestionsByKind/' + questionKindId.toString()
+    );
+  }
+
 }

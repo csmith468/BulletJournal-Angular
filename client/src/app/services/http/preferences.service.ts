@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-import { ISideNavData } from '../../models/sidenav-data/ISideNavData';
+import { Subject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { QuestionPreferences } from '../../models/data-models/questionPreferences';
 import { TablePreferences } from '../../models/data-models/tablePreferences';
-import { Tables } from '../../models/data-models/tables';
 import { SidenavService } from '../components/sidenav.service';
 
 @Injectable({

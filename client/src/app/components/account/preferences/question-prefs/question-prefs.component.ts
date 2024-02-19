@@ -27,6 +27,7 @@ export class QuestionPrefsComponent implements OnDestroy {
 
   constructor(private preferencesService: PreferencesService, private router: Router,
       private metadataService: MetadataService) {
+    // get all tables for tab headers
     this.metadataService.getMyTables().subscribe(
       tables => {
         tables.forEach(t => {
@@ -42,6 +43,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  // get questions for selected table tab
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
     this.activeTabName = data.heading!;
@@ -57,7 +59,7 @@ export class QuestionPrefsComponent implements OnDestroy {
       columns => {
         columns.forEach(
           c => {
-            group[c.columnName] = new FormControl(c.isColumnVisible);
+            group[c.key] = new FormControl(c.isVisible);
             this.questions.push(c);
           }
         )
@@ -69,6 +71,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     )
   }
 
+  // update preferences for table's questions
   submitForm() {
     var finalPrefs: QuestionPrefDto[] = [];
 
@@ -77,10 +80,10 @@ export class QuestionPrefsComponent implements OnDestroy {
 
       if (control && control.dirty) {
         const question = this.questions.find(q => q.tableName == this.tableNames[this.activeTabName]
-            && q.columnName == c);
-        if (question && question.isColumnVisible != control.value) {
-          question.isColumnVisible = control.value;
-          finalPrefs.push({questionPreferencesID: question.questionPreferencesID, isColumnVisible: control.value});
+            && q.key == c);
+        if (question && question.isVisible != control.value) {
+          question.isVisible = control.value;
+          finalPrefs.push({questionPreferencesID: question.questionPreferencesID, isVisible: control.value});
         }
       }
     })
@@ -95,7 +98,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     this.getData();
   }
 
-  //on change - compare payload to original payload
+  // on change - compare payload to original payload to determine if changes have been made (if no changes are made, disable submit)
   onChange() {
     const subscription = this.form!.valueChanges.subscribe(() => {
       this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));

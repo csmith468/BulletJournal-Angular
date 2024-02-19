@@ -1,14 +1,16 @@
-import { QuestionBase } from "../../../models/question-models/questionBase";
+import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
+import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
 
-export class SwitchQuestion extends QuestionBase<boolean> {
-    override type = 'switch';
-    override controlType = 'checkbox';
-}
+export class SwitchQuestion extends ChecklistFormItem<boolean> { }
 
-export function createSwitchQuestion(key: string, label: string, item?: any) {
+export function createSwitchQuestion(q: ChecklistQuestion, item?: any) {
     return new SwitchQuestion({
-        key: key,
-        label: label,
-        value: (item && item[key]) ? item[key] : false
+        value: (item && item[q.key]) ? item[q.key] : false,
+        key: q.key,
+        label: q.label,
+        questionOrder: (q.questionOrder) ? q.questionOrder : 1,
+        kindBase: q.kindBase,
+        kindDetail: q.kindDetail,
+        required: false
     });
 }

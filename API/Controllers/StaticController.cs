@@ -18,12 +18,12 @@ namespace API.Controllers
         }
 
         [HttpGet("timezones")]
-        public async Task<ActionResult<IEnumerable<TimezoneLocation>>> GetTimezoneLocation() {
+        public async Task<ActionResult<IEnumerable<TimezoneLocationView>>> GetTimezoneLocation() {
             return Ok(await _uow.StaticRepository.GetTimezoneLocationsAsync());
         }
 
         [HttpGet("timezone/{id}")]
-        public async Task<ActionResult<TimezoneLocation>> GetTimezoneById(int id) {
+        public async Task<ActionResult<TimezoneLocationView>> GetTimezoneById(int id) {
             return Ok(await _uow.StaticRepository.GetTimezoneLocationByIDAsync(id));
         }
 

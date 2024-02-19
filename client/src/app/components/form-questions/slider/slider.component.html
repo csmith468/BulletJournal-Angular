@@ -1,26 +1,26 @@
 <div [formGroup]="form">
     <!-- <div [formGroup]="form">
         <div class="form mb-2" >
-            <label [attr.for]="question.key">{{question.label}}</label>
+            <label [attr.for]="item.key">{{item.label}}</label>
             <input 
                 class="form-range" 
                 [type]="'range'"
-                [id]="question.key"
-                [formControlName]="question.key"
-                [min]="question.minValue"
-                [max]="question.maxValue"
+                [id]="item.key"
+                [formControlName]="item.key"
+                [min]="item.minValue"
+                [max]="item.maxValue"
                 step="1"
             >
         </div>
     </div> -->
 <div class="label-container">
-    <label [attr.for]="question.key" class="name-label">{{question.label}}</label>
+    <label [attr.for]="item.key" class="name-label">{{item.label}}</label>
     <label class="value-label">{{slider.value}}</label>
 </div>
-<mat-slider [min]="question.minValue" [max]="question.maxValue" step="1" discrete [displayWith]="formatLabel">
+<mat-slider [min]="item.minValue" [max]="item.maxValue" step="1" discrete [displayWith]="formatLabel">
     <input matSliderThumb
-        [id]="question.key"
-        [formControlName]="question.key"
+        [id]="item.key"
+        [formControlName]="item.key"
         #slider
     >
   </mat-slider>

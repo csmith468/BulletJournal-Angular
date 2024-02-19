@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/services/components/chart.service';
 import { FieldType } from '../../fieldType';
-import { QuestionType } from 'src/app/models/question-models/questionType';
+import { QuestionType } from 'src/app/models/question-models/questionKind';
 import { MetadataService } from 'src/app/services/http/metadata.service';
 
 export type FieldValues = {

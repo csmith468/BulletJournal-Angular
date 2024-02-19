@@ -5,7 +5,8 @@ GO
 CREATE TABLE [app].[tablePreferences](
 	[tablePreferencesID] [int] IDENTITY(1,1) NOT NULL,
 	[userID] [int] NOT NULL,
-	[tableName] [nvarchar](100) NULL,
+	[key] [nvarchar](100) NOT NULL,
+	[label] [nvarchar](100) NOT NULL,
 	[isVisible] [bit] NULL
 ) ON [PRIMARY]
 GO

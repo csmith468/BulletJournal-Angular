@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { QuestionBase } from 'src/app/models/question-models/questionBase';
+import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
 
 @Component({
   standalone: true,
@@ -11,11 +11,11 @@ import { QuestionBase } from 'src/app/models/question-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class DropdownComponent {
-  @Input() question!: QuestionBase<any>;
+  @Input() item!: ChecklistFormItem<any>;
   @Input() form!: FormGroup;
 
   get isValid() {
-    return this.form.controls[this.question.key].valid;
+    return this.form.controls[this.item.key].valid;
   }
 
 }

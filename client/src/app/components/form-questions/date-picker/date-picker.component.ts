@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { QuestionBase } from 'src/app/models/question-models/questionBase';
+import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
 
 
 @Component({
@@ -13,11 +13,13 @@ import { QuestionBase } from 'src/app/models/question-models/questionBase';
   imports: [CommonModule, ReactiveFormsModule, BsDatepickerModule]
 })
 export class DatePickerComponent implements OnInit {
-  @Input() question!: QuestionBase<any>;
+  @Input() item!: ChecklistFormItem<any>;
   @Input() form!: FormGroup;
   @Input() minDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() - 10 ))
   @Input() maxDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() + 5 ))
   @Input() validityCheck? = true;
+  
+  bsValue:Date = new Date();
 
   bsConfig = {
     dateInputFormat: 'MMM DD, YYYY',
@@ -28,17 +30,14 @@ export class DatePickerComponent implements OnInit {
     // isAnimated: true
   };
 
-  bsValue:Date = new Date();
+  constructor() { }
 
   ngOnInit(): void {
-    this.bsValue = <Date>this.question.value;
-  }
-
-  constructor() {
+    this.bsValue = <Date>this.item.value;
   }
 
   get isValid() {
-    return this.form.controls[this.question.key].valid;
+    return this.form.controls[this.item.key].valid;
   }
 
 }

@@ -2,9 +2,9 @@
     <div class="form-floating mb-2 custom-textbox" >
         <input 
             class="form-control" 
-            [type]="question.inputType"
-            [id]="question.key"
-            [formControlName]="question.key"
+            [type]="item.kindBase"
+            [id]="item.key"
+            [formControlName]="item.key"
             [class.is-invalid]="emptyButRequired || isTooSmall || isTooLarge"
             [class.is-valid]="isValid"
         >
@@ -12,12 +12,12 @@
           Question is required.
         </div>
         <div class="invalid-feedback" *ngIf="isTooSmall">
-          Number must be at least {{question.minValue}}.
+          Number must be at least {{item.minValue}}.
         </div>
         <div class="invalid-feedback" *ngIf="isTooLarge">
-          Number must be no greater than {{question.maxValue}}.
+          Number must be no greater than {{item.maxValue}}.
         </div>
         <div class="valid-feedback" *ngIf="isValid"></div>
-        <label [attr.for]="question.key">{{question.label}}</label>
+        <label [attr.for]="item.key">{{item.label}}</label>
     </div>
 </div>

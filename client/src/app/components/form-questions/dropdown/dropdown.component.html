@@ -1,13 +1,13 @@
 <div [formGroup]="form">
     <div class="form-floating mb-2">
         <select class="form-control custom-select"
-            [id]="question.key"
-            [formControlName]="question.key"
+            [id]="item.key"
+            [formControlName]="item.key"
         >
-            <option *ngIf="!question.required" value=""></option>
-            <option *ngFor="let opt of question.options"
+            <option *ngIf="!item.required" value=""></option>
+            <option *ngFor="let opt of item.options"
                 [value]="opt.key">{{opt.value}}</option>
         </select>
-        <label [attr.for]="question.key">{{question.label}}</label>
+        <label [attr.for]="item.key">{{item.label}}</label>
     </div>  
 </div>

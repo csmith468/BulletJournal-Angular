@@ -15,20 +15,20 @@ namespace API.Data.Repositories {
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<TimezoneLocation>> GetTimezoneLocationsAsync() {
-            return await _contextEF.TimezoneLocations
+        public async Task<IEnumerable<TimezoneLocationView>> GetTimezoneLocationsAsync() {
+            return await _contextEF.TimezoneLocationsView
                 .OrderBy(t => t.timezoneLocationName)
                 .ToListAsync();
         }
 
-        public async Task<TimezoneLocation> GetTimezoneLocationByIDAsync(int id) {
-            return await _contextEF.TimezoneLocations
+        public async Task<TimezoneLocationView> GetTimezoneLocationByIDAsync(int id) {
+            return await _contextEF.TimezoneLocationsView
                 .Where(t => t.timezoneLocationID == id)
                 .SingleOrDefaultAsync();
         }
 
         public async Task<bool> TimezoneExistsAsync(int id) {
-            return await _contextEF.TimezoneLocations.AnyAsync(x => x.timezoneLocationID == id);
+            return await _contextEF.TimezoneLocationsView.AnyAsync(x => x.timezoneLocationID == id);
         }
 
         public async Task<IEnumerable<QuestionKinds>> GetQuestionKindsAsync() {

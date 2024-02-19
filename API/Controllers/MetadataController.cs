@@ -34,41 +34,27 @@ namespace API.Controllers
             return Ok(filteredTables);
         }
 
-        [HttpGet("{type}/getQuestionSet")]
-        public async Task<ActionResult<IEnumerable<QuestionSetDto>>> GetQuestionSet(string type) {
-            var questionSet = await _uow.MetadataRepository.GetQuestionSetAsync(User.GetUserId(), type);
-            if (questionSet == null) return NotFound();
-            return Ok(questionSet);
-        }
-
-        [HttpGet("getChartQuestions")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> GetChartQuestions() {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsAsync(User.GetUserId());
+        // Chart Questions
+        [HttpGet("{type}/getChartQuestions")]
+        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> GetChartQuestions(string type) {
+            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsAsync(User.GetUserId(), type);
             if (chartQuestions == null) return NotFound();
             return Ok(chartQuestions);
         }
 
-
-        [HttpGet("{type}/getChartQuestionsByType")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> getChartQuestionsByType(string type) {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsByTypeAsync(User.GetUserId(), type);
-            if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions);
-        }
-        
-
-        [HttpGet("getChartQuestionsByKindId/{kindId}")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> GetChartQuestionsByKindId(int kindId) {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsByKindIdAsync(User.GetUserId(), kindId);
+        [HttpGet("{type}/getChartQuestionsByKind/{kindId}")]
+        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> GetChartQuestionsByKind(string type, int kindId) {
+            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsByKindAsync(User.GetUserId(), type, kindId);
             if (chartQuestions == null) return NotFound();
             return Ok(chartQuestions);
         }
 
-        [HttpGet("{type}/getChartQuestionsByTypeAndKindId/{kindId}")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> GetChartQuestionsByKindId(string type, int kindId) {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsByTypeAndKindIdAsync(User.GetUserId(), type, kindId);
-            if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions);
+        // Checklist Questions
+        [HttpGet("{type}/getChecklistQuestions")]
+        public async Task<ActionResult<IEnumerable<ChartQuestionsView>>> getChecklistQuestions(string type) {
+            var checklistQuestions = await _uow.MetadataRepository.GetChecklistQuestionsAsync(User.GetUserId(), type);
+            if (checklistQuestions == null) return NotFound();
+            return Ok(checklistQuestions);
         }
 
     }
