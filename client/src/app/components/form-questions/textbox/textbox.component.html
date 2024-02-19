@@ -2,7 +2,7 @@
     <div class="form-floating mb-2 custom-textbox" >
         <input 
             class="form-control" 
-            [type]="item.kindBase"
+            type="text"
             [id]="item.key"
             [formControlName]="item.key"
             [class.is-invalid]="emptyButRequired || isTooSmall || isTooLarge"

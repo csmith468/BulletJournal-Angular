@@ -5,14 +5,14 @@
       <form [formGroup]="dateForm">
         <div class="form-row">
           <app-date-picker
-            [question]="startDateInput!"
+            [item]="startDateInput!"
             [form]="dateForm"
             [minDate]="minDate"
             [maxDate]="maxDate"
             [validityCheck]="false"
             class="date-input"></app-date-picker>
           <app-date-picker
-            [question]="endDateInput!"
+            [item]="endDateInput!"
             [form]="dateForm"
             [minDate]="minDate"
             [maxDate]="maxDate"
@@ -50,8 +50,8 @@
       <tbody>
         <tr *ngFor="let data of table">
           <td *ngFor="let q of questions">
-            {{  q.baseType == 'switch' ? (data[q.key] == 1) 
-                : q.baseType == 'number' ? (data[q.key] | number) 
+            {{  q.kindBase == 'switch' ? (data[q.key] == 1) 
+                : q.kindBase == 'number' ? (data[q.key] | number) 
                 : data[q.key] }}
           </td>
           <td>

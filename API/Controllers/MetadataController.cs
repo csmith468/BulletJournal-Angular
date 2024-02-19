@@ -42,10 +42,17 @@ namespace API.Controllers
 
         // Checklist Questions
         [HttpGet("{type}/getChecklistQuestions")]
-        public async Task<ActionResult<IEnumerable<ChecklistQuestionViewDto>>> getChecklistQuestions(string type) {
+        public async Task<ActionResult<IEnumerable<ChecklistQuestionViewDto>>> GetChecklistQuestions(string type) {
             var checklistQuestions = await _uow.MetadataRepository.GetChecklistQuestionsAsync(User.GetUserId(), type);
             if (checklistQuestions == null) return NotFound();
             return Ok(checklistQuestions);
+        }
+
+        [HttpGet("{type}/getTableQuestions")]
+        public async Task<ActionResult<IEnumerable<TableQuestionViewDto>>> GetTableQuestions(string type) {
+            var tableQuestions = await _uow.MetadataRepository.GetTableQuestionsAsync(User.GetUserId(), type);
+            if (tableQuestions == null) return NotFound();
+            return Ok(tableQuestions);
         }
 
     }

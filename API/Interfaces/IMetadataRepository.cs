@@ -6,14 +6,16 @@ namespace API.Data.Interfaces
 {
     public interface IMetadataRepository {
 
-        // Chart Questions
+        // Questions with Relevant Data for Each UI Page
         Task<IEnumerable<ChartQuestionViewDto>> GetChartQuestionsAsync(int userId, string type);
         Task<IEnumerable<ChartQuestionViewDto>> GetChartQuestionsByKindAsync(int userId, string type, int kindId);
 
-        // Checklist Questions
         Task<IEnumerable<ChecklistQuestionViewDto>> GetChecklistQuestionsAsync(int userId, string type);
 
-        // Table Types for Layout
+        Task<IEnumerable<TableQuestionViewDto>> GetTableQuestionsAsync(int userId, string type);
+
+        
+        // Table Types with Relevant Data for Each UI Page
         Task<IEnumerable<TableTypeLayoutDto>> GetTableTypeLayoutAsync(int userId);
 
     }

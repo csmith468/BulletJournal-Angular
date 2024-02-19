@@ -17,12 +17,8 @@ namespace API.Data.Repositories
             _contextEF = contextEF;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<TableTypeLayoutDto>> GetTableTypeLayoutAsync(int userID) {
-            var tables = await _contextEF.TableTypeView.Where(t => t.userID == userID).OrderBy(t => t.key).ToListAsync();
-            return tables.Select(q => _mapper.Map<TableTypeView, TableTypeLayoutDto>(q)).ToList();
-        }
 
-        // Chart Questions
+        // Questions with Relevant Data for Each UI Page
         public async Task<IEnumerable<ChartQuestionViewDto>> GetChartQuestionsAsync(int userId, string type) {
             var questions = await _contextEF.QuestionsView.Where(q => q.userID == userId && q.tableName == type && q.includeInCharts == true).ToListAsync();
             return questions.Select(q => _mapper.Map<QuestionView, ChartQuestionViewDto>(q)).ToList();
@@ -35,10 +31,21 @@ namespace API.Data.Repositories
             return questions.Select(q => _mapper.Map<QuestionView, ChartQuestionViewDto>(q)).ToList();
         }
 
-        // Checklist Questions
         public async Task<IEnumerable<ChecklistQuestionViewDto>> GetChecklistQuestionsAsync(int userId, string type) {
             var questions = await _contextEF.QuestionsView.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
             return questions.Select(q => _mapper.Map<QuestionView, ChecklistQuestionViewDto>(q)).ToList();
+        }
+
+        public async Task<IEnumerable<TableQuestionViewDto>> GetTableQuestionsAsync(int userId, string type) {
+            var questions = await _contextEF.QuestionsView.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
+            return questions.Select(q => _mapper.Map<QuestionView, TableQuestionViewDto>(q)).ToList();
+        }
+
+
+        // Table Types with Relevant Data for Each UI Page
+        public async Task<IEnumerable<TableTypeLayoutDto>> GetTableTypeLayoutAsync(int userID) {
+            var tables = await _contextEF.TableTypeView.Where(t => t.userID == userID).OrderBy(t => t.key).ToListAsync();
+            return tables.Select(q => _mapper.Map<TableTypeView, TableTypeLayoutDto>(q)).ToList();
         }
     }
 }

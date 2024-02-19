@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Tables } from 'src/app/models/data-models/tables';
+import { TableTypeLayout } from 'src/app/models/data-models/tableTypeLayout';
 import { ISideNavData } from 'src/app/models/sidenav-data/ISideNavData';
 import { environment } from 'src/environments/environment';
 
@@ -17,7 +17,7 @@ export class SidenavService {
 
 
   setSideNav() {
-    this.http.get<Tables[]>(this.baseUrl + 'metadata/getMyTables').pipe(
+    this.http.get<TableTypeLayout[]>(this.baseUrl + 'metadata/getTableTypeLayout').pipe(
       map(t => [
         {
           routeLink: '',
@@ -53,10 +53,11 @@ export class SidenavService {
     })
   }
 
-  createSection(t: Tables[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
+  createSection(t: TableTypeLayout[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
     const headers = t.filter(table => table.isHeader);
     const items = t.filter(table => !table.isHeader && !table.category);
     const subItems = t.filter(table => !table.isHeader && table.category);
+    console.log(t)
 
     const groupedTables = subItems.reduce((categories: any, table) => {
       if (table.category) {
@@ -70,19 +71,19 @@ export class SidenavService {
       .map(item => ({
         routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
         icon: item.icon,
-        label: labelPrefix + ' ' + item.displayName
+        label: labelPrefix + ' ' + item.label
       }));
 
     headers.forEach(header => {
       const headerNavItem: ISideNavData = {
         routeLink: routeLinkPrefix + '/' + header.key,
         icon: header.icon,
-        label: labelPrefix + ' ' + header.displayName,
+        label: labelPrefix + ' ' + header.label,
         items: groupedTables[header.key] ? groupedTables[header.key].map(
-          (item: Tables) => ({
+          (item: TableTypeLayout) => ({
             routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
             icon: item.icon,
-            label: labelPrefix + ' ' + item.displayName
+            label: labelPrefix + ' ' + item.label
           })) : [],
       };
 

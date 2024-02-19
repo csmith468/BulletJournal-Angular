@@ -11,7 +11,7 @@ export class QuestionControlService {
 
     questions.forEach(question => {
       var value = (question.kindBase === 'switch') ? false : '';
-      value = (question.kindBase === 'number' && question.value == 0) ? 0 : question.value;
+      value = (question.kindBase === 'number' && question.value === 0) ? 0 : question.value;
       var validators: any[] = [];
       if (question.required) validators.push(Validators.required);
       if (question.minValue != null) validators.push(Validators.min(question.minValue));

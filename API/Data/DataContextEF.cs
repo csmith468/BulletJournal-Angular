@@ -61,9 +61,9 @@ namespace API.Data
             //     .HasKey(u => u.hiddenQuestionID);
 
             // Metadata views related to user
-            modelBuilder.Entity<QuestionView>().ToView("v_questions", "app")
+            modelBuilder.Entity<QuestionView>().ToView("v_question", "app")
                 .HasKey(q => q.questionPreferencesId);
-            modelBuilder.Entity<TableTypeView>().ToView("v_tableTypes", "app")
+            modelBuilder.Entity<TableTypeView>().ToView("v_tableType", "app")
                 .HasKey(t => t.tablePreferencesID);
 
             // Static tables

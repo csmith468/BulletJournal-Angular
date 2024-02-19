@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
@@ -28,7 +28,7 @@ import { ChecklistQuestion } from 'src/app/models/question-models/checklistQuest
   imports: [AsyncPipe, CommonModule, ReactiveFormsModule, 
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
-export class ChecklistComponent implements OnInit {
+export class ChecklistComponent implements OnDestroy {
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.changeMade && this.form.dirty && !this.saving) $event.returnValue = true;
   }
@@ -41,7 +41,7 @@ export class ChecklistComponent implements OnInit {
   changeMade: boolean = false;
   header: string = '';
   saving: boolean = false;
-  private readonly subscription = new Subscription();
+  private subscription: Subscription | undefined;
 
   constructor(private checklistService: ChecklistService, private router: Router, private route: ActivatedRoute, 
     private qcs: QuestionControlService, private metadataService: MetadataService) 
@@ -62,6 +62,10 @@ export class ChecklistComponent implements OnInit {
     )
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
+
   createFormItem(q: ChecklistQuestion, checklist: any) {
     if (q.kindBase == 'date') 
       this.checklistFormItems.push(createDateQuestion(q, checklist))
@@ -78,20 +82,20 @@ export class ChecklistComponent implements OnInit {
     // eventually add textarea question
   }
 
-
-  ngOnInit(): void {
-  }
-
   createForm() {
     this.form = this.qcs.toFormGroup(this.checklistFormItems);
-    this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
-    this.originalPayload = JSON.stringify(this.updatePayload());
+    this.payload = JSON.stringify(this.updatePayload());
+    this.originalPayload = this.payload;
     this.onChange();
   }
   
   //on change - run function to check validity, compare payload to original payload
   onChange() {
-    const subscription = this.form!.valueChanges.subscribe(() => {
+    // if it makes it here and subscription exists, reset subscription
+    if (this.subscription) this.subscription.unsubscribe();
+    this.changeMade = false;
+
+    this.subscription = this.form!.valueChanges.subscribe(() => {
       this.payload = JSON.stringify(this.updatePayload());
       if (this.editMode) {
         if (this.payload != this.originalPayload) this.changeMade = true;
@@ -100,11 +104,10 @@ export class ChecklistComponent implements OnInit {
         this.changeMade = true;
       }
     })
-    this.subscription.add(subscription);
   }
 
   cancelForm() {
-    this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
     this.router.navigateByUrl('/data/' + this.source);
   }
 
@@ -117,7 +120,7 @@ export class ChecklistComponent implements OnInit {
   submitForm() {
     this.saving = true;
     this.payload = this.updatePayload();
-    if (this.editMode) this.subscription.unsubscribe();
+    if (this.editMode && this.subscription) this.subscription.unsubscribe();
     var id = this.route.snapshot.data['metadata']['id'];
     this.checklistService.addOrUpdateEntry(this.source, this.payload, id).subscribe({
       next: () => {
@@ -133,9 +136,8 @@ export class ChecklistComponent implements OnInit {
     
     if (this.checklistFormItems) {
       for (let q of this.checklistFormItems) {
-        
         if (q.kindBase == 'switch') {
-          payloadJSON[q.key] = (payloadJSON[q.key] === true) ? 1 : 0; // empty string (untouched) or false = 0
+          payloadJSON[q.key] = (payloadJSON[q.key] === true || payloadJSON[q.key] === 1) ? 1 : 0; // empty string (untouched) or false = 0
         }
 
         if (q.kindBase == 'text' && !q.required && payloadJSON[q.key] === "") payloadJSON[q.key] = null;

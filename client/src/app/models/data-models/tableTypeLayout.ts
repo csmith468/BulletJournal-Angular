@@ -1,7 +1,6 @@
-export interface Tables {
-    tableID: number;
+export interface TableTypeLayout {
     key: string;
-    displayName: string;
+    label: string;
     icon: string;
     category?: string;
     isHeader?: boolean;

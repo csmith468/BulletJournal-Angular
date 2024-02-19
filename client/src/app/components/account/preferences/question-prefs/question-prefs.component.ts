@@ -20,7 +20,7 @@ export class QuestionPrefsComponent implements OnDestroy {
   activeTabName: string = '';
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
-  private readonly subscription = new Subscription();
+  private subscription: Subscription | undefined;
   payload: string = '';
   originalPayload: string = '';
   changeMade: boolean = false;
@@ -28,11 +28,11 @@ export class QuestionPrefsComponent implements OnDestroy {
   constructor(private preferencesService: PreferencesService, private router: Router,
       private metadataService: MetadataService) {
     // get all tables for tab headers
-    this.metadataService.getMyTables().subscribe(
+    this.metadataService.getTableTypeLayout().subscribe(
       tables => {
         tables.forEach(t => {
-          this.tableNames[t.displayName] = t.key;
-          if (this.activeTabName == '') this.activeTabName = t.displayName
+          this.tableNames[t.label] = t.key;
+          if (this.activeTabName == '') this.activeTabName = t.label
         })
         this.getData();
       }
@@ -40,7 +40,7 @@ export class QuestionPrefsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   // get questions for selected table tab
@@ -59,8 +59,10 @@ export class QuestionPrefsComponent implements OnDestroy {
       columns => {
         columns.forEach(
           c => {
-            group[c.key] = new FormControl(c.isVisible);
-            this.questions.push(c);
+            if (c.key !== 'date') {
+              group[c.key] = new FormControl(c.isVisible);
+              this.questions.push(c);
+            }
           }
         )
         this.form = new FormGroup(group);
@@ -100,12 +102,15 @@ export class QuestionPrefsComponent implements OnDestroy {
 
   // on change - compare payload to original payload to determine if changes have been made (if no changes are made, disable submit)
   onChange() {
-    const subscription = this.form!.valueChanges.subscribe(() => {
+    // if it makes it here and subscription exists, reset subscription
+    if (this.subscription) this.subscription.unsubscribe();
+    this.changeMade = false;
+    
+    this.subscription = this.form!.valueChanges.subscribe(() => {
       this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
       if (this.payload != this.originalPayload) this.changeMade = true;
       else this.changeMade = false;
     })
-    this.subscription.add(subscription);
   }
 
   markAllTrue() {
