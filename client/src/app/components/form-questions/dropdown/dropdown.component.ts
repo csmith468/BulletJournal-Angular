@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { QuestionBase } from 'src/app/models/form-models/questionBase';
+import { QuestionBase } from 'src/app/models/question-models/questionBase';
 
 @Component({
   standalone: true,

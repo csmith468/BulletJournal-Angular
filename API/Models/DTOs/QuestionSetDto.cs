@@ -4,8 +4,8 @@ namespace API.Models.DTOs {
         public string key { get; set; }  // Key 
         public string label { get; set; } // Question
         public int questionOrder { get; set; }
-        public string baseType { get; set; }
-        public string typeDetail { get; set; }
+        public string kindBase { get; set; }
+        public string kindDetail { get; set; }
         public int? minValue { get; set; }
         public int? maxValue { get; set; }
     }

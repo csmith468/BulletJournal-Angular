@@ -39,7 +39,7 @@ namespace API.Controllers
             var prefs = await _uow.PreferencesRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.questionPreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.isQuestionVisible = questionPrefs.isQuestionVisible;
+            prefs.isVisible = questionPrefs.isVisible;
             prefs.userID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
@@ -54,7 +54,7 @@ namespace API.Controllers
                 var pref = await _uow.PreferencesRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), p.questionPreferencesID);
                 if (pref == null) return NotFound();
 
-                pref.isQuestionVisible = p.isQuestionVisible;
+                pref.isVisible = p.isVisible;
                 if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
             }
 

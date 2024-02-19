@@ -4,7 +4,7 @@ using API.Models.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
-// static data that is un-related to any user or checklist type
+// static data that is un-related to any user or user data
 namespace API.Data.Repositories {
     public class StaticRepository : IStaticRepository {
         // private readonly DataContextDapper _contextDapper;
@@ -31,16 +31,16 @@ namespace API.Data.Repositories {
             return await _contextEF.TimezoneLocations.AnyAsync(x => x.timezoneLocationID == id);
         }
 
-        public async Task<IEnumerable<QuestionTypes>> GetQuestionTypesAsync() {
-            return await _contextEF.QuestionTypes.ToListAsync();
+        public async Task<IEnumerable<QuestionKinds>> GetQuestionKindsAsync() {
+            return await _contextEF.QuestionKinds.ToListAsync();
         }
 
-        public async Task<IEnumerable<QuestionTypes>> GetChartQuestionTypesAsync() {
-            return await _contextEF.QuestionTypes.Where(q => q.includeInCharts == true).ToListAsync();
+        public async Task<IEnumerable<QuestionKinds>> GetChartQuestionKindsAsync() {
+            return await _contextEF.QuestionKinds.Where(q => q.includeInCharts == true).ToListAsync();
         }
 
-        public async Task<IEnumerable<Tables>> GetTablesAsync() {
-            return await _contextEF.Tables.OrderBy(x => x.displayName).ToListAsync();
+        public async Task<QuestionKinds> GetQuestionKindByIdAsync(int id) {
+            return await _contextEF.QuestionKinds.Where(q => q.questionKindID == id).FirstOrDefaultAsync();
         }
     }
 }

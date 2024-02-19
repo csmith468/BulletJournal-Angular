@@ -19,21 +19,20 @@ namespace API.Controllers {
 
         [HttpGet("not-found")]
         public ActionResult<AppUser> GetNotFound() {
-            var thing = _contextEF.AppUsers.Find(-1);
-            if (thing == null) return NotFound();
-            return thing;
+            var test = _contextEF.AppUsers.Find(-1);
+            if (test == null) return NotFound();
+            return test;
         }
 
         [HttpGet("server-error")]
         public ActionResult<string> GetServerError() {
-            var thing = _contextEF.AppUsers.Find(-1);
-            var thingToReturn = thing.ToString();
-            return thingToReturn;
+            var test = _contextEF.AppUsers.Find(-1);
+            return test.ToString();
         }
 
         [HttpGet("bad-request")]
         public ActionResult<string> GetBadRequest() {
-            return BadRequest("This was not a good request");
+            return BadRequest("Bad request.");
         }
     }
 }

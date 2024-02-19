@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using API.Models.Entities;
 
-// static data that is un-related to any user or checklist type
+// static data that is un-related to any user or user data
 namespace API.Controllers
 {
     [Authorize] 
@@ -27,18 +27,26 @@ namespace API.Controllers
             return Ok(await _uow.StaticRepository.GetTimezoneLocationByIDAsync(id));
         }
 
-        [HttpGet("getQuestionTypes")]
-        public async Task<ActionResult<IEnumerable<QuestionTypes>>> GetQuestionTypes() {
-            var questionTypes = await _uow.StaticRepository.GetQuestionTypesAsync();
-            if (questionTypes == null) return NotFound();
-            return Ok(questionTypes);
+
+        [HttpGet("getQuestionKinds")]
+        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetQuestionKinds() {
+            var questionKinds = await _uow.StaticRepository.GetQuestionKindsAsync();
+            if (questionKinds == null) return NotFound();
+            return Ok(questionKinds);
         }
 
-        [HttpGet("getChartQuestionTypes")]
-        public async Task<ActionResult<IEnumerable<QuestionTypes>>> GetChartQuestionTypes() {
-            var questionTypes = await _uow.StaticRepository.GetChartQuestionTypesAsync();
-            if (questionTypes == null) return NotFound();
-            return Ok(questionTypes);
+        [HttpGet("getChartQuestionKinds")]
+        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetChartQuestionKinds() {
+            var questionKinds = await _uow.StaticRepository.GetChartQuestionKindsAsync();
+            if (questionKinds == null) return NotFound();
+            return Ok(questionKinds);
+        }
+
+        [HttpGet("getQuestionKindById/{id}")]
+        public async Task<ActionResult<IEnumerable<QuestionKinds>>> GetChartQuestionKindById(int id) {
+            var questionKind = await _uow.StaticRepository.GetQuestionKindByIdAsync(id);
+            if (questionKind == null) return NotFound();
+            return Ok(questionKind);
         }
     }
 }

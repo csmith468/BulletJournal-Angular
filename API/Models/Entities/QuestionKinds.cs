@@ -1,8 +1,8 @@
 namespace API.Models.Entities {
-    public class QuestionTypes {
-        public int questionTypeID { get; set; }
-        public string typeDetail { get; set; }
-        public string type { get; set; }
+    public class QuestionKinds {
+        public int questionKindID { get; set; }
+        public string kindBase { get; set; }
+        public string kindDetail { get; set; }
         public bool includeInCharts { get; set; }
         public bool? isPercentage { get; set; }
         public bool? isCurrency { get; set; }

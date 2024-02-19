@@ -1,4 +1,4 @@
-import { QuestionBase } from "../../../models/form-models/questionBase";
+import { QuestionBase } from "../../../models/question-models/questionBase";
 
 export class SwitchQuestion extends QuestionBase<boolean> {
     override type = 'switch';
@@ -12,8 +12,3 @@ export function createSwitchQuestion(key: string, label: string, item?: any) {
         value: (item && item[key]) ? item[key] : false
     });
 }
-
-
-// key: 'meds',
-// label: 'Did you take your meds?',
-// value: false,

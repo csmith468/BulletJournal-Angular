@@ -1,4 +1,4 @@
-import { QuestionBase } from "../../../models/form-models/questionBase";
+import { QuestionBase } from "../../../models/question-models/questionBase";
 
 export class TextboxQuestion extends QuestionBase<any> {
     override controlType = 'textbox';

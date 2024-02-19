@@ -2,6 +2,7 @@
 using API.Data.Interfaces;
 using API.Models.DTOs;
 using API.Models.Entities;
+using API.Models.Views;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +21,8 @@ namespace API.Data.Repositories {
             var visibleQuestions = await _contextEF.QuestionPreferences
                 .Where(p => p.userID == userId 
                     && p.tableName.ToLower() == type.ToLower() 
-                    && p.isQuestionVisible == true
+                    && p.isVisible == true
                 ).ToListAsync();
-            
             return visibleQuestions.Select(q => _mapper.Map<QuestionPreferences, QuestionSetDto>(q)).ToList();
         }
 
@@ -31,6 +31,28 @@ namespace API.Data.Repositories {
                 .Where(t => t.userID == userId && t.isTableVisible == false)
                 .Select(p => p.tableName)
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsAsync(int userId) {
+            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByTypeAsync(int userId, string type) {
+            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId && q.tableName == type).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByKindIdAsync(int userId, int kindId) {
+            return await _contextEF.ChartQuestionsViews.Where(q => q.userID == userId && q.questionKindID == kindId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ChartQuestionsView>> GetChartQuestionsByTypeAndKindIdAsync(int userId, string type, int kindId) {
+            return await _contextEF.ChartQuestionsViews.Where(q => 
+                q.userID == userId && q.tableName == type && q.questionKindID == kindId
+            ).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Tables>> GetTablesAsync() {
+            return await _contextEF.Tables.OrderBy(x => x.displayName).ToListAsync();
         }
     }
 }

@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[questionPreferencesSetup](
 	[QuestionKey] [nvarchar](100) NOT NULL,
 	[QuestionNumber] [int] NULL,
 	[QuestionLabel] [nvarchar](100) NOT NULL,
-	[IsQuestionVisible] [bit] NULL,
+	[isVisible] [bit] NULL,
 	[QuestionOrder] [int] NULL,
 	[Type] [nvarchar](100) NOT NULL,
 	[TypeDetail] [nvarchar](100) NOT NULL,

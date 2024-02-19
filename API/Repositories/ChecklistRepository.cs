@@ -157,7 +157,7 @@ namespace API.Data.Repositories
             var visibleColumns = await _contextEF.QuestionPreferences
                 .Where(p => p.userID == userId 
                     && p.tableName.ToLower() == typeof(T).Name.ToLower() 
-                    && p.isQuestionVisible == true)
+                    && p.isVisible == true)
                 .Select(p => p.key)
                 .ToListAsync();
 

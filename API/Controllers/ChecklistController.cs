@@ -43,11 +43,9 @@ namespace API.Controllers
 
         [HttpGet("{type}/getMyChecklists")] //?pageNumber=2&pageSize=3 (pageSize = -1 will return all entries)
         public async Task<ActionResult<PagedList<Checklist>>> GetMyChecklists(string type, [FromQuery]PageParams pageParams) {
-            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
             
-            var result = await checklistRepository.GetListAsync(userID, pageParams);
-
+            var result = await checklistRepository.GetListAsync(User.GetUserId(), pageParams);
             if (result == null) return NoContent();
 
             var checklists = result.Item1;  
@@ -60,10 +58,9 @@ namespace API.Controllers
 
         [HttpGet("{type}/getMyChecklistById/{id}")]
         public async Task<ActionResult<Checklist>> GetMyChecklistById(string type, int id) {
-            var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);
 
-            var checklist = await checklistRepository.GetByIdFilteredAsync(userID, id);
+            var checklist = await checklistRepository.GetByIdFilteredAsync(User.GetUserId(), id);
             if (checklist == null) return NotFound();
 
             return Ok(checklist);

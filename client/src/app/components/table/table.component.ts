@@ -9,7 +9,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
-import { QuestionSet } from 'src/app/models/form-models/questionSet';
+import { QuestionSet } from 'src/app/models/question-models/questionSet';
 import { MetadataService } from 'src/app/services/http/metadata.service';
 
 @Component({

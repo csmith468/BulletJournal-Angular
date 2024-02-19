@@ -1,5 +1,6 @@
 using API.Data.Helpers;
 using API.Models.Entities;
+using API.Models.Views;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -12,8 +13,9 @@ namespace API.Data
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<ChartQuestionsView> ChartQuestionsViews { get; set; }
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
-        public DbSet<QuestionTypes> QuestionTypes { get; set; }
+        public DbSet<QuestionKinds> QuestionKinds { get; set; }
         public DbSet<TablePreferences> TablePreferences { get; set; }
         public DbSet<TimezoneLocation> TimezoneLocations { get; set; }
         public DbSet<Tables> Tables { get; set; }
@@ -44,10 +46,12 @@ namespace API.Data
                 .HasKey(u => u.questionPreferencesID);
             modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app_sys")
                 .HasKey(u => u.tablePreferencesID);
-            modelBuilder.Entity<QuestionTypes>().ToTable("questionTypes", "app_sys")
-                .HasKey(u => u.questionTypeID);
+            modelBuilder.Entity<QuestionKinds>().ToTable("questionKinds", "app_sys")
+                .HasKey(u => u.questionKindID);
             modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
                 .HasKey(u => u.tableID);
+            modelBuilder.Entity<ChartQuestionsView>().ToView("v_chartQuestions", "app_sys")
+                .HasKey(q => q.questionPreferencesId);
 
             modelBuilder.Entity<Morning>().ToTable("morning", "app")
                 .HasKey(u => u.id);

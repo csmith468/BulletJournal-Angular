@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Tables } from 'src/app/models/data-models/tables';
-import { QuestionSet } from 'src/app/models/form-models/questionSet';
+import { QuestionSet } from 'src/app/models/question-models/questionSet';
+import { QuestionType } from 'src/app/models/question-models/questionType';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,5 +30,13 @@ export class MetadataService {
         }).filter(table => !table.isHeader);
       }
     ))
+  }
+
+  getChartQuestionTypes() {
+    return this.http.get<QuestionType[]>(this.baseUrl + 'metadata/getChartQuestionTypes');
+  }
+
+  getQuestionTypeByLabel(typeDetail: string) {
+    return this.http.get<QuestionType>(this.baseUrl + 'metadata/getQuestionTypeByLabel/' + typeDetail);
   }
 }

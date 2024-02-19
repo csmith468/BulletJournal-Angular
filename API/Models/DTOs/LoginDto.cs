@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace API.Models.DTOs {
-
     public class LoginDto {
         public string email { get; set; }
         public string password { get; set; }
