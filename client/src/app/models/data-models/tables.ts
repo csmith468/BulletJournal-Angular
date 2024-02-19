@@ -3,6 +3,6 @@ export interface Tables {
     key: string;
     displayName: string;
     icon: string;
-    category: string | null;
-    isHeader: boolean | null;
+    category?: string;
+    isHeader?: boolean;
 }

@@ -3,6 +3,6 @@ namespace API.Models.Entities {
         public int tablePreferencesID { get; set; }
         public int userID { get; set; }
         public string tableName { get; set; }
-        public bool? isTableVisible { get; set; }
+        public bool? isVisible { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace API.Data.Repositories
                             SELECT " + userId.ToString()
                                 + @" AS [userID]
                                 ,[tableName]
-                                ,1 AS [isTableVisible]
+                                ,1 AS [isVisible]
                             FROM [dbo].[tablePreferencesSetup]
                         ";
             return await _contextDapper.ExecuteAsync(sql);

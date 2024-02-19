@@ -28,7 +28,7 @@ namespace API.Data.Repositories {
 
         public async Task<IEnumerable<string>> GetInvisibleTablesAsync(int userId) {
             return await _contextEF.TablePreferences
-                .Where(t => t.userID == userId && t.isTableVisible == false)
+                .Where(t => t.userID == userId && t.isVisible == false)
                 .Select(p => p.tableName)
                 .ToListAsync();
         }

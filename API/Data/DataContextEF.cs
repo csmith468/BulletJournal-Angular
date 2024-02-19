@@ -41,41 +41,48 @@ namespace API.Data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<AppUser>().ToTable("user", "app_sys").HasKey(u => u.userID);
-            modelBuilder.Entity<QuestionPreferences>().ToTable("questionPreferences", "app_sys")
+
+            // Metadata ables related to user 
+            modelBuilder.Entity<AppUser>().ToTable("user", "app")
+                .HasKey(u => u.userID);
+            modelBuilder.Entity<QuestionPreferences>().ToTable("questionPreferences", "app")
                 .HasKey(u => u.questionPreferencesID);
-            modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app_sys")
+            modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app")
                 .HasKey(u => u.tablePreferencesID);
-            modelBuilder.Entity<QuestionKinds>().ToTable("questionKinds", "app_sys")
-                .HasKey(u => u.questionKindID);
-            modelBuilder.Entity<Tables>().ToTable("tables", "app_sys")
-                .HasKey(u => u.tableID);
-            modelBuilder.Entity<ChartQuestionsView>().ToView("v_chartQuestions", "app_sys")
+            // hidden questions
+            modelBuilder.Entity<ChartQuestionsView>().ToView("v_chartQuestions", "app")
                 .HasKey(q => q.questionPreferencesId);
 
-            modelBuilder.Entity<Morning>().ToTable("morning", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<Night>().ToTable("night", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<Daily>().ToTable("daily", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<Wellbeing>().ToTable("wellbeing", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<Physical>().ToTable("physical", "app")
-                .HasKey(u => u.id);
 
-            modelBuilder.Entity<SpendingFinancial>().ToTable("spendingFinancial", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<SpendingHealthcare>().ToTable("spendingHealthcare", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<SpendingPersonal>().ToTable("spendingPersonal", "app")
-                .HasKey(u => u.id);
-            modelBuilder.Entity<SpendingRegular>().ToTable("spendingRegular", "app")
-                .HasKey(u => u.id);
-            // modelBuilder.Entity<Sleep>().ToTable("sleep", "app").HasKey(u => u.SleepID);
-
-            modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "dbo")
+            // Static tables
+            modelBuilder.Entity<QuestionKinds>().ToTable("questionKinds", "app_sys")
+                .HasKey(u => u.questionKindID);
+            modelBuilder.Entity<TimezoneLocation>().ToView("v_timezoneLocation", "app_sys")
                 .HasKey(u => u.timezoneLocationID);
+
+
+            // Checklist data
+            modelBuilder.Entity<Morning>().ToTable("morning", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Night>().ToTable("night", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Daily>().ToTable("daily", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Wellbeing>().ToTable("wellbeing", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Physical>().ToTable("physical", "checklist")
+                .HasKey(u => u.id);
+            // modelBuilder.Entity<Sleep>().ToTable("sleep", "app")
+            //  .HasKey(u => u.SleepID);
+
+            modelBuilder.Entity<SpendingFinancial>().ToTable("spendingFinancial", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<SpendingHealthcare>().ToTable("spendingHealthcare", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<SpendingPersonal>().ToTable("spendingPersonal", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<SpendingRegular>().ToTable("spendingRegular", "checklist")
+                .HasKey(u => u.id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder) {

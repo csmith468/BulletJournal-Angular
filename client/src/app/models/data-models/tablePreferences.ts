@@ -1,11 +1,11 @@
 export interface TablePreferences {
     tablePreferencesID: number;
     tableName: string;
-    isTableVisible: boolean;
+    isVisible: boolean;
 }
 
 
 export interface TablePrefDto {
     tablePreferencesID: number;
-    isTableVisible: boolean;
+    isVisible: boolean;
 }

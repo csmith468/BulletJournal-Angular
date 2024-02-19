@@ -82,7 +82,7 @@ namespace API.Data.Repositories
 
         // public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
         //     List<string> tables = await _contextEF.TablePreferences
-        //         .Where(t => t.userID == userId && t.isTableVisible == true)
+        //         .Where(t => t.userID == userId && t.isVisible == true)
         //         .Select(t => t.tableName).ToListAsync();
 
         //     string sql = "";
