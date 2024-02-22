@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Subject, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { QuestionPreferences } from '../../models/data-models/questionPreferences';
-import { TablePreferences } from '../../models/data-models/tablePreferences';
 import { SidenavService } from '../components/sidenav.service';
+import { ChecklistTypePreferences } from 'src/app/models/data-models/checklistTypePreferences';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +29,12 @@ export class PreferencesService {
     return this.http.put(this.baseUrl + 'preferences/questions/updateMultiplePreferences', list);
   }
 
-  getTablePreferences() {
-    return this.http.get<TablePreferences[]>(this.baseUrl + 'preferences/tables/getPreferences');
+  getChecklistTypePreferences() {
+    return this.http.get<ChecklistTypePreferences[]>(this.baseUrl + 'preferences/checklistTypes/getPreferences');
   }
 
-  updateTablePreferences(list: any) {
-    return this.http.put(this.baseUrl + 'preferences/tables/updateMultiplePreferences', list).pipe(
+  updateChecklistTypePreferences(list: any) {
+    return this.http.put(this.baseUrl + 'preferences/checklistTypes/updateMultiplePreferences', list).pipe(
       map(response => {
         this.sidenavService.setSideNav();
         return response;

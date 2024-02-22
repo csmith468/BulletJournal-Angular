@@ -1,9 +1,9 @@
-import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
-import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
+import { Question_Checklist } from "src/app/models/question-models/question_checklist";
+import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
 
-export class SwitchQuestion extends ChecklistFormItem<boolean> { }
+export class SwitchQuestion extends QuestionFormItem<boolean> { }
 
-export function createSwitchQuestion(q: ChecklistQuestion, item?: any) {
+export function createSwitchQuestion(q: Question_Checklist, item?: any) {
     return new SwitchQuestion({
         value: (item && item[q.key]) ? item[q.key] : false,
         key: q.key,

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { TableTypeLayout } from 'src/app/models/data-models/tableTypeLayout';
+import { VisibleChecklistType } from 'src/app/models/data-models/visibleChecklistType';
 import { ISideNavData } from 'src/app/models/sidenav-data/ISideNavData';
 import { environment } from 'src/environments/environment';
 
@@ -17,7 +17,7 @@ export class SidenavService {
 
 
   setSideNav() {
-    this.http.get<TableTypeLayout[]>(this.baseUrl + 'metadata/getTableTypeLayout').pipe(
+    this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes').pipe(
       map(t => [
         {
           routeLink: '',
@@ -32,7 +32,7 @@ export class SidenavService {
         },
         {
           routeLink: 'data',
-          icon: 'fa-solid fa-table-list',
+          icon: 'fa-solid fa-table',
           label: 'Data',
           items: this.createSection(t, 'data', '', 'View')
         },
@@ -53,21 +53,20 @@ export class SidenavService {
     })
   }
 
-  createSection(t: TableTypeLayout[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
-    const headers = t.filter(table => table.isHeader);
-    const items = t.filter(table => !table.isHeader && !table.category);
-    const subItems = t.filter(table => !table.isHeader && table.category);
-    console.log(t)
+  createSection(t: VisibleChecklistType[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
+    const headers = t.filter(ct => ct.isHeader);
+    const items = t.filter(ct => !ct.isHeader && !ct.category);
+    const subItems = t.filter(ct => !ct.isHeader && ct.category);
 
-    const groupedTables = subItems.reduce((categories: any, table) => {
-      if (table.category) {
-        if (!categories[table.category.toLowerCase()]) categories[table.category.toLowerCase()] = [];
-        categories[table.category.toLowerCase()].push(table);
+    const groupedTables = subItems.reduce((categories: any, ct) => {
+      if (ct.category) {
+        if (!categories[ct.category.toLowerCase()]) categories[ct.category.toLowerCase()] = [];
+        categories[ct.category.toLowerCase()].push(ct);
       }
       return categories;
     }, {});
 
-    const sideNavItems: ISideNavData[] = items.filter(table => !table.category)
+    const sideNavItems: ISideNavData[] = items.filter(ct => !ct.category)
       .map(item => ({
         routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
         icon: item.icon,
@@ -80,7 +79,7 @@ export class SidenavService {
         icon: header.icon,
         label: labelPrefix + ' ' + header.label,
         items: groupedTables[header.key] ? groupedTables[header.key].map(
-          (item: TableTypeLayout) => ({
+          (item: VisibleChecklistType) => ({
             routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
             icon: item.icon,
             label: labelPrefix + ' ' + item.label

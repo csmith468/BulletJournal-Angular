@@ -3,8 +3,8 @@
 // This data is exactly what is needed for table visualization ("Data" page)
 
 namespace API.Models.Views.DTOs {
-    public class TableQuestionViewDto {
-        public string tableName { get; set; }
+    public class VisibleQuestion_TableViewDto {
+        public string checklistTypeName { get; set; }
         public string key { get; set; }
         public string label { get; set; }
         public string kindBase { get; set; }

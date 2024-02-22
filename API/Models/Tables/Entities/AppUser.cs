@@ -1,5 +1,5 @@
 namespace API.Models.Tables.Entities {
-    public class AppUser {
+    public class AppUser : BaseEntity {
         public int userID { get; set; }
         public string email { get; set; }
         public string firstName { get; set; }

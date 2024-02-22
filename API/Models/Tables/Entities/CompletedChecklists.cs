@@ -1,7 +1,7 @@
 namespace API.Models.Tables.Entities {
     public class CompletedChecklists {
-        public string tableName { get; set; }
-        public string tableLabel { get; set; }
+        public string checklistTypeName { get; set; }
+        public string checklistTypeLabel { get; set; }
         public DateTime date { get; set; }
         public int? id { get; set; }
     }

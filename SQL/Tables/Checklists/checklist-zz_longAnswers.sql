@@ -18,6 +18,8 @@ CREATE TABLE [checklist].[zz_longAnswers](
 	[Any stores] [nvarchar](1) NULL,
 	[Favorite game or app] [nvarchar](1) NULL,
 	[Favorite song] [nvarchar](1) NULL,
-	[What did you read] [nvarchar](1) NULL
+	[What did you read] [nvarchar](1) NULL,
+	[createdDatetime] [datetime] NULL,
+	[modifiedDatetime] [datetime] NULL
 ) ON [PRIMARY]
 GO

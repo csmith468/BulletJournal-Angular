@@ -4,6 +4,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [app].[user](
 	[userID] [int] IDENTITY(1,1) NOT NULL,
+	[createdDatetime] [datetime] NULL,
+	[modifiedDatetime] [datetime] NULL,
 	[email] [nvarchar](100) NOT NULL,
 	[firstName] [nvarchar](50) NOT NULL,
 	[lastName] [nvarchar](50) NOT NULL,

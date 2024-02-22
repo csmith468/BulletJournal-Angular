@@ -1,5 +1,5 @@
-namespace API.Models.Tables.Entities {
-    public class QuestionKind {
+namespace API.Models.Views.Entities {
+    public class QuestionKindView {
         public int questionKindID { get; set; }
         public string kindBase { get; set; }
         public string kindDetail { get; set; }

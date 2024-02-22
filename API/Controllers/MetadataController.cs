@@ -4,6 +4,7 @@ using AutoMapper;
 using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Models.Views.DTOs;
+using API.Models.Views.Entities;
 
 // getting data about tables/questions for user but not data within them
 namespace API.Controllers
@@ -18,41 +19,41 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("getTableTypeLayout")]
-        public async Task<ActionResult<IEnumerable<TableTypeLayoutDto>>> GetTableTypeLayout() {
-            var tableTypes = await _uow.MetadataRepository.GetTableTypeLayoutAsync(User.GetUserId());
+        [HttpGet("getVisibleChecklistTypes")]
+        public async Task<ActionResult<IEnumerable<VisibleChecklistTypeViewDto>>> GetVisibleChecklistTypes() {
+            var tableTypes = await _uow.MetadataRepository.GetVisibleChecklistTypeAsync(User.GetUserId());
             if (tableTypes == null) return NotFound();
-            return Ok(tableTypes);
+            return Ok(tableTypes.Select(q => _mapper.Map<ChecklistTypePreferencesView, VisibleChecklistTypeViewDto>(q)).ToList());
         }
 
         // Chart Questions
         [HttpGet("{type}/getChartQuestions")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionViewDto>>> GetChartQuestions(string type) {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsAsync(User.GetUserId(), type);
+        public async Task<ActionResult<IEnumerable<VisibleQuestion_ChartsViewDto>>> GetChartQuestions(string type) {
+            var chartQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, true, null);
             if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions);
+            return Ok(chartQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
         }
 
         [HttpGet("{type}/getChartQuestionsByKind/{kindId}")]
-        public async Task<ActionResult<IEnumerable<ChartQuestionViewDto>>> GetChartQuestionsByKind(string type, int kindId) {
-            var chartQuestions = await _uow.MetadataRepository.GetChartQuestionsByKindAsync(User.GetUserId(), type, kindId);
+        public async Task<ActionResult<IEnumerable<VisibleQuestion_ChartsViewDto>>> GetChartQuestionsByKind(string type, int kindId) {
+            var chartQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, true, kindId);
             if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions);
+            return Ok(chartQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
         }
 
         // Checklist Questions
         [HttpGet("{type}/getChecklistQuestions")]
-        public async Task<ActionResult<IEnumerable<ChecklistQuestionViewDto>>> GetChecklistQuestions(string type) {
-            var checklistQuestions = await _uow.MetadataRepository.GetChecklistQuestionsAsync(User.GetUserId(), type);
+        public async Task<ActionResult<IEnumerable<VisibleQuestion_ChecklistViewDto>>> GetChecklistQuestions(string type) {
+            var checklistQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, false, null);
             if (checklistQuestions == null) return NotFound();
-            return Ok(checklistQuestions);
+            return Ok(checklistQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChecklistViewDto>(q)).ToList());
         }
 
         [HttpGet("{type}/getTableQuestions")]
-        public async Task<ActionResult<IEnumerable<TableQuestionViewDto>>> GetTableQuestions(string type) {
-            var tableQuestions = await _uow.MetadataRepository.GetTableQuestionsAsync(User.GetUserId(), type);
+        public async Task<ActionResult<IEnumerable<VisibleQuestion_TableViewDto>>> GetTableQuestions(string type) {
+            var tableQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, false, null);
             if (tableQuestions == null) return NotFound();
-            return Ok(tableQuestions);
+            return Ok(tableQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_TableViewDto>(q)).ToList());
         }
 
     }

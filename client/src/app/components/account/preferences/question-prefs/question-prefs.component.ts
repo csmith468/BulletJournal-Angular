@@ -16,7 +16,7 @@ export class QuestionPrefsComponent implements OnDestroy {
   @ViewChild('questionTabs') questionTabs!: TabsetComponent;
 
   activeTab?: TabDirective;
-  tableNames: { [key: string]: string } = {};
+  checklistTypeNames: { [key: string]: string } = {};
   activeTabName: string = '';
   questions: QuestionPreferences[] = [];
   form!: FormGroup;
@@ -27,12 +27,12 @@ export class QuestionPrefsComponent implements OnDestroy {
 
   constructor(private preferencesService: PreferencesService, private router: Router,
       private metadataService: MetadataService) {
-    // get all tables for tab headers
-    this.metadataService.getTableTypeLayout().subscribe(
-      tables => {
-        tables.forEach(t => {
-          this.tableNames[t.label] = t.key;
-          if (this.activeTabName == '') this.activeTabName = t.label
+    // get all checklistTypes for tab headers
+    this.metadataService.getVisibleChecklistTypes().subscribe(
+      checklistTypes => {
+        checklistTypes.forEach(ct => {
+          this.checklistTypeNames[ct.label] = ct.key;
+          if (this.activeTabName == '') this.activeTabName = ct.label
         })
         this.getData();
       }
@@ -43,7 +43,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  // get questions for selected table tab
+  // get questions for selected checklist tab
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
     this.activeTabName = data.heading!;
@@ -55,7 +55,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     const group: any = {};
     this.questions = [];
 
-    this.preferencesService.getQuestionPreferences(this.tableNames[this.activeTabName]).subscribe(
+    this.preferencesService.getQuestionPreferences(this.checklistTypeNames[this.activeTabName]).subscribe(
       columns => {
         columns.forEach(
           c => {
@@ -73,7 +73,7 @@ export class QuestionPrefsComponent implements OnDestroy {
     )
   }
 
-  // update preferences for table's questions
+  // update preferences for checklist type's questions
   submitForm() {
     var finalPrefs: QuestionPrefDto[] = [];
 
@@ -81,7 +81,7 @@ export class QuestionPrefsComponent implements OnDestroy {
       const control = this.form.get(c);
 
       if (control && control.dirty) {
-        const question = this.questions.find(q => q.tableName == this.tableNames[this.activeTabName]
+        const question = this.questions.find(q => q.checklistTypeName == this.checklistTypeNames[this.activeTabName]
             && q.key == c);
         if (question && question.isVisible != control.value) {
           question.isVisible = control.value;

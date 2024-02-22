@@ -13,15 +13,15 @@ namespace API.Data.Helpers
 
             CreateMap<AppUser, AppUserDto>();
             CreateMap<AppUserUpdateDto, AppUser>();
-            CreateMap<QuestionPreferences, QuestionPreferences>();
-            CreateMap<TablePreferences, TablePreferences>();
-            CreateMap<QuestionPreferences, QuestionPreferencesDto>();
+            CreateMap<QuestionPreferencesView, QuestionPreferences>();
+            CreateMap<QuestionPreferencesDto, QuestionPreferences>();
+            CreateMap<ChecklistTypePreferences, ChecklistTypePreferences>();
 
             // Views with relevant data for each component in the UI
-            CreateMap<QuestionView, ChartQuestionViewDto>();
-            CreateMap<QuestionView, ChecklistQuestionViewDto>();
-            CreateMap<QuestionView, TableQuestionViewDto>();
-            CreateMap<TableTypeView, TableTypeLayoutDto>();
+            CreateMap<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>();
+            CreateMap<QuestionPreferencesView, VisibleQuestion_ChecklistViewDto>();
+            CreateMap<QuestionPreferencesView, VisibleQuestion_TableViewDto>();
+            CreateMap<ChecklistTypePreferencesView, VisibleChecklistTypeViewDto>();
 
             CreateMap<Checklist, Checklist>();
             

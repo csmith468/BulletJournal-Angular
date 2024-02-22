@@ -1,9 +1,9 @@
-import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
-import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
+import { Question_Checklist } from "src/app/models/question-models/question_checklist";
+import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
 
-export class SliderQuestion extends ChecklistFormItem<any> { }
+export class SliderQuestion extends QuestionFormItem<any> { }
 
-export function createSliderQuestion(q: ChecklistQuestion, item?: any) {
+export function createSliderQuestion(q: Question_Checklist, item?: any) {
    return new SliderQuestion({
         value: (item && item[q.key]) ? item[q.key] : ((q.minValue) ? q.minValue : 0),
         key: q.key,

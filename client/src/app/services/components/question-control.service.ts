@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ChecklistFormItem } from '../../models/question-models/checklistFormItem';
+import { QuestionFormItem } from '../../models/question-models/questionFormItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionControlService {
-  toFormGroup(questions: ChecklistFormItem<any>[]) {
+  toFormGroup(questions: QuestionFormItem<any>[]) {
     const group: any = {};
 
     questions.forEach(question => {

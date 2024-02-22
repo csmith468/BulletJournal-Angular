@@ -15,16 +15,16 @@ namespace API.Data
         // Metadata tables/views related to user 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
-        public DbSet<TablePreferences> TablePreferences { get; set; }
+        public DbSet<ChecklistTypePreferences> ChecklistTypePreferences { get; set; }
         // public DbSet<HiddenQuestions> HiddenQuestions { get; set; }
 
-        public DbSet<QuestionView> QuestionsView { get; set; }
-        public DbSet<TableTypeView> TableTypeView { get; set; }
+        public DbSet<QuestionPreferencesView> QuestionPreferencesView { get; set; }
+        public DbSet<ChecklistTypePreferencesView> ChecklistTypePreferencesView { get; set; }
 
 
         // Static tables/views
-        public DbSet<QuestionKind> QuestionKinds { get; set; }
-        public DbSet<TableType> Tables { get; set; }
+        public DbSet<QuestionKindView> QuestionKindsView { get; set; }
+        public DbSet<ChecklistTypeView> ChecklistTypesView { get; set; }
         public DbSet<TimezoneLocationView> TimezoneLocationsView { get; set; }
         
         // Checklist data
@@ -55,22 +55,22 @@ namespace API.Data
                 .HasKey(u => u.userID);
             modelBuilder.Entity<QuestionPreferences>().ToTable("questionPreferences", "app")
                 .HasKey(u => u.questionPreferencesID);
-            modelBuilder.Entity<TablePreferences>().ToTable("tablePreferences", "app")
-                .HasKey(u => u.tablePreferencesID);
+            modelBuilder.Entity<ChecklistTypePreferences>().ToTable("checklistTypePreferences", "app")
+                .HasKey(u => u.checklistTypePreferencesID);
             // modelBuilder.Entity<HiddenQuestions>().ToTable("hiddenQuestions", "app")
             //     .HasKey(u => u.hiddenQuestionID);
 
             // Metadata views related to user
-            modelBuilder.Entity<QuestionView>().ToView("v_question", "app")
-                .HasKey(q => q.questionPreferencesId);
-            modelBuilder.Entity<TableTypeView>().ToView("v_tableType", "app")
-                .HasKey(t => t.tablePreferencesID);
+            modelBuilder.Entity<QuestionPreferencesView>().ToView("v_questionPreferences", "app")
+                .HasKey(q => q.questionPreferencesID);
+            modelBuilder.Entity<ChecklistTypePreferencesView>().ToView("v_checklistTypePreferences", "app")
+                .HasKey(t => t.checklistTypePreferencesID);
 
-            // Static tables
-            modelBuilder.Entity<QuestionKind>().ToTable("questionKind", "app_sys")
+            // Static views
+            modelBuilder.Entity<QuestionKindView>().ToView("v_questionKind", "app_sys")
                 .HasKey(u => u.questionKindID);
-            modelBuilder.Entity<TableType>().ToTable("tableType", "app_sys")
-                .HasKey(u => u.tableID);
+            modelBuilder.Entity<ChecklistTypeView>().ToView("v_checklistType", "app_sys")
+                .HasKey(u => u.checklistTypeID);
             modelBuilder.Entity<TimezoneLocationView>().ToView("v_timezoneLocation", "app_sys")
                 .HasKey(u => u.timezoneLocationID);
 

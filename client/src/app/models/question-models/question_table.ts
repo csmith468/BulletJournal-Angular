@@ -1,5 +1,5 @@
-export interface TableQuestion {
-    tableName: string;
+export interface Question_Table {
+    checklistTypeName: string;
     key: string;
     label: string;
     kindBase: string;

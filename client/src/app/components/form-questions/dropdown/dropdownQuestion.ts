@@ -1,10 +1,10 @@
-import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
-import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
+import { Question_Checklist } from "src/app/models/question-models/question_checklist";
+import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
 
-export class DropdownQuestion extends ChecklistFormItem<any> { }
+export class DropdownQuestion extends QuestionFormItem<any> { }
 
 
-export function createDropdownQuestion(q: ChecklistQuestion, options: { key: string, value: string }[], item?: any) {
+export function createDropdownQuestion(q: Question_Checklist, options: { key: string, value: string }[], item?: any) {
     if ('' in options.keys() || '' in options.values()) {
         options.unshift({key: '',  value: ''}) // move empty value first to be default option
     }

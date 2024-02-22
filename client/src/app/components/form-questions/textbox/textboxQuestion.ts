@@ -1,9 +1,9 @@
-import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
-import { ChecklistFormItem } from "src/app/models/question-models/checklistFormItem";
+import { Question_Checklist } from "src/app/models/question-models/question_checklist";
+import { QuestionFormItem } from "src/app/models/question-models/questionFormItem";
 
-export class TextboxQuestion extends ChecklistFormItem<any> { }
+export class TextboxQuestion extends QuestionFormItem<any> { }
 
-export function createTextboxQuestion(q: ChecklistQuestion, item?: any) {
+export function createTextboxQuestion(q: Question_Checklist, item?: any) {
     return new TextboxQuestion({
         value: (item && item[q.key]) ? item[q.key] : '',
         key: q.key,

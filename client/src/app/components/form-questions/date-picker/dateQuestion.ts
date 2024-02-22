@@ -1,11 +1,11 @@
 import { GetDateType } from "src/app/helpers/functions/getDateTypeFn";
-import { ChecklistFormItem } from "../../../models/question-models/checklistFormItem";
-import { ChecklistQuestion } from "src/app/models/question-models/checklistQuestion";
+import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
+import { Question_Checklist } from "src/app/models/question-models/question_checklist";
 
-export class DateQuestion extends ChecklistFormItem<any> { }
+export class DateQuestion extends QuestionFormItem<any> { }
 
 
-export function createDateQuestion(q: ChecklistQuestion, item?: any) {
+export function createDateQuestion(q: Question_Checklist, item?: any) {
     return new DateQuestion({
         value: (item && item[q.key]) ? GetDateType(item[q.key]) : new Date,
         key: q.key,

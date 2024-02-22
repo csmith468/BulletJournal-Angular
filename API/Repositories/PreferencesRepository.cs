@@ -1,5 +1,6 @@
 using API.Data.Interfaces;
 using API.Models.Tables.Entities;
+using API.Models.Views.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,68 +16,69 @@ namespace API.Data.Repositories
             _contextDapper = contextDapper;
         }
 
-        public async Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesAsync(int userId) {
-            return await _contextEF.QuestionPreferences   
+        public async Task<IEnumerable<QuestionPreferencesView>> GetQuestionPreferencesViewAsync(int userId) {
+            return await _contextEF.QuestionPreferencesView
                 .Where(x => x.userID == userId)
-                .OrderBy(x => x.tableName)
+                .OrderBy(x => x.questionOrder)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<QuestionPreferences>> GetQuestionPreferencesByTypeAsync(int userId, string type) {
-            return await _contextEF.QuestionPreferences   
-                .Where(x => x.userID == userId && x.tableName == type)
-                .OrderBy(x => x.tableName)
+        public async Task<IEnumerable<QuestionPreferencesView>> GetQuestionPreferencesViewByTypeAsync(int userId, string type) {
+            return await _contextEF.QuestionPreferencesView   
+                .Where(x => x.userID == userId && x.checklistTypeName == type)
+                .OrderBy(x => x.questionOrder)
                 .ToListAsync();
+        }
+
+        public async Task<QuestionPreferencesView> GetQuestionPreferencesViewByIdAsync(int userId, int id) {
+            return await _contextEF.QuestionPreferencesView   
+                .Where(x => x.userID == userId && x.questionPreferencesID == id)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<QuestionPreferences> GetQuestionPreferencesByIdAsync(int userId, int id) {
-            return await _contextEF.QuestionPreferences   
+            return await _contextEF.QuestionPreferences
                 .Where(x => x.userID == userId && x.questionPreferencesID == id)
                 .SingleOrDefaultAsync();
         }
 
 
-        public async Task<IEnumerable<TablePreferences>> GetTablePreferencesAsync(int userId) {
-            return await _contextEF.TablePreferences   
+        public async Task<IEnumerable<ChecklistTypePreferencesView>> GetChecklistTypePreferencesViewAsync(int userId) {
+            return await _contextEF.ChecklistTypePreferencesView   
                 .Where(x => x.userID == userId)
-                .OrderBy(x => x.key)
+                .OrderBy(x => x.defaultOrder)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TablePreferences>> GetTablePreferencesByTypeAsync(int userId, string type) {
-            return await _contextEF.TablePreferences   
+        public async Task<IEnumerable<ChecklistTypePreferencesView>> GetChecklistTypePreferencesViewByTypeAsync(int userId, string type) {
+            return await _contextEF.ChecklistTypePreferencesView   
                 .Where(x => x.userID == userId)
-                .OrderBy(x => x.key)
+                .OrderBy(x => x.defaultOrder)
                 .ToListAsync();
         }
 
-        public async Task<TablePreferences> GetTablePreferencesByIdAsync(int userId, int id) {
-            return await _contextEF.TablePreferences   
-                .Where(x => x.userID == userId && x.tablePreferencesID == id)
+        public async Task<ChecklistTypePreferencesView> GetChecklistTypePreferencesViewByIdAsync(int userId, int id) {
+            return await _contextEF.ChecklistTypePreferencesView   
+                .Where(x => x.userID == userId && x.checklistTypePreferencesID == id)
                 .SingleOrDefaultAsync();
         }
 
+        public async Task<ChecklistTypePreferences> GetChecklistTypePreferencesByIdAsync(int userId, int id) {
+            return await _contextEF.ChecklistTypePreferences   
+                .Where(x => x.userID == userId && x.checklistTypePreferencesID == id)
+                .SingleOrDefaultAsync();
 
-        public async Task<bool> CreateTablePreferencesAsync(int userId) {
-            string sql = @"INSERT INTO [app_sys].[tablePreferences]
-                            SELECT " + userId.ToString()
-                                + @" AS [userID]
-                                ,[tableName]
-                                ,1 AS [isVisible]
-                            FROM [dbo].[tablePreferencesSetup]
-                        ";
+        }
+
+        public async Task<bool> CreateChecklistTypePreferencesAsync(int userId) {
+            string sql = @" EXEC app.sp_createUserChecklistTypePreferences
+                        @UserId = " + userId.ToString();
             return await _contextDapper.ExecuteAsync(sql);
         }
 
         public async Task<bool> CreateQuestionPreferencesAsync(int userId) {
-            string sql = @"INSERT INTO [app_sys].[questionPreferences]
-                            SELECT " + userId.ToString()
-                                + @" AS [userID]
-                                ,[tableName]
-                                ,[columnName]
-                                ,1 AS [isColumnVisible]
-                            FROM [dbo].[questionPreferencesSetup]
-                        ";
+            string sql = @" EXEC app.sp_createUserQuestionPreferences
+                        @UserId = " + userId.ToString();
             return await _contextDapper.ExecuteAsync(sql);
         }
 

@@ -5,6 +5,8 @@ GO
 CREATE TABLE [checklist].[spendingRegular](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[userID] [int] NOT NULL,
+	[createdDatetime] [datetime] NULL,
+	[modifiedDatetime] [datetime] NULL,
 	[date] [date] NOT NULL,
 	[question1] [float] NULL,
 	[question2] [float] NULL,

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
 import { MetadataService } from 'src/app/services/http/metadata.service';
-import { TableQuestion } from 'src/app/models/question-models/tableQuestion';
+import { Question_Table } from 'src/app/models/question-models/question_table';
 
 @Component({
   standalone: true,
@@ -22,7 +22,7 @@ import { TableQuestion } from 'src/app/models/question-models/tableQuestion';
 export class TableComponent implements OnInit, OnDestroy {
   table: Array<any> = [];
   pagination: Pagination | undefined;
-  questions: TableQuestion[] = []
+  questions: Question_Table[] = []
   pageNumber = 1;
   pageSize = 10;
   source: string = '';

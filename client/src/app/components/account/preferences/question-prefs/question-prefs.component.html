@@ -1,5 +1,5 @@
-<tabset class="profile-tabset" *ngIf="(tableNames | keyvalue).length > 0"  #questionTabs>
-  <div *ngFor="let t of tableNames | keyvalue">
+<tabset class="profile-tabset" *ngIf="(checklistTypeNames | keyvalue).length > 0"  #questionTabs>
+  <div *ngFor="let t of checklistTypeNames | keyvalue">
 
     <!-- Create tab for each table -->
     <tab [heading]="t.key" (selectTab)="onTabActivated($event)">

@@ -1,6 +1,6 @@
 export interface QuestionPreferences {
     questionPreferencesID: number;
-    tableName: string;
+    checklistTypeName: string;
     key: string;
     keyNumber?: number;
     label: string;

@@ -1,6 +1,5 @@
 
 using API.Data.Interfaces;
-using API.Models.Tables.Entities;
 using API.Models.Views.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -33,16 +32,16 @@ namespace API.Data.Repositories
             return await _contextEF.TimezoneLocationsView.AnyAsync(x => x.timezoneLocationID == id);
         }
 
-        public async Task<IEnumerable<QuestionKind>> GetQuestionKindsAsync() {
-            return await _contextEF.QuestionKinds.ToListAsync();
+        public async Task<IEnumerable<QuestionKindView>> GetQuestionKindsAsync() {
+            return await _contextEF.QuestionKindsView.ToListAsync();
         }
 
-        public async Task<IEnumerable<QuestionKind>> GetChartQuestionKindsAsync() {
-            return await _contextEF.QuestionKinds.Where(q => q.includeInCharts == true).ToListAsync();
+        public async Task<IEnumerable<QuestionKindView>> GetChartQuestionKindsAsync() {
+            return await _contextEF.QuestionKindsView.Where(q => q.includeInCharts == true).ToListAsync();
         }
 
-        public async Task<QuestionKind> GetQuestionKindByIdAsync(int id) {
-            return await _contextEF.QuestionKinds.Where(q => q.questionKindID == id).FirstOrDefaultAsync();
+        public async Task<QuestionKindView> GetQuestionKindByIdAsync(int id) {
+            return await _contextEF.QuestionKindsView.Where(q => q.questionKindID == id).FirstOrDefaultAsync();
         }
     }
 }

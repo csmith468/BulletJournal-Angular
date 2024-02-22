@@ -1,4 +1,4 @@
-export class ChecklistFormItem<T> {
+export class QuestionFormItem<T> {
     value: T | undefined;
     key: string;
     label: string;

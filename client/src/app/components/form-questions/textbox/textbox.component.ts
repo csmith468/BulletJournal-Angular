@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
+import { QuestionFormItem } from 'src/app/models/question-models/questionFormItem';
 
 @Component({
   standalone: true,
@@ -11,7 +11,7 @@ import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormI
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class TextboxComponent {
-  @Input() item!: ChecklistFormItem<any>;
+  @Input() item!: QuestionFormItem<any>;
   @Input() form!: FormGroup;
 
   get isValid() {

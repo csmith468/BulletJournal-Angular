@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using API.Extensions;
 using API.Models.Tables.Entities;
 using API.Models.Tables.DTOs;
+using API.Models.Views.Entities;
 
-// everything is related to user preferences for questions/tables
+// everything is related to user preferences for questions/checklist types
 namespace API.Controllers
 {
     [Authorize] 
@@ -20,22 +21,22 @@ namespace API.Controllers
         }
 
         [HttpGet("questions/getPreferences")]
-        public async Task<ActionResult<IEnumerable<QuestionPreferences>>> GetQuestionPreferences() {
-            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesAsync(User.GetUserId()));
+        public async Task<ActionResult<IEnumerable<QuestionPreferencesView>>> GetQuestionPreferences() {
+            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesViewAsync(User.GetUserId()));
         }
 
         [HttpGet("questions/getPreferencesByType/{type}")]
-        public async Task<ActionResult<IEnumerable<QuestionPreferences>>> GetQuestionPreferencesByType(string type) {
-            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesByTypeAsync(User.GetUserId(), type));
+        public async Task<ActionResult<IEnumerable<QuestionPreferencesView>>> GetQuestionPreferencesByType(string type) {
+            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesViewByTypeAsync(User.GetUserId(), type));
         }
 
         [HttpGet("questions/getPreferencesById/{id}")]
-        public async Task<ActionResult<QuestionPreferences>> GetQuestionPreferencesById(int id) {
-            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), id));
+        public async Task<ActionResult<QuestionPreferencesView>> GetQuestionPreferencesById(int id) {
+            return Ok(await _uow.PreferencesRepository.GetQuestionPreferencesViewByIdAsync(User.GetUserId(), id));
         }
 
         [HttpPut("questions/updatePreferences")]
-        public async Task<ActionResult> UpdateQuestionPreferences(QuestionPreferences questionPrefs) {
+        public async Task<ActionResult> UpdateQuestionPreferences(QuestionPreferencesDto questionPrefs) {
             var prefs = await _uow.PreferencesRepository.GetQuestionPreferencesByIdAsync(User.GetUserId(), questionPrefs.questionPreferencesID);
             if (prefs == null) return NotFound();
 
@@ -61,38 +62,38 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpGet("tables/getPreferences")]
-        public async Task<ActionResult<IEnumerable<TablePreferences>>> GetTablePreferences() {
-            return Ok(await _uow.PreferencesRepository.GetTablePreferencesAsync(User.GetUserId()));
+        [HttpGet("checklistTypes/getPreferences")]
+        public async Task<ActionResult<IEnumerable<ChecklistTypePreferences>>> GetTablePreferences() {
+            return Ok(await _uow.PreferencesRepository.GetChecklistTypePreferencesViewAsync(User.GetUserId()));
         }
 
-        [HttpGet("tables/getPreferencesById/{id}")]
-        public async Task<ActionResult<TablePreferences>> GetTablePreferencesById(int id) {
-            return Ok(await _uow.PreferencesRepository.GetTablePreferencesByIdAsync(User.GetUserId(), id));
+        [HttpGet("checklistTypes/getPreferencesById/{id}")]
+        public async Task<ActionResult<ChecklistTypePreferences>> GetTablePreferencesById(int id) {
+            return Ok(await _uow.PreferencesRepository.GetChecklistTypePreferencesViewByIdAsync(User.GetUserId(), id));
         }
 
-        [HttpPut("tables/updatePreferences")]
-        public async Task<ActionResult> UpdateTablePreferences(TablePreferences tablePrefs) {
-            var prefs = await _uow.PreferencesRepository.GetTablePreferencesByIdAsync(User.GetUserId(), tablePrefs.tablePreferencesID);
+        [HttpPut("checklistTypes/updatePreferences")]
+        public async Task<ActionResult> UpdateTablePreferences(ChecklistTypePreferences checklistTypePrefs) {
+            var prefs = await _uow.PreferencesRepository.GetChecklistTypePreferencesByIdAsync(User.GetUserId(), checklistTypePrefs.checklistTypePreferencesID);
             if (prefs == null) return NotFound();
 
-            prefs.isVisible = tablePrefs.isVisible;
+            prefs.isVisible = checklistTypePrefs.isVisible;
             prefs.userID = User.GetUserId();
             if (await _uow.Complete()) return NoContent();
 
-            return BadRequest("Failed to update user question preferences.");
+            return BadRequest("Failed to update user checklist type preferences.");
         }
 
-        [HttpPut("tables/updateMultiplePreferences")]
-        public async Task<ActionResult> UpdateMultipleTablePreferences(List<TablePreferencesDto> prefDtos) {
+        [HttpPut("checklistTypes/updateMultiplePreferences")]
+        public async Task<ActionResult> UpdateMultipleTablePreferences(List<ChecklistTypePreferences> prefDtos) {
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
-            foreach (TablePreferencesDto p in prefDtos) {
-                var pref = await _uow.PreferencesRepository.GetTablePreferencesByIdAsync(User.GetUserId(), p.tablePreferencesID);
+            foreach (ChecklistTypePreferences p in prefDtos) {
+                var pref = await _uow.PreferencesRepository.GetChecklistTypePreferencesByIdAsync(User.GetUserId(), p.checklistTypePreferencesID);
                 if (pref == null) return NotFound();
 
                 pref.isVisible = p.isVisible;
-                if (!await _uow.Complete()) return BadRequest("Failed to update user question preferences.");
+                if (!await _uow.Complete()) return BadRequest("Failed to update user checklist type preferences.");
             }
 
             return NoContent();

@@ -1,5 +1,5 @@
 namespace API.Models.Tables.Entities {
-    public class Checklist {
+    public class Checklist : BaseEntity {
         public int id { get; set; }
         public int userID { get; set; }
         public DateOnly date { get; set; }

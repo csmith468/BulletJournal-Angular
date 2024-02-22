@@ -1,8 +1,8 @@
 namespace API.Models.Tables.Entities {
-    public class QuestionPreferences {
+    public class QuestionPreferences : BaseEntity {
         public int questionPreferencesID { get; set; }
         public int userID { get; set; }
-        public string tableName { get; set; }
+        public int checklistTypeID { get; set; }
         public string key { get; set; }
         public int? keyNumber { get; set; }
         public string label { get; set; }

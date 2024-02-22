@@ -1,7 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
+import { QuestionFormItem } from 'src/app/models/question-models/questionFormItem';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { createDateQuestion } from '../form-questions/date-picker/dateQuestion';
 import { createSliderQuestion } from '../form-questions/slider/sliderQuestion';
 import { SliderComponent } from '../form-questions/slider/slider.component';
 import { MetadataService } from 'src/app/services/http/metadata.service';
-import { ChecklistQuestion } from 'src/app/models/question-models/checklistQuestion';
+import { Question_Checklist } from 'src/app/models/question-models/question_checklist';
 
 @Component({
   standalone: true,
@@ -32,7 +32,7 @@ export class ChecklistComponent implements OnDestroy {
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.changeMade && this.form.dirty && !this.saving) $event.returnValue = true;
   }
-  checklistFormItems: ChecklistFormItem<any>[] = [];
+  questionFormItems: QuestionFormItem<any>[] = [];
   payload: string = '';
   editMode: boolean = false;
   source: string = '';
@@ -66,24 +66,24 @@ export class ChecklistComponent implements OnDestroy {
     if (this.subscription) this.subscription.unsubscribe();
   }
 
-  createFormItem(q: ChecklistQuestion, checklist: any) {
+  createFormItem(q: Question_Checklist, checklist: any) {
     if (q.kindBase == 'date') 
-      this.checklistFormItems.push(createDateQuestion(q, checklist))
+      this.questionFormItems.push(createDateQuestion(q, checklist))
     
     if (q.kindBase == 'switch') 
-      this.checklistFormItems.push(createSwitchQuestion(q, checklist))
+      this.questionFormItems.push(createSwitchQuestion(q, checklist))
     
     if (q.kindBase == 'text' || q.kindBase == 'number') 
-      this.checklistFormItems.push(createTextboxQuestion(q, checklist))
+      this.questionFormItems.push(createTextboxQuestion(q, checklist))
 
     if (q.kindBase == 'slider' && q.minValue && q.maxValue) 
-      this.checklistFormItems.push(createSliderQuestion(q, checklist))
+      this.questionFormItems.push(createSliderQuestion(q, checklist))
 
     // eventually add textarea question
   }
 
   createForm() {
-    this.form = this.qcs.toFormGroup(this.checklistFormItems);
+    this.form = this.qcs.toFormGroup(this.questionFormItems);
     this.payload = JSON.stringify(this.updatePayload());
     this.originalPayload = this.payload;
     this.onChange();
@@ -134,8 +134,8 @@ export class ChecklistComponent implements OnDestroy {
     var payloadJSON = JSON.parse(JSON.stringify(this.form!.getRawValue()));
     // if (payloadJSON['date']) payloadJSON['date'] = getDateOnly(payloadJSON['date']);
     
-    if (this.checklistFormItems) {
-      for (let q of this.checklistFormItems) {
+    if (this.questionFormItems) {
+      for (let q of this.questionFormItems) {
         if (q.kindBase == 'switch') {
           payloadJSON[q.key] = (payloadJSON[q.key] === true || payloadJSON[q.key] === 1) ? 1 : 0; // empty string (untouched) or false = 0
         }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormItem';
+import { QuestionFormItem } from 'src/app/models/question-models/questionFormItem';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { ChecklistFormItem } from 'src/app/models/question-models/checklistFormI
   imports: [CommonModule, ReactiveFormsModule, BsDatepickerModule]
 })
 export class DatePickerComponent implements OnInit {
-  @Input() item!: ChecklistFormItem<any>;
+  @Input() item!: QuestionFormItem<any>;
   @Input() form!: FormGroup;
   @Input() minDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() - 10 ))
   @Input() maxDate?: Date = new Date(new Date().setFullYear( new Date().getFullYear() + 5 ))

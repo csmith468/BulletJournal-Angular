@@ -1,4 +1,4 @@
-export interface TableTypeLayout {
+export interface VisibleChecklistType {
     key: string;
     label: string;
     icon: string;

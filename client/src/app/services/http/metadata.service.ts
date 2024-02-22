@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { TableTypeLayout } from 'src/app/models/data-models/tableTypeLayout';
-import { ChartQuestion } from 'src/app/models/question-models/chartQuestion';
-import { ChecklistQuestion } from 'src/app/models/question-models/checklistQuestion';
+import { VisibleChecklistType } from 'src/app/models/data-models/visibleChecklistType';
+import { Question_Chart } from 'src/app/models/question-models/question_chart';
+import { Question_Checklist } from 'src/app/models/question-models/question_checklist';
+import { Question_Table } from 'src/app/models/question-models/question_table';
 import { QuestionKind } from 'src/app/models/question-models/questionKind';
-import { TableQuestion } from 'src/app/models/question-models/tableQuestion';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,16 +16,16 @@ export class MetadataService {
 
   constructor(private http: HttpClient) { }
 
-  getTableTypeLayout() {
-    return this.http.get<TableTypeLayout[]>(this.baseUrl + 'metadata/getTableTypeLayout').pipe(map(
-      tables => {
-        return tables.map(table => {
-          if (table.category) {
+  getVisibleChecklistTypes() {
+    return this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes').pipe(map(
+      checklistTypes => {
+        return checklistTypes.map(ct => {
+          if (ct.category) {
             // If the table has a category, update the displayName
-            table.label = table.category + ' ' + table.label;
+            ct.label = ct.category + ' ' + ct.label;
           }
-          return table;
-        }).filter(table => !table.isHeader);
+          return ct;
+        }).filter(ct => !ct.isHeader);
       }
     ))
   }
@@ -36,22 +36,22 @@ export class MetadataService {
 
 
   getChecklistQuestions(type: string) {
-    return this.http.get<ChecklistQuestion[]>(this.baseUrl + 'metadata/' + type + '/getChecklistQuestions');
+    return this.http.get<Question_Checklist[]>(this.baseUrl + 'metadata/' + type + '/getChecklistQuestions');
   }
 
 
   getChartQuestions(type: string) {
-    return this.http.get<ChartQuestion[]>(this.baseUrl + 'metadata/' + type + '/getChartQuestions');
+    return this.http.get<Question_Chart[]>(this.baseUrl + 'metadata/' + type + '/getChartQuestions');
   }
 
   getChartQuestionsByKind(type: string, questionKindId: number) {
-    return this.http.get<ChartQuestion[]>(
+    return this.http.get<Question_Chart[]>(
       this.baseUrl + 'metadata/' + type + '/getChartQuestionsByKind/' + questionKindId.toString()
     );
   }
 
   getTableQuestions(type: string) {
-    return this.http.get<TableQuestion[]>(this.baseUrl + 'metadata/' + type + '/getTableQuestions');
+    return this.http.get<Question_Table[]>(this.baseUrl + 'metadata/' + type + '/getTableQuestions');
   }
 
 }

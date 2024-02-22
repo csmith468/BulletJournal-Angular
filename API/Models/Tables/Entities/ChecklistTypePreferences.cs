@@ -1,6 +1,6 @@
 namespace API.Models.Tables.Entities {
-    public class TablePreferences {
-        public int tablePreferencesID { get; set; }
+    public class ChecklistTypePreferences : BaseEntity {
+        public int checklistTypePreferencesID { get; set; }
         public int userID { get; set; }
         public string key { get; set; }
         public string label { get; set; }

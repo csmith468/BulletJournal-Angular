@@ -2,12 +2,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE VIEW [app].[v_question] AS
+CREATE VIEW [app].[v_questionPreferences] AS
     SELECT qp.[questionPreferencesID]
         ,qp.[userID]
-        ,qp.[tableName]
+        ,ct.[label] AS [checklistTypeName]
         ,qp.[key]
         ,qp.[label]
+        ,qp.[isVisible]
         ,qk.[includeInCharts]
         ,qp.[questionKindID]
         ,qk.[kindBase]
@@ -17,5 +18,5 @@ CREATE VIEW [app].[v_question] AS
         ,COALESCE(qp.[maxValue], qk.[maxValue]) AS [maxValue]
     FROM [app].[questionPreferences] qp
     JOIN [app_sys].[questionKind] qk ON qk.[questionKindID] = qp.[questionKindID]
-    WHERE qp.[isVisible] = 1
+    JOIN [app_sys].[checklistType] ct ON ct.[checklistTypeID] = qp.[checklistTypeID]
 GO

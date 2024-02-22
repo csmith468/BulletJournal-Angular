@@ -140,7 +140,6 @@ namespace API.Data.Repositories
             if (checklist == null) return null;
 
             var visibleColumns = await GetVisibleColumnsAsync(userId);
-            // var columnNames = ((IEnumerable<dynamic>)visibleColumns).Cast<string>().ToList();
 
             var expandoObj = new Dictionary<string, object>();
 
@@ -154,10 +153,11 @@ namespace API.Data.Repositories
         }
 
         private async Task<IEnumerable<string>> GetVisibleColumnsAsync(int userId) {
-            var visibleColumns = await _contextEF.QuestionPreferences
+            var visibleColumns = await _contextEF.QuestionPreferencesView
                 .Where(p => p.userID == userId 
-                    && p.tableName.ToLower() == typeof(T).Name.ToLower() 
-                    && p.isVisible == true)
+                    && p.checklistTypeName.ToLower() == typeof(T).Name.ToLower()
+                    && p.isVisible == true
+                )
                 .Select(p => p.key)
                 .ToListAsync();
 

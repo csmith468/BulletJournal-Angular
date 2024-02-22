@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TablePrefDto, TablePreferences } from 'src/app/models/data-models/tablePreferences';
+import { ChecklistTypePrefDto, ChecklistTypePreferences } from 'src/app/models/data-models/checklistTypePreferences';
 import { PreferencesService } from 'src/app/services/http/preferences.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { PreferencesService } from 'src/app/services/http/preferences.service';
   styleUrls: ['./table-prefs.component.css']
 })
 export class TablePrefsComponent implements OnDestroy {
-  tables: TablePreferences[] = [];
+  checklistTypes: ChecklistTypePreferences[] = [];
   form!: FormGroup;
-  private readonly subscription = new Subscription();
+  private subscription: Subscription | undefined;
   payload: string = '';
   originalPayload: string = '';
   changeMade: boolean = false;
@@ -23,20 +23,20 @@ export class TablePrefsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   getData() {
     this.changeMade = false;
     const group: any = {};
-    this.tables = [];
+    this.checklistTypes = [];
 
-    this.preferencesService.getTablePreferences().subscribe(
+    this.preferencesService.getChecklistTypePreferences().subscribe(
       checklists => {
         checklists.forEach(
           c => {
             group[c.key] = new FormControl(c.isVisible);
-            this.tables.push(c);
+            this.checklistTypes.push(c);
           }
         )
         this.form = new FormGroup(group);
@@ -49,21 +49,21 @@ export class TablePrefsComponent implements OnDestroy {
 
 
   submitForm() {
-    var finalPrefs: TablePrefDto[] = [];
+    var finalPrefs: ChecklistTypePrefDto[] = [];
 
     Object.keys(this.form.controls).forEach(c => {
       const control = this.form.get(c);
 
       if (control && control.dirty) {
-        const checklist = this.tables.find(q => q.key == c);
+        const checklist = this.checklistTypes.find(q => q.key == c);
         if (checklist && checklist.isVisible != control.value) {
           checklist.isVisible = control.value;
-          finalPrefs.push({tablePreferencesID: checklist.tablePreferencesID, isVisible: control.value});
+          finalPrefs.push({checklistTypePreferencesID: checklist.checklistTypePreferencesID, isVisible: control.value});
         }
       }
     })
     if (finalPrefs.length > 0) {
-      this.preferencesService.updateTablePreferences(finalPrefs).subscribe({
+      this.preferencesService.updateChecklistTypePreferences(finalPrefs).subscribe({
         next: () => this.getData()
       })
     }
@@ -75,11 +75,14 @@ export class TablePrefsComponent implements OnDestroy {
 
   //on change - compare payload to original payload
   onChange() {
-    const subscription = this.form!.valueChanges.subscribe(() => {
+    // if it makes it here and subscription exists, reset subscription
+    if (this.subscription) this.subscription.unsubscribe();
+    this.changeMade = false;
+
+    this.subscription = this.form!.valueChanges.subscribe(() => {
       this.payload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
       if (this.payload != this.originalPayload) this.changeMade = true;
       else this.changeMade = false;
     })
-    this.subscription.add(subscription);
   }
 }
