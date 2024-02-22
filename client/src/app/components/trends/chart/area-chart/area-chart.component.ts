@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/services/components/chart.service';
-import { FieldType } from '../../fieldType';
-import { QuestionType } from 'src/app/models/question-models/questionKind';
-import { MetadataService } from 'src/app/services/http/metadata.service';
+import { Question_Chart } from 'src/app/models/question-models/question_chart';
+import { QuestionKind } from 'src/app/models/question-models/questionKind';
 
-export type FieldValues = {
+export type QuestionValues = {
   name: string;
   data: number[];
 }
@@ -17,54 +16,49 @@ export type FieldValues = {
 })
 export class AreaChartComponent implements OnInit {
   @Input() data: Array<any> = [];
-  @Input() selectedFields: FieldType[] = [];
-  @Input() fieldTypeDetail: string = '';
+  @Input() selectedQuestions: Question_Chart[] = [];
+  @Input() selectedKindDetail: QuestionKind | undefined;
   @Input() aggregation: string = 'Monthly';
   @Input() chartNumber: number = 0;
 
   dateAxis: any[] = [];
-  chartData: FieldValues[] = [];
-  questionType: QuestionType | undefined;
+  chartData: QuestionValues[] = [];
   minValue: number = 0;
   maxValue: number = 0;
 
   chartOptions: Partial<ChartOptions> | undefined;
 
-  constructor(private chartService: ChartService, private metadataService: MetadataService) { }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
+    console.log(this.selectedKindDetail)
     this.createSubscriptions();
     this.startCreation();
   }
 
-  // create data for each field, then create chart
+  // create data for each question, then create chart
   startCreation() {
-    for (const field of this.selectedFields) {
-      this.initializeChartData(field); 
+    for (const question of this.selectedQuestions) {
+      this.initializeChartData(question); 
     }
-    this.metadataService.getQuestionTypeByLabel(this.fieldTypeDetail).subscribe(
-      qt => {
-        this.questionType = qt;
-        this.createChart();
-      }
-    );
+    this.createChart();
   }
 
-  // create data for field
-  initializeChartData(field: FieldType) {
+  // create data for question
+  initializeChartData(question: Question_Chart) {
     var dataTemp: any[] = [];
 
     // if rating, use value, if yes/no, true = 1, false = 0
-    if (this.fieldTypeDetail === 'Yes/No') {
+    if (this.selectedKindDetail!.kindDetail === 'Yes/No') {
       this.data.forEach(q => {
-        var value = (q[field.key] != null) ? ((q[field.key] == true) ? 1 : 0) : null;
+        var value = (q[question.key] != null) ? ((q[question.key] == true) ? 1 : 0) : null;
         dataTemp.push([new Date(q.date), value]);
         if (value && value < this.minValue) this.minValue = value;
         if (value && value > this.maxValue) this.maxValue = value;
       })
     } else {
       this.data.forEach(q => {
-        dataTemp.push([new Date(q.date), (q[field.key] != null ? q[field.key] : null)])
+        dataTemp.push([new Date(q.date), (q[question.key] != null ? q[question.key] : null)])
       })
     }
 
@@ -76,7 +70,7 @@ export class AreaChartComponent implements OnInit {
       this.dateAxis.push(dataTemp.map(dates => dates[0]));
     }
     
-    this.chartData.push({name: field.label, data: dataTemp.map(values => values[1])});
+    this.chartData.push({name: question.label, data: dataTemp.map(values => values[1])});
   }
   
   // aggregate by month/year
@@ -112,23 +106,23 @@ export class AreaChartComponent implements OnInit {
 
   // Subscribe to updates from chart component
   createSubscriptions() {
-    // Subscribe to if a field is added and add the field
-    this.chartService.addedField$.subscribe(event => {
+    // Subscribe to if a question is added and add the question
+    this.chartService.addedQuestion$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
-        this.addField(event.field);
+        this.addQuestion(event.question);
       }
     });
-    // Subscribe to if a field is removed and remove the field
-    this.chartService.removedField$.subscribe(event => {
+    // Subscribe to if a question is removed and remove the question
+    this.chartService.removedQuestion$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
-        this.removeField(event.field);
+        this.removeQuestion(event.question);
       }
     });
-    // Reset all aspects of the chart (when field type or range type changes)
+    // Reset all aspects of the chart (when question type or range type changes)
     this.chartService.resetChart$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
-        this.selectedFields = event.selectedFields;
-        this.fieldTypeDetail = event.fieldType;
+        this.selectedQuestions = event.selectedQuestions;
+        this.selectedKindDetail = event.selectedKindDetail;
         this.aggregation = event.aggregation;
         this.dateAxis = [];
         this.chartData = [];
@@ -139,15 +133,15 @@ export class AreaChartComponent implements OnInit {
     });
   }
 
-  removeField(field: FieldType) {
-    this.selectedFields = this.selectedFields.filter(sf => sf !== field);
-    this.chartData = this.chartData.filter(data => data.name !== field.label);
+  removeQuestion(question: Question_Chart) {
+    this.selectedQuestions = this.selectedQuestions.filter(sq => sq !== question);
+    this.chartData = this.chartData.filter(data => data.name !== question.label);
     this.createChart();
   }
 
-  addField(field: FieldType) {
-    this.selectedFields.push(field);
-    this.initializeChartData(field);
+  addQuestion(question: Question_Chart) {
+    this.selectedQuestions.push(question);
+    this.initializeChartData(question);
     this.createChart();
   }
 
@@ -174,35 +168,29 @@ export class AreaChartComponent implements OnInit {
       },
       tooltip: {
         shared: true,
-        x: { format: tooltip_x_format }
+        x: { format: tooltip_x_format },
+        y: { formatter: (value: number) => { return this.formatNumber(value, 'Label'); }}
+      },
+      yaxis: {
+        // If min value is in question type, use that, otherwise use min(or 0 if lesser)/max value in data
+        min: (this.selectedKindDetail && this.selectedKindDetail.minValue) ? this.selectedKindDetail.minValue : this.minValue,
+        max: (this.selectedKindDetail && this.selectedKindDetail.maxValue) ? this.selectedKindDetail.maxValue : this.maxValue,
+        labels: {
+          formatter: (value: number) => { return this.formatNumber(value, 'Axis'); }
+        }
       },
     }
-    this.createChartDetail();
     this.setChartColors();
-  }
-
-  createChartDetail() {
-    this.chartOptions!.yaxis = {
-      // If min value is in question type, use that, otherwise use min(or 0 if lesser)/max value in data
-      min: (this.questionType && this.questionType.minValue) ? this.questionType.minValue : this.minValue,
-      max: (this.questionType && this.questionType.maxValue) ? this.questionType.maxValue : this.maxValue,
-      labels: {
-        formatter: (value: number) => { return this.formatNumber(value, 'Label'); }
-      }
-    }
-    this.chartOptions!.tooltip!.y = {
-      formatter: (value: number) => { return this.formatNumber(value, 'Axis'); }
-    }
   }
 
   // Format number based on type and if percentage (TODO: currency)
   formatNumber(num: number, type: string) {
-    if (this.questionType && this.questionType.isPercentage) num *= 100;
+    if (this.selectedKindDetail && this.selectedKindDetail.isPercentage) num *= 100;
 
     // QuestionType has different properties for the number of decimal places for the y-label vs y-axis
     const getDecimalPlaces = (prop: string): number => {
-      const key = prop as keyof QuestionType;
-      return ((this.questionType && this.questionType[key]) ? (this.questionType[key] as number) : 0);
+      const key = prop as keyof QuestionKind;
+      return ((this.selectedKindDetail && this.selectedKindDetail[key]) ? (this.selectedKindDetail[key] as number) : 0);
     }
 
     const formattedNum = num.toLocaleString(undefined, {
@@ -210,7 +198,7 @@ export class AreaChartComponent implements OnInit {
       maximumFractionDigits: getDecimalPlaces(`maxDecimalPlacesY${type}`)
     })
 
-    return formattedNum + ((this.questionType && this.questionType.isPercentage) ? '%' : '');
+    return formattedNum + ((this.selectedKindDetail && this.selectedKindDetail.isPercentage) ? '%' : '');
   }
 
   setChartColors() {

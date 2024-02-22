@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { Pagination } from 'src/app/models/data-models/pagination';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
-import { FieldType } from './fieldType';
 import { ChartService } from 'src/app/services/components/chart.service';
 import { MetadataService } from 'src/app/services/http/metadata.service';
+import { Question_Chart } from 'src/app/models/question-models/question_chart';
+import { QuestionKind } from 'src/app/models/question-models/questionKind';
+import { finalize, forkJoin, map, mergeMap, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-trends',
@@ -17,8 +19,8 @@ export class TrendsComponent {
   dates: Date[] = [];
   pagination: Pagination | undefined;
   source: string = '';  // morning, night, etc
-  fields: FieldType[] = [];
-  typeDetailsInQuestionSet: string[] = [];
+  chartQuestions: Question_Chart[] = [];
+  questionKindsInSet: QuestionKind[] = [];
   initialRangeType: string = 'Monthly';
   header: string = '';
   chartVisibility: {chartNumber: number, visibility: string}[] = [];
@@ -30,21 +32,87 @@ export class TrendsComponent {
     this.header = this.route.snapshot.data['metadata']['header'] + ' Trends';
 
     // Get all fields to include in charts
-    this.metadataService.getQuestions(this.source).subscribe(
-      qs => {
-        qs.forEach(q => {
-          if (q.key != 'date') {
-            this.fields.push({key: q.key, label: q.label, typeDetail: q.typeDetail});
-            if (!this.typeDetailsInQuestionSet.includes(q.typeDetail)) this.typeDetailsInQuestionSet.push(q.typeDetail);
+    // this.metadataService.getChartQuestions(this.source).subscribe(
+    //   qs => {
+    //     qs.forEach(q => {
+    //         this.chartQuestions.push(q);
+    //         if (!this.questionKindsInSet.find(k => k.questionKindID === q.questionKindID)) {
+    //           this.metadataService.getQuestionKindById(q.questionKindID).subscribe(
+    //             qt => this.questionKindsInSet.push(qt)
+    //           );
+    //           console.log('here')
+    //         }
+    //     })
+    //     // Set chart visibility for all charts to open initially with one chart per question kind
+    //     this.chartVisibility = Array.from({ length: this.questionKindsInSet.length }, (_, index) => ({
+    //       chartNumber: index,
+    //       visibility: 'open'
+    //     }));
+    //   }
+    // )
+
+    // this.metadataService.getChartQuestions(this.source).pipe(
+    //   switchMap(qs => {
+    //     const questionObservables = qs.map(q => {
+    //       this.chartQuestions.push(q);
+    //       if (!this.questionKindsInSet.find(k => k.questionKindID === q.questionKindID)) {
+    //         return this.metadataService.getQuestionKindById(q.questionKindID).pipe(
+    //           tap(qt => this.questionKindsInSet.push(qt))
+    //         );
+    //       } else {
+    //         return of(null); // Return an observable that emits null for already fetched question kinds
+    //       }
+    //     });
+    
+    //     return forkJoin(questionObservables).pipe(
+    //       map(() => qs)
+    //     );
+    //   })
+    // ).subscribe(
+    //   qs => {
+    //     // Set chart visibility for all charts to open initially with one chart per question kind
+    //     this.chartVisibility = Array.from({ length: this.questionKindsInSet.length }, (_, index) => ({
+    //       chartNumber: index,
+    //       visibility: 'open'
+    //     }));
+    //   }
+    //   )
+    this.metadataService.getChartQuestions(this.source).pipe(
+      mergeMap((qs) => {
+        const uniqueQuestionKindIds = new Set<number>();
+    
+        const observables = qs.map((q) => {
+          this.chartQuestions.push(q);
+    
+          if (!uniqueQuestionKindIds.has(q.questionKindID)) {
+            uniqueQuestionKindIds.add(q.questionKindID);
+            return this.metadataService.getQuestionKindById(q.questionKindID);
+          } else {
+            return of(null); // Skip if the question kind ID is already processed
           }
-        })
-        // Set chart visibility for all charts to open initially with one chart per question type
-        this.chartVisibility = Array.from({ length: this.typeDetailsInQuestionSet.length }, (_, index) => ({
-          chartNumber: index,
-          visibility: 'open'
-        }));
-      }
-    )
+        });
+    
+        return forkJoin(observables).pipe(
+          map((questionKinds) => ({ qs, questionKinds }))
+        );
+      })
+    ).subscribe(
+      ({ qs, questionKinds }) => {
+        questionKinds.forEach((qt) => {
+          if (qt) {
+            this.questionKindsInSet.push(qt);
+          }
+        });
+    
+        // Set chart visibility for all charts to open initially with one chart per question kind
+        this.chartVisibility = Array.from(
+          { length: this.questionKindsInSet.length },
+          (_, index) => ({
+            chartNumber: index,
+            visibility: 'open',
+          })
+        );
+      })
   
     // Get all data for chart
     this.checklistService.getTableData(this.source, 1, -1).subscribe({

@@ -5,7 +5,7 @@
     <button class="btn btn-success" (click)="addChart()"><i class="fa fa-plus"></i></button>
   </div>
 </div>
-<div *ngIf="data && data.length > 0 && fields && fields.length > 0">
+<div *ngIf="data && data.length > 0 && chartQuestions && chartQuestions.length > 0">
   <div *ngFor="let chart of chartVisibility">
     <div class="card" *ngIf="chart.visibility !== 'closed'">
       <div class="row row-buttons">
@@ -27,8 +27,8 @@
       </div>
       <app-chart
         [data]="data"
-        [fields]="fields"
-        [typeDetailsInQuestionSet]="typeDetailsInQuestionSet"
+        [chartQuestions]="chartQuestions"
+        [questionKindsInSet]="questionKindsInSet"
         [selectedRangeType]="initialRangeType"
         [chartNumber]="chart.chartNumber"></app-chart>
     </div>

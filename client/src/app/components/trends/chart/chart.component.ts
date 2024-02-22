@@ -1,30 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FieldType } from '../fieldType';
 import { ChartService } from 'src/app/services/components/chart.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Question_Chart } from 'src/app/models/question-models/question_chart';
+import { QuestionKind } from 'src/app/models/question-models/questionKind';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit{
+export class ChartComponent implements OnInit {
   @Input() data: Array<any> = [];
-  @Input() fields: FieldType[] = [];
-  @Input() typeDetailsInQuestionSet: string[] = [];
+  @Input() chartQuestions: Question_Chart[] = [];
+  @Input() questionKindsInSet: QuestionKind[] = [];
   @Input() chartNumber: number = 0;
   @Input() selectedRangeType: string = 'Monthly';
 
-  selectedFields: FieldType[] = [];
-  fieldOptions: FieldType[] = [];
-  selectedTypeDetail: string = '';
-  maxFieldsInitial: number = 6;
+  selectedQuestions: Question_Chart[] = [];
+  questionOptionsInKind: Question_Chart[] = [];
+  selectedKindDetail: QuestionKind | undefined;
+  maxQuestionsInitial: number = 6;
   isVisible: boolean = true;
   selectForm: FormGroup;
 
   constructor(private chartService: ChartService) {
     this.selectForm = new FormGroup({
-      typeDetail: new FormControl(null),
+      kindDetail: new FormControl(null),
       rangeType: new FormControl(null)
     });
 
@@ -36,54 +37,59 @@ export class ChartComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+
     // Set the type of chart to the index of the chart number so each chart shows one type initially
-    this.selectedTypeDetail = (this.typeDetailsInQuestionSet.length > this.chartNumber) 
-      ? this.typeDetailsInQuestionSet[this.chartNumber] 
-      : this.typeDetailsInQuestionSet[0];
+    this.selectedKindDetail = (this.questionKindsInSet.length > this.chartNumber) 
+      ? this.questionKindsInSet[this.chartNumber] 
+      : this.questionKindsInSet[0];
     this.setValues();
 
+    console.log(this.selectedRangeType)
+
     // Form for setting type of form and range 
-    this.selectForm.controls['typeDetail'].setValue(this.selectedTypeDetail);
+    this.selectForm.controls['kindDetail'].setValue(this.selectedKindDetail.kindDetail);
     this.selectForm.controls['rangeType'].setValue(this.selectedRangeType);
   }
 
-  // Get the fields within that field type and select up to the maximum number of fields initially
+  // Get the questions within that question type and select up to the maximum number of questions initially
   setValues() {
-    this.fieldOptions = this.fields.filter(field => field.typeDetail == this.selectedTypeDetail);
-    this.selectedFields = this.fieldOptions.slice(0, this.maxFieldsInitial);
+    this.questionOptionsInKind = this.chartQuestions.filter(q => q.questionKindID == this.selectedKindDetail!.questionKindID);
+    this.selectedQuestions = this.questionOptionsInKind.slice(0, this.maxQuestionsInitial);
   }
 
-  // Send the actual chart the fields available to it (user can select/deselect fields to see in chart through checkbox panel)
-  onUpdateFields(typeDetail: any) {
-    const fieldLabel = typeDetail.target.id;
-    var field = this.selectedFields.find(f => f.label === fieldLabel);
-    if (field) {
-      this.selectedFields.splice(this.selectedFields.indexOf(field, 0), 1);
-      this.chartService.emitRemovedField(field, this.chartNumber);
+  // Send the actual chart the questions available to it (user can select/deselect questions to see in chart through checkbox panel)
+  onUpdateQuestions(kindDetail: any) {
+    const questionKey = kindDetail.target.id;
+    var question = this.selectedQuestions.find(f => f.key === questionKey);
+    if (question) {
+      this.selectedQuestions.splice(this.selectedQuestions.indexOf(question, 0), 1);
+      this.chartService.emitRemovedQuestion(question, this.chartNumber);
     }
     else {
-      field = this.fieldOptions!.find(f => f.label === fieldLabel);
-      if (field) {
-        this.selectedFields.push();
-        this.chartService.emitAddedField(field, this.chartNumber);
+      question = this.questionOptionsInKind!.find(f => f.key === questionKey);
+      if (question) {
+        this.selectedQuestions.push();
+        this.chartService.emitAddedQuestion(question, this.chartNumber);
       }
     }
   }
 
-  // When form updates for the range type or the field types
-  onUpdateSelect(typeDetail: any) {
-    // Reset available fields for that field type if applicable
-    if (this.selectedTypeDetail != this.selectForm.value['typeDetail']) {
-      this.selectedTypeDetail = this.selectForm.value['typeDetail'];
+  // When form updates for the range type or the question types
+  onUpdateSelect() {
+    // Reset available questions for that question type if applicable
+    if (this.selectedKindDetail?.kindDetail != this.selectForm.value['kindDetail']) {
+      this.selectedKindDetail = this.questionKindsInSet.find(k => k.kindDetail == this.selectForm.value['kindDetail']);
       this.setValues();
     }
 
     // Reset range type if applicable
-    if (this.selectedTypeDetail != this.selectForm.value['rangeType']) {
+    if (this.selectedRangeType != this.selectForm.value['rangeType']) {
       this.selectedRangeType = this.selectForm.value['rangeType'];
     }
 
     // Send the actual chart component the updated data
-    this.chartService.emitResetChart(this.selectedFields, this.selectedTypeDetail, this.selectedRangeType, this.chartNumber);
+    this.chartService.emitResetChart(this.selectedQuestions, this.selectedKindDetail!, 
+      this.selectedRangeType, this.chartNumber);
   }
 }

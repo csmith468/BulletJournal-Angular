@@ -1,23 +1,23 @@
 
 <div *ngIf="isVisible" class="row">
-    <div class="col-9">
+    <div class="col-9" *ngIf="selectedKindDetail">
         <app-area-chart
             [data]="data"
-            [selectedFields]="selectedFields"
-            [fieldTypeDetail]="selectedTypeDetail"
+            [selectedQuestions]="selectedQuestions"
+            [selectedKindDetail]="selectedKindDetail"
             aggregation="Monthly"
             [chartNumber]="chartNumber"
         ></app-area-chart>
     </div>
     <div class="col-3">
         <form [formGroup]="selectForm" class="dropdown">
-            <select *ngIf="typeDetailsInQuestionSet.length > 1" class="custom-select" 
-                id="selectType_{{chartNumber}}" formControlName="typeDetail" 
-                (change)="onUpdateSelect($event)">
-                <option *ngFor="let t of typeDetailsInQuestionSet" [ngValue]="t">{{t}}</option>
+            <select *ngIf="questionKindsInSet.length > 1" class="custom-select" 
+                id="selectType_{{chartNumber}}" formControlName="kindDetail" 
+                (change)="onUpdateSelect()">
+                <option *ngFor="let q of questionKindsInSet" [ngValue]="q.kindDetail">{{q.kindDetail}}</option>
             </select>
             <select class="custom-select" id="selectRange_{{chartNumber}}" formControlName="rangeType" 
-                (change)="onUpdateSelect($event)">
+                (change)="onUpdateSelect()">
                 <option ngValue="Weekly">Weekly</option>
                 <option ngValue="Monthly">Monthly</option>
                 <option ngValue="Yearly">Yearly</option>
@@ -26,15 +26,15 @@
         <div class="card mt-2">
             <div class="card-body">
                 <div class="form-check">
-                    <div *ngFor="let field of fieldOptions">
+                    <div *ngFor="let question of questionOptionsInKind">
                         <input type="checkbox" 
-                            [checked]="selectedFields.includes(field)" 
+                            [checked]="selectedQuestions.includes(question)" 
                             class="form-check-input"
-                            [id]="field.label"
-                            [disabled]="(selectedFields.includes(field) && selectedFields.length == 1)"
-                            (click)="onUpdateFields($event)"
+                            [id]="question.key"
+                            [disabled]="(selectedQuestions.includes(question) && selectedQuestions.length == 1)"
+                            (click)="onUpdateQuestions($event)"
                         >
-                        <label [for]="field" class="form-check-label">{{field.label}}</label>
+                        <label [for]="question.key" class="form-check-label">{{question.label}}</label>
                     </div>
                 </div>
             </div>

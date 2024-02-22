@@ -34,7 +34,7 @@ export const baseChartOptions: BaseChartOptions = {
         zoom: {
           type: "x",
           enabled: true,
-          autoScaleYaxis: true
+          autoScaleYaxis: false
         },
         toolbar: {
             show: true,
@@ -43,7 +43,7 @@ export const baseChartOptions: BaseChartOptions = {
             tools: {
               download: false,
               selection: false,
-              zoom: false,
+              zoom: true,
               zoomin: true,
               zoomout: true,
               pan: false,
