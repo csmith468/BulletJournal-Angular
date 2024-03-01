@@ -16,6 +16,9 @@ namespace API.Data.Helpers
             CreateMap<QuestionPreferencesView, QuestionPreferences>();
             CreateMap<QuestionPreferencesDto, QuestionPreferences>();
             CreateMap<ChecklistTypePreferences, ChecklistTypePreferences>();
+            CreateMap<GeneralPreferences, GeneralPreferencesDto>();
+            CreateMap<GeneralPreferencesDto, GeneralPreferences>();
+                // .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             // Views with relevant data for each component in the UI
             CreateMap<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>();

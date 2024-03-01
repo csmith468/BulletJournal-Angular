@@ -1,4 +1,5 @@
 using API.Data.Interfaces;
+using API.Models.Tables.DTOs;
 using API.Models.Tables.Entities;
 using API.Models.Views.Entities;
 using AutoMapper;
@@ -33,13 +34,13 @@ namespace API.Data.Repositories
         public async Task<QuestionPreferencesView> GetQuestionPreferencesViewByIdAsync(int userId, int id) {
             return await _contextEF.QuestionPreferencesView   
                 .Where(x => x.userID == userId && x.questionPreferencesID == id)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<QuestionPreferences> GetQuestionPreferencesByIdAsync(int userId, int id) {
             return await _contextEF.QuestionPreferences
                 .Where(x => x.userID == userId && x.questionPreferencesID == id)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
 
@@ -60,24 +61,55 @@ namespace API.Data.Repositories
         public async Task<ChecklistTypePreferencesView> GetChecklistTypePreferencesViewByIdAsync(int userId, int id) {
             return await _contextEF.ChecklistTypePreferencesView   
                 .Where(x => x.userID == userId && x.checklistTypePreferencesID == id)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<ChecklistTypePreferences> GetChecklistTypePreferencesByIdAsync(int userId, int id) {
             return await _contextEF.ChecklistTypePreferences   
                 .Where(x => x.userID == userId && x.checklistTypePreferencesID == id)
-                .SingleOrDefaultAsync();
-
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> CreateChecklistTypePreferencesAsync(int userId) {
+        public async Task<GeneralPreferencesDto> GetGeneralPreferencesAsync(int userId) {
+            var prefs = await _contextEF.GeneralPreferences.Where(x => x.userID == userId).FirstOrDefaultAsync();
+            return _mapper.Map<GeneralPreferences, GeneralPreferencesDto>(prefs);
+        }
+
+        public async Task<bool> UpdateGeneralPreferencesAsync(int userId, GeneralPreferencesDto prefsToUpdate) {
+            var prefs = await _contextEF.GeneralPreferences.Where(x => x.userID == userId).FirstOrDefaultAsync();
+            if (prefs == null) return false;
+
+            // only update if there is a value to update to
+            if (prefsToUpdate.showDeleteGuard != null) 
+                prefs.showDeleteGuard = (bool)prefsToUpdate.showDeleteGuard;
+            if (prefsToUpdate.showUnsavedChangesGuard != null)
+                prefs.showUnsavedChangesGuard = (bool)prefsToUpdate.showUnsavedChangesGuard;
+                
+            return _contextEF.SaveChanges() > 0;
+        }
+
+        public async Task<bool> CreateAllPreferencesAsync(int userId) {
+            var resultAddChecklistType = await CreateChecklistTypePreferencesAsync(userId);
+            var resultAddQuestions = await CreateQuestionPreferencesAsync(userId);
+            var resultAddPreferences = await CreateGeneralPreferencesAsync(userId);
+
+            return resultAddChecklistType || resultAddQuestions || resultAddPreferences;
+        }
+
+        private async Task<bool> CreateChecklistTypePreferencesAsync(int userId) {
             string sql = @" EXEC app.sp_createUserChecklistTypePreferences
                         @UserId = " + userId.ToString();
             return await _contextDapper.ExecuteAsync(sql);
         }
 
-        public async Task<bool> CreateQuestionPreferencesAsync(int userId) {
+        private async Task<bool> CreateQuestionPreferencesAsync(int userId) {
             string sql = @" EXEC app.sp_createUserQuestionPreferences
+                        @UserId = " + userId.ToString();
+            return await _contextDapper.ExecuteAsync(sql);
+        }
+
+        private async Task<bool> CreateGeneralPreferencesAsync(int userId) {
+            string sql = @" EXEC app.sp_createUserGeneralPreferences
                         @UserId = " + userId.ToString();
             return await _contextDapper.ExecuteAsync(sql);
         }

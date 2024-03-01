@@ -43,10 +43,9 @@ namespace API.Controllers
             var result = _uow.AccountRepository.RegisterUserAsync(user);
             if (result == null) return BadRequest("Failed to register user.");
 
-            var resultAddChecklistType = await _uow.PreferencesRepository.CreateChecklistTypePreferencesAsync(result.Result.userID);
-            var resultAddQuestions = await _uow.PreferencesRepository.CreateQuestionPreferencesAsync(result.Result.userID);
-
-            if (!resultAddChecklistType || !resultAddQuestions) return BadRequest("Failed to register user.");
+            // Create all preferences
+            var resultAddPreferences = await _uow.PreferencesRepository.CreateAllPreferencesAsync(result.Result.userID);
+            if (!resultAddPreferences) return BadRequest("Failed to create user preferences.");
 
             return new AppUserDto{
                 userID = result.Result.userID,

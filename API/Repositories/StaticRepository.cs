@@ -25,7 +25,7 @@ namespace API.Data.Repositories
         public async Task<TimezoneLocationView> GetTimezoneLocationByIDAsync(int id) {
             return await _contextEF.TimezoneLocationsView
                 .Where(t => t.timezoneLocationID == id)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> TimezoneExistsAsync(int id) {

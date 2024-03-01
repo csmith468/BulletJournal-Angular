@@ -16,6 +16,7 @@ namespace API.Data
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<QuestionPreferences> QuestionPreferences { get; set; }
         public DbSet<ChecklistTypePreferences> ChecklistTypePreferences { get; set; }
+        public DbSet<GeneralPreferences> GeneralPreferences { get; set; }
         // public DbSet<HiddenQuestions> HiddenQuestions { get; set; }
 
         public DbSet<QuestionPreferencesView> QuestionPreferencesView { get; set; }
@@ -57,6 +58,8 @@ namespace API.Data
                 .HasKey(u => u.questionPreferencesID);
             modelBuilder.Entity<ChecklistTypePreferences>().ToTable("checklistTypePreferences", "app")
                 .HasKey(u => u.checklistTypePreferencesID);
+            modelBuilder.Entity<GeneralPreferences>().ToTable("generalPreferences", "app")
+                .HasKey(u => u.generalPreferencesID);
             // modelBuilder.Entity<HiddenQuestions>().ToTable("hiddenQuestions", "app")
             //     .HasKey(u => u.hiddenQuestionID);
 

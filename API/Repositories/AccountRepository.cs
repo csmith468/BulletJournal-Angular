@@ -19,13 +19,13 @@ namespace API.Data.Repositories
         public async Task<AppUser> GetAppUserByEmailAsync(string email) {
             return await _contextEF.AppUsers   
                 .Where(x => x.email.ToLower() == email.ToLower())
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
         
         public async Task<AppUser> GetAppUserByIdAsync(int id) {
             return await _contextEF.AppUsers   
                 .Where(x => x.userID == id)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> EmailExistsAsync(string email) {

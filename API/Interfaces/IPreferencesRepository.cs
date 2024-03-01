@@ -1,4 +1,5 @@
 // everything is related to user preferences for questions/tables
+using API.Models.Tables.DTOs;
 using API.Models.Tables.Entities;
 using API.Models.Views.Entities;
 
@@ -14,8 +15,10 @@ namespace API.Data.Interfaces
         Task<IEnumerable<ChecklistTypePreferencesView>> GetChecklistTypePreferencesViewByTypeAsync(int userId, string type);
         Task<ChecklistTypePreferencesView> GetChecklistTypePreferencesViewByIdAsync(int userId, int id);
         Task<ChecklistTypePreferences> GetChecklistTypePreferencesByIdAsync(int userId, int id);
+
+        Task<GeneralPreferencesDto> GetGeneralPreferencesAsync(int userId);
+        Task<bool> UpdateGeneralPreferencesAsync(int userId, GeneralPreferencesDto prefsToUpdate);
         
-        Task<bool> CreateChecklistTypePreferencesAsync(int userId);
-        Task<bool> CreateQuestionPreferencesAsync(int userId);
+        Task<bool> CreateAllPreferencesAsync(int userId);
     }
 }

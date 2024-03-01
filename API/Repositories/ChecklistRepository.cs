@@ -176,7 +176,7 @@ namespace API.Data.Repositories
         //         );
 
         //     return (DbSet<Checklist>)dbSetProperty?.GetValue(_contextEF);
-        //     // return dbSetValue.Where(x => x.userID == userId && x.ID == itemID).SingleOrDefaultAsync();
+        //     // return dbSetValue.Where(x => x.userID == userId && x.ID == itemID).FirstOrDefaultAsync();
         // }
         // private IQueryable<Checklist> GetDbSetByType(string type) {
         //     var baseDbSet = _contextEF.Set<Checklist>();

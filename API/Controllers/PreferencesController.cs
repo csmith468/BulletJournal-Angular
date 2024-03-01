@@ -98,5 +98,21 @@ namespace API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("general/getPreferences")]
+        public async Task<ActionResult<GeneralPreferencesDto>> GetGeneralPreferences() {
+            var prefs = await _uow.PreferencesRepository.GetGeneralPreferencesAsync(User.GetUserId());
+            if (prefs == null) return NotFound();
+            return Ok(prefs);
+        }
+
+        [HttpPut("general/updatePreferences")]
+        public async Task<ActionResult> UpdateGeneralPreferences(GeneralPreferencesDto prefsToUpdate) {
+            var result = await _uow.PreferencesRepository.UpdateGeneralPreferencesAsync(
+                User.GetUserId(), prefsToUpdate);
+            if (result) return NoContent();
+
+            return BadRequest("Failed to update entry.");
+        }
     }
 }
