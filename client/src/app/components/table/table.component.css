@@ -18,3 +18,7 @@
     font-size: 80%;
     color: #e83e8c; 
 }
+
+.date-col {
+    min-width: 120px;
+}

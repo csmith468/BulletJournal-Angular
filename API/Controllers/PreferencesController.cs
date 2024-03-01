@@ -63,17 +63,17 @@ namespace API.Controllers
         }
 
         [HttpGet("checklistTypes/getPreferences")]
-        public async Task<ActionResult<IEnumerable<ChecklistTypePreferences>>> GetTablePreferences() {
+        public async Task<ActionResult<IEnumerable<ChecklistTypePreferences>>> GetChecklistTypePreferences() {
             return Ok(await _uow.PreferencesRepository.GetChecklistTypePreferencesViewAsync(User.GetUserId()));
         }
 
         [HttpGet("checklistTypes/getPreferencesById/{id}")]
-        public async Task<ActionResult<ChecklistTypePreferences>> GetTablePreferencesById(int id) {
+        public async Task<ActionResult<ChecklistTypePreferences>> GetChecklistTypePreferencesById(int id) {
             return Ok(await _uow.PreferencesRepository.GetChecklistTypePreferencesViewByIdAsync(User.GetUserId(), id));
         }
 
         [HttpPut("checklistTypes/updatePreferences")]
-        public async Task<ActionResult> UpdateTablePreferences(ChecklistTypePreferences checklistTypePrefs) {
+        public async Task<ActionResult> UpdateTablePreferences(ChecklistTypePreferencesDto checklistTypePrefs) {
             var prefs = await _uow.PreferencesRepository.GetChecklistTypePreferencesByIdAsync(User.GetUserId(), checklistTypePrefs.checklistTypePreferencesID);
             if (prefs == null) return NotFound();
 
@@ -85,10 +85,10 @@ namespace API.Controllers
         }
 
         [HttpPut("checklistTypes/updateMultiplePreferences")]
-        public async Task<ActionResult> UpdateMultipleTablePreferences(List<ChecklistTypePreferences> prefDtos) {
+        public async Task<ActionResult> UpdateMultipleTablePreferences(List<ChecklistTypePreferencesDto> prefDtos) {
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
-            foreach (ChecklistTypePreferences p in prefDtos) {
+            foreach (ChecklistTypePreferencesDto p in prefDtos) {
                 var pref = await _uow.PreferencesRepository.GetChecklistTypePreferencesByIdAsync(User.GetUserId(), p.checklistTypePreferencesID);
                 if (pref == null) return NotFound();
 

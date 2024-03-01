@@ -1,4 +1,4 @@
 public class BaseEntity { 
-    public DateTime? CreatedDatetime { get; set; }
-    public DateTime? ModifiedDatetime { get; set; }    
+    public DateTime? createdDatetime { get; set; }
+    public DateTime? modifiedDatetime { get; set; }    
 }

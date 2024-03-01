@@ -46,10 +46,10 @@ namespace API.Data.Repositories
                 ));
 
             foreach (var entity in entries) {
-                if (entity.State == EntityState.Added || (entity.State == EntityState.Modified && ((BaseEntity)entity.Entity).CreatedDatetime == null)) {
-                    ((BaseEntity)entity.Entity).CreatedDatetime = DateTime.UtcNow;
+                if (entity.State == EntityState.Added || (entity.State == EntityState.Modified && ((BaseEntity)entity.Entity).createdDatetime == null)) {
+                    ((BaseEntity)entity.Entity).createdDatetime = DateTime.UtcNow;
                 } else {
-                    ((BaseEntity)entity.Entity).ModifiedDatetime = DateTime.UtcNow;
+                    ((BaseEntity)entity.Entity).modifiedDatetime = DateTime.UtcNow;
                 }
             }
         }

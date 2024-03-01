@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using API.Models.Views.Entities;
 
-// static data that is un-related to any user or user data
+// static data that is un-related to any user or user data (only getters)
 namespace API.Controllers
 {
     [Authorize] 
