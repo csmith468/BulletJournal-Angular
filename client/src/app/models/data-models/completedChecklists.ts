@@ -1,6 +1,6 @@
 export interface CompletedChecklists {
-    tableName: string;
-    tableLabel: string;
+    checklistTypeName: string;
+    checklistTypeLabel: string;
     date: string;
     id: number;
 }

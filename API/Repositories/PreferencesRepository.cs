@@ -11,7 +11,7 @@ namespace API.Data.Repositories
         private readonly DataContextDapper _contextDapper;
         private readonly DataContextEF _contextEF;
         private readonly IMapper _mapper;
-        public PreferencesRepository(DataContextEF contextEF, IMapper mapper, DataContextDapper contextDapper) {
+        public PreferencesRepository(DataContextEF contextEF, DataContextDapper contextDapper, IMapper mapper) {
             _contextEF = contextEF;
             _mapper = mapper;
             _contextDapper = contextDapper;

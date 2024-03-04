@@ -20,8 +20,8 @@ namespace API.Data.Repositories
         public IChecklistRepository<T> GetChecklistRepository<T>() where T : Checklist {
             return new ChecklistRepository<T>(_contextEF, _mapper, _contextDapper);
         }        
-        public IMetadataRepository MetadataRepository => new MetadataRepository(_contextEF, _mapper);
-        public IPreferencesRepository PreferencesRepository => new PreferencesRepository(_contextEF, _mapper, _contextDapper);
+        public IMetadataRepository MetadataRepository => new MetadataRepository(_contextEF, _contextDapper, _mapper);
+        public IPreferencesRepository PreferencesRepository => new PreferencesRepository(_contextEF, _contextDapper, _mapper);
         public IStaticRepository StaticRepository => new StaticRepository(_contextEF, _mapper);
         
         public async Task<bool> Complete() {

@@ -11,6 +11,5 @@ namespace API.Data.Interfaces
         Task<Dictionary<string, object>> AddAsync(T item);
         void DeleteAsync(T checklist);
         Task<bool> DateUsedAsync(DateOnly date, int userId);
-        // Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(string type, int userId);
     }
 }

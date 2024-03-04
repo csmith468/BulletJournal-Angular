@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { CompletedChecklists } from 'src/app/models/data-models/completedChecklists';
 import { VisibleChecklistType } from 'src/app/models/data-models/visibleChecklistType';
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
 import { Question_Checklist } from 'src/app/models/question-models/question_checklist';
@@ -52,6 +53,10 @@ export class MetadataService {
 
   getTableQuestions(type: string) {
     return this.http.get<Question_Table[]>(this.baseUrl + 'metadata/' + type + '/getTableQuestions');
+  }
+
+  getCompletedToday() {
+    return this.http.get<CompletedChecklists[]>(this.baseUrl + 'metadata/getCompletedToday');
   }
 
 }

@@ -94,11 +94,6 @@ namespace API.Controllers
             return Ok(await addAsyncMethod);
         }
 
-        // [HttpGet("getCompletedToday")]
-        // public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
-        //     return Ok(await _uow.ChecklistRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
-        // }
-
         private async Task<ActionResult> UpdateChecklistHelper(string type, Checklist inputChecklist) {
             var userID = User.GetUserId();
             dynamic checklistRepository = GetTypedRepository(type);

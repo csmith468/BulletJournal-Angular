@@ -5,6 +5,7 @@ using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using API.Models.Views.DTOs;
 using API.Models.Views.Entities;
+using API.Models.Tables.Entities;
 
 // getting data about tables/questions for user but not data within them
 namespace API.Controllers
@@ -54,6 +55,11 @@ namespace API.Controllers
             var tableQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, false, null);
             if (tableQuestions == null) return NotFound();
             return Ok(tableQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_TableViewDto>(q)).ToList());
+        }
+
+        [HttpGet("getCompletedToday")]
+        public async Task<ActionResult<CompletedChecklists>> GetToDoList() {
+            return Ok(await _uow.MetadataRepository.GetCompletedChecklistsPerDay(User.GetUserId()));
         }
 
     }

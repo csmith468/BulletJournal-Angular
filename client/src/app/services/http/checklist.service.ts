@@ -51,8 +51,4 @@ export class ChecklistService {
         }
     ))
   }
-
-  // getCompletedToday() {
-  //   return this.http.get<CompletedChecklists[]>(this.baseUrl + 'user/getCompletedToday');
-  // }
 }

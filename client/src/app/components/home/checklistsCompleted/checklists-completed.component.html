@@ -4,11 +4,11 @@
     <div class="list-group">
     <div *ngFor="let c of completedChecklists">
         <button class="list-group-item list-group-item-action pb-0"
-            routerLink="/checklists/{{c.tableName}}/{{c.id ? '/edit/' + c.id.toString() : '/add'}}">
+            routerLink="/checklists/{{c.checklistTypeName}}/{{c.id ? '/edit/' + c.id.toString() : '/add'}}">
             <div class="form-row">
                 <i *ngIf="c.id" class="fa-solid fa-square-check" style="color:#a1d354; font-size: 25;"></i>
                 <i *ngIf="!c.id" class="fa-solid fa-square-xmark" style="color:#e83e8c; font-size: 25;"></i>
-                <p class="ml-3">{{c.tableLabel}}</p>
+                <p class="ml-3">{{c.checklistTypeLabel}}</p>
             </div>
         </button>
     </div>

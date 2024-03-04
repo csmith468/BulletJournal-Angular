@@ -80,33 +80,6 @@ namespace API.Data.Repositories
             return await dbSet.AnyAsync(x => x.date == date && x.userID == userId);
         }
 
-        // public async Task<IEnumerable<CompletedChecklists>> GetCompletedChecklistsPerDay(int userId) {
-        //     List<string> tables = await _contextEF.TablePreferences
-        //         .Where(t => t.userID == userId && t.isVisible == true)
-        //         .Select(t => t.tableName).ToListAsync();
-
-        //     string sql = "";
-        //     for (var i = 0; i < tables.Count; i++) {
-        //         sql += @$"
-        //         SELECT '{tables[i]}' AS TtableName,
-        //             ISNULL([category].[DisplayName] + ' ', '') + [tables].[DisplayName] AS TableLabel,
-        //             CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[userID]) AS Date) AS [Date],
-        //             [{tables[i]}].[{tables[i]}ID] AS ID
-        //         FROM [app_sys].[user]
-        //         LEFT JOIN [app].[{tables[i]}] ON [{tables[i]}].[userID] = [user].[userID] 
-        //             AND [{tables[i]}].[Date] = CAST([app_sys].GetUTCInUserTimezone(GETUTCDATE(), [user].[userID]) AS Date)
-        //         LEFT JOIN [app_sys].[tables] ON [tables].[key] = '{tables[i]}'
-        //         LEFT JOIN [app_sys].[tables] [category] ON [category].[key] = [tables].[category]
-        //         AND [user].[userID] = {userId} 
-        //         ";
-        //         if (i < tables.Count - 1) {
-        //             sql += " UNION ALL ";
-        //         }
-        //     }
-
-        //     return await _contextDapper.QueryAsync<CompletedChecklists>(sql);
-        // }
-
         private async Task<T> GetMinDateEntryAsync(int userID) {
             var dbSet = _contextEF.Set<T>();
             return await dbSet.Where(x => x.userID == userID).OrderBy(x => x.date).FirstOrDefaultAsync();
