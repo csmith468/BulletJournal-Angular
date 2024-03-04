@@ -81,7 +81,7 @@ export class QuestionPrefsComponent implements OnDestroy {
       const control = this.form.get(c);
 
       if (control && control.dirty) {
-        const question = this.questions.find(q => q.checklistTypeName == this.checklistTypeNames[this.activeTabName]
+        const question = this.questions.find(q => q.checklistTypeName == this.activeTabName
             && q.key == c);
         if (question && question.isVisible != control.value) {
           question.isVisible = control.value;
@@ -89,6 +89,7 @@ export class QuestionPrefsComponent implements OnDestroy {
         }
       }
     })
+
     if (finalPrefs.length > 0) {
       this.preferencesService.updateQuestionPreferences(finalPrefs).subscribe({
         next: () => this.getData()

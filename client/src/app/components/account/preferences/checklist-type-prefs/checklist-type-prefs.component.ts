@@ -6,11 +6,11 @@ import { ChecklistTypePrefDto, ChecklistTypePreferences } from 'src/app/models/d
 import { PreferencesService } from 'src/app/services/http/preferences.service';
 
 @Component({
-  selector: 'app-table-prefs',
-  templateUrl: './table-prefs.component.html',
-  styleUrls: ['./table-prefs.component.css']
+  selector: 'app-checklist-type-prefs',
+  templateUrl: './checklist-type-prefs.component.html',
+  styleUrls: ['./checklist-type-prefs.component.css']
 })
-export class TablePrefsComponent implements OnDestroy {
+export class ChecklistTypePrefsComponent implements OnDestroy {
   checklistTypes: ChecklistTypePreferences[] = [];
   form!: FormGroup;
   private subscription: Subscription | undefined;

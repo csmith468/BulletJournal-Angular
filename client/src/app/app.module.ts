@@ -36,8 +36,10 @@ import { AreaChartComponent } from './components/trends/chart/area-chart/area-ch
 import { BodyComponent } from './components/layout/body/body.component';
 import { ChartComponent } from './components/trends/chart/chart.component';
 import { ChecklistsCompletedComponent } from './components/home/checklistsCompleted/checklists-completed.component';
+import { ChecklistTypePrefsComponent } from './components/account/preferences/checklist-type-prefs/checklist-type-prefs.component';
 import { ConfirmDialogComponent } from './components/layout/modals/confirm-dialog/confirm-dialog.component';
 import { DropdownInputComponent } from './components/account/register/form-register-validation/dropdown-register/dropdown-register.component';
+import { GeneralPrefsComponent } from './components/account/preferences/general-prefs/general-prefs.component';
 import { HeaderComponent } from './components/layout/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/account/login/login.component';
@@ -48,7 +50,6 @@ import { RegisterComponent } from './components/account/register/register.compon
 import { SetupComponent } from './components/account/preferences/setup/setup.component';
 import { SidenavComponent } from './components/layout/sidenav/sidenav.component';
 import { SubLevelMenuComponent } from './components/layout/sidenav/sub-level-menu.component';
-import { TablePrefsComponent } from './components/account/preferences/table-prefs/table-prefs.component';
 import { TextInputComponent } from './components/account/register/form-register-validation/text-register/text-register.component';
 import { TrendsComponent } from './components/trends/trends.component';
 
@@ -60,8 +61,10 @@ import { TrendsComponent } from './components/trends/trends.component';
     BodyComponent,
     ChartComponent,
     ChecklistsCompletedComponent,
+    ChecklistTypePrefsComponent,
     ConfirmDialogComponent,
     DropdownInputComponent,
+    GeneralPrefsComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
@@ -73,7 +76,6 @@ import { TrendsComponent } from './components/trends/trends.component';
     SidenavComponent,
     SubLevelMenuComponent,
     // TableComponent,
-    TablePrefsComponent,
     TextInputComponent,
     TrendsComponent
   ],

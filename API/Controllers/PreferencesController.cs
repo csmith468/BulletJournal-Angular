@@ -73,7 +73,7 @@ namespace API.Controllers
         }
 
         [HttpPut("checklistTypes/updatePreferences")]
-        public async Task<ActionResult> UpdateTablePreferences(ChecklistTypePreferencesDto checklistTypePrefs) {
+        public async Task<ActionResult> UpdateChecklistTypePreferences(ChecklistTypePreferencesDto checklistTypePrefs) {
             var prefs = await _uow.PreferencesRepository.GetChecklistTypePreferencesByIdAsync(User.GetUserId(), checklistTypePrefs.checklistTypePreferencesID);
             if (prefs == null) return NotFound();
 
@@ -85,7 +85,7 @@ namespace API.Controllers
         }
 
         [HttpPut("checklistTypes/updateMultiplePreferences")]
-        public async Task<ActionResult> UpdateMultipleTablePreferences(List<ChecklistTypePreferencesDto> prefDtos) {
+        public async Task<ActionResult> UpdateMultipleChecklistTypePreferences(List<ChecklistTypePreferencesDto> prefDtos) {
             if (prefDtos == null || !prefDtos.Any()) return BadRequest("Invalid data provided.");
 
             foreach (ChecklistTypePreferencesDto p in prefDtos) {

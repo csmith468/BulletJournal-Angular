@@ -22,3 +22,7 @@
 .date-col {
     min-width: 120px;
 }
+
+td, th {
+    text-align: center;
+}

@@ -6,7 +6,7 @@ CREATE TABLE [app].[checklistTypePreferences](
 	[checklistTypePreferencesID] [int] IDENTITY(1,1) NOT NULL,
 	[userID] [int] NOT NULL,
 	[createdDatetime] [datetime] NULL,
-	[modifiedDatetime] [int] NULL,
+	[modifiedDatetime] [datetime] NULL,
 	[checklistTypeID] [int] NOT NULL,
 	[isVisible] [bit] NOT NULL
 ) ON [PRIMARY]
