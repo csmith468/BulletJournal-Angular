@@ -20,13 +20,7 @@ export class MetadataService {
   getVisibleChecklistTypes() {
     return this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes').pipe(map(
       checklistTypes => {
-        return checklistTypes.map(ct => {
-          if (ct.category) {
-            // If the table has a category, update the displayName
-            ct.label = ct.category + ' ' + ct.label;
-          }
-          return ct;
-        }).filter(ct => !ct.isHeader);
+        return checklistTypes.filter(ct => !ct.isHeader);
       }
     ))
   }

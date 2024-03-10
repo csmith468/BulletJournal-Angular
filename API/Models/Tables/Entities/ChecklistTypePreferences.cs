@@ -4,5 +4,6 @@ namespace API.Models.Tables.Entities {
         public int userID { get; set; }
         public int checklistTypeID { get; set; }
         public bool? isVisible { get; set; }
+        public bool? canUpdateQuestions { get; set; }
     }
 }

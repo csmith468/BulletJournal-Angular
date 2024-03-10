@@ -32,14 +32,14 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<VisibleQuestion_ChartsViewDto>>> GetChartQuestions(string type) {
             var chartQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, true, null);
             if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
+            return Ok(chartQuestions.Where(q => q.includeInCharts).Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
         }
 
         [HttpGet("{type}/getChartQuestionsByKind/{kindId}")]
         public async Task<ActionResult<IEnumerable<VisibleQuestion_ChartsViewDto>>> GetChartQuestionsByKind(string type, int kindId) {
             var chartQuestions = await _uow.MetadataRepository.GetVisibleQuestionsAsync(User.GetUserId(), type, true, kindId);
             if (chartQuestions == null) return NotFound();
-            return Ok(chartQuestions.Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
+            return Ok(chartQuestions.Where(q => q.includeInCharts).Select(q => _mapper.Map<QuestionPreferencesView, VisibleQuestion_ChartsViewDto>(q)).ToList());
         }
 
         // Checklist Questions

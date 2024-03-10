@@ -27,20 +27,20 @@ export class SidenavService {
         {
           routeLink: 'checklist',
           icon: 'fa-solid fa-check',
-          label: 'Checklists',
-          items: this.createSection(t, 'checklists', '/add', 'Add')
+          label: 'Fill Checklist',
+          items: this.createSection(t, 'checklists', '/add', false)
         },
         {
           routeLink: 'data',
           icon: 'fa-solid fa-table',
-          label: 'Data',
-          items: this.createSection(t, 'data', '', 'View')
+          label: 'View Data',
+          items: this.createSection(t, 'data', '', false)
         },
         {
           routeLink: 'trends',
           icon: 'fa-solid fa-chart-line',
-          label: 'Trends',
-          items: this.createSection(t, 'trends', '', 'View')
+          label: 'View Trends',
+          items: this.createSection(t, 'trends', '', true)
         },
         {
           routeLink: 'about',
@@ -53,7 +53,9 @@ export class SidenavService {
     })
   }
 
-  createSection(t: VisibleChecklistType[], routeLinkPrefix: string, routeLinkSuffix: string, labelPrefix: string) {
+  createSection(t: VisibleChecklistType[], routeLinkPrefix: string, routeLinkSuffix: string, filterCharts: boolean) {
+    if (filterCharts) t = t.filter(ct => ct.includeInCharts == true);
+
     const headers = t.filter(ct => ct.isHeader);
     const items = t.filter(ct => !ct.isHeader && !ct.category);
     const subItems = t.filter(ct => !ct.isHeader && ct.category);
@@ -70,19 +72,19 @@ export class SidenavService {
       .map(item => ({
         routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
         icon: item.icon,
-        label: labelPrefix + ' ' + item.label
+        label: item.label
       }));
 
     headers.forEach(header => {
       const headerNavItem: ISideNavData = {
         routeLink: routeLinkPrefix + '/' + header.key,
         icon: header.icon,
-        label: labelPrefix + ' ' + header.label,
+        label: header.label,
         items: groupedTables[header.key] ? groupedTables[header.key].map(
           (item: VisibleChecklistType) => ({
             routeLink: routeLinkPrefix + '/' + item.key + routeLinkSuffix,
             icon: item.icon,
-            label: labelPrefix + ' ' + item.label
+            label: item.label
           })) : [],
       };
 

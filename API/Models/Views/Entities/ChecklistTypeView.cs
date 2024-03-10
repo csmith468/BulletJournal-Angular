@@ -7,5 +7,7 @@ namespace API.Models.Views.Entities {
         public string category { get; set; }
         public bool? isHeader { get; set; }
         public int defaultOrder { get; set; }
+        public bool includeInCharts { get; set; }
+        public bool canUpdateQuestions { get; set; }
     }
 }

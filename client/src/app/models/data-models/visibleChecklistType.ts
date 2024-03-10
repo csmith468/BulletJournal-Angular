@@ -4,4 +4,6 @@ export interface VisibleChecklistType {
     icon: string;
     category?: string;
     isHeader?: boolean;
+    includeInCharts: boolean;
+    canUpdateQuestions: boolean;
 }

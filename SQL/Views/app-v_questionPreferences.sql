@@ -2,14 +2,15 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE VIEW [app].[v_questionPreferences] AS
+ALTER VIEW [app].[v_questionPreferences] AS
     SELECT qp.[questionPreferencesID]
         ,qp.[userID]
         ,ct.[label] AS [checklistTypeName]
         ,qp.[key]
         ,qp.[label]
         ,qp.[isVisible]
-        ,qk.[includeInCharts]
+        ,CASE WHEN ct.[includeInCharts] = 1 THEN qk.[includeInCharts] ELSE 0 END AS [includeInCharts]
+        ,ct.[canUpdateQuestions]
         ,qp.[questionKindID]
         ,qk.[kindBase]
         ,qk.[kindDetail]

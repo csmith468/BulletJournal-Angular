@@ -10,5 +10,7 @@ CREATE VIEW [app_sys].[v_checklistType] AS
         ,[category]
         ,[isHeader]
         ,[defaultOrder]
+        ,[includeInCharts]
+        ,[canUpdateQuestions]
     FROM [BulletJournalApp].[app_sys].[checklistType]
 GO

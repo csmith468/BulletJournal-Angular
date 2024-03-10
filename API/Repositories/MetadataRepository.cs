@@ -67,7 +67,7 @@ namespace API.Data.Repositories
             for (var i = 0; i < checklistTypes.Count; i++) {
                 sql += @$"
                 SELECT DISTINCT '{checklistTypes[i]}' AS checklistTypeName,
-                    ISNULL([category].[label] + ' ', '') + [checklistType].[label] AS checklistTypeLabel,
+                    [checklistType].[label] AS checklistTypeLabel,
                     CAST([app_sys].fn_getUTCInUserTimezone(GETUTCDATE(), [user].[userID]) AS Date) AS [date],
                     [{checklistTypes[i]}].[id]
                 FROM [app].[user]

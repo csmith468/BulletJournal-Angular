@@ -13,5 +13,7 @@ namespace API.Models.Views.DTOs {
         public int? questionOrder { get; set; }
         public int? minValue { get; set; }
         public int? maxValue { get; set; }
+        public bool includeInCharts { get; set; }
+        public bool canUpdateQuestions { get; set; }
     }
 }

@@ -13,6 +13,8 @@ CREATE VIEW [app].[v_checklistTypePreferences] AS
         ,ct.[category]
         ,ct.[isHeader]
         ,ct.[defaultOrder]
+        ,ct.[includeInCharts]
+        ,ct.[canUpdateQuestions]
     FROM [app].[checklistTypePreferences] cp
     LEFT JOIN [app_sys].[checklistType] ct ON ct.[checklistTypeID] = cp.[checklistTypeID]
 GO
