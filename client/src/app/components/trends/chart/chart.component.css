@@ -1,5 +1,16 @@
 .card-body {
-    max-height: 250px;
+    max-height: 350px;
     overflow-y: auto;
     white-space: nowrap;
+}
+
+.filter-button {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    height: 30px;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

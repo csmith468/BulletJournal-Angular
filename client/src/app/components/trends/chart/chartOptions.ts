@@ -31,6 +31,11 @@ export const baseChartOptions: BaseChartOptions = {
         height: 350,
         type: "area",   // override in actual
         stacked: false,   // override in actual
+        redrawOnParentResize: true,
+        redrawOnWindowResize: true,
+        animations: {
+            enabled: false
+        },
         zoom: {
           type: "x",
           enabled: true,

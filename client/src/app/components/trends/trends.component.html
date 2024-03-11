@@ -1,26 +1,29 @@
 <div class="d-flex justify-content-between">
   <h4 class="mt-2 mb-3">{{this.header}}</h4>
   <div class="row">
-    <button class="btn btn-secondary" (click)="viewData()">View Data</button>
-    <button class="btn btn-success" (click)="addChart()"><i class="fa fa-plus"></i></button>
+    <button class="btn btn-secondary text-button" (click)="viewData()">View Data</button>
+    <button class="btn btn-info text-button" (click)="changeFilterVisibility()">
+      {{showFilters ? 'Hide' : 'Show'}} Filters
+    </button>
+    <button class="btn btn-success square-button" (click)="addChart()"><i class="fa fa-plus"></i></button>
   </div>
 </div>
 <div *ngIf="data && data.length > 0 && chartQuestions && chartQuestions.length > 0">
   <div *ngFor="let chart of chartVisibility">
     <div class="card" *ngIf="chart.visibility !== 'closed'">
       <div class="row row-buttons">
-        <button class="btn btn-danger" (click)="closeChart(chart.chartNumber)">
+        <button class="btn btn-danger square-button" (click)="closeChart(chart.chartNumber)">
           <i class="fa fa-times"></i>
         </button>
         <button
           *ngIf="chart.visibility === 'open'"
-          class="btn btn-warning"
+          class="btn btn-warning square-button"
           (click)="minimizeChart(chart.chartNumber)">
           <i class="fa fa-window-minimize"></i>
         </button>
         <button
           *ngIf="chart.visibility === 'minimized'"
-          class="btn btn-info"
+          class="btn btn-info square-button"
           (click)="openChart(chart.chartNumber)">
           <i class="fa fa-window-maximize"></i>
         </button>

@@ -3,10 +3,7 @@
     margin-bottom: 1rem;
 }
 
-.btn-danger,
-.btn-warning,
-.btn-info,
-.btn-success {
+.square-button {
     width: 30px;
     height: 30px;
     margin: 0 0.2rem; 
@@ -15,7 +12,7 @@
     align-items: center;
 }
 
-.btn-secondary {
+.text-button {
     width: 120px;
     height: 30px;
     margin: 0 0.2rem; 

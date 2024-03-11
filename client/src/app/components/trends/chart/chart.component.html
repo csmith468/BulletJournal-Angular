@@ -1,40 +1,47 @@
 
-<div *ngIf="isVisible" class="row">
-    <div class="col-9" *ngIf="selectedKindDetail">
-        <app-area-chart
-            [data]="data"
-            [selectedQuestions]="selectedQuestions"
-            [selectedKindDetail]="selectedKindDetail"
-            aggregation="Monthly"
-            [chartNumber]="chartNumber"
-        ></app-area-chart>
+<div *ngIf="isVisible">
+    <button class="btn btn-info filter-button" (click)="changeFilterPanelVisibility()">
+        {{showFilterPanel ? 'Hide' : 'Show'}} Filter
+    </button>
+    <div class="row">
+        <div [ngClass]="showFilterPanel ? 'col-9' : 'col-12'">
+            <app-area-chart
+                [data]="data"
+                [selectedQuestions]="selectedQuestions"
+                [selectedQuestionKind]="selectedQuestionKind"
+                aggregation="Monthly"
+                [chartNumber]="chartNumber"
+            ></app-area-chart>
     </div>
-    <div class="col-3">
-        <form [formGroup]="selectForm" class="dropdown">
-            <select *ngIf="questionKindsInSet.length > 1" class="custom-select" 
-                id="selectType_{{chartNumber}}" formControlName="kindDetail" 
-                (change)="onUpdateSelect()">
-                <option *ngFor="let q of questionKindsInSet" [ngValue]="q.kindDetail">{{q.kindDetail}}</option>
-            </select>
-            <select class="custom-select" id="selectRange_{{chartNumber}}" formControlName="rangeType" 
-                (change)="onUpdateSelect()">
-                <option ngValue="Weekly">Weekly</option>
-                <option ngValue="Monthly">Monthly</option>
-                <option ngValue="Yearly">Yearly</option>
-            </select>
-        </form>
-        <div class="card mt-2">
-            <div class="card-body">
-                <div class="form-check">
-                    <div *ngFor="let question of questionOptionsInKind">
-                        <input type="checkbox" 
-                            [checked]="selectedQuestions.includes(question)" 
-                            class="form-check-input"
-                            [id]="question.key"
-                            [disabled]="(selectedQuestions.includes(question) && selectedQuestions.length == 1)"
-                            (click)="onUpdateQuestions($event)"
-                        >
-                        <label [for]="question.key" class="form-check-label">{{question.label}}</label>
+        <div *ngIf="showFilterPanel" class="col-3 pt-2">
+            <div >
+                <form [formGroup]="selectForm" class="dropdown">
+                    <select *ngIf="questionKindsInSet.length > 1" class="custom-select" 
+                        id="selectType_{{chartNumber}}" formControlName="kindDetail" 
+                        (change)="onUpdateSelect()">
+                        <option *ngFor="let q of questionKindsInSet" [ngValue]="q.kindDetail">{{q.kindDetail}}</option>
+                    </select>
+                    <select class="custom-select" id="selectRange_{{chartNumber}}" formControlName="rangeType" 
+                        (change)="onUpdateSelect()">
+                        <option ngValue="Weekly">Weekly</option>
+                        <option ngValue="Monthly">Monthly</option>
+                        <option ngValue="Yearly">Yearly</option>
+                    </select>
+                </form>
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="form-check">
+                            <div *ngFor="let question of questionOptionsInKind">
+                                <input type="checkbox" 
+                                    [checked]="selectedQuestions.includes(question)" 
+                                    class="form-check-input"
+                                    [id]="question.key"
+                                    [disabled]="(selectedQuestions.includes(question) && selectedQuestions.length == 1)"
+                                    (click)="onUpdateQuestions($event)"
+                                >
+                                <label [for]="question.key" class="form-check-label">{{question.label}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

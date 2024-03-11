@@ -18,10 +18,11 @@ export class ChartComponent implements OnInit {
 
   selectedQuestions: Question_Chart[] = [];
   questionOptionsInKind: Question_Chart[] = [];
-  selectedKindDetail: QuestionKind | undefined;
+  selectedQuestionKind: QuestionKind | undefined;
   maxQuestionsInitial: number = 6;
   isVisible: boolean = true;
   selectForm: FormGroup;
+  showFilterPanel: boolean = true;
 
   constructor(private chartService: ChartService) {
     this.selectForm = new FormGroup({
@@ -34,27 +35,28 @@ export class ChartComponent implements OnInit {
       if (event.chartNumber === this.chartNumber)
         this.isVisible = event.isVisible;
     });
+
+    // Subscribe to visibility of filter panel from trends component
+    this.chartService.filterVisibility$.subscribe(event => {
+      this.showFilterPanel = event.isVisible;
+    })
   }
 
   ngOnInit(): void {
-
-
     // Set the type of chart to the index of the chart number so each chart shows one type initially
-    this.selectedKindDetail = (this.questionKindsInSet.length > this.chartNumber) 
+    this.selectedQuestionKind = (this.questionKindsInSet.length > this.chartNumber) 
       ? this.questionKindsInSet[this.chartNumber] 
       : this.questionKindsInSet[0];
     this.setValues();
 
-    console.log(this.selectedRangeType)
-
     // Form for setting type of form and range 
-    this.selectForm.controls['kindDetail'].setValue(this.selectedKindDetail.kindDetail);
+    this.selectForm.controls['kindDetail'].setValue(this.selectedQuestionKind.kindDetail);
     this.selectForm.controls['rangeType'].setValue(this.selectedRangeType);
   }
 
   // Get the questions within that question type and select up to the maximum number of questions initially
   setValues() {
-    this.questionOptionsInKind = this.chartQuestions.filter(q => q.questionKindID == this.selectedKindDetail!.questionKindID);
+    this.questionOptionsInKind = this.chartQuestions.filter(q => q.questionKindID == this.selectedQuestionKind!.questionKindID);
     this.selectedQuestions = this.questionOptionsInKind.slice(0, this.maxQuestionsInitial);
   }
 
@@ -69,7 +71,7 @@ export class ChartComponent implements OnInit {
     else {
       question = this.questionOptionsInKind!.find(f => f.key === questionKey);
       if (question) {
-        this.selectedQuestions.push();
+        this.selectedQuestions.push(question);
         this.chartService.emitAddedQuestion(question, this.chartNumber);
       }
     }
@@ -78,8 +80,8 @@ export class ChartComponent implements OnInit {
   // When form updates for the range type or the question types
   onUpdateSelect() {
     // Reset available questions for that question type if applicable
-    if (this.selectedKindDetail?.kindDetail != this.selectForm.value['kindDetail']) {
-      this.selectedKindDetail = this.questionKindsInSet.find(k => k.kindDetail == this.selectForm.value['kindDetail']);
+    if (this.selectedQuestionKind?.kindDetail != this.selectForm.value['kindDetail']) {
+      this.selectedQuestionKind = this.questionKindsInSet.find(k => k.kindDetail == this.selectForm.value['kindDetail']);
       this.setValues();
     }
 
@@ -89,7 +91,13 @@ export class ChartComponent implements OnInit {
     }
 
     // Send the actual chart component the updated data
-    this.chartService.emitResetChart(this.selectedQuestions, this.selectedKindDetail!, 
+    this.chartService.emitResetChart(this.selectedQuestions, this.selectedQuestionKind!, 
       this.selectedRangeType, this.chartNumber);
+  }
+
+  changeFilterPanelVisibility() {
+    this.showFilterPanel = !this.showFilterPanel;
+    // Make apex chart think the window resized so it will resize the chart to fit
+    window.dispatchEvent(new Event('resize'));
   }
 }

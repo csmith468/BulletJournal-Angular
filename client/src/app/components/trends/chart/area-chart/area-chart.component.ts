@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { ChartOptions, baseChartOptions } from '../chartOptions';
 import { ChartService } from 'src/app/services/components/chart.service';
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
@@ -17,7 +17,7 @@ export type QuestionValues = {
 export class AreaChartComponent implements OnInit {
   @Input() data: Array<any> = [];
   @Input() selectedQuestions: Question_Chart[] = [];
-  @Input() selectedKindDetail: QuestionKind | undefined;
+  @Input() selectedQuestionKind: QuestionKind | undefined;
   @Input() aggregation: string = 'Monthly';
   @Input() chartNumber: number = 0;
 
@@ -31,7 +31,6 @@ export class AreaChartComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
-    console.log(this.selectedKindDetail)
     this.createSubscriptions();
     this.startCreation();
   }
@@ -49,15 +48,16 @@ export class AreaChartComponent implements OnInit {
     var dataTemp: any[] = [];
 
     // if rating, use value, if yes/no, true = 1, false = 0
-    if (this.selectedKindDetail!.kindDetail === 'Yes/No') {
+    if (this.selectedQuestionKind!.kindDetail === 'Yes/No') {
       this.data.forEach(q => {
         var value = (q[question.key] != null) ? ((q[question.key] == true) ? 1 : 0) : null;
         dataTemp.push([new Date(q.date), value]);
-        if (value && value < this.minValue) this.minValue = value;
-        if (value && value > this.maxValue) this.maxValue = value;
+        this.maxValue = 1;
       })
     } else {
       this.data.forEach(q => {
+        if (q[question.key] && q[question.key] < this.minValue) this.minValue = q[question.key];
+        if (q[question.key] && q[question.key] > this.maxValue) this.maxValue = q[question.key];
         dataTemp.push([new Date(q.date), (q[question.key] != null ? q[question.key] : null)])
       })
     }
@@ -122,7 +122,7 @@ export class AreaChartComponent implements OnInit {
     this.chartService.resetChart$.subscribe(event => {
       if (event.chartNumber === this.chartNumber) {
         this.selectedQuestions = event.selectedQuestions;
-        this.selectedKindDetail = event.selectedKindDetail;
+        this.selectedQuestionKind = event.selectedQuestionKind;
         this.aggregation = event.aggregation;
         this.dateAxis = [];
         this.chartData = [];
@@ -158,7 +158,10 @@ export class AreaChartComponent implements OnInit {
         type: "area",
         stacked: false,
         zoom: baseChartOptions.chart.zoom,
-        toolbar: baseChartOptions.chart.toolbar
+        toolbar: baseChartOptions.chart.toolbar,
+        redrawOnParentResize: baseChartOptions.chart.redrawOnParentResize,
+        redrawOnWindowResize: baseChartOptions.chart.redrawOnWindowResize,
+        animations: baseChartOptions.chart.animations
       },
       markers: { size: 5 },
       stroke: { curve: "smooth" },
@@ -173,8 +176,8 @@ export class AreaChartComponent implements OnInit {
       },
       yaxis: {
         // If min value is in question type, use that, otherwise use min(or 0 if lesser)/max value in data
-        min: (this.selectedKindDetail && this.selectedKindDetail.minValue) ? this.selectedKindDetail.minValue : this.minValue,
-        max: (this.selectedKindDetail && this.selectedKindDetail.maxValue) ? this.selectedKindDetail.maxValue : this.maxValue,
+        min: (this.selectedQuestionKind && this.selectedQuestionKind.minValue) ? this.selectedQuestionKind.minValue : this.minValue,
+        max: (this.selectedQuestionKind && this.selectedQuestionKind.maxValue) ? this.selectedQuestionKind.maxValue : this.maxValue,
         labels: {
           formatter: (value: number) => { return this.formatNumber(value, 'Axis'); }
         }
@@ -185,12 +188,12 @@ export class AreaChartComponent implements OnInit {
 
   // Format number based on type and if percentage (TODO: currency)
   formatNumber(num: number, type: string) {
-    if (this.selectedKindDetail && this.selectedKindDetail.isPercentage) num *= 100;
+    if (this.selectedQuestionKind && this.selectedQuestionKind.isPercentage) num *= 100;
 
     // QuestionType has different properties for the number of decimal places for the y-label vs y-axis
     const getDecimalPlaces = (prop: string): number => {
       const key = prop as keyof QuestionKind;
-      return ((this.selectedKindDetail && this.selectedKindDetail[key]) ? (this.selectedKindDetail[key] as number) : 0);
+      return ((this.selectedQuestionKind && this.selectedQuestionKind[key]) ? (this.selectedQuestionKind[key] as number) : 0);
     }
 
     const formattedNum = num.toLocaleString(undefined, {
@@ -198,7 +201,7 @@ export class AreaChartComponent implements OnInit {
       maximumFractionDigits: getDecimalPlaces(`maxDecimalPlacesY${type}`)
     })
 
-    return formattedNum + ((this.selectedKindDetail && this.selectedKindDetail.isPercentage) ? '%' : '');
+    return formattedNum + ((this.selectedQuestionKind && this.selectedQuestionKind.isPercentage) ? '%' : '');
   }
 
   setChartColors() {
@@ -217,5 +220,6 @@ export class AreaChartComponent implements OnInit {
     const weekNumber = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
     return weekNumber;
   }
+
 }
 
