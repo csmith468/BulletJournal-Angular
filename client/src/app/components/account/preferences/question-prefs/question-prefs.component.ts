@@ -31,8 +31,10 @@ export class QuestionPrefsComponent implements OnDestroy {
     this.metadataService.getVisibleChecklistTypes().subscribe(
       checklistTypes => {
         checklistTypes.forEach(ct => {
-          this.checklistTypeNames[ct.label] = ct.key;
-          if (this.activeTabName == '') this.activeTabName = ct.label
+          if (ct.canUpdateQuestions) {
+            this.checklistTypeNames[ct.label] = ct.key;
+            if (this.activeTabName == '') this.activeTabName = ct.label
+          }
         })
         this.getData();
       }

@@ -27,19 +27,19 @@ export class SidenavService {
         {
           routeLink: 'checklist',
           icon: 'fa-solid fa-check',
-          label: 'Fill Checklist',
+          label: 'Checklist',
           items: this.createSection(t, 'checklists', '/add', false)
         },
         {
           routeLink: 'data',
           icon: 'fa-solid fa-table',
-          label: 'View Data',
+          label: 'Data',
           items: this.createSection(t, 'data', '', false)
         },
         {
           routeLink: 'trends',
           icon: 'fa-solid fa-chart-line',
-          label: 'View Trends',
+          label: 'Trends',
           items: this.createSection(t, 'trends', '', true)
         },
         {

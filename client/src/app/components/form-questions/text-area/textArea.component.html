@@ -1,0 +1,10 @@
+<div [formGroup]="form">
+    <div class="form-floating mb-2 custom-textbox" >
+        <textarea 
+            class="form-control textAreaStyle" 
+            [id]="item.key"
+            [formControlName]="item.key"
+        ></textarea>
+        <label [attr.for]="item.key">{{item.label}}</label>
+    </div>
+</div>

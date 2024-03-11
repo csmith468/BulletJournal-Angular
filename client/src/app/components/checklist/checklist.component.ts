@@ -18,6 +18,8 @@ import { createSliderQuestion } from '../form-questions/slider/sliderQuestion';
 import { SliderComponent } from '../form-questions/slider/slider.component';
 import { MetadataService } from 'src/app/services/http/metadata.service';
 import { Question_Checklist } from 'src/app/models/question-models/question_checklist';
+import { createTextAreaQuestion } from '../form-questions/text-area/textAreaQuestion';
+import { TextAreaComponent } from '../form-questions/text-area/textArea.component';
 
 @Component({
   standalone: true,
@@ -25,7 +27,7 @@ import { Question_Checklist } from 'src/app/models/question-models/question_chec
   templateUrl: './checklist.component.html',
   styleUrls: ['./checklist.component.css'],
   providers: [ChecklistService],
-  imports: [AsyncPipe, CommonModule, ReactiveFormsModule, 
+  imports: [AsyncPipe, CommonModule, ReactiveFormsModule, TextAreaComponent,
     TextboxComponent, SwitchComponent, DropdownComponent, DatePickerComponent, SliderComponent]
 })
 export class ChecklistComponent implements OnDestroy {
@@ -78,6 +80,9 @@ export class ChecklistComponent implements OnDestroy {
 
     if (q.kindBase == 'slider' && q.minValue && q.maxValue) 
       this.questionFormItems.push(createSliderQuestion(q, checklist))
+
+    if (q.kindBase == 'textarea') 
+      this.questionFormItems.push(createTextAreaQuestion(q, checklist));
 
     // eventually add textarea question
   }

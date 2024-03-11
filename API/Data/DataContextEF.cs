@@ -36,10 +36,17 @@ namespace API.Data
         public DbSet<Physical> Physical { get; set; }
         // public DbSet<Sleep> Sleep { get; set; }
 
+        // Spending
         public DbSet<SpendingFinancial> SpendingFinancial { get; set; }
         public DbSet<SpendingHealthcare> SpendingHealthcare { get; set; }
         public DbSet<SpendingPersonal> SpendingPersonal { get; set; }
         public DbSet<SpendingRegular> SpendingRegular { get; set; }
+
+        // Writing
+        public DbSet<Dream> Dream { get; set; }
+        public DbSet<Journal> Journal { get; set; }
+        public DbSet<Gratitude> Gratitude { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) {
@@ -99,6 +106,13 @@ namespace API.Data
             modelBuilder.Entity<SpendingPersonal>().ToTable("spendingPersonal", "checklist")
                 .HasKey(u => u.id);
             modelBuilder.Entity<SpendingRegular>().ToTable("spendingRegular", "checklist")
+                .HasKey(u => u.id);
+
+            modelBuilder.Entity<Dream>().ToTable("dream", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Journal>().ToTable("journal", "checklist")
+                .HasKey(u => u.id);
+            modelBuilder.Entity<Gratitude>().ToTable("gratitude", "checklist")
                 .HasKey(u => u.id);
         }
 

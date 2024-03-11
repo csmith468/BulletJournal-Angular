@@ -27,6 +27,9 @@
                 <div *ngSwitchCase="'slider'" >
                     <app-slider [item]="question" [form]="form"></app-slider>
                 </div>
+                <div *ngSwitchCase="'textarea'" >
+                    <app-textArea [item]="question" [form]="form"></app-textArea>
+                </div>
             </div>
         </div>
         <div class="form-row mt-3">

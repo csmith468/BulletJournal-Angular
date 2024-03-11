@@ -39,6 +39,10 @@ namespace API.Data.Helpers
             CreateMap<SpendingPersonal, SpendingPersonal>();
             CreateMap<SpendingRegular, SpendingRegular>();
 
+            CreateMap<Dream, Dream>();
+            CreateMap<Journal, Journal>();
+            CreateMap<Gratitude, Gratitude>();
+
             CreateMap<Checklist, Morning>();
             CreateMap<Checklist, Night>();
             CreateMap<Checklist, Daily>();
@@ -50,6 +54,10 @@ namespace API.Data.Helpers
             CreateMap<Checklist, SpendingPersonal>();
             CreateMap<Checklist, SpendingRegular>();
 
+            CreateMap<Checklist, Dream>();
+            CreateMap<Checklist, Journal>();
+            CreateMap<Checklist, Gratitude>();
+
             CreateMap<Morning, Checklist>();
             CreateMap<Night, Checklist>();
             CreateMap<Daily, Checklist>();
@@ -60,6 +68,11 @@ namespace API.Data.Helpers
             CreateMap<SpendingHealthcare, Checklist>();
             CreateMap<SpendingPersonal, Checklist>();
             CreateMap<SpendingRegular, Checklist>();
+
+            CreateMap<Dream, Checklist>();
+            CreateMap<Journal, Checklist>();
+            CreateMap<Gratitude, Checklist>();
+
         }
     }
 }
