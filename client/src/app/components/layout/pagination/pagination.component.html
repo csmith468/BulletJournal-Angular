@@ -1,0 +1,24 @@
+<div *ngIf="pageRange.length > 0">
+    <ul class="pagination">   
+        <button class="btn btn-outline-primary" (click)="changePage(1)" [disabled]="currentPage === 1">&laquo;</button>
+        <button class="btn btn-outline-primary" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">&lsaquo;</button>
+        <div *ngFor="let i of pageRange">
+            <button class="{{i == currentPage ? 'btn btn-primary' : 'btn btn-outline-primary'}}" (click)="changePage(i)">{{i}}</button>
+        </div>
+        <button class="btn btn-outline-primary" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">&rsaquo;</button>
+        <button class="btn btn-outline-primary" (click)="changePage(totalPages)" [disabled]="currentPage === totalPages">&raquo;</button>
+    </ul>
+</div>
+
+<!-- <pagination
+    [boundaryLinks]="true"
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    [maxSize]="10"
+    [(ngModel)]="currentPage"
+    (pageChanged)="changePage($event.page)"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;">
+</pagination> -->
