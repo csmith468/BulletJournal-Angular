@@ -48,7 +48,7 @@ export class SidenavComponent implements OnInit {
   constructor(public sidenavService: SidenavService, public accountService: AccountService, 
     public router: Router) {
       this.sidenavService.sideNav$.subscribe(navData => {
-        if ((this.accountService.currentUser$)) this.navData_loggedIn = navData;
+        if (this.accountService.currentUser$) this.navData_loggedIn = navData;
       })
   }
 

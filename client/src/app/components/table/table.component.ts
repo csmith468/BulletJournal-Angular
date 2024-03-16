@@ -70,18 +70,13 @@ export class TableComponent implements OnInit, OnDestroy {
     this.checklistService.getTableData(this.source, this.pageNumber, this.pageSize, minDateParam, maxDateParam).subscribe({
       next: response => {
         if (response.result && response.pagination) {
-          console.log(response.pagination)
           this.table = <any[]>response.result;
           this.pagination = response.pagination;
           this.minDate = GetDateType(this.pagination.minDate);
           this.maxDate = GetDateType(this.pagination.maxDate);
           if (!this.changingPage) this.createDateForm();
-          if (this.changingPage == true){
-            this.changingPage = false;
-          }
-          if (this.settingDateRange == true){
-            this.settingDateRange = false;
-          }
+          this.changingPage = false;
+          this.settingDateRange = false;
         }
       }
     })
@@ -95,11 +90,7 @@ export class TableComponent implements OnInit, OnDestroy {
       'endDate', 'End Date', false, 2, GetDateType(this.pagination!.maxDateInRange)
     );
 
-    // this.startDateInput.value = GetDateType(this.pagination!.minDateInRange);
-    // this.endDateInput.value = GetDateType(this.pagination!.maxDateInRange);
-
     const group: any = {};
-
     group['startDate'] = new FormControl(this.startDateInput.value);
     group['endDate'] = new FormControl(this.endDateInput.value);
 
@@ -155,6 +146,4 @@ export class TableComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
 }
