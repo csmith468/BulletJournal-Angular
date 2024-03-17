@@ -18,11 +18,7 @@ export class MetadataService {
   constructor(private http: HttpClient) { }
 
   getVisibleChecklistTypes() {
-    return this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes').pipe(map(
-      checklistTypes => {
-        return checklistTypes.filter(ct => !ct.isHeader);
-      }
-    ))
+    return this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes');
   }
 
   getQuestionKindById(questionKindId: number) {

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { VisibleChecklistType } from 'src/app/models/data-models/visibleChecklistType';
 import { ISideNavData } from 'src/app/models/sidenav-data/ISideNavData';
 import { environment } from 'src/environments/environment';
+import { MetadataService } from '../http/metadata.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class SidenavService {
   private sideNavSubject = new BehaviorSubject<ISideNavData[]>([]);
   sideNav$: Observable<ISideNavData[]> = this.sideNavSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private metadataService: MetadataService) { }
 
 
   setSideNav() {
-    this.http.get<VisibleChecklistType[]>(this.baseUrl + 'metadata/getVisibleChecklistTypes').pipe(
+    this.metadataService.getVisibleChecklistTypes().pipe(
       map(t => [
         {
           routeLink: '',
@@ -54,11 +55,15 @@ export class SidenavService {
   }
 
   createSection(t: VisibleChecklistType[], routeLinkPrefix: string, routeLinkSuffix: string, filterCharts: boolean) {
+    console.log(t)
     if (filterCharts) t = t.filter(ct => ct.includeInCharts == true);
 
     const headers = t.filter(ct => ct.isHeader);
     const items = t.filter(ct => !ct.isHeader && !ct.category);
     const subItems = t.filter(ct => !ct.isHeader && ct.category);
+
+    // console.log(headers)
+    // console.log(subItems)
 
     const groupedTables = subItems.reduce((categories: any, ct) => {
       if (ct.category) {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChecklistTypePrefDto, ChecklistTypePreferences } from 'src/app/models/data-models/checklistTypePreferences';
@@ -18,7 +18,11 @@ export class ChecklistTypePrefsComponent implements OnDestroy {
   originalPayload: string = '';
   changeMade: boolean = false;
 
-  constructor(private preferencesService: PreferencesService, private router: Router) {
+  headers: ChecklistTypePreferences[] = [];
+  items: ChecklistTypePreferences[] = [];
+  subItems: ChecklistTypePreferences[] = [];
+
+  constructor(private preferencesService: PreferencesService, private router: Router, private formBuilder: FormBuilder) {
     this.getData();
   }
 
@@ -28,25 +32,74 @@ export class ChecklistTypePrefsComponent implements OnDestroy {
 
   getData() {
     this.changeMade = false;
-    const group: any = {};
+    this.form = this.formBuilder.group({});
     this.checklistTypes = [];
 
     this.preferencesService.getChecklistTypePreferences().subscribe(
       checklists => {
-        checklists.forEach(
-          c => {
-            group[c.key] = new FormControl(c.isVisible);
-            this.checklistTypes.push(c);
-          }
-        )
-        this.form = new FormGroup(group);
-        this.originalPayload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
-        this.payload = this.originalPayload;
-        this.onChange();
+        this.headers = checklists.filter(ct => ct.isHeader);
+        this.items = checklists.filter(ct => !ct.isHeader && !ct.category);
+        this.subItems = checklists.filter(ct => !ct.isHeader && ct.category);
+        
+        this.createForm(checklists);
       }
     )
   }
 
+  createForm(checklists: ChecklistTypePreferences[]) {
+    checklists.forEach(
+      c => {
+        this.form.addControl(c.key, new FormControl(c.isVisible));
+        this.checklistTypes.push(c);
+      }
+    )
+    // disable subitems when header is not visible
+    this.headers.filter(ct => !ct.isVisible).forEach(header => this.updateSubItemsFromHeader(header.key, header.isVisible!));
+
+    this.originalPayload = JSON.stringify(JSON.stringify(this.form!.getRawValue()));
+    this.payload = this.originalPayload;
+    this.onChange();
+  }
+
+  getSubItems(headerKey: string) {
+    return this.subItems.filter(si => si.category.toLowerCase() === headerKey.toLowerCase());
+  }
+
+  onHeaderChange(event: any) {
+    this.updateSubItemsFromHeader(event.target.id, event.target.checked);
+  }
+
+  updateSubItemsFromHeader(headerKey: string, checked: boolean) {
+    this.subItems.forEach(subItem => {
+      if (subItem.category.toLowerCase() == headerKey.toLowerCase() && this.form.get(subItem.key)) {
+        if (checked) this.form.get(subItem.key)!.enable();
+        else this.form.get(subItem.key)!.disable();
+      }
+    })
+  }
+
+  onSubItemChange(event: any, headerKey: string) {
+    // if all subitems are unchecked, uncheck and disable header
+    let noSubItemsChecked = true;
+    if (!event.target.checked) {
+      this.subItems.forEach(subItem => {
+        if (subItem.category.toLowerCase() == headerKey && this.form.get(subItem.key)) {
+          if (this.form.get(subItem.key)?.value == true) 
+            noSubItemsChecked = false;
+        }
+      })
+      if (noSubItemsChecked && this.form.get(headerKey)){
+        this.form.get(headerKey)!.setValue(false);
+        this.form.get(headerKey)!.disable();
+      }
+    }
+
+    // if header and subitems were all unchecked and you check a subitem, it will also check and re-enable the header
+    if (event.target.checked && this.form.get(headerKey) && this.form.get(headerKey)!.disabled) {
+      this.form.get(headerKey)!.setValue(true);
+      this.form.get(headerKey)!.enable();
+    }
+  }
 
   submitForm() {
     var finalPrefs: ChecklistTypePrefDto[] = [];

@@ -4,6 +4,8 @@ export interface ChecklistTypePreferences {
     key: string;
     label: string;
     isVisible?: boolean;
+    isHeader: boolean;
+    category: string;
 }
 
 
