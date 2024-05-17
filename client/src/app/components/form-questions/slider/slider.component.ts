@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { QuestionFormItem } from 'src/app/models/question-models/questionFormItem';
 import { MatSliderModule } from '@angular/material/slider';
+
+import { QuestionFormItem } from 'src/app/models/question-models/questionFormItem';
 
 @Component({
   standalone: true,

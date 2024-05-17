@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { CompletedChecklists } from 'src/app/models/data-models/completedChecklists';
 import { ChecklistService } from 'src/app/services/http/checklist.service';
 import { MetadataService } from 'src/app/services/http/metadata.service';

@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import { map } from 'rxjs';
-import { PaginatedResult } from '../../models/data-models/pagination';
+import { environment } from 'src/environments/environment';
+
 import { getDateOnly } from '../../helpers/functions/getDateOnlyFn';
 import { CompletedChecklists } from '../../models/data-models/completedChecklists';
+import { PaginatedResult } from '../../models/data-models/pagination';
 
 @Injectable({
   providedIn: 'root'

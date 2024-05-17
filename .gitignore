@@ -485,3 +485,5 @@ SQL/Backups
 ios/
 android/
 client/src/assets
+BETTER VERSION OF DB SETUP
+Option 1 for new checklist setup.sql

@@ -1,0 +1,28 @@
+{
+    "extends": [
+      "plugin:@angular-eslint/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [["builtin", "external"], "internal"],
+          "pathGroups": [
+            {
+              "pattern": "@angular/**",
+              "group": "external",
+              "position": "before"
+            }
+          ],
+          "pathGroupsExcludedImportTypes": ["@angular/**"],
+          "newlines-between": "always",
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": true
+          }
+        }
+      ]
+    }
+  }

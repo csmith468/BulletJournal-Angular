@@ -1,16 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination } from 'src/app/models/data-models/pagination';
-import { ChecklistService } from 'src/app/services/http/checklist.service';
-import { DateQuestion, createDateQuestionParams } from '../form-questions/date-picker/dateQuestion';
-import { DatePickerComponent } from '../form-questions/date-picker/date-picker.component';
+
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GetDateType } from 'src/app/helpers/functions/getDateTypeFn';
-import { MetadataService } from 'src/app/services/http/metadata.service';
+import { Pagination } from 'src/app/models/data-models/pagination';
 import { Question_Table } from 'src/app/models/question-models/question_table';
+import { ChecklistService } from 'src/app/services/http/checklist.service';
+import { MetadataService } from 'src/app/services/http/metadata.service';
+
+import { DatePickerComponent } from '../form-questions/date-picker/date-picker.component';
+import { DateQuestion, createDateQuestionParams } from '../form-questions/date-picker/dateQuestion';
 import { PaginationComponent } from '../layout/pagination/pagination.component';
 
 @Component({

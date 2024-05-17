@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { VisibleChecklistType } from 'src/app/models/data-models/visibleChecklistType';
 import { ISideNavData } from 'src/app/models/sidenav-data/ISideNavData';
 import { environment } from 'src/environments/environment';
+
 import { MetadataService } from '../http/metadata.service';
 
 @Injectable({

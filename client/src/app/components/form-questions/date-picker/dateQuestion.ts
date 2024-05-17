@@ -1,6 +1,7 @@
 import { GetDateType } from "src/app/helpers/functions/getDateTypeFn";
-import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
 import { Question_Checklist } from "src/app/models/question-models/question_checklist";
+
+import { QuestionFormItem } from "../../../models/question-models/questionFormItem";
 
 export class DateQuestion extends QuestionFormItem<any> { }
 

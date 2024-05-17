@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
+
 import { BehaviorSubject, map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 import { PreferencesService } from './preferences.service';
-import { User } from '../../models/data-models/user';
 import { TimezoneLocation } from '../../models/data-models/timezoneLocation';
+import { User } from '../../models/data-models/user';
 import { SidenavService } from '../components/sidenav.service';
 
 @Injectable({

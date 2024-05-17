@@ -1,9 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ISideNavData } from '../../../models/sidenav-data/ISideNavData';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
-import { AccountService } from 'src/app/services/http/account.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { AccountService } from 'src/app/services/http/account.service';
+
+import { sidenav_fadeInOut } from './sidenav-styling/sidenav-fadeInOut';
+import { ISideNavData } from '../../../models/sidenav-data/ISideNavData';
+
+
 
 
 // ng g c components/sidenav/subLevelMenu --inline-template --inline-style --flat true

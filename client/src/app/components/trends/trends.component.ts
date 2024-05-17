@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { finalize, forkJoin, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { getDateOnly } from 'src/app/helpers/functions/getDateOnlyFn';
 import { Pagination } from 'src/app/models/data-models/pagination';
-import { ChecklistService } from 'src/app/services/http/checklist.service';
-import { ChartService } from 'src/app/services/components/chart.service';
-import { MetadataService } from 'src/app/services/http/metadata.service';
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
 import { QuestionKind } from 'src/app/models/question-models/questionKind';
-import { finalize, forkJoin, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { ChartService } from 'src/app/services/components/chart.service';
+import { ChecklistService } from 'src/app/services/http/checklist.service';
+import { MetadataService } from 'src/app/services/http/metadata.service';
 
 @Component({
   selector: 'app-trends',

@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartService } from 'src/app/services/components/chart.service';
 import { FormControl, FormGroup } from '@angular/forms';
+
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
 import { QuestionKind } from 'src/app/models/question-models/questionKind';
+import { ChartService } from 'src/app/services/components/chart.service';
 
 @Component({
   selector: 'app-chart',

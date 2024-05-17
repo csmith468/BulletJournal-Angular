@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Subject, map } from 'rxjs';
+import { ChecklistTypePreferences } from 'src/app/models/data-models/checklistTypePreferences';
 import { environment } from 'src/environments/environment';
+
 import { QuestionPreferences } from '../../models/data-models/questionPreferences';
 import { SidenavService } from '../components/sidenav.service';
-import { ChecklistTypePreferences } from 'src/app/models/data-models/checklistTypePreferences';
 
 @Injectable({
   providedIn: 'root'

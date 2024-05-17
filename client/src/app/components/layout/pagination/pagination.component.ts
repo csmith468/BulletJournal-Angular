@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Pagination } from 'src/app/models/data-models/pagination';
 

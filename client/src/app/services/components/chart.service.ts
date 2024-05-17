@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+
 import { Subject } from 'rxjs';
-import { QuestionKind } from 'src/app/models/question-models/questionKind';
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
+import { QuestionKind } from 'src/app/models/question-models/questionKind';
 
 
 @Injectable({

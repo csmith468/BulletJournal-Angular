@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
-import { DropdownItem } from 'src/app/models/dropdownItem';
 import { TimezoneLocation } from 'src/app/models/data-models/timezoneLocation';
+import { DropdownItem } from 'src/app/models/dropdownItem';
 import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({

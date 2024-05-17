@@ -1,8 +1,10 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { ChartOptions, baseChartOptions } from '../chartOptions';
-import { ChartService } from 'src/app/services/components/chart.service';
+
 import { Question_Chart } from 'src/app/models/question-models/question_chart';
 import { QuestionKind } from 'src/app/models/question-models/questionKind';
+import { ChartService } from 'src/app/services/components/chart.service';
+
+import { ChartOptions, baseChartOptions } from '../chartOptions';
 
 export type QuestionValues = {
   name: string;
